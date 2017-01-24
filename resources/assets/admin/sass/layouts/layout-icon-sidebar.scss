@@ -1,0 +1,33 @@
+.layout-icon-sidebar .sidebar-left {
+    width: 200px;
+
+    .side-nav {
+        li {
+            text-align: center;
+        }
+
+        li a {
+            padding: 15px;
+        }
+
+        li i {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.5em;
+            font-size: 30px;
+        }
+
+    }
+
+    .metismenu .arrow{
+        position: absolute;
+        right: 21px;
+        top: 50%;
+        margin-top: -8px;
+    }
+}
+
+
+
+
+
