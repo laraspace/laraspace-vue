@@ -1,4 +1,4 @@
-let mix = require('laravel-mix').mix;
+const { mix } = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -7,7 +7,7 @@ let mix = require('laravel-mix').mix;
  |
  | Mix provides a clean, fluent API for defining some Webpack build steps
  | for your Laravel application. By default, we are compiling the Sass
- | file for your application, as well as bundling up your JS files.
+ | file for the application as well as bundling up all the JS files.
  |
  */
 
@@ -42,27 +42,11 @@ mix.combine([
     pluginPath + 'alertify/alertify.js',
     pluginPath + 'easypiecharts/jquery.easypiechart.js',
     pluginPath + 'metisMenu/metisMenu.js',
+],'public/assets/js/core/plugins.js')
 
-],'public/assets/admin/js/core/plugins.js')
+.js('resources/assets/js/app.js','public/assets/js/')
 
-.js('resources/assets/admin/js/app.js','public/assets/admin/js/')
+.sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
 
-.sass('resources/assets/admin/sass/laraspace.scss', 'public/assets/admin/css/')
+.version()
 
-.version();
-
-
-
-// Full API
-// mix.js(src, output);
-// mix.extract(vendorLibs);
-// mix.sass(src, output);
-// mix.less(src, output);
-// mix.combine(files, destination);
-// mix.copy(from, to);
-// mix.minify(file);
-// mix.sourceMaps(); // Enable sourcemaps
-// mix.version(); // Enable versioning.
-// mix.disableNotifications();
-// mix.setPublicPath('path/to/public'); <-- Useful for Node apps.
-// mix.webpackConfig({}); <-- Override webpack.config.js, without editing the file directly.
