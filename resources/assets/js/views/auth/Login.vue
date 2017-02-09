@@ -33,8 +33,8 @@
         data() {
             return {
                 loginData: {
-                    email: '',
-                    password: '',
+                    email: 'admin@laraspace.in',
+                    password: 'admin@123',
                     remember: ''
                 }
             }
