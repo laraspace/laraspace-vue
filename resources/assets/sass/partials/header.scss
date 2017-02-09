@@ -43,6 +43,11 @@
             padding: 11px;
         }
 
+        a.active {
+            background-color: $header-buttons-bg-color;
+            color  : $ls-color-primary;
+        }
+
         a:hover {
             background-color: $header-buttons-bg-color--hover;
             color: $header-font-color;

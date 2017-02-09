@@ -25,6 +25,9 @@
         },
         mounted() {
             this.setLayoutClasses()
+        },
+        destroyed(){
+            $('body').removeClass('login-page')
         }
     }
 </script>

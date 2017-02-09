@@ -12,6 +12,8 @@
     import SiteFooter from './partials/SiteFooter.vue'
     import SiteSidebar from './partials/SiteSidebar.vue'
 
+    import Layout from '../../helpers/layout'
+
     export default {
         data() {
             return {
@@ -21,15 +23,8 @@
         components : {
             SiteHeader , SiteSidebar , SiteFooter
         },
-        methods : {
-            setLayoutClasses(){
-                let body = $('body');
-                body.removeClass();
-                body.addClass('layout-icon-sidebar')
-            }
-        },
         mounted() {
-            this.setLayoutClasses()
+            Layout.set('layout-icon-sidebar')
         }
     }
 </script>

@@ -75,7 +75,7 @@ const routes = [
      */
 
     {
-        path: 'layouts', component: LayoutBasic,
+        path: '/admin/layouts', component: LayoutBasic,
         children: [
             {
                 path: 'sidebar',
@@ -84,7 +84,7 @@ const routes = [
         ]
     },
     {
-        path: 'layouts', component: LayoutHorizontal,
+        path: '/admin/layouts', component: LayoutHorizontal,
         children: [
             {
                 path: 'horizontal',
@@ -93,7 +93,7 @@ const routes = [
         ]
     },
     {
-        path: 'layouts', component: LayoutIconSidebar,
+        path: '/admin/layouts', component: LayoutIconSidebar,
         children: [
             {
                 path: 'icon-sidebar',
@@ -125,7 +125,7 @@ const routes = [
      |--------------------------------------------------------------------------|
      */
     {
-        path: 'admin', component: LayoutBasic,  // Change the desired Layout here
+        path: '/admin', component: LayoutBasic,  // Change the desired Layout here
         meta: { requiresAuth: true },
         children: [
 
@@ -237,8 +237,7 @@ const routes = [
     },
 
     // DEFAULT ROUTE
-    {   path: '*', component: NotFoundPage }
-
+    {   path: '*', component : NotFoundPage }
 ]
 
 const router = new VueRouter({
@@ -254,7 +253,7 @@ router.beforeEach((to, from, next) => {
 
         return AuthService.check().then(authenticated => {
             if(!authenticated){
-                return next({ path : 'login'})
+                return next({ path : '/login'})
             }
 
             return next()

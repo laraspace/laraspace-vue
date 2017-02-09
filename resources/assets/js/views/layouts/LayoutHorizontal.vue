@@ -13,6 +13,8 @@
     import SiteFooter from './partials/SiteFooter.vue'
     import SiteHeaderBottom from './partials/SiteHeaderBottom.vue'
 
+    import Layout from '../../helpers/layout'
+
     export default {
         data() {
             return {
@@ -22,15 +24,8 @@
         components : {
             SiteHeader , SiteHeaderBottom , SiteFooter
         },
-        methods : {
-            setLayoutClasses(){
-                let body = $('body');
-                body.removeClass();
-                body.addClass('layout-horizontal')
-            }
-        },
         mounted() {
-            this.setLayoutClasses()
+            Layout.set('layout-horizontal')
         }
     }
 </script>

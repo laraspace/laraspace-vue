@@ -7,7 +7,7 @@
 
             <ul class="action-list">
                 <li>
-                    <a href="/admin">Admin Dashboard</a>
+                    <router-link to="/admin/dashboard/basic">Admin Dashboard</router-link>
                 </li>
             </ul>
         </header>
