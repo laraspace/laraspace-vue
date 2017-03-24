@@ -11,6 +11,9 @@ const { mix } = require('laravel-mix');
  |
  */
 
+// Do not Autoload Jquery as we're already including it via `plugins.js`
+mix.autoload({})
+
 var pluginPath =  'resources/assets/plugins/';
 
 mix.combine([
@@ -48,5 +51,6 @@ mix.combine([
 
 .sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
 
-.version()
+// .version();
+
 

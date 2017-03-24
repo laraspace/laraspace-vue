@@ -13,4 +13,5 @@ class FrontendController extends Controller
         flash()->success('Welcome to Laraspace');
         return view('front.index');
     }
+
 }
