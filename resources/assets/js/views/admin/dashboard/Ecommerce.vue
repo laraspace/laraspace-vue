@@ -65,7 +65,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-line-chart text-primary"></i> Monthly Sales</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <line-graph :labels="['Jan','Feb','Mar','June']" :values="[20,30,40,60]"></line-graph>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-shopping-cart text-danger"></i> Pending Orders</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
@@ -110,7 +110,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-users text-info"></i> New Customers</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>

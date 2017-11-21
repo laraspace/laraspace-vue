@@ -14,7 +14,7 @@
                                        target="_blank">source</a>
                 </h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div :class="{'form-group' : true , 'has-danger': errors.has('name') }">
                     <label>Name </label>
                     <input v-model="name" v-validate data-vv-rules="required" class="form-control"
@@ -38,7 +38,7 @@
                                        target="_blank">source</a>
                 </h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
 
                 <form @submit="validateBeforeSubmit">
 

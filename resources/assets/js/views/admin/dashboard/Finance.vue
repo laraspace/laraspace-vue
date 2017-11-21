@@ -78,7 +78,7 @@
                         </div>
                     </div>
 
-                    <div class="card-block">
+                    <div class="card-body">
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="balanceSummry" role="tabpanel">
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <pie-graph
                                 :labels="['Revenue', 'Expense', 'Profit']"
                                 :values="[300, 50, 250]"
@@ -139,7 +139,7 @@
                             <button class="btn btn-outline-danger btn-sm"> Past Month</button>
                         </div>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <bar-graph :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
                                    :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"></bar-graph>
                     </div>

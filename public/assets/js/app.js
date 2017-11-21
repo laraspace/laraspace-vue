@@ -4632,382 +4632,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bind = __webpack_require__(137);
-var isBuffer = __webpack_require__(293);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-  return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-  var result;
-  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-  }
-  return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-  return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-  return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  navigator.product -> 'ReactNative'
- */
-function isStandardBrowserEnv() {
-  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
-    return false;
-  }
-  return (
-    typeof window !== 'undefined' &&
-    typeof document !== 'undefined'
-  );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-  // Don't bother if no value provided
-  if (obj === null || typeof obj === 'undefined') {
-    return;
-  }
-
-  // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
-    /*eslint no-param-reassign:0*/
-    obj = [obj];
-  }
-
-  if (isArray(obj)) {
-    // Iterate over array values
-    for (var i = 0, l = obj.length; i < l; i++) {
-      fn.call(null, obj[i], i, obj);
-    }
-  } else {
-    // Iterate over object keys
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        fn.call(null, obj[key], key, obj);
-      }
-    }
-  }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-  forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === 'function') {
-      a[key] = bind(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  });
-  return a;
-}
-
-module.exports = {
-  isArray: isArray,
-  isArrayBuffer: isArrayBuffer,
-  isBuffer: isBuffer,
-  isFormData: isFormData,
-  isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
-  isObject: isObject,
-  isUndefined: isUndefined,
-  isDate: isDate,
-  isFile: isFile,
-  isBlob: isBlob,
-  isFunction: isFunction,
-  isStream: isStream,
-  isURLSearchParams: isURLSearchParams,
-  isStandardBrowserEnv: isStandardBrowserEnv,
-  forEach: forEach,
-  merge: merge,
-  extend: extend,
-  trim: trim
-};
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-    toggleSidebar: function toggleSidebar() {
-        var icon = $('.hamburger').first();
-        $('body').toggleClass('sidebar-open');
-        icon.toggleClass('is-active');
-    },
-    reset: function reset() {
-        $("body").removeClass(function (index, css) {
-            return (css.match(/(^|\s)layout-\S+/g) || []).join(' ');
-        });
-    },
-    set: function set(layoutName) {
-        this.reset();
-        $("body").addClass(layoutName);
-    }
-});
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(147)
-}
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(150),
-  /* template */
-  __webpack_require__(198),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/components/LineGraph.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] LineGraph.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-172bcd72", Component.options)
-  } else {
-    hotAPI.reload("data-v-172bcd72", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -5089,6 +4713,73 @@ function toComment(sourceMap) {
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    toggleSidebar: function toggleSidebar() {
+        var icon = $('.hamburger').first();
+        $('body').toggleClass('sidebar-open');
+        icon.toggleClass('is-active');
+    },
+    reset: function reset() {
+        $("body").removeClass(function (index, css) {
+            return (css.match(/(^|\s)layout-\S+/g) || []).join(' ');
+        });
+    },
+    set: function set(layoutName) {
+        this.reset();
+        $("body").addClass(layoutName);
+    }
+});
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(147)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(150),
+  /* template */
+  __webpack_require__(198),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\LineGraph.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] LineGraph.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-172bcd72", Component.options)
+  } else {
+    hotAPI.reload("data-v-172bcd72", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 5 */,
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5400,7 +5091,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/components/BarGraph.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\BarGraph.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] BarGraph.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5444,7 +5135,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/components/PieGraph.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\PieGraph.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] PieGraph.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5524,7 +5215,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/partials/SiteHeader.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteHeader.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5564,7 +5255,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/partials/SiteFooter.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteFooter.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteFooter.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5594,7 +5285,7 @@ module.exports = Component.exports
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 var normalizeHeaderName = __webpack_require__(296);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -15815,7 +15506,7 @@ module.exports = g;
 
 "use strict";
 /**
-  * vue-router v2.2.1
+  * vue-router v2.7.0
   * (c) 2017 Evan You
   * @license MIT
   */
@@ -15828,9 +15519,13 @@ function assert (condition, message) {
 }
 
 function warn (condition, message) {
-  if (!condition) {
+  if ("development" !== 'production' && !condition) {
     typeof console !== 'undefined' && console.warn(("[vue-router] " + message));
   }
+}
+
+function isError (err) {
+  return Object.prototype.toString.call(err).indexOf('Error') > -1
 }
 
 var View = {
@@ -15842,7 +15537,7 @@ var View = {
       default: 'default'
     }
   },
-  render: function render (h, ref) {
+  render: function render (_, ref) {
     var props = ref.props;
     var children = ref.children;
     var parent = ref.parent;
@@ -15850,6 +15545,9 @@ var View = {
 
     data.routerView = true;
 
+    // directly use parent context's createElement() function
+    // so that components rendered by router-view can resolve named slots
+    var h = parent.$createElement;
     var name = props.name;
     var route = parent.$route;
     var cache = parent._routerViewCache || (parent._routerViewCache = {});
@@ -15858,7 +15556,7 @@ var View = {
     // has been toggled inactive but kept-alive.
     var depth = 0;
     var inactive = false;
-    while (parent) {
+    while (parent && parent._routerRoot !== parent) {
       if (parent.$vnode && parent.$vnode.data.routerView) {
         depth++;
       }
@@ -15883,18 +15581,23 @@ var View = {
 
     var component = cache[name] = matched.components[name];
 
-    // inject instance registration hooks
-    var hooks = data.hook || (data.hook = {});
-    hooks.init = function (vnode) {
-      matched.instances[name] = vnode.child;
-    };
-    hooks.prepatch = function (oldVnode, vnode) {
-      matched.instances[name] = vnode.child;
-    };
-    hooks.destroy = function (vnode) {
-      if (matched.instances[name] === vnode.child) {
-        matched.instances[name] = undefined;
+    // attach instance registration hook
+    // this will be called in the instance's injected lifecycle hooks
+    data.registerRouteInstance = function (vm, val) {
+      // val could be undefined for unregistration
+      var current = matched.instances[name];
+      if (
+        (val && current !== vm) ||
+        (!val && current === vm)
+      ) {
+        matched.instances[name] = val;
       }
+    }
+
+    // also regiseter instance in prepatch hook
+    // in case the same component instance is reused across different routes
+    ;(data.hook || (data.hook = {})).prepatch = function (_, vnode) {
+      matched.instances[name] = vnode.componentInstance;
     };
 
     // resolve props
@@ -15915,7 +15618,13 @@ function resolveProps (route, config) {
     case 'boolean':
       return config ? route.params : undefined
     default:
-      warn(false, ("props in \"" + (route.path) + "\" is a " + (typeof config) + ", expecting an object, function or boolean."));
+      if (true) {
+        warn(
+          false,
+          "props in \"" + (route.path) + "\" is a " + (typeof config) + ", " +
+          "expecting an object, function or boolean."
+        );
+      }
   }
 }
 
@@ -15925,7 +15634,7 @@ var encodeReserveRE = /[!'()*]/g;
 var encodeReserveReplacer = function (c) { return '%' + c.charCodeAt(0).toString(16); };
 var commaRE = /%2C/g;
 
-// fixed encodeURIComponent which is more comformant to RFC3986:
+// fixed encodeURIComponent which is more conformant to RFC3986:
 // - escapes [!'()*]
 // - preserve commas
 var encode = function (str) { return encodeURIComponent(str)
@@ -15936,25 +15645,24 @@ var decode = decodeURIComponent;
 
 function resolveQuery (
   query,
-  extraQuery
+  extraQuery,
+  _parseQuery
 ) {
   if ( extraQuery === void 0 ) extraQuery = {};
 
-  if (query) {
-    var parsedQuery;
-    try {
-      parsedQuery = parseQuery(query);
-    } catch (e) {
-      "development" !== 'production' && warn(false, e.message);
-      parsedQuery = {};
-    }
-    for (var key in extraQuery) {
-      parsedQuery[key] = extraQuery[key];
-    }
-    return parsedQuery
-  } else {
-    return extraQuery
+  var parse = _parseQuery || parseQuery;
+  var parsedQuery;
+  try {
+    parsedQuery = parse(query || '');
+  } catch (e) {
+    "development" !== 'production' && warn(false, e.message);
+    parsedQuery = {};
   }
+  for (var key in extraQuery) {
+    var val = extraQuery[key];
+    parsedQuery[key] = Array.isArray(val) ? val.slice() : val;
+  }
+  return parsedQuery
 }
 
 function parseQuery (query) {
@@ -15999,7 +15707,7 @@ function stringifyQuery (obj) {
 
     if (Array.isArray(val)) {
       var result = [];
-      val.slice().forEach(function (val2) {
+      val.forEach(function (val2) {
         if (val2 === undefined) {
           return
         }
@@ -16019,13 +15727,16 @@ function stringifyQuery (obj) {
 
 /*  */
 
+
 var trailingSlashRE = /\/?$/;
 
 function createRoute (
   record,
   location,
-  redirectedFrom
+  redirectedFrom,
+  router
 ) {
+  var stringifyQuery$$1 = router && router.options.stringifyQuery;
   var route = {
     name: location.name || (record && record.name),
     meta: (record && record.meta) || {},
@@ -16033,11 +15744,11 @@ function createRoute (
     hash: location.hash || '',
     query: location.query || {},
     params: location.params || {},
-    fullPath: getFullPath(location),
+    fullPath: getFullPath(location, stringifyQuery$$1),
     matched: record ? formatMatch(record) : []
   };
   if (redirectedFrom) {
-    route.redirectedFrom = getFullPath(redirectedFrom);
+    route.redirectedFrom = getFullPath(redirectedFrom, stringifyQuery$$1);
   }
   return Object.freeze(route)
 }
@@ -16056,12 +15767,16 @@ function formatMatch (record) {
   return res
 }
 
-function getFullPath (ref) {
+function getFullPath (
+  ref,
+  _stringifyQuery
+) {
   var path = ref.path;
   var query = ref.query; if ( query === void 0 ) query = {};
   var hash = ref.hash; if ( hash === void 0 ) hash = '';
 
-  return (path || '/') + stringifyQuery(query) + hash
+  var stringify = _stringifyQuery || stringifyQuery;
+  return (path || '/') + stringify(query) + hash
 }
 
 function isSameRoute (a, b) {
@@ -16096,7 +15811,15 @@ function isObjectEqual (a, b) {
   if (aKeys.length !== bKeys.length) {
     return false
   }
-  return aKeys.every(function (key) { return String(a[key]) === String(b[key]); })
+  return aKeys.every(function (key) {
+    var aVal = a[key];
+    var bVal = b[key];
+    // check nested equality
+    if (typeof aVal === 'object' && typeof bVal === 'object') {
+      return isObjectEqual(aVal, bVal)
+    }
+    return String(aVal) === String(bVal)
+  })
 }
 
 function isIncludedRoute (current, target) {
@@ -16139,6 +15862,7 @@ var Link = {
     append: Boolean,
     replace: Boolean,
     activeClass: String,
+    exactActiveClass: String,
     event: {
       type: eventTypes,
       default: 'click'
@@ -16153,11 +15877,30 @@ var Link = {
     var location = ref.location;
     var route = ref.route;
     var href = ref.href;
+
     var classes = {};
-    var activeClass = this.activeClass || router.options.linkActiveClass || 'router-link-active';
-    var compareTarget = location.path ? createRoute(null, location) : route;
+    var globalActiveClass = router.options.linkActiveClass;
+    var globalExactActiveClass = router.options.linkExactActiveClass;
+    // Support global empty active class
+    var activeClassFallback = globalActiveClass == null
+            ? 'router-link-active'
+            : globalActiveClass;
+    var exactActiveClassFallback = globalExactActiveClass == null
+            ? 'router-link-exact-active'
+            : globalExactActiveClass;
+    var activeClass = this.activeClass == null
+            ? activeClassFallback
+            : this.activeClass;
+    var exactActiveClass = this.exactActiveClass == null
+            ? exactActiveClassFallback
+            : this.exactActiveClass;
+    var compareTarget = location.path
+      ? createRoute(null, location, null, router)
+      : route;
+
+    classes[exactActiveClass] = isSameRoute(current, compareTarget);
     classes[activeClass] = this.exact
-      ? isSameRoute(current, compareTarget)
+      ? classes[exactActiveClass]
       : isIncludedRoute(current, compareTarget);
 
     var handler = function (e) {
@@ -16207,14 +15950,14 @@ var Link = {
 
 function guardEvent (e) {
   // don't redirect with control keys
-  if (e.metaKey || e.ctrlKey || e.shiftKey) { return }
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) { return }
   // don't redirect when preventDefault called
   if (e.defaultPrevented) { return }
   // don't redirect on right click
   if (e.button !== undefined && e.button !== 0) { return }
   // don't redirect if `target="_blank"`
-  if (e.target && e.target.getAttribute) {
-    var target = e.target.getAttribute('target');
+  if (e.currentTarget && e.currentTarget.getAttribute) {
+    var target = e.currentTarget.getAttribute('target');
     if (/\b_blank\b/i.test(target)) { return }
   }
   // this may be a Weex event which doesn't have this method
@@ -16247,22 +15990,38 @@ function install (Vue) {
 
   _Vue = Vue;
 
-  Object.defineProperty(Vue.prototype, '$router', {
-    get: function get () { return this.$root._router }
-  });
+  var isDef = function (v) { return v !== undefined; };
 
-  Object.defineProperty(Vue.prototype, '$route', {
-    get: function get () { return this.$root._route }
-  });
+  var registerInstance = function (vm, callVal) {
+    var i = vm.$options._parentVnode;
+    if (isDef(i) && isDef(i = i.data) && isDef(i = i.registerRouteInstance)) {
+      i(vm, callVal);
+    }
+  };
 
   Vue.mixin({
     beforeCreate: function beforeCreate () {
-      if (this.$options.router) {
+      if (isDef(this.$options.router)) {
+        this._routerRoot = this;
         this._router = this.$options.router;
         this._router.init(this);
         Vue.util.defineReactive(this, '_route', this._router.history.current);
+      } else {
+        this._routerRoot = (this.$parent && this.$parent._routerRoot) || this;
       }
+      registerInstance(this, this);
+    },
+    destroyed: function destroyed () {
+      registerInstance(this);
     }
+  });
+
+  Object.defineProperty(Vue.prototype, '$router', {
+    get: function get () { return this._routerRoot._router }
+  });
+
+  Object.defineProperty(Vue.prototype, '$route', {
+    get: function get () { return this._routerRoot._route }
   });
 
   Vue.component('router-view', View);
@@ -16270,7 +16029,7 @@ function install (Vue) {
 
   var strats = Vue.config.optionMergeStrategies;
   // use the same hook merging strategy for route hooks
-  strats.beforeRouteEnter = strats.beforeRouteLeave = strats.created;
+  strats.beforeRouteEnter = strats.beforeRouteLeave = strats.beforeRouteUpdate = strats.created;
 }
 
 /*  */
@@ -16284,11 +16043,12 @@ function resolvePath (
   base,
   append
 ) {
-  if (relative.charAt(0) === '/') {
+  var firstChar = relative.charAt(0);
+  if (firstChar === '/') {
     return relative
   }
 
-  if (relative.charAt(0) === '?' || relative.charAt(0) === '#') {
+  if (firstChar === '?' || firstChar === '#') {
     return base + relative
   }
 
@@ -16305,11 +16065,9 @@ function resolvePath (
   var segments = relative.replace(/^\//, '').split('/');
   for (var i = 0; i < segments.length; i++) {
     var segment = segments[i];
-    if (segment === '.') {
-      continue
-    } else if (segment === '..') {
+    if (segment === '..') {
       stack.pop();
-    } else {
+    } else if (segment !== '.') {
       stack.push(segment);
     }
   }
@@ -16349,132 +16107,9 @@ function cleanPath (path) {
   return path.replace(/\/\//g, '/')
 }
 
-/*  */
-
-function createRouteMap (
-  routes,
-  oldPathMap,
-  oldNameMap
-) {
-  var pathMap = oldPathMap || Object.create(null);
-  var nameMap = oldNameMap || Object.create(null);
-
-  routes.forEach(function (route) {
-    addRouteRecord(pathMap, nameMap, route);
-  });
-
-  return {
-    pathMap: pathMap,
-    nameMap: nameMap
-  }
-}
-
-function addRouteRecord (
-  pathMap,
-  nameMap,
-  route,
-  parent,
-  matchAs
-) {
-  var path = route.path;
-  var name = route.name;
-  if (true) {
-    assert(path != null, "\"path\" is required in a route configuration.");
-    assert(
-      typeof route.component !== 'string',
-      "route config \"component\" for path: " + (String(path || name)) + " cannot be a " +
-      "string id. Use an actual component instead."
-    );
-  }
-
-  var record = {
-    path: normalizePath(path, parent),
-    components: route.components || { default: route.component },
-    instances: {},
-    name: name,
-    parent: parent,
-    matchAs: matchAs,
-    redirect: route.redirect,
-    beforeEnter: route.beforeEnter,
-    meta: route.meta || {},
-    props: route.props == null
-      ? {}
-      : route.components
-        ? route.props
-        : { default: route.props }
-  };
-
-  if (route.children) {
-    // Warn if route is named and has a default child route.
-    // If users navigate to this route by name, the default child will
-    // not be rendered (GH Issue #629)
-    if (true) {
-      if (route.name && route.children.some(function (child) { return /^\/?$/.test(child.path); })) {
-        warn(
-          false,
-          "Named Route '" + (route.name) + "' has a default child route. " +
-          "When navigating to this named route (:to=\"{name: '" + (route.name) + "'\"), " +
-          "the default child route will not be rendered. Remove the name from " +
-          "this route and use the name of the default child route for named " +
-          "links instead."
-        );
-      }
-    }
-    route.children.forEach(function (child) {
-      var childMatchAs = matchAs
-        ? cleanPath((matchAs + "/" + (child.path)))
-        : undefined;
-      addRouteRecord(pathMap, nameMap, child, record, childMatchAs);
-    });
-  }
-
-  if (route.alias !== undefined) {
-    if (Array.isArray(route.alias)) {
-      route.alias.forEach(function (alias) {
-        var aliasRoute = {
-          path: alias,
-          children: route.children
-        };
-        addRouteRecord(pathMap, nameMap, aliasRoute, parent, record.path);
-      });
-    } else {
-      var aliasRoute = {
-        path: route.alias,
-        children: route.children
-      };
-      addRouteRecord(pathMap, nameMap, aliasRoute, parent, record.path);
-    }
-  }
-
-  if (!pathMap[record.path]) {
-    pathMap[record.path] = record;
-  }
-
-  if (name) {
-    if (!nameMap[name]) {
-      nameMap[name] = record;
-    } else if ("development" !== 'production' && !matchAs) {
-      warn(
-        false,
-        "Duplicate named routes definition: " +
-        "{ name: \"" + name + "\", path: \"" + (record.path) + "\" }"
-      );
-    }
-  }
-}
-
-function normalizePath (path, parent) {
-  path = path.replace(/\/$/, '');
-  if (path[0] === '/') { return path }
-  if (parent == null) { return path }
-  return cleanPath(((parent.path) + "/" + path))
-}
-
 var index$1 = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
-
-var isarray = index$1;
 
 /**
  * Expose `pathToRegexp`.
@@ -16656,7 +16291,7 @@ function tokensToFunction (tokens) {
         }
       }
 
-      if (isarray(value)) {
+      if (index$1(value)) {
         if (!token.repeat) {
           throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
         }
@@ -16807,7 +16442,7 @@ function stringToRegexp (path, keys, options) {
  * @return {!RegExp}
  */
 function tokensToRegExp (tokens, keys, options) {
-  if (!isarray(keys)) {
+  if (!index$1(keys)) {
     options = /** @type {!Object} */ (keys || options);
     keys = [];
   }
@@ -16883,7 +16518,7 @@ function tokensToRegExp (tokens, keys, options) {
  * @return {!RegExp}
  */
 function pathToRegexp (path, keys, options) {
-  if (!isarray(keys)) {
+  if (!index$1(keys)) {
     options = /** @type {!Object} */ (keys || options);
     keys = [];
   }
@@ -16894,7 +16529,7 @@ function pathToRegexp (path, keys, options) {
     return regexpToRegexp(path, /** @type {!Array} */ (keys))
   }
 
-  if (isarray(path)) {
+  if (index$1(path)) {
     return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
   }
 
@@ -16907,24 +16542,6 @@ index.tokensToFunction = tokensToFunction_1;
 index.tokensToRegExp = tokensToRegExp_1;
 
 /*  */
-
-var regexpCache = Object.create(null);
-
-function getRouteRegex (path) {
-  var hit = regexpCache[path];
-  var keys, regexp;
-
-  if (hit) {
-    keys = hit.keys;
-    regexp = hit.regexp;
-  } else {
-    keys = [];
-    regexp = index(path, keys);
-    regexpCache[path] = { keys: keys, regexp: regexp };
-  }
-
-  return { keys: keys, regexp: regexp }
-}
 
 var regexpCompileCache = Object.create(null);
 
@@ -16948,10 +16565,171 @@ function fillParams (
 
 /*  */
 
+function createRouteMap (
+  routes,
+  oldPathList,
+  oldPathMap,
+  oldNameMap
+) {
+  // the path list is used to control path matching priority
+  var pathList = oldPathList || [];
+  var pathMap = oldPathMap || Object.create(null);
+  var nameMap = oldNameMap || Object.create(null);
+
+  routes.forEach(function (route) {
+    addRouteRecord(pathList, pathMap, nameMap, route);
+  });
+
+  // ensure wildcard routes are always at the end
+  for (var i = 0, l = pathList.length; i < l; i++) {
+    if (pathList[i] === '*') {
+      pathList.push(pathList.splice(i, 1)[0]);
+      l--;
+      i--;
+    }
+  }
+
+  return {
+    pathList: pathList,
+    pathMap: pathMap,
+    nameMap: nameMap
+  }
+}
+
+function addRouteRecord (
+  pathList,
+  pathMap,
+  nameMap,
+  route,
+  parent,
+  matchAs
+) {
+  var path = route.path;
+  var name = route.name;
+  if (true) {
+    assert(path != null, "\"path\" is required in a route configuration.");
+    assert(
+      typeof route.component !== 'string',
+      "route config \"component\" for path: " + (String(path || name)) + " cannot be a " +
+      "string id. Use an actual component instead."
+    );
+  }
+
+  var normalizedPath = normalizePath(path, parent);
+  var pathToRegexpOptions = route.pathToRegexpOptions || {};
+
+  if (typeof route.caseSensitive === 'boolean') {
+    pathToRegexpOptions.sensitive = route.caseSensitive;
+  }
+
+  var record = {
+    path: normalizedPath,
+    regex: compileRouteRegex(normalizedPath, pathToRegexpOptions),
+    components: route.components || { default: route.component },
+    instances: {},
+    name: name,
+    parent: parent,
+    matchAs: matchAs,
+    redirect: route.redirect,
+    beforeEnter: route.beforeEnter,
+    meta: route.meta || {},
+    props: route.props == null
+      ? {}
+      : route.components
+        ? route.props
+        : { default: route.props }
+  };
+
+  if (route.children) {
+    // Warn if route is named, does not redirect and has a default child route.
+    // If users navigate to this route by name, the default child will
+    // not be rendered (GH Issue #629)
+    if (true) {
+      if (route.name && !route.redirect && route.children.some(function (child) { return /^\/?$/.test(child.path); })) {
+        warn(
+          false,
+          "Named Route '" + (route.name) + "' has a default child route. " +
+          "When navigating to this named route (:to=\"{name: '" + (route.name) + "'\"), " +
+          "the default child route will not be rendered. Remove the name from " +
+          "this route and use the name of the default child route for named " +
+          "links instead."
+        );
+      }
+    }
+    route.children.forEach(function (child) {
+      var childMatchAs = matchAs
+        ? cleanPath((matchAs + "/" + (child.path)))
+        : undefined;
+      addRouteRecord(pathList, pathMap, nameMap, child, record, childMatchAs);
+    });
+  }
+
+  if (route.alias !== undefined) {
+    var aliases = Array.isArray(route.alias)
+      ? route.alias
+      : [route.alias];
+
+    aliases.forEach(function (alias) {
+      var aliasRoute = {
+        path: alias,
+        children: route.children
+      };
+      addRouteRecord(
+        pathList,
+        pathMap,
+        nameMap,
+        aliasRoute,
+        parent,
+        record.path || '/' // matchAs
+      );
+    });
+  }
+
+  if (!pathMap[record.path]) {
+    pathList.push(record.path);
+    pathMap[record.path] = record;
+  }
+
+  if (name) {
+    if (!nameMap[name]) {
+      nameMap[name] = record;
+    } else if ("development" !== 'production' && !matchAs) {
+      warn(
+        false,
+        "Duplicate named routes definition: " +
+        "{ name: \"" + name + "\", path: \"" + (record.path) + "\" }"
+      );
+    }
+  }
+}
+
+function compileRouteRegex (path, pathToRegexpOptions) {
+  var regex = index(path, [], pathToRegexpOptions);
+  if (true) {
+    var keys = {};
+    regex.keys.forEach(function (key) {
+      warn(!keys[key.name], ("Duplicate param keys in route with path: \"" + path + "\""));
+      keys[key.name] = true;
+    });
+  }
+  return regex
+}
+
+function normalizePath (path, parent) {
+  path = path.replace(/\/$/, '');
+  if (path[0] === '/') { return path }
+  if (parent == null) { return path }
+  return cleanPath(((parent.path) + "/" + path))
+}
+
+/*  */
+
+
 function normalizeLocation (
   raw,
   current,
-  append
+  append,
+  router
 ) {
   var next = typeof raw === 'string' ? { path: raw } : raw;
   // named target
@@ -16967,7 +16745,7 @@ function normalizeLocation (
     if (current.name) {
       next.name = current.name;
       next.params = params;
-    } else if (current.matched) {
+    } else if (current.matched.length) {
       var rawPath = current.matched[current.matched.length - 1].path;
       next.path = fillParams(rawPath, params, ("path " + (current.path)));
     } else if (true) {
@@ -16980,8 +16758,14 @@ function normalizeLocation (
   var basePath = (current && current.path) || '/';
   var path = parsedPath.path
     ? resolvePath(parsedPath.path, basePath, append || next.append)
-    : (current && current.path) || '/';
-  var query = resolveQuery(parsedPath.query, next.query);
+    : basePath;
+
+  var query = resolveQuery(
+    parsedPath.query,
+    next.query,
+    router && router.options.parseQuery
+  );
+
   var hash = next.hash || parsedPath.hash;
   if (hash && hash.charAt(0) !== '#') {
     hash = "#" + hash;
@@ -17004,13 +16788,18 @@ function assign (a, b) {
 
 /*  */
 
-function createMatcher (routes) {
+
+function createMatcher (
+  routes,
+  router
+) {
   var ref = createRouteMap(routes);
+  var pathList = ref.pathList;
   var pathMap = ref.pathMap;
   var nameMap = ref.nameMap;
 
   function addRoutes (routes) {
-    createRouteMap(routes, pathMap, nameMap);
+    createRouteMap(routes, pathList, pathMap, nameMap);
   }
 
   function match (
@@ -17018,7 +16807,7 @@ function createMatcher (routes) {
     currentRoute,
     redirectedFrom
   ) {
-    var location = normalizeLocation(raw, currentRoute);
+    var location = normalizeLocation(raw, currentRoute, false, router);
     var name = location.name;
 
     if (name) {
@@ -17026,7 +16815,8 @@ function createMatcher (routes) {
       if (true) {
         warn(record, ("Route with name '" + name + "' does not exist"));
       }
-      var paramNames = getRouteRegex(record.path).keys
+      if (!record) { return _createRoute(null, location) }
+      var paramNames = record.regex.keys
         .filter(function (key) { return !key.optional; })
         .map(function (key) { return key.name; });
 
@@ -17048,9 +16838,11 @@ function createMatcher (routes) {
       }
     } else if (location.path) {
       location.params = {};
-      for (var path in pathMap) {
-        if (matchRoute(path, location.params, location.path)) {
-          return _createRoute(pathMap[path], location, redirectedFrom)
+      for (var i = 0; i < pathList.length; i++) {
+        var path = pathList[i];
+        var record$1 = pathMap[path];
+        if (matchRoute(record$1.regex, location.path, location.params)) {
+          return _createRoute(record$1, location, redirectedFrom)
         }
       }
     }
@@ -17064,7 +16856,7 @@ function createMatcher (routes) {
   ) {
     var originalRedirect = record.redirect;
     var redirect = typeof originalRedirect === 'function'
-        ? originalRedirect(createRoute(record, location))
+        ? originalRedirect(createRoute(record, location, null, router))
         : originalRedirect;
 
     if (typeof redirect === 'string') {
@@ -17072,9 +16864,11 @@ function createMatcher (routes) {
     }
 
     if (!redirect || typeof redirect !== 'object') {
-      "development" !== 'production' && warn(
-        false, ("invalid redirect option: " + (JSON.stringify(redirect)))
-      );
+      if (true) {
+        warn(
+          false, ("invalid redirect option: " + (JSON.stringify(redirect)))
+        );
+      }
       return _createRoute(null, location)
     }
 
@@ -17114,7 +16908,9 @@ function createMatcher (routes) {
         hash: hash
       }, undefined, location)
     } else {
-      warn(false, ("invalid redirect option: " + (JSON.stringify(redirect))));
+      if (true) {
+        warn(false, ("invalid redirect option: " + (JSON.stringify(redirect))));
+      }
       return _createRoute(null, location)
     }
   }
@@ -17149,7 +16945,7 @@ function createMatcher (routes) {
     if (record && record.matchAs) {
       return alias(record, location, record.matchAs)
     }
-    return createRoute(record, location, redirectedFrom)
+    return createRoute(record, location, redirectedFrom, router)
   }
 
   return {
@@ -17159,14 +16955,11 @@ function createMatcher (routes) {
 }
 
 function matchRoute (
+  regex,
   path,
-  params,
-  pathname
+  params
 ) {
-  var ref = getRouteRegex(path);
-  var regexp = ref.regexp;
-  var keys = ref.keys;
-  var m = pathname.match(regexp);
+  var m = path.match(regex);
 
   if (!m) {
     return false
@@ -17175,9 +16968,11 @@ function matchRoute (
   }
 
   for (var i = 1, len = m.length; i < len; ++i) {
-    var key = keys[i - 1];
+    var key = regex.keys[i - 1];
     var val = typeof m[i] === 'string' ? decodeURIComponent(m[i]) : m[i];
-    if (key) { params[key.name] = val; }
+    if (key) {
+      params[key.name] = val;
+    }
   }
 
   return true
@@ -17231,7 +17026,9 @@ function handleScroll (
     if (isObject && typeof shouldScroll.selector === 'string') {
       var el = document.querySelector(shouldScroll.selector);
       if (el) {
-        position = getElementPosition(el);
+        var offset = shouldScroll.offset && typeof shouldScroll.offset === 'object' ? shouldScroll.offset : {};
+        offset = normalizeOffset(offset);
+        position = getElementPosition(el, offset);
       } else if (isValidPosition(shouldScroll)) {
         position = normalizePosition(shouldScroll);
       }
@@ -17262,13 +17059,13 @@ function getScrollPosition () {
   }
 }
 
-function getElementPosition (el) {
+function getElementPosition (el, offset) {
   var docEl = document.documentElement;
   var docRect = docEl.getBoundingClientRect();
   var elRect = el.getBoundingClientRect();
   return {
-    x: elRect.left - docRect.left,
-    y: elRect.top - docRect.top
+    x: elRect.left - docRect.left - offset.x,
+    y: elRect.top - docRect.top - offset.y
   }
 }
 
@@ -17280,6 +17077,13 @@ function normalizePosition (obj) {
   return {
     x: isNumber(obj.x) ? obj.x : window.pageXOffset,
     y: isNumber(obj.y) ? obj.y : window.pageYOffset
+  }
+}
+
+function normalizeOffset (obj) {
+  return {
+    x: isNumber(obj.x) ? obj.x : 0,
+    y: isNumber(obj.y) ? obj.y : 0
   }
 }
 
@@ -17365,6 +17169,106 @@ function runQueue (queue, fn, cb) {
 
 /*  */
 
+function resolveAsyncComponents (matched) {
+  return function (to, from, next) {
+    var hasAsync = false;
+    var pending = 0;
+    var error = null;
+
+    flatMapComponents(matched, function (def, _, match, key) {
+      // if it's a function and doesn't have cid attached,
+      // assume it's an async component resolve function.
+      // we are not using Vue's default async resolving mechanism because
+      // we want to halt the navigation until the incoming component has been
+      // resolved.
+      if (typeof def === 'function' && def.cid === undefined) {
+        hasAsync = true;
+        pending++;
+
+        var resolve = once(function (resolvedDef) {
+          if (resolvedDef.__esModule && resolvedDef.default) {
+            resolvedDef = resolvedDef.default;
+          }
+          // save resolved on async factory in case it's used elsewhere
+          def.resolved = typeof resolvedDef === 'function'
+            ? resolvedDef
+            : _Vue.extend(resolvedDef);
+          match.components[key] = resolvedDef;
+          pending--;
+          if (pending <= 0) {
+            next();
+          }
+        });
+
+        var reject = once(function (reason) {
+          var msg = "Failed to resolve async component " + key + ": " + reason;
+          "development" !== 'production' && warn(false, msg);
+          if (!error) {
+            error = isError(reason)
+              ? reason
+              : new Error(msg);
+            next(error);
+          }
+        });
+
+        var res;
+        try {
+          res = def(resolve, reject);
+        } catch (e) {
+          reject(e);
+        }
+        if (res) {
+          if (typeof res.then === 'function') {
+            res.then(resolve, reject);
+          } else {
+            // new syntax in Vue 2.3
+            var comp = res.component;
+            if (comp && typeof comp.then === 'function') {
+              comp.then(resolve, reject);
+            }
+          }
+        }
+      }
+    });
+
+    if (!hasAsync) { next(); }
+  }
+}
+
+function flatMapComponents (
+  matched,
+  fn
+) {
+  return flatten(matched.map(function (m) {
+    return Object.keys(m.components).map(function (key) { return fn(
+      m.components[key],
+      m.instances[key],
+      m, key
+    ); })
+  }))
+}
+
+function flatten (arr) {
+  return Array.prototype.concat.apply([], arr)
+}
+
+// in Webpack 2, require.ensure now also returns a Promise
+// so the resolve/reject functions may get called an extra time
+// if the user uses an arrow function shorthand that happens to
+// return that Promise.
+function once (fn) {
+  var called = false;
+  return function () {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    if (called) { return }
+    called = true;
+    return fn.apply(this, args)
+  }
+}
+
+/*  */
 
 var History = function History (router, base) {
   this.router = router;
@@ -17374,18 +17278,27 @@ var History = function History (router, base) {
   this.pending = null;
   this.ready = false;
   this.readyCbs = [];
+  this.readyErrorCbs = [];
+  this.errorCbs = [];
 };
 
 History.prototype.listen = function listen (cb) {
   this.cb = cb;
 };
 
-History.prototype.onReady = function onReady (cb) {
+History.prototype.onReady = function onReady (cb, errorCb) {
   if (this.ready) {
     cb();
   } else {
     this.readyCbs.push(cb);
+    if (errorCb) {
+      this.readyErrorCbs.push(errorCb);
+    }
   }
+};
+
+History.prototype.onError = function onError (errorCb) {
+  this.errorCbs.push(errorCb);
 };
 
 History.prototype.transitionTo = function transitionTo (location, onComplete, onAbort) {
@@ -17400,18 +17313,34 @@ History.prototype.transitionTo = function transitionTo (location, onComplete, on
     // fire ready cbs once
     if (!this$1.ready) {
       this$1.ready = true;
-      this$1.readyCbs.forEach(function (cb) {
-        cb(route);
-      });
+      this$1.readyCbs.forEach(function (cb) { cb(route); });
     }
-  }, onAbort);
+  }, function (err) {
+    if (onAbort) {
+      onAbort(err);
+    }
+    if (err && !this$1.ready) {
+      this$1.ready = true;
+      this$1.readyErrorCbs.forEach(function (cb) { cb(err); });
+    }
+  });
 };
 
 History.prototype.confirmTransition = function confirmTransition (route, onComplete, onAbort) {
     var this$1 = this;
 
   var current = this.current;
-  var abort = function () { onAbort && onAbort(); };
+  var abort = function (err) {
+    if (isError(err)) {
+      if (this$1.errorCbs.length) {
+        this$1.errorCbs.forEach(function (cb) { cb(err); });
+      } else {
+        warn(false, 'uncaught error during route navigation:');
+        console.error(err);
+      }
+    }
+    onAbort && onAbort(err);
+  };
   if (
     isSameRoute(route, current) &&
     // in the case the route map has been dynamically appended to
@@ -17444,29 +17373,44 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
     if (this$1.pending !== route) {
       return abort()
     }
-    hook(route, current, function (to) {
-      if (to === false) {
-        // next(false) -> abort navigation, ensure current URL
-        this$1.ensureURL(true);
-        abort();
-      } else if (typeof to === 'string' || typeof to === 'object') {
-        // next('/') or next({ path: '/' }) -> redirect
-        (typeof to === 'object' && to.replace) ? this$1.replace(to) : this$1.push(to);
-        abort();
-      } else {
-        // confirm transition and pass on the value
-        next(to);
-      }
-    });
+    try {
+      hook(route, current, function (to) {
+        if (to === false || isError(to)) {
+          // next(false) -> abort navigation, ensure current URL
+          this$1.ensureURL(true);
+          abort(to);
+        } else if (
+          typeof to === 'string' ||
+          (typeof to === 'object' && (
+            typeof to.path === 'string' ||
+            typeof to.name === 'string'
+          ))
+        ) {
+          // next('/') or next({ path: '/' }) -> redirect
+          abort();
+          if (typeof to === 'object' && to.replace) {
+            this$1.replace(to);
+          } else {
+            this$1.push(to);
+          }
+        } else {
+          // confirm transition and pass on the value
+          next(to);
+        }
+      });
+    } catch (e) {
+      abort(e);
+    }
   };
 
   runQueue(queue, iterator, function () {
     var postEnterCbs = [];
     var isValid = function () { return this$1.current === route; };
-    var enterGuards = extractEnterGuards(activated, postEnterCbs, isValid);
     // wait until async components are resolved before
     // extracting in-component enter guards
-    runQueue(enterGuards, iterator, function () {
+    var enterGuards = extractEnterGuards(activated, postEnterCbs, isValid);
+    var queue = enterGuards.concat(this$1.router.resolveHooks);
+    runQueue(queue, iterator, function () {
       if (this$1.pending !== route) {
         return abort()
       }
@@ -17474,7 +17418,7 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
       onComplete(route);
       if (this$1.router.app) {
         this$1.router.app.$nextTick(function () {
-          postEnterCbs.forEach(function (cb) { return cb(); });
+          postEnterCbs.forEach(function (cb) { cb(); });
         });
       }
     });
@@ -17496,6 +17440,8 @@ function normalizeBase (base) {
       // respect <base> tag
       var baseEl = document.querySelector('base');
       base = (baseEl && baseEl.getAttribute('href')) || '/';
+      // strip full URL origin
+      base = base.replace(/^https?:\/\/[^\/]+/, '');
     } else {
       base = '/';
     }
@@ -17563,8 +17509,10 @@ function extractUpdateHooks (updated) {
 }
 
 function bindGuard (guard, instance) {
-  return function boundRouteGuard () {
-    return guard.apply(instance, arguments)
+  if (instance) {
+    return function boundRouteGuard () {
+      return guard.apply(instance, arguments)
+    }
   }
 }
 
@@ -17617,64 +17565,6 @@ function poll (
   }
 }
 
-function resolveAsyncComponents (matched) {
-  return flatMapComponents(matched, function (def, _, match, key) {
-    // if it's a function and doesn't have Vue options attached,
-    // assume it's an async component resolve function.
-    // we are not using Vue's default async resolving mechanism because
-    // we want to halt the navigation until the incoming component has been
-    // resolved.
-    if (typeof def === 'function' && !def.options) {
-      return function (to, from, next) {
-        var resolve = once(function (resolvedDef) {
-          match.components[key] = resolvedDef;
-          next();
-        });
-
-        var reject = once(function (reason) {
-          warn(false, ("Failed to resolve async component " + key + ": " + reason));
-          next(false);
-        });
-
-        var res = def(resolve, reject);
-        if (res && typeof res.then === 'function') {
-          res.then(resolve, reject);
-        }
-      }
-    }
-  })
-}
-
-function flatMapComponents (
-  matched,
-  fn
-) {
-  return flatten(matched.map(function (m) {
-    return Object.keys(m.components).map(function (key) { return fn(
-      m.components[key],
-      m.instances[key],
-      m, key
-    ); })
-  }))
-}
-
-function flatten (arr) {
-  return Array.prototype.concat.apply([], arr)
-}
-
-// in Webpack 2, require.ensure now also returns a Promise
-// so the resolve/reject functions may get called an extra time
-// if the user uses an arrow function shorthand that happens to
-// return that Promise.
-function once (fn) {
-  var called = false;
-  return function () {
-    if (called) { return }
-    called = true;
-    return fn.apply(this, arguments)
-  }
-}
-
 /*  */
 
 
@@ -17691,9 +17581,10 @@ var HTML5History = (function (History$$1) {
     }
 
     window.addEventListener('popstate', function (e) {
+      var current = this$1.current;
       this$1.transitionTo(getLocation(this$1.base), function (route) {
         if (expectScroll) {
-          handleScroll(router, route, this$1.current, true);
+          handleScroll(router, route, current, true);
         }
       });
     });
@@ -17710,9 +17601,11 @@ var HTML5History = (function (History$$1) {
   HTML5History.prototype.push = function push (location, onComplete, onAbort) {
     var this$1 = this;
 
+    var ref = this;
+    var fromRoute = ref.current;
     this.transitionTo(location, function (route) {
       pushState(cleanPath(this$1.base + route.fullPath));
-      handleScroll(this$1.router, route, this$1.current, false);
+      handleScroll(this$1.router, route, fromRoute, false);
       onComplete && onComplete(route);
     }, onAbort);
   };
@@ -17720,9 +17613,11 @@ var HTML5History = (function (History$$1) {
   HTML5History.prototype.replace = function replace (location, onComplete, onAbort) {
     var this$1 = this;
 
+    var ref = this;
+    var fromRoute = ref.current;
     this.transitionTo(location, function (route) {
       replaceState(cleanPath(this$1.base + route.fullPath));
-      handleScroll(this$1.router, route, this$1.current, false);
+      handleScroll(this$1.router, route, fromRoute, false);
       onComplete && onComplete(route);
     }, onAbort);
   };
@@ -17845,10 +17740,10 @@ function pushHash (path) {
 }
 
 function replaceHash (path) {
-  var i = window.location.href.indexOf('#');
-  window.location.replace(
-    window.location.href.slice(0, i >= 0 ? i : 0) + '#' + path
-  );
+  var href = window.location.href;
+  var i = href.indexOf('#');
+  var base = i >= 0 ? href.slice(0, i) : href;
+  window.location.replace((base + "#" + path));
 }
 
 /*  */
@@ -17919,11 +17814,12 @@ var VueRouter = function VueRouter (options) {
   this.apps = [];
   this.options = options;
   this.beforeHooks = [];
+  this.resolveHooks = [];
   this.afterHooks = [];
-  this.matcher = createMatcher(options.routes || []);
+  this.matcher = createMatcher(options.routes || [], this);
 
   var mode = options.mode || 'hash';
-  this.fallback = mode === 'history' && !supportsPushState;
+  this.fallback = mode === 'history' && !supportsPushState && options.fallback !== false;
   if (this.fallback) {
     mode = 'hash';
   }
@@ -18004,15 +17900,23 @@ VueRouter.prototype.init = function init (app /* Vue component instance */) {
 };
 
 VueRouter.prototype.beforeEach = function beforeEach (fn) {
-  this.beforeHooks.push(fn);
+  return registerHook(this.beforeHooks, fn)
+};
+
+VueRouter.prototype.beforeResolve = function beforeResolve (fn) {
+  return registerHook(this.resolveHooks, fn)
 };
 
 VueRouter.prototype.afterEach = function afterEach (fn) {
-  this.afterHooks.push(fn);
+  return registerHook(this.afterHooks, fn)
 };
 
-VueRouter.prototype.onReady = function onReady (cb) {
-  this.history.onReady(cb);
+VueRouter.prototype.onReady = function onReady (cb, errorCb) {
+  this.history.onReady(cb, errorCb);
+};
+
+VueRouter.prototype.onError = function onError (errorCb) {
+  this.history.onError(errorCb);
 };
 
 VueRouter.prototype.push = function push (location, onComplete, onAbort) {
@@ -18037,7 +17941,9 @@ VueRouter.prototype.forward = function forward () {
 
 VueRouter.prototype.getMatchedComponents = function getMatchedComponents (to) {
   var route = to
-    ? this.resolve(to).route
+    ? to.matched
+      ? to
+      : this.resolve(to).route
     : this.currentRoute;
   if (!route) {
     return []
@@ -18054,7 +17960,12 @@ VueRouter.prototype.resolve = function resolve (
   current,
   append
 ) {
-  var location = normalizeLocation(to, current || this.history.current, append);
+  var location = normalizeLocation(
+    to,
+    current || this.history.current,
+    append,
+    this
+  );
   var route = this.match(location, current);
   var fullPath = route.redirectedFrom || route.fullPath;
   var base = this.history.base;
@@ -18078,13 +17989,21 @@ VueRouter.prototype.addRoutes = function addRoutes (routes) {
 
 Object.defineProperties( VueRouter.prototype, prototypeAccessors );
 
+function registerHook (list, fn) {
+  list.push(fn);
+  return function () {
+    var i = list.indexOf(fn);
+    if (i > -1) { list.splice(i, 1); }
+  }
+}
+
 function createHref (base, fullPath, mode) {
   var path = mode === 'hash' ? '#' + fullPath : fullPath;
   return base ? cleanPath(base + '/' + path) : path
 }
 
 VueRouter.install = install;
-VueRouter.version = '2.2.1';
+VueRouter.version = '2.7.0';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -29726,7 +29645,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/partials/SiteSidebar.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteSidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteSidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -29780,7 +29699,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 var settle = __webpack_require__(297);
 var buildURL = __webpack_require__(299);
 var parseHeaders = __webpack_require__(300);
@@ -30391,7 +30310,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/dashboard/Basic.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Basic.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Basic.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -30615,7 +30534,7 @@ if(false) {
 /* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
@@ -43445,7 +43364,7 @@ if(false) {
 /* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
@@ -43561,7 +43480,7 @@ if(false) {
 /* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
@@ -43657,7 +43576,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('line-graph', {
     attrs: {
       "labels": ['Jan', 'Feb', 'Mar', 'June'],
@@ -43668,7 +43587,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_vm._m(2), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('bar-graph', {
     attrs: {
       "labels": ['Jan', 'Feb', 'Mar', 'June'],
@@ -43755,7 +43674,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-shopping-cart text-danger"
   }), _vm._v(" Recent Orders")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('table', {
     staticClass: "table"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Customer Name")]), _vm._v(" "), _c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Amount")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Walter White")]), _vm._v(" "), _c('td', [_vm._v("05/12/2016")]), _vm._v(" "), _c('td', [_vm._v("555$")]), _vm._v(" "), _c('td', [_c('a', {
@@ -43777,7 +43696,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-users text-info"
   }), _vm._v(" New Customers")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('table', {
     staticClass: "table"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Customer Name")]), _vm._v(" "), _c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Amount")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Walter White")]), _vm._v(" "), _c('td', [_vm._v("05/12/2016")]), _vm._v(" "), _c('td', [_vm._v("555$")]), _vm._v(" "), _c('td', [_c('a', {
@@ -43817,7 +43736,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/dashboard/Ecommerce.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Ecommerce.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Ecommerce.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44031,7 +43950,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('line-graph', {
     attrs: {
       "labels": ['Jan', 'Feb', 'Mar', 'June'],
@@ -44164,7 +44083,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-shopping-cart text-danger"
   }), _vm._v(" Pending Orders")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('table', {
     staticClass: "table"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Customer Name")]), _vm._v(" "), _c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Amount")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Walter White")]), _vm._v(" "), _c('td', [_vm._v("05/12/2016")]), _vm._v(" "), _c('td', [_vm._v("555$")]), _vm._v(" "), _c('td', [_c('a', {
@@ -44186,7 +44105,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-users text-info"
   }), _vm._v(" New Customers")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('table', {
     staticClass: "table"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Customer Name")]), _vm._v(" "), _c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Amount")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Walter White")]), _vm._v(" "), _c('td', [_vm._v("05/12/2016")]), _vm._v(" "), _c('td', [_vm._v("555$")]), _vm._v(" "), _c('td', [_c('a', {
@@ -44226,7 +44145,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/dashboard/Finance.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Finance.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Finance.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44449,7 +44368,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card with-tabs"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "tab-content"
   }, [_c('div', {
@@ -44492,7 +44411,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_vm._m(2), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('pie-graph', {
     attrs: {
       "labels": ['Revenue', 'Expense', 'Profit'],
@@ -44505,7 +44424,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_vm._m(3), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('bar-graph', {
     attrs: {
       "labels": ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -44713,7 +44632,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/LayoutBasic.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutBasic.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutBasic.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45434,7 +45353,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/LayoutHorizontal.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutHorizontal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutHorizontal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45519,7 +45438,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/partials/SiteHeaderBottom.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeaderBottom.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteHeaderBottom.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45721,7 +45640,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/LayoutIconSidebar.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutIconSidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutIconSidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45826,7 +45745,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/LayoutLogin.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutLogin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutLogin.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45946,7 +45865,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/layouts/LayoutFront.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutFront.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutFront.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46030,7 +45949,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/basic-ui/Buttons.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Buttons.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Buttons.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46520,7 +46439,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("General Buttons")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -46685,7 +46604,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Button Groups")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -47111,7 +47030,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Ladda Buttons")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block ladda-buttons-demo"
+    staticClass: "card-body ladda-buttons-demo"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -47251,7 +47170,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/basic-ui/Cards.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Cards.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Cards.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47306,7 +47225,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cards")])])]), _vm._v(" "), _c('div', {
     staticClass: "card"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('h4', [_vm._v("Basic Cards")]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -47314,7 +47233,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('h5', [_vm._v("Default Card")]), _vm._v(" "), _c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
@@ -47322,13 +47241,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h5', [_vm._v("Card with header")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
     staticClass: "card"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('h5', [_vm._v("Card with Footer")]), _vm._v(" "), _c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, molestias.")])]), _vm._v(" "), _c('div', {
     staticClass: "card-footer"
   }, [_vm._v("\n                            Card footer\n                        ")])])]), _vm._v(" "), _c('div', {
@@ -47340,7 +47259,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-star"
   }), _vm._v(" Card With Icon")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])])]), _vm._v(" "), _c('h4', {
     staticClass: "mt-4"
   }, [_vm._v("Card With Actions")]), _vm._v(" "), _c('div', {
@@ -47364,7 +47283,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fa fa-trash"
   }), _vm._v(" Delete")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero voluptatum!")])])]), _vm._v(" "), _c('div', {
     staticClass: "card"
   }, [_c('div', {
@@ -47403,7 +47322,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "href": "#"
     }
   }, [_vm._v("Delete")])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero voluptatum!")])])])])]), _vm._v(" "), _c('h4', {
     staticClass: "mt-4"
   }, [_vm._v("Colorful Header")]), _vm._v(" "), _c('div', {
@@ -47417,7 +47336,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-star"
   }), _vm._v(" Primary")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
@@ -47427,7 +47346,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-info"
   }), _vm._v(" Info")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
@@ -47437,7 +47356,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-ambulance"
   }), _vm._v(" Danger")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
@@ -47447,7 +47366,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-warning"
   }), _vm._v(" Warning")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
@@ -47457,7 +47376,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-check"
   }), _vm._v(" Success")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
   }, [_c('div', {
@@ -47467,7 +47386,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_c('i', {
     staticClass: "fa fa-cube"
   }), _vm._v(" Dark")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n                                Alias enim excepturi exercitationem ipsum labore provident quam ut velit vero\n                                voluptatum!")])])])])]), _vm._v(" "), _c('h4', {
     staticClass: "mt-4"
   }, [_vm._v("Background Inverse")]), _vm._v(" "), _c('div', {
@@ -47475,11 +47394,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "col-sm-6 col-lg-3"
   }, [_c('div', {
-    staticClass: "card card-inverse card-primary text-xs-center"
+    staticClass: "card text-white bg-primary text-xs-center"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('blockquote', {
-    staticClass: "card-blockquote"
+    staticClass: "card-bodyquote"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a\n                                    ante.")]), _vm._v(" "), _c('footer', [_vm._v("Someone famous in "), _c('cite', {
     attrs: {
       "title": "Source Title"
@@ -47487,11 +47406,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Source Title")])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6 col-lg-3"
   }, [_c('div', {
-    staticClass: "card card-inverse card-success text-xs-center"
+    staticClass: "card text-white bg-success text-xs-center"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('blockquote', {
-    staticClass: "card-blockquote"
+    staticClass: "card-bodyquote"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a\n                                    ante.")]), _vm._v(" "), _c('footer', [_vm._v("Someone famous in "), _c('cite', {
     attrs: {
       "title": "Source Title"
@@ -47499,11 +47418,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Source Title")])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6 col-lg-3"
   }, [_c('div', {
-    staticClass: "card card-inverse card-info text-xs-center"
+    staticClass: "card text-white bg-info text-xs-center"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('blockquote', {
-    staticClass: "card-blockquote"
+    staticClass: "card-bodyquote"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a\n                                    ante.")]), _vm._v(" "), _c('footer', [_vm._v("Someone famous in "), _c('cite', {
     attrs: {
       "title": "Source Title"
@@ -47511,11 +47430,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Source Title")])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6 col-lg-3"
   }, [_c('div', {
-    staticClass: "card card-inverse card-warning text-xs-center"
+    staticClass: "card text-white bg-warning text-xs-center"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('blockquote', {
-    staticClass: "card-blockquote"
+    staticClass: "card-bodyquote"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a\n                                    ante.")]), _vm._v(" "), _c('footer', [_vm._v("Someone famous in "), _c('cite', {
     attrs: {
       "title": "Source Title"
@@ -47523,11 +47442,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Source Title")])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6 col-lg-3"
   }, [_c('div', {
-    staticClass: "card card-inverse card-danger text-xs-center"
+    staticClass: "card text-white bg-danger text-xs-center"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('blockquote', {
-    staticClass: "card-blockquote"
+    staticClass: "card-bodyquote"
   }, [_c('p', [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a\n                                    ante.")]), _vm._v(" "), _c('footer', [_vm._v("Someone famous in "), _c('cite', {
     attrs: {
       "title": "Source Title"
@@ -47559,7 +47478,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/basic-ui/Tabs.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tabs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tabs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47616,7 +47535,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Tabs Default")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -47918,7 +47837,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Tabs Simple")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -48181,7 +48100,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/basic-ui/Typography.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Typography.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Typography.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -48242,7 +48161,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Headings")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block buttons-demo"
+    staticClass: "card-body buttons-demo"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -48272,7 +48191,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Other")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -48356,7 +48275,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/basic-ui/Tables.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tables.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tables.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -48411,7 +48330,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Tables")])])]), _vm._v(" "), _c('div', {
     staticClass: "card"
   }, [_c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -48559,7 +48478,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/components/Datatables.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Datatables.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Datatables.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -49632,7 +49551,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Default")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered",
     attrs: {
@@ -49645,7 +49564,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Responsive")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered",
     attrs: {
@@ -49680,7 +49599,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/components/Notifications.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Notifications.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Notifications.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -49849,43 +49768,88 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     message = $(this).data('message'),
                     title = $(this).data('title');
 
+                console.log(message);
                 switch (type) {
                     case 'success':
-                        notie.alert(1, message); // Never hides unless clicked, or escape or enter is pressed
+                        notie.alert({ type: 1, text: 'Success!' });
                         break;
                     case 'warning':
-                        notie.alert(2, message);
-                        break;
-                    case 'info':
-                        notie.alert(4, message);
+                        notie.alert({ type: 2, text: 'Warning!' });
                         break;
                     case 'error':
-                        notie.alert(3, message);
+                        notie.alert({ type: 3, text: 'Error!' });
+                        break;
+                    case 'info':
+                        notie.alert({ type: 4, text: 'Info!' });
                         break;
                     case 'confirm':
-                        notie.confirm('Are you sure you want to do that?', 'Yes', 'Cancel', function () {
-                            notie.alert(1, 'Good choice!', 2);
+                        notie.confirm({
+                            text: 'Are you sure you want to do that?<br><b>That\'s a bold move...</b>',
+                            cancelCallback: function cancelCallback() {
+                                notie.alert({ type: 3, text: 'Aw, why not? :(', time: 2 });
+                            },
+                            submitCallback: function submitCallback() {
+                                notie.alert({ type: 1, text: 'Good choice! :D', time: 2 });
+                            }
                         });
                         break;
                     case 'input':
                         notie.input({
-                            type: 'password',
-                            placeholder: 'Enter your password'
-                        }, 'Please enter your password:', 'Submit', 'Cancel', function (valueEntered) {
-                            notie.alert(1, 'You entered: ' + valueEntered, 2);
-                        }, function (valueEntered) {
-                            notie.alert(3, 'You cancelled with this value: ' + valueEntered, 2);
+                            text: 'Please enter your email:',
+                            submitText: 'Submit',
+                            cancelText: 'Cancel',
+                            cancelCallback: function cancelCallback(value) {
+                                notie.alert({ type: 3, text: 'You cancelled with this value: ' + value });
+                            },
+                            submitCallback: function submitCallback(value) {
+                                notie.alert({ type: 1, text: 'You entered: ' + value });
+                            },
+                            value: 'jane@doe.com',
+                            type: 'email',
+                            placeholder: 'name@example.com'
                         });
                         break;
                     case 'select':
-                        notie.select('Demo item #1, owner is Jane Smith', [{ title: 'Share' }, { title: 'Open', color: '#57BF57' }, { title: 'Edit', type: 2 }, { title: 'Delete', type: 3 }], function () {
-                            notie.alert(1, 'Share item!', 3);
-                        }, function () {
-                            notie.alert(1, 'Open item!', 3);
-                        }, function () {
-                            notie.alert(2, 'Edit item!', 3);
-                        }, function () {
-                            notie.alert(3, 'Delete item!', 3);
+                        notie.select({
+                            text: 'Demo item #1, owner is Jane Smith',
+                            cancelText: 'Close',
+                            cancelCallback: function cancelCallback() {
+                                notie.alert({ type: 5, text: 'Cancel!' });
+                            },
+                            choices: [{
+                                text: 'Share',
+                                handler: function handler() {
+                                    notie.alert({ type: 1, text: 'Share item!' });
+                                }
+                            }, {
+                                text: 'Open',
+                                handler: function handler() {
+                                    notie.alert({ type: 1, text: 'Open item!' });
+                                }
+                            }, {
+                                type: 2,
+                                text: 'Edit',
+                                handler: function handler() {
+                                    notie.alert({ type: 2, text: 'Edit item!' });
+                                }
+                            }, {
+                                type: 3,
+                                text: 'Delete',
+                                handler: function handler() {
+                                    notie.alert({ type: 3, text: 'Delete item!' });
+                                }
+                            }]
+                        });
+                        break;
+                    case 'date':
+                        notie.date({
+                            value: new Date(2015, 8, 27),
+                            cancelCallback: function cancelCallback(date) {
+                                notie.alert({ type: 3, text: 'You cancelled: ' + date.toISOString() });
+                            },
+                            submitCallback: function submitCallback(date) {
+                                notie.alert({ type: 1, text: 'You selected: ' + date.toISOString() });
+                            }
                         });
                         break;
 
@@ -49940,7 +49904,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Toastr")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block buttons-demo"
+    staticClass: "card-body buttons-demo"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -49982,7 +49946,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Notie.js")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -50035,7 +49999,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Easy Flash Notifications")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -50067,7 +50031,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/components/Graphs.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Graphs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Graphs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50209,7 +50173,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/components/DoughnutGraph.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\DoughnutGraph.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] DoughnutGraph.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50262,7 +50226,7 @@ if(false) {
 /* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
@@ -50355,7 +50319,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "mb-4"
   }, [_c('h5', {
@@ -50451,7 +50415,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/forms/General.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\General.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] General.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50512,13 +50476,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Basic Inputs")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('h5', {
     staticClass: "section-semi-title"
   }, [_vm._v("Horizontal")]), _vm._v(" "), _c('form', [_c('div', {
     staticClass: "form-group row"
   }, [_c('label', {
-    staticClass: "col-sm-2 form-control-label",
+    staticClass: "col-sm-2 col-form-label",
     attrs: {
       "for": "inputEmail3"
     }
@@ -50534,7 +50498,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('div', {
     staticClass: "form-group row"
   }, [_c('label', {
-    staticClass: "col-sm-2 form-control-label",
+    staticClass: "col-sm-2 col-form-label",
     attrs: {
       "for": "inputPassword3"
     }
@@ -50549,149 +50513,173 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])])]), _vm._v(" "), _c('h5', {
     staticClass: "section-semi-title mt-4"
-  }, [_vm._v("Vertical")]), _vm._v(" "), _c('form', [_c('fieldset', {
+  }, [_vm._v("Vertical")]), _vm._v(" "), _c('form', [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "exampleInputEmail1"
+      "for": "exampleFormControlInput1"
     }
   }, [_vm._v("Email address")]), _vm._v(" "), _c('input', {
     staticClass: "form-control",
     attrs: {
       "type": "email",
-      "id": "exampleInputEmail1",
-      "placeholder": "Enter email"
+      "id": "exampleFormControlInput1",
+      "placeholder": "Enter Email"
     }
-  }), _vm._v(" "), _c('small', {
-    staticClass: "text-muted"
-  }, [_vm._v("We'll never share your email with anyone else.")])]), _vm._v(" "), _c('fieldset', {
+  })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "exampleInputPassword1"
-    }
-  }, [_vm._v("Password")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "password",
-      "id": "exampleInputPassword1",
-      "placeholder": "Password"
-    }
-  })]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "exampleSelect1"
+      "for": "exampleFormControlSelect1"
     }
   }, [_vm._v("Example select")]), _vm._v(" "), _c('select', {
     staticClass: "form-control",
     attrs: {
-      "id": "exampleSelect1"
+      "id": "exampleFormControlSelect1"
     }
-  }, [_c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")]), _vm._v(" "), _c('option', [_vm._v("5")])])]), _vm._v(" "), _c('fieldset', {
+  }, [_c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")]), _vm._v(" "), _c('option', [_vm._v("5")])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "exampleSelect2"
+      "for": "exampleFormControlSelect2"
     }
   }, [_vm._v("Example multiple select")]), _vm._v(" "), _c('select', {
     staticClass: "form-control",
     attrs: {
       "multiple": "",
-      "id": "exampleSelect2"
+      "id": "exampleFormControlSelect2"
     }
-  }, [_c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")]), _vm._v(" "), _c('option', [_vm._v("5")])])]), _vm._v(" "), _c('fieldset', {
+  }, [_c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")]), _vm._v(" "), _c('option', [_vm._v("5")])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "exampleTextarea"
+      "for": "exampleFormControlTextarea1"
     }
   }, [_vm._v("Example textarea")]), _vm._v(" "), _c('textarea', {
     staticClass: "form-control",
     attrs: {
-      "id": "exampleTextarea",
+      "id": "exampleFormControlTextarea1",
       "rows": "3"
     }
-  })]), _vm._v(" "), _c('fieldset', {
+  })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "exampleInputFile"
+      "for": "exampleFormControlFile1"
     }
-  }, [_vm._v("File input")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Example file input")]), _vm._v(" "), _c('input', {
     staticClass: "form-control-file",
     attrs: {
       "type": "file",
-      "id": "exampleInputFile"
+      "id": "exampleFormControlFile1"
     }
   }), _vm._v(" "), _c('small', {
     staticClass: "text-muted"
   }, [_vm._v("This is some placeholder block-level help text for the above\n                                input. It's a bit lighter and easily wraps to a new line.\n                            ")])])]), _vm._v(" "), _c('h5', {
     staticClass: "section-semi-title mt-4"
-  }, [_vm._v("\n                        Validation States\n                    ")]), _vm._v(" "), _c('form', [_c('div', {
-    staticClass: "form-group has-success"
+  }, [_vm._v("\n                        Validation States\n                    ")]), _vm._v(" "), _c('form', {
+    staticClass: "was-validated"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 mb-3"
   }, [_c('label', {
-    staticClass: "form-control-label",
     attrs: {
-      "for": "inputSuccess1"
+      "for": "validationDefault01"
     }
-  }, [_vm._v("Input with success")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control form-control-success",
+  }, [_vm._v("First name")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
     attrs: {
       "type": "text",
-      "id": "inputSuccess1"
+      "id": "validationDefault01",
+      "placeholder": "First name",
+      "value": "Mark",
+      "required": ""
     }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group has-warning"
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 mb-3"
   }, [_c('label', {
-    staticClass: "form-control-label",
     attrs: {
-      "for": "inputWarning1"
+      "for": "validationDefault03"
     }
-  }, [_vm._v("Input with warning")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control form-control-warning",
+  }, [_vm._v("Last name")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
     attrs: {
       "type": "text",
-      "id": "inputWarning1"
+      "id": "validationDefault03",
+      "placeholder": "Last name",
+      "required": ""
     }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group has-danger"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "invalid-feedback"
+  }, [_vm._v("\n                                    Please provide Last name.\n                                ")])])])]), _vm._v(" "), _c('form', {
+    staticClass: "was-validated"
   }, [_c('label', {
-    staticClass: "form-control-label",
-    attrs: {
-      "for": "inputDanger1"
-    }
-  }, [_vm._v("Input with danger")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control form-control-danger",
-    attrs: {
-      "type": "text",
-      "id": "inputDanger1"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "checkbox has-success"
-  }, [_c('label', [_c('input', {
+    staticClass: "custom-control custom-checkbox"
+  }, [_c('input', {
+    staticClass: "custom-control-input",
     attrs: {
       "type": "checkbox",
-      "id": "checkboxSuccess",
-      "value": "option1"
+      "required": ""
     }
-  }), _vm._v("\n                                Checkbox with success\n                            ")])]), _vm._v(" "), _c('div', {
-    staticClass: "checkbox has-warning"
-  }, [_c('label', [_c('input', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "custom-control-indicator"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "custom-control-description"
+  }, [_vm._v("Check this custom checkbox")])]), _vm._v(" "), _c('div', {
+    staticClass: "custom-controls-stacked d-block my-3"
+  }, [_c('label', {
+    staticClass: "custom-control custom-radio"
+  }, [_c('input', {
+    staticClass: "custom-control-input",
     attrs: {
-      "type": "checkbox",
-      "id": "checkboxWarning",
-      "value": "option1"
+      "id": "radioStacked1",
+      "name": "radio-stacked",
+      "type": "radio",
+      "required": ""
     }
-  }), _vm._v("\n                                Checkbox with warning\n                            ")])]), _vm._v(" "), _c('div', {
-    staticClass: "checkbox has-danger"
-  }, [_c('label', [_c('input', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "custom-control-indicator"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "custom-control-description"
+  }, [_vm._v("Toggle this custom radio")])]), _vm._v(" "), _c('label', {
+    staticClass: "custom-control custom-radio"
+  }, [_c('input', {
+    staticClass: "custom-control-input",
     attrs: {
-      "type": "checkbox",
-      "id": "checkboxDanger",
-      "value": "option1"
+      "id": "radioStacked2",
+      "name": "radio-stacked",
+      "type": "radio",
+      "required": ""
     }
-  }), _vm._v("\n                                Checkbox with danger\n                            ")])])]), _vm._v(" "), _c('h5', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "custom-control-indicator"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "custom-control-description"
+  }, [_vm._v("Or toggle this other custom radio")])])]), _vm._v(" "), _c('select', {
+    staticClass: "custom-select d-block my-3",
+    attrs: {
+      "required": ""
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Open this select menu")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v("One")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "2"
+    }
+  }, [_vm._v("Two")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "3"
+    }
+  }, [_vm._v("Three")])])]), _vm._v(" "), _c('h5', {
     staticClass: "section-semi-title mt-4"
   }, [_vm._v("\n                        Static Controls\n                    ")]), _vm._v(" "), _c('form', [_c('div', {
     staticClass: "form-group row"
@@ -50700,7 +50688,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Email")]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-10"
   }, [_c('p', {
-    staticClass: "form-control-static"
+    staticClass: "form-control-plaintext"
   }, [_vm._v("mohit@laraspace.in")])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group row"
   }, [_c('label', {
@@ -50708,7 +50696,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("username")]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-10"
   }, [_c('p', {
-    staticClass: "form-control-static"
+    staticClass: "form-control-plaintext"
   }, [_vm._v("laraspace")])])])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -50718,7 +50706,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Checkbox & Radios")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -50861,7 +50849,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/forms/Advanced.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Advanced.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Advanced.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51450,7 +51438,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -51759,7 +51747,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -51868,7 +51856,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -52186,7 +52174,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -52279,7 +52267,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -52337,7 +52325,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -52400,7 +52388,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -52486,7 +52474,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/forms/FormLayouts.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormLayouts.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FormLayouts.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -52547,7 +52535,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Basic Form")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('form', [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -52618,7 +52606,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Horizontal Form")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('form', [_c('div', {
     staticClass: "form-group row"
   }, [_c('label', {
@@ -52678,7 +52666,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Inline Form")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('form', {
     staticClass: "form-inline"
   }, [_c('div', {
@@ -52741,7 +52729,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/forms/FormValidation.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormValidation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FormValidation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -52924,7 +52912,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('form', {
     attrs: {
       "id": "validateForm"
@@ -53005,7 +52993,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/forms/Editors.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Editors.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Editors.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53125,7 +53113,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Summernote")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "ls-summernote"
   }, [_vm._v("\n                    Hello Summernote\n                ")])])]), _vm._v(" "), _c('div', {
@@ -53133,7 +53121,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Simple MDE")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('textarea', {
     staticClass: "ls-simplemde"
   }, [_vm._v("# Intro\nGo ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](http://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like `cmd-b` or `ctrl-b`.\n\n## Lists\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Lists are a piece of cake\n* They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!\n\n## What about images?\n![Yes](http://i.imgur.com/sZlktY7.png)\n                ")])])])])
@@ -53163,7 +53151,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/forms/VeeValidate.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\VeeValidate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] VeeValidate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53308,7 +53296,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "card"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('div', {
     class: {
       'form-group': true, 'has-danger': _vm.errors.has('name')
@@ -53392,7 +53380,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.errors.first('email')) + "\n                ")])])])]), _vm._v(" "), _c('div', {
     staticClass: "card"
   }, [_vm._m(2), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('form', {
     on: {
       "submit": _vm.validateBeforeSubmit
@@ -53600,7 +53588,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/admin/Settings.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\Settings.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Settings.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53655,7 +53643,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Easy Site Settings API")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('p', [_vm._v("Laraspace provides easy way to store and retrieve your Site Settings")]), _vm._v(" "), _c('p', [_c('code', [_vm._v("Setting::setSetting('key','value')")])]), _vm._v(" "), _c('p', [_c('code', [_vm._v("Setting::getSetting('key')")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -53665,7 +53653,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-header"
   }, [_c('h6', [_vm._v("Example Social Settings")])]), _vm._v(" "), _c('div', {
-    staticClass: "card-block"
+    staticClass: "card-body"
   }, [_c('form', {
     attrs: {
       "action": "/admin/settings/social",
@@ -53756,7 +53744,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/auth/Login.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53999,7 +53987,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/auth/Register.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Register.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Register.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54096,7 +54084,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/errors/404.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\errors\\404.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] 404.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54198,7 +54186,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/bytefury/Project/web/laraspace-vue/resources/assets/js/views/front/Home.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\front\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54280,7 +54268,7 @@ window.Vue = __webpack_require__(14);
 window.axios = __webpack_require__(136);
 
 window.axios.defaults.headers.common = {
-  'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest'
 };
 
 /**
@@ -54288,17 +54276,17 @@ window.axios.defaults.headers.common = {
  */
 
 axios.interceptors.request.use(function (config) {
-  // Do something before request is sent
-  var AUTH_TOKEN = __WEBPACK_IMPORTED_MODULE_3__services_ls__["a" /* default */].get('auth.token');
+    // Do something before request is sent
+    var AUTH_TOKEN = __WEBPACK_IMPORTED_MODULE_3__services_ls__["a" /* default */].get('auth.token');
 
-  if (AUTH_TOKEN) {
-    config.headers.common['Authorization'] = 'Bearer ' + AUTH_TOKEN;
-  }
+    if (AUTH_TOKEN) {
+        config.headers.common['Authorization'] = 'Bearer ' + AUTH_TOKEN;
+    }
 
-  return config;
+    return config;
 }, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
+    // Do something with request error
+    return Promise.reject(error);
 });
 
 /**
@@ -57900,7 +57888,7 @@ return index;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 var bind = __webpack_require__(137);
 var Axios = __webpack_require__(294);
 var defaults = __webpack_require__(13);
@@ -57987,7 +57975,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(13);
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 var InterceptorManager = __webpack_require__(304);
 var dispatchRequest = __webpack_require__(305);
 var isAbsoluteURL = __webpack_require__(307);
@@ -58265,7 +58253,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -58345,7 +58333,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -58420,7 +58408,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 /**
  * Parse headers into an object
@@ -58464,7 +58452,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -58582,7 +58570,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -58642,7 +58630,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -58701,7 +58689,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 var transformData = __webpack_require__(306);
 var isCancel = __webpack_require__(140);
 var defaults = __webpack_require__(13);
@@ -58787,7 +58775,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(321);
 
 /**
  * Transform the data for a request or a response
@@ -76040,6 +76028,323 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(137);
+var isBuffer = __webpack_require__(293);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object' && !isArray(obj)) {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
 
 /***/ })
 /******/ ]);

@@ -52,7 +52,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-line-chart text-warning"></i> Traffic Stats</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <line-graph :labels="['Jan','Feb','Mar','June']" :values="[20,30,40,60]"></line-graph>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-bar-chart text-success"></i> Sales Chart</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <bar-graph :labels="['Jan','Feb','Mar','June']" :values="[20,30,40,60]"></bar-graph>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-shopping-cart text-danger"></i> Recent Orders</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
@@ -107,7 +107,7 @@
                     <div class="card-header">
                         <h6><i class="fa fa-users text-info"></i> New Customers</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>

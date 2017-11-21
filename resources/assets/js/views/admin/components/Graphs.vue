@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h6>Chartjs</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Line Chart

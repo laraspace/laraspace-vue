@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h6>General Buttons</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -167,7 +167,7 @@
                     <div class="card-header">
                         <h6>Button Groups</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
                                 <h5 class="section-semi-title">Variations</h5>
@@ -338,7 +338,7 @@
                     <div class="card-header">
                         <h6>Ladda Buttons</h6>
                     </div>
-                    <div class="card-block ladda-buttons-demo">
+                    <div class="card-body ladda-buttons-demo">
                         <div class="row">
                             <div class="col-sm-6">
                                 <h5 class="section-semi-title">Expand</h5>

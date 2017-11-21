@@ -11,7 +11,7 @@
             <div class="card-header">
                 <h6>Easy Site Settings API</h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <p>Laraspace provides easy way to store and retrieve your Site Settings</p>
                 <p><code>Setting::setSetting('key','value')</code></p>
                 <p><code>Setting::getSetting('key')</code></p>
@@ -23,7 +23,7 @@
                     <div class="card-header">
                         <h6>Example Social Settings</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <form action="/admin/settings/social" method="post">
                             <div class="form-body">
                                 <div class="form-group row">
