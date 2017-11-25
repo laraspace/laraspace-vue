@@ -32,6 +32,11 @@ import Tables from './views/admin/basic-ui/Tables.vue'
 import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import Graphs from './views/admin/components/Graphs.vue'
+import ImageCropper from './views/admin/components/ImageCropper.vue'
+import ImageZoom from './views/admin/components/ImageZoom.vue'
+import Calendar from './views/admin/components/Calendar.vue'
+import NestableTree from './views/admin/components/NestableTree.vue'
+import NestableList from './views/admin/components/NestableList.vue'
 
 //Forms
 import General from './views/admin/forms/General.vue'
@@ -64,7 +69,7 @@ import NotFoundPage from './views/errors/404.vue'
 
 import Home from './views/front/Home.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     
@@ -178,6 +183,26 @@ const routes = [
             {
                 path: 'components/graphs',
                 component: Graphs
+            },
+            {
+                path: 'components/image-cropper',
+                component: ImageCropper
+            },
+            {
+                path: 'components/image-zoom',
+                component: ImageZoom
+            },
+            {
+                path: 'components/calendar',
+                component: Calendar
+            },
+            {
+                path: 'components/nestable-tree',
+                component: NestableTree
+            },
+            {
+                path: 'components/nestable-list',
+                component: NestableList
             },
 
             //Forms
