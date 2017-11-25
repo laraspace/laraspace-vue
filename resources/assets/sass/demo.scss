@@ -1,93 +1,250 @@
 // demo.scss - Styles for Preview pages
 
-.buttons-demo {
-    .btn {
-        margin-bottom: 10px;
+// Image Zoom
+// -------------------------
+
+.image-zoom-demo {
+  text-align: justify;
+
+  .img-left {
+    float: left;
+    width: 20%;
+    margin: 20px 20px 20px 0;
+  }
+
+  .img-right {
+    float: right;
+    width: 20%;
+    margin: 0 20px 20px 20px;
+  }
+
+}
+
+
+// Icons
+// -------------------------
+
+.icon-container {
+
+  .demo-icon {
+
+    .icon-classname {
+      margin-left: 20px;
     }
 
-    .btn-group-vertical .btn {
-        margin-bottom: 0;
+    .icon-box {
+      height: 50px;
+      width: 50px;
+      padding: 10px;
+      border-radius: 3px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 2px solid #FFEB3B;
+
+      &:hover {
+        background-color: #FFEB3B;
+      }
     }
+
+  }
+
+}
+
+@mixin n-columns($min-width, $gutter, $last-equal: false, $max-cols: 5) {
+
+  .icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -$gutter;
+    margin-top: -$gutter;
+
+    .demo-icon {
+      flex: 1 0 $min-width;
+      margin-left: $gutter;
+      margin-top: $gutter;
+      margin-bottom: $gutter;
+      align-items: center;
+
+      @if $last-equal {
+        @for $i from 2 through $max-cols {
+          $screen-width: ($min-width*$i)+($gutter*$i);
+          $column-width: (100%/$i);
+          @media (min-width: $screen-width) {
+            max-width: calc(#{$column-width} - #{$gutter});
+          }
+        }
+
+        $column-width: (100%/$max-cols);
+        @media (min-width: $min-width*$max-cols) {
+          min-width: calc(#{$column-width} - #{$gutter});
+        }
+      }
+    }
+  }
+
+}
+
+@include n-columns(350px, 20px, true, 5);
+
+.icon-container {
+
+  .demo-icon {
+    display: flex;
+    flex-direction: row;
+  }
+
+  svg {
+    display: block;
+  }
+
+}
+
+// Buttons
+// -------------------------
+
+.buttons-demo {
+  .btn {
+    margin-bottom: 10px;
+  }
+
+  .btn-group-vertical .btn {
+    margin-bottom: 0;
+  }
 }
 
 .btn-group-vertical {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .source-link {
-    font-size: 0.9rem;
-    color: $ls-color-gray--very-dark;
+  font-size: 0.9rem;
+  color: $ls-color-gray--very-dark;
 }
 
-// SKINS DEMO
+// Basic UI
+// -------------------------
+
+.progress {
+  margin-top: 20px;
+}
+
+//Tooltips
+.tooltips-demo{
+  .btn{
+    margin-bottom: 10px;
+  }
+  .static-tooltips-demo{
+    .tooltip{
+      position: relative;
+      opacity: 1;
+      display: inline-block;
+      margin: 10px 0;
+
+      &.bs-tooltip-top .arrow,&.bs-tooltip-bottom .arrow{
+        left: 40%;
+      }
+      &.bs-tooltip-right .arrow,&.bs-tooltip-left .arrow{
+        top: 40%;
+      }
+    }
+  }
+}
+
+// Skin Tools
+// -------------------------
+
 .skin-tools {
-    position: fixed;
-    top: 96px;
-    right: -400px;
-    z-index: 900;
-    width: 400px;
-    transition: all .3s;
+  position: fixed;
+  top: 200px;
+  right: -400px;
+  z-index: 900;
+  width: 400px;
+  transition: all .3s;
 
-    .skin-tools-action {
-        position: absolute;
-        top: 1px;
-        left: -48px;
-        padding: 8px 16px;
-        font-size: 20px;
-        cursor: pointer;
-        background-color: $white;
-        color: $ls-color-black;
-        box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.15);
-        border-left: 1px solid rgba(222, 227, 231, 0.56);
-        border-bottom-left-radius: 4px;
-        border-top-left-radius: 4px;
-    }
+  .skin-tools-action {
+    position: absolute;
+    top: 1px;
+    left: -48px;
+    padding: 8px 16px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: $white;
+    color: $ls-color-black;
+    box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.15);
+    border-left: 1px solid rgba(222, 227, 231, 0.56);
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+  }
 
-    .skin-tools-content {
-        height: 100%;
-        min-height: 100px;
-        padding: 5px 20px 20px;
-        background-color: $white;
-        color: $ls-color-black;
-        border: 1px solid rgba(0, 0, 0, .08);
-        border-radius: 0 3px 3px;
-    }
+  .skin-tools-content {
+    height: 100%;
+    min-height: 100px;
+    padding: 5px 20px 20px;
+    background-color: $white;
+    color: $ls-color-black;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 0 3px 3px;
+  }
 
-    h5 {
-        margin-bottom: 10px;
-        color: $ls-color-black;
-    }
+  h5 {
+    margin-bottom: 10px;
+    color: $ls-color-black;
+  }
 
-    .skin-radio.active::after {
-        background-image: url('/assets/img/skins/tick.png');
-        background-size: 100% auto;
-        width: 20px;
-        height: 20px;
-        content: '';
-        position: absolute;
-        top: -6px;
-        right: 6px;
-        z-index: 10;
-    }
+  .skin-radio.active::after {
+    background-image: url('/assets/admin/img/skins/tick.png');
+    background-size: 100% auto;
+    width: 20px;
+    height: 20px;
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 6px;
+    z-index: 10;
+  }
 
-    .skin-radio.active img {
-        opacity: 1;
-    }
+  .skin-radio.active img {
+    opacity: 1;
+  }
 
-    .skin-radio img {
-        opacity: 0.5;
-    }
+  .skin-radio img {
+    opacity: 0.5;
+  }
 
-    &.is-open {
-        right: 0;
-    }
-
+  &.is-open {
+    right: 0;
+  }
 }
 
-@include media-breakpoint-down(sm) {
+@media (max-width: $x-small-breakpoint) {
 
-    .skin-tools {
-        right: -250px;
-        width: 250px;
+  .skin-tools {
+    top: 100px;
+    right: -250px;
+    width: 250px;
+
+    .skin-item {
+      margin-bottom: .5rem;
     }
+  }
+}
+
+@media (max-width: $small-breakpoint) {
+
+  .skin-tools {
+    top: 100px;
+    right: -250px;
+    width: 250px;
+
+    .skin-item {
+      margin-bottom: 1rem;
+    }
+
+    .skin-item:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

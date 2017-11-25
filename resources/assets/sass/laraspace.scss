@@ -1,67 +1,111 @@
-// Laraspace.scss - Bootstraps all the sass files into one
+// Variables
+//----------------------------------
 
 @import 'variables';
 
-// Plugins
-@import '../plugins/bootstrap/scss/bootstrap';
-@import '../plugins/fontawesome/font-awesome';
-@import '../plugins/ladda/ladda.scss';
-@import '../plugins/customScrollBar/customScrollBar.scss';
-@import '../plugins/toastr/toastr.scss';
-@import '../plugins/notie/notie.scss';
-@import "../plugins/switchery/switchery.scss";
-@import "../plugins/select2/select2.scss";
-@import "../plugins/select2/select2-bootstrap.scss";
-@import "../plugins/bootstrapSelect/bootstrap-select.scss";
-@import "../plugins/clockpicker/clockpicker.scss";
-@import "../plugins/datatables/datatables.scss";
-@import "../plugins/multiselect/multiselect.scss";
-@import "../plugins/bootstrap-datepicker/bootstrap-datepicker.scss";
-@import "../plugins/timepicker/timepicker";
-@import "../plugins/summernote/summernote.scss";
-@import "../plugins/simplemde/simplemde.scss";
-@import "../plugins/pace/pace.scss";
-@import "../plugins/alertify/alertify.scss";
-@import "../plugins/easypiecharts/easypiecharts.scss";
-@import "../plugins/metisMenu/metisMenu.scss";
 
-// Option Skin.
+// Plugins
+//----------------------------------
+
+@import '../../plugins/bootstrap/scss/bootstrap';
+@import '../../plugins/fontawesome/font-awesome';
+@import '../../plugins/ladda/ladda.scss';
+@import '../../plugins/customScrollBar/customScrollBar.scss';
+@import '../../plugins/toastr/toastr.scss';
+@import '../../plugins/notie/notie.scss';
+@import "../../plugins/switchery/switchery.scss";
+@import "../../plugins/select2/select2.scss";
+@import "../../plugins/select2/select2-bootstrap.scss";
+@import "../../plugins/clockpicker/clockpicker.scss";
+@import "../../plugins/datatables/dataTables.bootstrap4";
+@import "../../plugins/multiselect/multiselect.scss";
+@import "../../plugins/bootstrap-datepicker/bootstrap-datepicker.scss";
+@import "../../plugins/timepicker/timepicker";
+@import "../../plugins/summernote/summernote.scss";
+@import "../../plugins/simplemde/simplemde.scss";
+@import "../../plugins/pace/pace.scss";
+@import "../../plugins/alertify/alertify.scss";
+@import "../../plugins/easypiecharts/easypiecharts.scss";
+@import "../../plugins/metisMenu/metisMenu.scss";
+@import "../../plugins/nestable/nestable.scss";
+@import "../../plugins/jstree/jstree.min.scss";
+@import "../../plugins/ace-editor/twilight.scss";
+@import "../../plugins/icons/icons.scss";
+@import "../../plugins/calendar/fullcalendar.scss";
+@import "../../plugins/form-wizard/wizard.scss";
+@import "../../plugins/imageCropper/cropper.scss";
+@import "../../plugins/gallery/image/photoswipe.scss";
+@import "../../plugins/gallery/image/default-skin.scss";
+@import "../../plugins/zoom/zoom.scss";
+@import "../../plugins/bar-rating/bar-rating.scss";
+@import "../../plugins/rating/jquery.raty.scss";
+@import "../../plugins/charts/amcharts/export.scss";
+@import "../../plugins/charts/morris/morris.scss";
+@import "../../plugins/prism/prism.scss";
+
+
+// Skins
+//----------------------------------
+
 @import 'skins/skin-tyrell';
 @import 'skins/skin-arryn';
 @import 'skins/skin-targaryen';
 @import 'skins/skin-lannister';
 @import 'skins/skin-stark';
 
-// Content Styles
+
+// Site Base
+//----------------------------------
+
 @import 'base';
 
+
 // Layouts
+//----------------------------------
+
 @import 'layouts/layout';
 @import "layouts/layout-icon-sidebar";
 @import "layouts/layout-horizontal";
 
-//Partials
+
+// Partials
+//----------------------------------
+
 @import 'partials/header';
 @import 'partials/sidebar';
 @import 'partials/footer';
 
+
 // Components
+//----------------------------------
+
 @import 'components/forms';
 @import 'components/buttons';
 @import 'components/cards';
 @import 'components/tabs';
 @import 'components/tables';
+@import "components/modals";
 @import 'components/hamburgers';
 @import "components/transitions";
+@import "components/form-wizards";
+@import "components/charts";
+@import "components/gallery";
+@import "components/calendar";
+@import "components/ratings";
+@import "components/image-cropper";
 
-//Pages
+
+// Pages
+//----------------------------------
+
 @import 'pages/dashboard';
 @import 'pages/login';
+@import "pages/login-1";
+@import 'pages/login-2';
+@import 'pages/login-3';
 @import 'pages/user-profile';
 @import 'pages/404';
+@import 'pages/settings';
 
-//Front
-@import "front";
 
 @import "demo";
-
