@@ -3274,7 +3274,7 @@
          *
          * - Binds mousewheel event for paning zoomed image.
          * - Manages "dragging", "zoomed-in", "zoom-out" classes.
-         *   (which are used for cursors and zoom icon)
+         *   (which are used for cursors and zoom icons)
          * - Adds toggleDesktopZoom function.
          *
          */

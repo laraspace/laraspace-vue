@@ -14619,18 +14619,18 @@ var StandardTheme = Theme.extend({
 		listView: 'fc-widget-content'
 	},
 
-	baseIconClass: 'fc-icon',
+	baseIconClass: 'fc-icons',
 	iconClasses: {
-		close: 'fc-icon-x',
-		prev: 'fc-icon-left-single-arrow',
-		next: 'fc-icon-right-single-arrow',
-		prevYear: 'fc-icon-left-double-arrow',
-		nextYear: 'fc-icon-right-double-arrow'
+		close: 'fc-icons-x',
+		prev: 'fc-icons-left-single-arrow',
+		next: 'fc-icons-right-single-arrow',
+		prevYear: 'fc-icons-left-double-arrow',
+		nextYear: 'fc-icons-right-double-arrow'
 	},
 
 	iconOverrideOption: 'buttonIcons',
 	iconOverrideCustomButtonOption: 'icon',
-	iconOverridePrefix: 'fc-icon-'
+	iconOverridePrefix: 'fc-icons-'
 
 });
 
@@ -14668,18 +14668,18 @@ var JqueryUiTheme = Theme.extend({
 		listView: 'ui-widget-content'
 	},
 
-	baseIconClass: 'ui-icon',
+	baseIconClass: 'ui-icons',
 	iconClasses: {
-		close: 'ui-icon-closethick',
-		prev: 'ui-icon-circle-triangle-w',
-		next: 'ui-icon-circle-triangle-e',
-		prevYear: 'ui-icon-seek-prev',
-		nextYear: 'ui-icon-seek-next'
+		close: 'ui-icons-closethick',
+		prev: 'ui-icons-circle-triangle-w',
+		next: 'ui-icons-circle-triangle-e',
+		prevYear: 'ui-icons-seek-prev',
+		nextYear: 'ui-icons-seek-next'
 	},
 
 	iconOverrideOption: 'themeButtonIcons',
 	iconOverrideCustomButtonOption: 'themeIcon',
-	iconOverridePrefix: 'ui-icon-'
+	iconOverridePrefix: 'ui-icons-'
 
 });
 
@@ -16668,8 +16668,8 @@ var TimeGridEventRenderer = EventRenderer.extend({
 		props.right = right * 100 + '%';
 
 		if (shouldOverlap && seg.forwardPressure) {
-			// add padding to the edge so that forward stacked events don't cover the resizer's icon
-			props[this.isRTL ? 'marginLeft' : 'marginRight'] = 10 * 2; // 10 is a guesstimate of the icon's width
+			// add padding to the edge so that forward stacked events don't cover the resizer's icons
+			props[this.isRTL ? 'marginLeft' : 'marginRight'] = 10 * 2; // 10 is a guesstimate of the icons's width
 		}
 
 		return props;

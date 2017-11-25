@@ -10228,7 +10228,7 @@ a.text-gray-dark:hover {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* makes the font 33% larger relative to the icon container */
+/* makes the font 33% larger relative to the icons container */
 
 .icon-fa-lg {
   font-size: 1.33333333em;
@@ -16344,7 +16344,7 @@ button.toast-close-button {
    * Address Bootstrap control sizing classes
    *
    * 1. Reset Bootstrap defaults.
-   * 2. Adjust the dropdown arrow button icon position.
+   * 2. Adjust the dropdown arrow button icons position.
    *
    * @see http://getbootstrap.com/css/#forms-control-sizes
    */
@@ -30345,7 +30345,7 @@ body {
 
 /*
 	Arrow buttons hit area
-	(icon is added to :before pseudo-element)
+	(icons is added to :before pseudo-element)
 */
 
 .pswp__button--arrow--left,

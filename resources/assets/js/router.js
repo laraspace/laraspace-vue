@@ -33,6 +33,15 @@ import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import Graphs from './views/admin/components/Graphs.vue'
 
+//Icons
+import Evil from './views/admin/icons/Evil.vue'
+import Fontawesome from './views/admin/icons/Fontawesome.vue'
+import Fpsline from './views/admin/icons/FpsLine.vue'
+import IcoMoon from './views/admin/icons/IcoMoon.vue'
+import Line from './views/admin/icons/Line.vue'
+import Meteo from './views/admin/icons/Meteo.vue'
+
+
 //Forms
 import General from './views/admin/forms/General.vue'
 import Advanced from './views/admin/forms/Advanced.vue'
@@ -96,7 +105,7 @@ const routes = [
         path: '/admin/layouts', component: LayoutIconSidebar,
         children: [
             {
-                path: 'icon-sidebar',
+                path: 'icons-sidebar',
                 component: Basic
             },
         ]
@@ -178,6 +187,33 @@ const routes = [
             {
                 path: 'components/graphs',
                 component: Graphs
+            },
+            //chart
+
+            //Icons
+            {
+                path: 'icons/evil',
+                component: Evil
+            },
+            {
+                path: 'icons/fontawesome',
+                component: Fontawesome
+            },
+            {
+                path: 'icons/fpsline',
+                component: Fpsline
+            },
+            {
+                path: 'icons/icomoon',
+                component: IcoMoon
+            },
+            {
+                path: 'icons/line',
+                component: Line
+            },
+            {
+                path: 'icons/meteo',
+                component: Meteo
             },
 
             //Forms

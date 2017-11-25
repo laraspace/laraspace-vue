@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 138);
+/******/ 	return __webpack_require__(__webpack_require__.s = 141);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4531,7 +4531,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)(module)))
 
 /***/ }),
 /* 1 */
@@ -4637,8 +4637,8 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(133);
-var isBuffer = __webpack_require__(293);
+var bind = __webpack_require__(136);
+var isBuffer = __webpack_require__(305);
 
 /*global toString:true*/
 
@@ -4963,7 +4963,50 @@ module.exports = {
 });
 
 /***/ }),
-/* 4 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(146)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(149),
+  /* template */
+  __webpack_require__(150),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\LineChart.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] LineChart.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cec13052", Component.options)
+  } else {
+    hotAPI.reload("data-v-cec13052", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
@@ -5047,10 +5090,319 @@ function toComment(sourceMap) {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(148)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(151)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(153),
+  /* template */
+  __webpack_require__(154),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\BarChart.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] BarChart.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2135880e", Component.options)
+  } else {
+    hotAPI.reload("data-v-2135880e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(155)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(157),
+  /* template */
+  __webpack_require__(158),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\PieChart.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PieChart.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-67512a96", Component.options)
+  } else {
+    hotAPI.reload("data-v-67512a96", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ls__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ls__ = __webpack_require__(16);
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -5086,7 +5438,7 @@ function toComment(sourceMap) {
 });
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -5102,7 +5454,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeader.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteHeader.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5126,7 +5478,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -5142,7 +5494,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteFooter.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteFooter.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteFooter.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5166,14 +5518,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(296);
+var normalizeHeaderName = __webpack_require__(308);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -5189,10 +5541,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(134);
+    adapter = __webpack_require__(137);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(134);
+    adapter = __webpack_require__(137);
   }
   return adapter;
 }
@@ -5263,10 +5615,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(295)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(307)))
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15358,10 +15710,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports) {
 
 var g;
@@ -15388,7 +15740,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17900,7 +18252,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17917,7 +18269,7 @@ if (inBrowser && window.Vue) {
 });
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -17933,7 +18285,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteSidebar.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteSidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteSidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -17957,7 +18309,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* MIT license */
@@ -18448,7 +18800,7 @@ module.exports = Color;
 
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -18476,7 +18828,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18554,7 +18906,7 @@ return af;
 
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18701,7 +19053,7 @@ return ar;
 
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18765,7 +19117,7 @@ return arDz;
 
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18829,7 +19181,7 @@ return arKw;
 
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18960,7 +19312,7 @@ return arLy;
 
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19025,7 +19377,7 @@ return arMa;
 
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19135,7 +19487,7 @@ return arSa;
 
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19199,7 +19551,7 @@ return arTn;
 
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19309,7 +19661,7 @@ return az;
 
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19448,7 +19800,7 @@ return be;
 
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19543,7 +19895,7 @@ return bg;
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19667,7 +20019,7 @@ return bn;
 
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19791,7 +20143,7 @@ return bo;
 
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19904,7 +20256,7 @@ return br;
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20052,7 +20404,7 @@ return bs;
 
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20145,7 +20497,7 @@ return ca;
 
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20322,7 +20674,7 @@ return cs;
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20390,7 +20742,7 @@ return cv;
 
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20476,7 +20828,7 @@ return cy;
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20541,7 +20893,7 @@ return da;
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20624,7 +20976,7 @@ return de;
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20708,7 +21060,7 @@ return deAt;
 
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20791,7 +21143,7 @@ return deCh;
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20896,7 +21248,7 @@ return dv;
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21001,7 +21353,7 @@ return el;
 
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21073,7 +21425,7 @@ return enAu;
 
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21141,7 +21493,7 @@ return enCa;
 
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21213,7 +21565,7 @@ return enGb;
 
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21285,7 +21637,7 @@ return enIe;
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21357,7 +21709,7 @@ return enNz;
 
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21435,7 +21787,7 @@ return eo;
 
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21523,7 +21875,7 @@ return es;
 
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21610,7 +21962,7 @@ return esDo;
 
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21695,7 +22047,7 @@ return et;
 
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21766,7 +22118,7 @@ return eu;
 
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21878,7 +22230,7 @@ return fa;
 
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21990,7 +22342,7 @@ return fi;
 
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22055,7 +22407,7 @@ return fo;
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22143,7 +22495,7 @@ return fr;
 
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22222,7 +22574,7 @@ return frCa;
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22305,7 +22657,7 @@ return frCh;
 
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22385,7 +22737,7 @@ return fy;
 
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22466,7 +22818,7 @@ return gd;
 
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22548,7 +22900,7 @@ return gl;
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22675,7 +23027,7 @@ return gomLatn;
 
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22779,7 +23131,7 @@ return he;
 
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22908,7 +23260,7 @@ return hi;
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23058,7 +23410,7 @@ return hr;
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23172,7 +23524,7 @@ return hu;
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23272,7 +23624,7 @@ return hyAm;
 
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23360,7 +23712,7 @@ return id;
 
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23492,7 +23844,7 @@ return is;
 
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23567,7 +23919,7 @@ return it;
 
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23652,7 +24004,7 @@ return ja;
 
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23740,7 +24092,7 @@ return jv;
 
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23834,7 +24186,7 @@ return ka;
 
 
 /***/ }),
-/* 73 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23926,7 +24278,7 @@ return kk;
 
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23989,7 +24341,7 @@ return km;
 
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24120,7 +24472,7 @@ return kn;
 
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24194,7 +24546,7 @@ return ko;
 
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24287,7 +24639,7 @@ return ky;
 
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24429,7 +24781,7 @@ return lb;
 
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24504,7 +24856,7 @@ return lo;
 
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24626,7 +24978,7 @@ return lt;
 
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24728,7 +25080,7 @@ return lv;
 
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24844,7 +25196,7 @@ return me;
 
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24913,7 +25265,7 @@ return mi;
 
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25008,7 +25360,7 @@ return mk;
 
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25094,7 +25446,7 @@ return ml;
 
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25258,7 +25610,7 @@ return mr;
 
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25345,7 +25697,7 @@ return ms;
 
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25433,7 +25785,7 @@ return msMy;
 
 
 /***/ }),
-/* 89 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25534,7 +25886,7 @@ return my;
 
 
 /***/ }),
-/* 90 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25602,7 +25954,7 @@ return nb;
 
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25730,7 +26082,7 @@ return ne;
 
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25823,7 +26175,7 @@ return nl;
 
 
 /***/ }),
-/* 93 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25916,7 +26268,7 @@ return nlBe;
 
 
 /***/ }),
-/* 94 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25981,7 +26333,7 @@ return nn;
 
 
 /***/ }),
-/* 95 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26110,7 +26462,7 @@ return paIn;
 
 
 /***/ }),
-/* 96 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26222,7 +26574,7 @@ return pl;
 
 
 /***/ }),
-/* 97 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26292,7 +26644,7 @@ return pt;
 
 
 /***/ }),
-/* 98 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26358,7 +26710,7 @@ return ptBr;
 
 
 /***/ }),
-/* 99 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26438,7 +26790,7 @@ return ro;
 
 
 /***/ }),
-/* 100 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26626,7 +26978,7 @@ return ru;
 
 
 /***/ }),
-/* 101 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26729,7 +27081,7 @@ return sd;
 
 
 /***/ }),
-/* 102 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26795,7 +27147,7 @@ return se;
 
 
 /***/ }),
-/* 103 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26871,7 +27223,7 @@ return si;
 
 
 /***/ }),
-/* 104 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27026,7 +27378,7 @@ return sk;
 
 
 /***/ }),
-/* 105 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27193,7 +27545,7 @@ return sl;
 
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27268,7 +27620,7 @@ return sq;
 
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27383,7 +27735,7 @@ return sr;
 
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27498,7 +27850,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27592,7 +27944,7 @@ return ss;
 
 
 /***/ }),
-/* 110 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27666,7 +28018,7 @@ return sv;
 
 
 /***/ }),
-/* 111 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27730,7 +28082,7 @@ return sw;
 
 
 /***/ }),
-/* 112 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27865,7 +28217,7 @@ return ta;
 
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27959,7 +28311,7 @@ return te;
 
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28032,7 +28384,7 @@ return tet;
 
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28104,7 +28456,7 @@ return th;
 
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28171,7 +28523,7 @@ return tlPh;
 
 
 /***/ }),
-/* 117 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28296,7 +28648,7 @@ return tlh;
 
 
 /***/ }),
-/* 118 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28391,7 +28743,7 @@ return tr;
 
 
 /***/ }),
-/* 119 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28487,7 +28839,7 @@ return tzl;
 
 
 /***/ }),
-/* 120 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28550,7 +28902,7 @@ return tzm;
 
 
 /***/ }),
-/* 121 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28613,7 +28965,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28769,7 +29121,7 @@ return uk;
 
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28873,7 +29225,7 @@ return ur;
 
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28936,7 +29288,7 @@ return uz;
 
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28999,7 +29351,7 @@ return uzLatn;
 
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29083,7 +29435,7 @@ return vi;
 
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29156,7 +29508,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29221,7 +29573,7 @@ return yo;
 
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29337,7 +29689,7 @@ return zhCn;
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29447,7 +29799,7 @@ return zhHk;
 
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29556,13 +29908,13 @@ return zhTw;
 
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(292);
+module.exports = __webpack_require__(304);
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29580,19 +29932,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var settle = __webpack_require__(297);
-var buildURL = __webpack_require__(299);
-var parseHeaders = __webpack_require__(300);
-var isURLSameOrigin = __webpack_require__(301);
-var createError = __webpack_require__(135);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(302);
+var settle = __webpack_require__(309);
+var buildURL = __webpack_require__(311);
+var parseHeaders = __webpack_require__(312);
+var isURLSameOrigin = __webpack_require__(313);
+var createError = __webpack_require__(138);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(314);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -29689,7 +30041,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(303);
+      var cookies = __webpack_require__(315);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -29767,13 +30119,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(298);
+var enhanceError = __webpack_require__(310);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -29792,7 +30144,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29804,7 +30156,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29830,22 +30182,22 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(139);
-module.exports = __webpack_require__(313);
+__webpack_require__(142);
+module.exports = __webpack_require__(325);
 
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__router_js__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__router_js__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_layout__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_plugin__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_plugin__ = __webpack_require__(324);
 
 
 
@@ -29856,7 +30208,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(290);
+__webpack_require__(302);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29877,15 +30229,15 @@ var app = new Vue({
 }).$mount('#app');
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_admin_dashboard_Basic_vue__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_admin_dashboard_Basic_vue__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_admin_dashboard_Basic_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_admin_dashboard_Basic_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_admin_dashboard_Ecommerce_vue__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_admin_dashboard_Ecommerce_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_admin_dashboard_Ecommerce_vue__);
@@ -29917,28 +30269,40 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_admin_components_Notifications_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__views_admin_components_Notifications_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__views_admin_components_Graphs_vue__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__views_admin_components_Graphs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__views_admin_components_Graphs_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__views_admin_forms_General_vue__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__views_admin_forms_General_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__views_admin_forms_General_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__views_admin_forms_Advanced_vue__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__views_admin_forms_Advanced_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__views_admin_forms_Advanced_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__views_admin_forms_FormLayouts_vue__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__views_admin_forms_FormLayouts_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__views_admin_forms_FormLayouts_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__views_admin_forms_FormValidation_vue__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__views_admin_forms_FormValidation_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__views_admin_forms_FormValidation_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__views_admin_forms_Editors_vue__ = __webpack_require__(272);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__views_admin_forms_Editors_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__views_admin_forms_Editors_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__views_admin_forms_VeeValidate_vue__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__views_admin_forms_VeeValidate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__views_admin_forms_VeeValidate_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__views_admin_Settings_vue__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__views_admin_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__views_admin_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__views_auth_Login_vue__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__views_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__views_auth_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__views_auth_Register_vue__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__views_auth_Register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__views_auth_Register_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__views_errors_404_vue__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__views_errors_404_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__views_errors_404_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__views_front_Home_vue__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__views_front_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__views_front_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__views_admin_icons_Evil_vue__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__views_admin_icons_Evil_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__views_admin_icons_Evil_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__views_admin_icons_Fontawesome_vue__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__views_admin_icons_Fontawesome_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__views_admin_icons_Fontawesome_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__views_admin_icons_FpsLine_vue__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__views_admin_icons_FpsLine_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__views_admin_icons_FpsLine_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__views_admin_icons_IcoMoon_vue__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__views_admin_icons_IcoMoon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__views_admin_icons_IcoMoon_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__views_admin_icons_Line_vue__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__views_admin_icons_Line_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__views_admin_icons_Line_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__views_admin_icons_Meteo_vue__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__views_admin_icons_Meteo_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__views_admin_icons_Meteo_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__views_admin_forms_General_vue__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__views_admin_forms_General_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__views_admin_forms_General_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__views_admin_forms_Advanced_vue__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__views_admin_forms_Advanced_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__views_admin_forms_Advanced_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__views_admin_forms_FormLayouts_vue__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__views_admin_forms_FormLayouts_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__views_admin_forms_FormLayouts_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__views_admin_forms_FormValidation_vue__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__views_admin_forms_FormValidation_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__views_admin_forms_FormValidation_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__views_admin_forms_Editors_vue__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__views_admin_forms_Editors_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__views_admin_forms_Editors_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__views_admin_forms_VeeValidate_vue__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__views_admin_forms_VeeValidate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_30__views_admin_forms_VeeValidate_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__views_admin_Settings_vue__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__views_admin_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_31__views_admin_Settings_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__views_auth_Login_vue__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__views_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_32__views_auth_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__views_auth_Register_vue__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__views_auth_Register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_33__views_auth_Register_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__views_errors_404_vue__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__views_errors_404_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_34__views_errors_404_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__views_front_Home_vue__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__views_front_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_35__views_front_Home_vue__);
 
 
 
@@ -29970,6 +30334,14 @@ var app = new Vue({
 
 
 //Components
+
+
+
+
+//Icons
+
+
+
 
 
 
@@ -30030,7 +30402,7 @@ var routes = [
 }, {
     path: '/admin/layouts', component: __WEBPACK_IMPORTED_MODULE_8__views_layouts_LayoutIconSidebar_vue___default.a,
     children: [{
-        path: 'icon-sidebar',
+        path: 'icons-sidebar',
         component: __WEBPACK_IMPORTED_MODULE_3__views_admin_dashboard_Basic_vue___default.a
     }]
 },
@@ -30045,7 +30417,7 @@ var routes = [
     path: '/', component: __WEBPACK_IMPORTED_MODULE_10__views_layouts_LayoutFront_vue___default.a,
     children: [{
         path: '/',
-        component: __WEBPACK_IMPORTED_MODULE_29__views_front_Home_vue___default.a,
+        component: __WEBPACK_IMPORTED_MODULE_35__views_front_Home_vue___default.a,
         name: 'home'
     }]
 },
@@ -30102,32 +30474,54 @@ var routes = [
         path: 'components/graphs',
         component: __WEBPACK_IMPORTED_MODULE_18__views_admin_components_Graphs_vue___default.a
     },
+    //chart
+
+    //Icons
+    {
+        path: 'icons/evil',
+        component: __WEBPACK_IMPORTED_MODULE_19__views_admin_icons_Evil_vue___default.a
+    }, {
+        path: 'icons/fontawesome',
+        component: __WEBPACK_IMPORTED_MODULE_20__views_admin_icons_Fontawesome_vue___default.a
+    }, {
+        path: 'icons/fpsline',
+        component: __WEBPACK_IMPORTED_MODULE_21__views_admin_icons_FpsLine_vue___default.a
+    }, {
+        path: 'icons/icomoon',
+        component: __WEBPACK_IMPORTED_MODULE_22__views_admin_icons_IcoMoon_vue___default.a
+    }, {
+        path: 'icons/line',
+        component: __WEBPACK_IMPORTED_MODULE_23__views_admin_icons_Line_vue___default.a
+    }, {
+        path: 'icons/meteo',
+        component: __WEBPACK_IMPORTED_MODULE_24__views_admin_icons_Meteo_vue___default.a
+    },
 
     //Forms
     {
         path: 'forms/general',
-        component: __WEBPACK_IMPORTED_MODULE_19__views_admin_forms_General_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_25__views_admin_forms_General_vue___default.a
     }, {
         path: 'forms/advanced',
-        component: __WEBPACK_IMPORTED_MODULE_20__views_admin_forms_Advanced_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_26__views_admin_forms_Advanced_vue___default.a
     }, {
         path: 'forms/layouts',
-        component: __WEBPACK_IMPORTED_MODULE_21__views_admin_forms_FormLayouts_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_27__views_admin_forms_FormLayouts_vue___default.a
     }, {
         path: 'forms/validation',
-        component: __WEBPACK_IMPORTED_MODULE_22__views_admin_forms_FormValidation_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_28__views_admin_forms_FormValidation_vue___default.a
     }, {
         path: 'forms/editors',
-        component: __WEBPACK_IMPORTED_MODULE_23__views_admin_forms_Editors_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_29__views_admin_forms_Editors_vue___default.a
     }, {
         path: 'forms/vee',
-        component: __WEBPACK_IMPORTED_MODULE_24__views_admin_forms_VeeValidate_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_30__views_admin_forms_VeeValidate_vue___default.a
     },
 
     //Settings
     {
         path: 'settings',
-        component: __WEBPACK_IMPORTED_MODULE_25__views_admin_Settings_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_31__views_admin_Settings_vue___default.a
     }]
 },
 
@@ -30141,17 +30535,17 @@ var routes = [
     path: '/', component: __WEBPACK_IMPORTED_MODULE_9__views_layouts_LayoutLogin_vue___default.a,
     children: [{
         path: 'login',
-        component: __WEBPACK_IMPORTED_MODULE_26__views_auth_Login_vue___default.a,
+        component: __WEBPACK_IMPORTED_MODULE_32__views_auth_Login_vue___default.a,
         name: 'login'
     }, {
         path: 'register',
-        component: __WEBPACK_IMPORTED_MODULE_27__views_auth_Register_vue___default.a,
+        component: __WEBPACK_IMPORTED_MODULE_33__views_auth_Register_vue___default.a,
         name: 'register'
     }]
 },
 
 // DEFAULT ROUTE
-{ path: '*', component: __WEBPACK_IMPORTED_MODULE_28__views_errors_404_vue___default.a }];
+{ path: '*', component: __WEBPACK_IMPORTED_MODULE_34__views_errors_404_vue___default.a }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes,
@@ -30181,13 +30575,13 @@ router.beforeEach(function (to, from, next) {
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(142),
+  __webpack_require__(145),
   /* template */
   __webpack_require__(159),
   /* styles */
@@ -30197,7 +30591,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Basic.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Basic.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Basic.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -30221,16 +30615,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__);
 //
 //
@@ -30392,61 +30786,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 143 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(144)
-}
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(147),
-  /* template */
-  __webpack_require__(148),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\LineChart.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] LineChart.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-cec13052", Component.options)
-  } else {
-    hotAPI.reload("data-v-cec13052", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 144 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(145);
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("3c114b94", content, false);
+var update = __webpack_require__(6)("3c114b94", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -30462,7 +30812,7 @@ if(false) {
 }
 
 /***/ }),
-/* 145 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)(undefined);
@@ -30476,7 +30826,7 @@ exports.push([module.i, "\n.graph-container {\n    height: 300px;\n}\n", ""]);
 
 
 /***/ }),
-/* 146 */
+/* 148 */
 /***/ (function(module, exports) {
 
 /**
@@ -30509,7 +30859,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 147 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30570,7 +30920,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 148 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30592,61 +30942,17 @@ if (false) {
 }
 
 /***/ }),
-/* 149 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(150)
-}
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(152),
-  /* template */
-  __webpack_require__(153),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\BarChart.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] BarChart.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2135880e", Component.options)
-  } else {
-    hotAPI.reload("data-v-2135880e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(151);
+var content = __webpack_require__(152);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("122d4bff", content, false);
+var update = __webpack_require__(6)("122d4bff", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -30662,7 +30968,7 @@ if(false) {
 }
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)(undefined);
@@ -30676,7 +30982,7 @@ exports.push([module.i, "\n.graph-container {\n    height: 300px;\n}\n", ""]);
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30725,7 +31031,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30747,50 +31053,6 @@ if (false) {
 }
 
 /***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(155)
-}
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(157),
-  /* template */
-  __webpack_require__(158),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\PieChart.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] PieChart.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-67512a96", Component.options)
-  } else {
-    hotAPI.reload("data-v-67512a96", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -30801,7 +31063,7 @@ var content = __webpack_require__(156);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("591d6f45", content, false);
+var update = __webpack_require__(6)("591d6f45", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -31071,7 +31333,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Ecommerce.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Ecommerce.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Ecommerce.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -31100,11 +31362,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__);
 //
 //
@@ -31480,7 +31742,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Finance.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Finance.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Finance.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -31509,11 +31771,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__);
 //
 //
@@ -31967,7 +32229,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutBasic.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutBasic.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutBasic.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -31996,11 +32258,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_layout__ = __webpack_require__(3);
 //
@@ -32044,7 +32306,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_layout__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth__ = __webpack_require__(9);
 //
 //
 //
@@ -32389,6 +32651,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -32533,9 +32815,70 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('a', [_vm._v("Graphs")])])], 1)]), _vm._v(" "), _c('li', {
     class: {
-      active: _vm.isActive('/admin/forms')
+      active: _vm.isActive('/admin/chart')
     }
   }, [_vm._m(4), _vm._v(" "), _c('ul', {
+    attrs: {
+      "aria-expanded": "true"
+    }
+  }, [_c('router-link', {
+    attrs: {
+      "to": "",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Jquery Datatables")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Notifications")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Graphs")])])], 1)]), _vm._v(" "), _c('li', {
+    class: {
+      active: _vm.isActive('/admin/icons')
+    }
+  }, [_vm._m(5), _vm._v(" "), _c('ul', {
+    attrs: {
+      "aria-expanded": "true"
+    }
+  }, [_c('router-link', {
+    attrs: {
+      "to": "/admin/icons/icomoon",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("IcoMoon")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "/admin/icons/evil",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Evil Icons")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "/admin/icons/meteo",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Meteo Icons")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "/admin/icons/line",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Line Icons")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "/admin/icons/fpsline",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("FPS Line")])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": "/admin/icons/fontawesome",
+      "tag": "li"
+    }
+  }, [_c('a', [_vm._v("Font Awesome")])])], 1)]), _vm._v(" "), _c('li', {
+    class: {
+      active: _vm.isActive('/admin/forms')
+    }
+  }, [_vm._m(6), _vm._v(" "), _c('ul', {
     attrs: {
       "aria-expanded": "true"
     }
@@ -32632,6 +32975,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-expanded": "true"
     }
   }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bar-chart"
+  }), _vm._v(" Charts "), _c('span', {
+    staticClass: "icon-fa arrow icon-fa-fw"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    attrs: {
+      "href": "#",
+      "aria-expanded": "true"
+    }
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eye"
+  }), _vm._v(" Icons "), _c('span', {
+    staticClass: "icon-fa arrow icon-fa-fw"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    attrs: {
+      "href": "#",
+      "aria-expanded": "true"
+    }
+  }, [_c('i', {
     staticClass: "icon-fa icon-fa-rocket"
   }), _vm._v(" Forms "), _c('span', {
     staticClass: "icon-fa arrow icon-fa-fw"
@@ -32688,7 +33053,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutHorizontal.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutHorizontal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutHorizontal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -32717,9 +33082,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteHeaderBottom_vue__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteHeaderBottom_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__partials_SiteHeaderBottom_vue__);
@@ -32773,7 +33138,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeaderBottom.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeaderBottom.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteHeaderBottom.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -32975,7 +33340,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutIconSidebar.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutIconSidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutIconSidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33004,11 +33369,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_SiteHeader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_SiteFooter_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__partials_SiteSidebar_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_layout__ = __webpack_require__(3);
 //
@@ -33080,7 +33445,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutLogin.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutLogin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutLogin.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33200,7 +33565,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutFront.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutFront.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutFront.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33284,7 +33649,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Buttons.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Buttons.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Buttons.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34505,7 +34870,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Cards.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Cards.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Cards.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34813,7 +35178,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tabs.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tabs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tabs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35435,7 +35800,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Typography.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Typography.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Typography.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35610,7 +35975,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tables.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tables.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tables.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35813,7 +36178,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Datatables.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Datatables.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Datatables.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -36934,7 +37299,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Notifications.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Notifications.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Notifications.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -37366,7 +37731,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Graphs.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Graphs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Graphs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -37395,11 +37760,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_LineChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_BarChart_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_PieChart_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DoughnutGraph_vue__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DoughnutGraph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_DoughnutGraph_vue__);
@@ -37508,7 +37873,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\DoughnutGraph.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\DoughnutGraph.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] DoughnutGraph.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -37542,7 +37907,7 @@ var content = __webpack_require__(210);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("1d12b129", content, false);
+var update = __webpack_require__(6)("1d12b129", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -37760,7 +38125,7 @@ module.exports = function() {
 /* global document: false */
 
 
-var color = __webpack_require__(15);
+var color = __webpack_require__(18);
 
 module.exports = function(Chart) {
 	// Global Chart helpers object for utility methods and classes
@@ -40455,7 +40820,7 @@ module.exports = function(Chart) {
 "use strict";
 
 
-var color = __webpack_require__(15);
+var color = __webpack_require__(18);
 
 module.exports = function(Chart) {
 
@@ -47276,236 +47641,236 @@ module.exports = function(Chart) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 17,
-	"./af.js": 17,
-	"./ar": 18,
-	"./ar-dz": 19,
-	"./ar-dz.js": 19,
-	"./ar-kw": 20,
-	"./ar-kw.js": 20,
-	"./ar-ly": 21,
-	"./ar-ly.js": 21,
-	"./ar-ma": 22,
-	"./ar-ma.js": 22,
-	"./ar-sa": 23,
-	"./ar-sa.js": 23,
-	"./ar-tn": 24,
-	"./ar-tn.js": 24,
-	"./ar.js": 18,
-	"./az": 25,
-	"./az.js": 25,
-	"./be": 26,
-	"./be.js": 26,
-	"./bg": 27,
-	"./bg.js": 27,
-	"./bn": 28,
-	"./bn.js": 28,
-	"./bo": 29,
-	"./bo.js": 29,
-	"./br": 30,
-	"./br.js": 30,
-	"./bs": 31,
-	"./bs.js": 31,
-	"./ca": 32,
-	"./ca.js": 32,
-	"./cs": 33,
-	"./cs.js": 33,
-	"./cv": 34,
-	"./cv.js": 34,
-	"./cy": 35,
-	"./cy.js": 35,
-	"./da": 36,
-	"./da.js": 36,
-	"./de": 37,
-	"./de-at": 38,
-	"./de-at.js": 38,
-	"./de-ch": 39,
-	"./de-ch.js": 39,
-	"./de.js": 37,
-	"./dv": 40,
-	"./dv.js": 40,
-	"./el": 41,
-	"./el.js": 41,
-	"./en-au": 42,
-	"./en-au.js": 42,
-	"./en-ca": 43,
-	"./en-ca.js": 43,
-	"./en-gb": 44,
-	"./en-gb.js": 44,
-	"./en-ie": 45,
-	"./en-ie.js": 45,
-	"./en-nz": 46,
-	"./en-nz.js": 46,
-	"./eo": 47,
-	"./eo.js": 47,
-	"./es": 48,
-	"./es-do": 49,
-	"./es-do.js": 49,
-	"./es.js": 48,
-	"./et": 50,
-	"./et.js": 50,
-	"./eu": 51,
-	"./eu.js": 51,
-	"./fa": 52,
-	"./fa.js": 52,
-	"./fi": 53,
-	"./fi.js": 53,
-	"./fo": 54,
-	"./fo.js": 54,
-	"./fr": 55,
-	"./fr-ca": 56,
-	"./fr-ca.js": 56,
-	"./fr-ch": 57,
-	"./fr-ch.js": 57,
-	"./fr.js": 55,
-	"./fy": 58,
-	"./fy.js": 58,
-	"./gd": 59,
-	"./gd.js": 59,
-	"./gl": 60,
-	"./gl.js": 60,
-	"./gom-latn": 61,
-	"./gom-latn.js": 61,
-	"./he": 62,
-	"./he.js": 62,
-	"./hi": 63,
-	"./hi.js": 63,
-	"./hr": 64,
-	"./hr.js": 64,
-	"./hu": 65,
-	"./hu.js": 65,
-	"./hy-am": 66,
-	"./hy-am.js": 66,
-	"./id": 67,
-	"./id.js": 67,
-	"./is": 68,
-	"./is.js": 68,
-	"./it": 69,
-	"./it.js": 69,
-	"./ja": 70,
-	"./ja.js": 70,
-	"./jv": 71,
-	"./jv.js": 71,
-	"./ka": 72,
-	"./ka.js": 72,
-	"./kk": 73,
-	"./kk.js": 73,
-	"./km": 74,
-	"./km.js": 74,
-	"./kn": 75,
-	"./kn.js": 75,
-	"./ko": 76,
-	"./ko.js": 76,
-	"./ky": 77,
-	"./ky.js": 77,
-	"./lb": 78,
-	"./lb.js": 78,
-	"./lo": 79,
-	"./lo.js": 79,
-	"./lt": 80,
-	"./lt.js": 80,
-	"./lv": 81,
-	"./lv.js": 81,
-	"./me": 82,
-	"./me.js": 82,
-	"./mi": 83,
-	"./mi.js": 83,
-	"./mk": 84,
-	"./mk.js": 84,
-	"./ml": 85,
-	"./ml.js": 85,
-	"./mr": 86,
-	"./mr.js": 86,
-	"./ms": 87,
-	"./ms-my": 88,
-	"./ms-my.js": 88,
-	"./ms.js": 87,
-	"./my": 89,
-	"./my.js": 89,
-	"./nb": 90,
-	"./nb.js": 90,
-	"./ne": 91,
-	"./ne.js": 91,
-	"./nl": 92,
-	"./nl-be": 93,
-	"./nl-be.js": 93,
-	"./nl.js": 92,
-	"./nn": 94,
-	"./nn.js": 94,
-	"./pa-in": 95,
-	"./pa-in.js": 95,
-	"./pl": 96,
-	"./pl.js": 96,
-	"./pt": 97,
-	"./pt-br": 98,
-	"./pt-br.js": 98,
-	"./pt.js": 97,
-	"./ro": 99,
-	"./ro.js": 99,
-	"./ru": 100,
-	"./ru.js": 100,
-	"./sd": 101,
-	"./sd.js": 101,
-	"./se": 102,
-	"./se.js": 102,
-	"./si": 103,
-	"./si.js": 103,
-	"./sk": 104,
-	"./sk.js": 104,
-	"./sl": 105,
-	"./sl.js": 105,
-	"./sq": 106,
-	"./sq.js": 106,
-	"./sr": 107,
-	"./sr-cyrl": 108,
-	"./sr-cyrl.js": 108,
-	"./sr.js": 107,
-	"./ss": 109,
-	"./ss.js": 109,
-	"./sv": 110,
-	"./sv.js": 110,
-	"./sw": 111,
-	"./sw.js": 111,
-	"./ta": 112,
-	"./ta.js": 112,
-	"./te": 113,
-	"./te.js": 113,
-	"./tet": 114,
-	"./tet.js": 114,
-	"./th": 115,
-	"./th.js": 115,
-	"./tl-ph": 116,
-	"./tl-ph.js": 116,
-	"./tlh": 117,
-	"./tlh.js": 117,
-	"./tr": 118,
-	"./tr.js": 118,
-	"./tzl": 119,
-	"./tzl.js": 119,
-	"./tzm": 120,
-	"./tzm-latn": 121,
-	"./tzm-latn.js": 121,
-	"./tzm.js": 120,
-	"./uk": 122,
-	"./uk.js": 122,
-	"./ur": 123,
-	"./ur.js": 123,
-	"./uz": 124,
-	"./uz-latn": 125,
-	"./uz-latn.js": 125,
-	"./uz.js": 124,
-	"./vi": 126,
-	"./vi.js": 126,
-	"./x-pseudo": 127,
-	"./x-pseudo.js": 127,
-	"./yo": 128,
-	"./yo.js": 128,
-	"./zh-cn": 129,
-	"./zh-cn.js": 129,
-	"./zh-hk": 130,
-	"./zh-hk.js": 130,
-	"./zh-tw": 131,
-	"./zh-tw.js": 131
+	"./af": 20,
+	"./af.js": 20,
+	"./ar": 21,
+	"./ar-dz": 22,
+	"./ar-dz.js": 22,
+	"./ar-kw": 23,
+	"./ar-kw.js": 23,
+	"./ar-ly": 24,
+	"./ar-ly.js": 24,
+	"./ar-ma": 25,
+	"./ar-ma.js": 25,
+	"./ar-sa": 26,
+	"./ar-sa.js": 26,
+	"./ar-tn": 27,
+	"./ar-tn.js": 27,
+	"./ar.js": 21,
+	"./az": 28,
+	"./az.js": 28,
+	"./be": 29,
+	"./be.js": 29,
+	"./bg": 30,
+	"./bg.js": 30,
+	"./bn": 31,
+	"./bn.js": 31,
+	"./bo": 32,
+	"./bo.js": 32,
+	"./br": 33,
+	"./br.js": 33,
+	"./bs": 34,
+	"./bs.js": 34,
+	"./ca": 35,
+	"./ca.js": 35,
+	"./cs": 36,
+	"./cs.js": 36,
+	"./cv": 37,
+	"./cv.js": 37,
+	"./cy": 38,
+	"./cy.js": 38,
+	"./da": 39,
+	"./da.js": 39,
+	"./de": 40,
+	"./de-at": 41,
+	"./de-at.js": 41,
+	"./de-ch": 42,
+	"./de-ch.js": 42,
+	"./de.js": 40,
+	"./dv": 43,
+	"./dv.js": 43,
+	"./el": 44,
+	"./el.js": 44,
+	"./en-au": 45,
+	"./en-au.js": 45,
+	"./en-ca": 46,
+	"./en-ca.js": 46,
+	"./en-gb": 47,
+	"./en-gb.js": 47,
+	"./en-ie": 48,
+	"./en-ie.js": 48,
+	"./en-nz": 49,
+	"./en-nz.js": 49,
+	"./eo": 50,
+	"./eo.js": 50,
+	"./es": 51,
+	"./es-do": 52,
+	"./es-do.js": 52,
+	"./es.js": 51,
+	"./et": 53,
+	"./et.js": 53,
+	"./eu": 54,
+	"./eu.js": 54,
+	"./fa": 55,
+	"./fa.js": 55,
+	"./fi": 56,
+	"./fi.js": 56,
+	"./fo": 57,
+	"./fo.js": 57,
+	"./fr": 58,
+	"./fr-ca": 59,
+	"./fr-ca.js": 59,
+	"./fr-ch": 60,
+	"./fr-ch.js": 60,
+	"./fr.js": 58,
+	"./fy": 61,
+	"./fy.js": 61,
+	"./gd": 62,
+	"./gd.js": 62,
+	"./gl": 63,
+	"./gl.js": 63,
+	"./gom-latn": 64,
+	"./gom-latn.js": 64,
+	"./he": 65,
+	"./he.js": 65,
+	"./hi": 66,
+	"./hi.js": 66,
+	"./hr": 67,
+	"./hr.js": 67,
+	"./hu": 68,
+	"./hu.js": 68,
+	"./hy-am": 69,
+	"./hy-am.js": 69,
+	"./id": 70,
+	"./id.js": 70,
+	"./is": 71,
+	"./is.js": 71,
+	"./it": 72,
+	"./it.js": 72,
+	"./ja": 73,
+	"./ja.js": 73,
+	"./jv": 74,
+	"./jv.js": 74,
+	"./ka": 75,
+	"./ka.js": 75,
+	"./kk": 76,
+	"./kk.js": 76,
+	"./km": 77,
+	"./km.js": 77,
+	"./kn": 78,
+	"./kn.js": 78,
+	"./ko": 79,
+	"./ko.js": 79,
+	"./ky": 80,
+	"./ky.js": 80,
+	"./lb": 81,
+	"./lb.js": 81,
+	"./lo": 82,
+	"./lo.js": 82,
+	"./lt": 83,
+	"./lt.js": 83,
+	"./lv": 84,
+	"./lv.js": 84,
+	"./me": 85,
+	"./me.js": 85,
+	"./mi": 86,
+	"./mi.js": 86,
+	"./mk": 87,
+	"./mk.js": 87,
+	"./ml": 88,
+	"./ml.js": 88,
+	"./mr": 89,
+	"./mr.js": 89,
+	"./ms": 90,
+	"./ms-my": 91,
+	"./ms-my.js": 91,
+	"./ms.js": 90,
+	"./my": 92,
+	"./my.js": 92,
+	"./nb": 93,
+	"./nb.js": 93,
+	"./ne": 94,
+	"./ne.js": 94,
+	"./nl": 95,
+	"./nl-be": 96,
+	"./nl-be.js": 96,
+	"./nl.js": 95,
+	"./nn": 97,
+	"./nn.js": 97,
+	"./pa-in": 98,
+	"./pa-in.js": 98,
+	"./pl": 99,
+	"./pl.js": 99,
+	"./pt": 100,
+	"./pt-br": 101,
+	"./pt-br.js": 101,
+	"./pt.js": 100,
+	"./ro": 102,
+	"./ro.js": 102,
+	"./ru": 103,
+	"./ru.js": 103,
+	"./sd": 104,
+	"./sd.js": 104,
+	"./se": 105,
+	"./se.js": 105,
+	"./si": 106,
+	"./si.js": 106,
+	"./sk": 107,
+	"./sk.js": 107,
+	"./sl": 108,
+	"./sl.js": 108,
+	"./sq": 109,
+	"./sq.js": 109,
+	"./sr": 110,
+	"./sr-cyrl": 111,
+	"./sr-cyrl.js": 111,
+	"./sr.js": 110,
+	"./ss": 112,
+	"./ss.js": 112,
+	"./sv": 113,
+	"./sv.js": 113,
+	"./sw": 114,
+	"./sw.js": 114,
+	"./ta": 115,
+	"./ta.js": 115,
+	"./te": 116,
+	"./te.js": 116,
+	"./tet": 117,
+	"./tet.js": 117,
+	"./th": 118,
+	"./th.js": 118,
+	"./tl-ph": 119,
+	"./tl-ph.js": 119,
+	"./tlh": 120,
+	"./tlh.js": 120,
+	"./tr": 121,
+	"./tr.js": 121,
+	"./tzl": 122,
+	"./tzl.js": 122,
+	"./tzm": 123,
+	"./tzm-latn": 124,
+	"./tzm-latn.js": 124,
+	"./tzm.js": 123,
+	"./uk": 125,
+	"./uk.js": 125,
+	"./ur": 126,
+	"./ur.js": 126,
+	"./uz": 127,
+	"./uz-latn": 128,
+	"./uz-latn.js": 128,
+	"./uz.js": 127,
+	"./vi": 129,
+	"./vi.js": 129,
+	"./x-pseudo": 130,
+	"./x-pseudo.js": 130,
+	"./yo": 131,
+	"./yo.js": 131,
+	"./zh-cn": 132,
+	"./zh-cn.js": 132,
+	"./zh-hk": 133,
+	"./zh-hk.js": 133,
+	"./zh-tw": 134,
+	"./zh-tw.js": 134
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -50489,7 +50854,14973 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\General.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Evil.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Evil.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6c1cef30", Component.options)
+  } else {
+    hotAPI.reload("data-v-6c1cef30", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_c('div', {
+    staticClass: "page-header"
+  }, [_c('h3', {
+    staticClass: "page-title"
+  }, [_vm._v("Evil Icons")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Icons")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Evil Icons")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', [_vm._v("Example Usage")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('pre', {
+    staticClass: "language-php"
+  }, [_c('code', [_vm._v("<i class=\"icon-el icon-el-archive\"></i>")])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-archive"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-archive")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-arrow-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-arrow-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-arrow-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-arrow-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-arrow-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-arrow-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-arrow-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-arrow-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-bell"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-bell")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-calendar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-calendar")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-camera")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-cart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-cart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-check"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-check")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-chevron-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-chevron-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-chevron-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-chevron-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-chevron-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-chevron-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-chevron-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-chevron-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-clock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-clock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-close-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-close-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-close"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-close")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-comment"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-comment")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-credit-card"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-credit-card")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-envelope"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-envelope")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-exclamation"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-exclamation")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-external-link"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-external-link")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-eye"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-eye")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-gear"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-gear")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-heart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-heart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-image"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-image")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-like"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-like")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-link"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-link")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-location"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-location")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-lock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-lock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-minus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-navicon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-navicon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-paperclip"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-paperclip")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-pencil"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-pencil")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-play"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-play")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-pointer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-pointer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-question"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-question")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-redo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-redo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-refresh"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-refresh")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-retweet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-retweet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-facebook"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-facebook")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-github"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-github")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-google-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-google-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-instagram"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-instagram")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-linkedin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-linkedin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-odnoklassniki"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-odnoklassniki")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-pinterest"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-pinterest")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-skype"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-skype")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-soundcloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-soundcloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-telegram"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-telegram")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-tumblr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-tumblr")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-twitter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-twitter")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-vimeo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-vimeo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-vk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-vk")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-sc-youtube"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-sc-youtube")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-search"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-search")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-share-apple"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-share-apple")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-share-google"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-share-google")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-spinner-2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-spinner-2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-spinner-3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-spinner-3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-spinner"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-spinner")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-star"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-star")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-tag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-tag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-trash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-trash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-trophy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-trophy")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-undo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-undo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-unlock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-unlock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-el icon-el-user"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-el-user")])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6c1cef30", module.exports)
+  }
+}
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(265),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Fontawesome.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Fontawesome.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-79c44448", Component.options)
+  } else {
+    hotAPI.reload("data-v-79c44448", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_c('div', {
+    staticClass: "page-header"
+  }, [_c('h4', {
+    staticClass: "page-title"
+  }, [_vm._v("Fontawesome Icons")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Icons")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Fontawesome Icons")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', [_vm._v("Example Usage")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('pre', {
+    staticClass: "language-php"
+  }, [_c('code', [_vm._v("<i class=\"icon-fa icon-fa-adjust\"></i>")])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Web Application Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-adjust"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- adjust")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-american-sign-language-interpreting"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-american-sign-language-interpreting")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-anchor"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-anchor")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-archive"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-archive")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-area-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-area-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrows")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows-h"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrows-h")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows-v"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrows-v")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-asl-interpreting"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-asl-interpreting")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-assistive-listening-systems"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-assistive-listening-systems")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-asterisk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-asterisk")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-at"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-at")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-audio-description"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-audio-description")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-automobile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-automobile")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-balance-scale"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-balance-scale")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ban"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ban")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bank"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bank")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bar-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bar-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bar-chart-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bar-chart-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-barcode"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-barcode")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bars"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bars")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-0"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-0")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-1(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-2(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-3(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-4(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-empty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- battery-empty")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-full"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-full")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-half"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-half")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-quarter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-quarter")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-battery-three-quarters"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-battery-three-quarters")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bed"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bed")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-beer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-beer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bell"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bell")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bell-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bell-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bell-slash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bell-slash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bell-slash-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bell-slash-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bicycle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bicycle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-binoculars"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-binoculars")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-birthday-cake"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-birthday-cake")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-blind"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-blind")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bluetooth"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bluetooth")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bluetooth-b"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bluetooth-b")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bolt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bolt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bomb"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bomb")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-book"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-book")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bookmark"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bookmark")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bookmark-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bookmark-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-braille"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-braille")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-briefcase"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-briefcase")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bug"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bug")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-building"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-building")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-building-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-building-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bullhorn"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bullhorn")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bullseye"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bullseye")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cab"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cab(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calculator"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calculator")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calendar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calendar")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calendar-check-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calendar-check-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calendar-minus-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calendar-minus-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calendar-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calendar-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calendar-plus-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calendar-plus-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-calendar-times-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-calendar-times-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-camera")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-camera-retro"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-camera-retro")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-car"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-car")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-square-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-square-o-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-square-o-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-square-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cart-arrow-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cart-arrow-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cart-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cart-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-certificate"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-certificate")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-child"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-child")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle-o-notch"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-circle-o-notch")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle-thin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-circle-thin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-clock-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-clock-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-clone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-clone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-close"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-close(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cloud-download"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cloud-download")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cloud-upload"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cloud-upload")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-code"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-code")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-code-fork"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-code-fork")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-coffee"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-coffee")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cog"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cog")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cogs"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cogs")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-comment"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-comment")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-comment-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-comment-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-commenting"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-commenting")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-commenting-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-commenting-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-comments"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-comments")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-comments-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-comments-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-compass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-compass")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-copyright"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-copyright")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-creative-commons"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-creative-commons")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-credit-card"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-credit-card")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-credit-card-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-credit-card-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-crop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-crop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-crosshairs"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-crosshairs")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cube"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cube")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cubes"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cubes")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cutlery"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cutlery")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dashboard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dashboard(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-database"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-database")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-deaf"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-deaf")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-deafness"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-deafness")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-desktop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-diamond")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dot-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dot-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-edit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-edit(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ellipsis-h"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ellipsis-h")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ellipsis-v"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ellipsis-v")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-envelope"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-envelope")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-envelope-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-envelope-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-envelope-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-envelope-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eraser"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-eraser")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-exchange"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-exchange")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-exclamation"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-exclamation")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-exclamation-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-exclamation-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-exclamation-triangle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-exclamation-triangle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-external-link"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-external-link")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-external-link-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-external-link-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eye"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- eye\n                    ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eye-slash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-eye-slash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eyedropper"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-eyedropper")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fax"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fax")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-feed"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-feed(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-female"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-female")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fighter-jet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fighter-jet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-archive-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-archive-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-audio-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-audio-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-code-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-code-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-excel-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-excel-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-image-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-image-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-movie-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-movie-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-pdf-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-pdf-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-photo-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-photo-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-picture-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-picture-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-powerpoint-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-powerpoint-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-sound-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-sound-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-video-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-video-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-word-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-word-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-zip-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-zip-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-film"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-film")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-filter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-filter")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fire-extinguisher"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fire-extinguisher")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-flag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-flag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-flag-checkered"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-flag-checkered")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-flag-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-flag-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-flash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-flash>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-flask"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-flask")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-folder"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-folder")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-folder-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-folder-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-folder-open"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-folder-open")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-folder-open-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-folder-open-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-frown-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-frown-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-futbol-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-futbol-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gamepad"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gamepad")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gavel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gavel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gear"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gear(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gears"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gears>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gift"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gift")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-glass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-glass")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-globe"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-globe")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-graduation-cap"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-graduation-cap")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-group"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-group>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-grab-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-grab-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-lizard-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-lizard-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-paper-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-paper-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-peace-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-peace-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-pointer-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-pointer-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-rock-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-rock-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-scissors-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-scissors-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-spock-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-spock-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-stop-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-stop-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hard-of-hearing"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hard-of-hearing(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hashtag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hashtag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hdd-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hdd-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-headphones"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-headphones")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-heart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-heart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-heart-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-heart-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-heartbeat"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-heartbeat")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-history"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-history")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-home"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-home")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hotel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hotel>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-1(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-2(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-3(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-end"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-end")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-half"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-half")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hourglass-start"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hourglass-start")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-i-cursor"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-i-cursor")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-image"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-image(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-inbox"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-inbox")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-industry"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-industry")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-info"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-info")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-info-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-info-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-institution"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-institution(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-key"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-key")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-keyboard-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-keyboard-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-language"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-language")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-laptop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-laptop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-leaf"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-leaf")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-legal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-legal(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-lemon-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-lemon-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-level-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-level-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-level-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-level-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-life-bouy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-life-bouy(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-life-buoy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-life-buoy(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-life-ring"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-life-ring")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-life-saver"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-life-saver(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-lightbulb-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-lightbulb-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-line-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-line-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-location-arrow"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-location-arrow")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-lock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-lock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-low-vision"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-low-vision")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-magic"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-magic")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-magnet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-magnet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mail-forward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mail-forward(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mail-reply"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mail-reply(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mail-reply-all"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mail-reply-all(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-male"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-male")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-map"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-map")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-map-marker"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-map-marker")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-map-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-map-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-map-pin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-map-pin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-map-signs"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-map-signs")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-meh-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-meh-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-microphone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-microphone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-microphone-slash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-microphone-slash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-minus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-minus-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-minus-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-minus-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-minus-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-minus-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-minus-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mobile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mobile")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mobile-phone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mobile-phone(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-money"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-money")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-moon-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-moon-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mortar-board"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mortar-board(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-motorcycle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-motorcycle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mouse-pointer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mouse-pointer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-music"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-music")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-navicon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-navicon(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-newspaper-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-newspaper-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-object-group"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-object-group")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-object-ungroup"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-object-ungroup")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paint-brush"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paint-brush")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paper-plane"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paper-plane")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paper-plane-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paper-plane-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paw"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paw")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pencil"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pencil")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pencil-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pencil-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pencil-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pencil-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-percent"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-percent")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-phone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-phone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-phone-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-phone-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-photo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-photo>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-picture-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-picture-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pie-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pie-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plane"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plane")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plug"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plug")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-power-off"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-power-off")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-print"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-print")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-puzzle-piece"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-puzzle-piece")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-qrcode"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-qrcode")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-question"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-question")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-question-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-question-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-question-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-question-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-quote-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-quote-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-quote-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-quote-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-random"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-random")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-recycle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-recycle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-refresh"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-refresh")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-registered"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-registered")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-remove"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-remove>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-reorder"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-reorder>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-reply"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-reply")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-reply-all"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-reply-all")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-retweet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-retweet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-road"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-road")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rocket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rocket")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rss"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rss")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rss-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rss-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-search"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-search")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-search-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-search-minus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-search-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-search-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-send"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-send(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-send-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-send-o>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-server"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-server")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share-alt-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share-alt-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-shield"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-shield")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ship"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ship")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-shopping-bag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-shopping-bag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-shopping-basket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-shopping-basket")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-shopping-cart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-shopping-cart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sign-in"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sign-in")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sign-language"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sign-language")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sign-out"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sign-out")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-signal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-signal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-signing"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-signing>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sitemap"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sitemap")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sliders"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sliders")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-smile-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-smile-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-soccer-ball-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-soccer-ball-o>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-alpha-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-alpha-asc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-alpha-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-alpha-desc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-amount-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-amount-asc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-amount-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-amount-desc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-asc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-desc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-down>(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-numeric-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-numeric-asc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-numeric-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-numeric-desc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sort-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sort-up(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-space-shuttle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-space-shuttle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-spinner"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-spinner")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-spoon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-spoon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-star"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-star")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-star-half"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-star-half")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-star-half-empty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-star-half-empty(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-star-half-full"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-star-half-full(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-star-half-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-star-half-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-star-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-star-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sticky-note"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sticky-note")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sticky-note-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sticky-note-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-street-view"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-street-view")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-suitcase"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-suitcase")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sun-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sun-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-support"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-support(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tablet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tablet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tachometer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tachometer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tags"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tags")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tasks"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tasks")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-taxi"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-taxi")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-television"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-television")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-terminal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-terminal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumb-tack"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumb-tack")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ticket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ticket")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-times"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-times")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-times-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-times-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-times-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-times-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tint"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tint")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-down(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-left(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-off"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-off")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-on"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-on")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-right(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-up(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-trademark"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-trademark")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-trash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-trash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-trash-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-trash-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tree"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tree")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-trophy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-trophy")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-truck"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-truck")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- tty")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tv(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-umbrella"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-umbrella")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-universal-access"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-universal-access")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-university"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-university")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-unlock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-unlock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-unlock-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-unlock-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-unsorted"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-unsorted(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-upload"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-upload")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-user"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-user")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-user-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-user-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-user-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-user-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-user-secret"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-user-secret")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-user-times"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-user-times")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-users"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-users")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-video-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-video-camera")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-volume-control-phone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-volume-control-phone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-volume-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-volume-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-volume-off"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-volume-off")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-volume-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-volume-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-warning"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-warning(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wheelchair")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wheelchair-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wifi"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wifi")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wrench"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wrench")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Accessibility Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-american-sign-language-interpreting"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-american-sign-language-interpreting")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-asl-interpreting"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-asl-interpreting(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-assistive-listening-systems"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-assistive-listening-systems")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-audio-description"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-audio-description")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-blind"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-blind")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-braille"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-braille")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-deaf"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-deaf")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-deafness"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-deafness(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hard-of-hearing"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hard-of-hearing(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-low-vision"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-low-vision")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-question-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-question-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sign-language"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sign-language")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-signing"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-signing(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tty")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-universal-access"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-universal-access")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-volume-control-phone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-volume-control-phone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-wheelchair")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-wheelchair-alt")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Hand Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-grab-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-grab-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-lizard-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-lizard-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-paper-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-paper-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-peace-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-peace-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-pointer-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-pointer-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-rock-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-rock-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-scissors-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-scissors-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-spock-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-spock-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-stop-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-stop-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-thumbs-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-thumbs-up")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Transportation Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ambulance"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ambulance")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-automobile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-automobile(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bicycle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bicycle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cab"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cab(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-car"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-car")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fighter-jet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fighter-jet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-motorcycle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-motorcycle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plane"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plane")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rocket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rocket")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ship"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ship")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-space-shuttle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-space-shuttle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-subway"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-subway")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-taxi"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-taxi")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-train"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-train")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-truck"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-truck")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-wheelchair")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-wheelchair-alt")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Gender Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-genderless"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- genderless")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-intersex"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- intersex(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mars"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mars")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mars-double"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mars-double")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mars-stroke"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mars-stroke")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mars-stroke-h"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mars-stroke-h")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mars-stroke-v"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mars-stroke-v")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mercury"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-mercury")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-neuter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-neuter")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-transgender"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-transgender")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-transgender-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-transgender-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-venus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-venus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-venus-double"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-venus-double")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-venus-mars"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-venus-mars")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("File Type Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-archive-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file-archive-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-audio-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file-audio-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-code-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file-code-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-excel-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file-excel-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-image-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file-image-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-movie-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- file-movie-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-pdf-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-pdf-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-photo-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-photo-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-picture-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-picture-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-powerpoint-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-powerpoint-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-sound-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-sound-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-text"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-text")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-text-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-text-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-video-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-video-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-word-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-word-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-zip-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-zip-o")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Spinner Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle-o-notch"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- circle-o-notch")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cog"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cog")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gear"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gear(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-refresh"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-refresh")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-spinner"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-spinner")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Form Control Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-check-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-check-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dot-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dot-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-minus-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-minus-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-minus-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-minus-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus-square-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-square-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-square-o")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Payment Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-amex"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-amex")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-diners-club"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-diners-club")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-discover"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-discover")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-jcb"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-jcb")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-mastercard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-mastercard")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-paypal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-paypal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-stripe"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-stripe")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-visa"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-visa")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-credit-card"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-credit-card")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-credit-card-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-credit-card-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-google-wallet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-google-wallet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paypal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paypal")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Chart Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-area-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-area-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bar-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bar-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bar-chart-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bar-chart-o(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-line-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-line-chart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pie-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pie-chart")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Currency Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bitcoin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bitcoin(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-btc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-btc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cny"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cny(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dollar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dollar(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eur"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-eur")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-euro"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-euro(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gbp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gbp")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gg"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gg")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gg-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gg-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ils"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ils")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-inr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-inr")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-jpy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-jpy")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-krw"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-krw")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-money"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-money")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rmb"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rmb(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rouble"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rouble(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rub"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rub")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ruble"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ruble(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rupee"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rupee(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-shekel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-shekel(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sheqel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sheqel(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-try"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-try")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-turkish-lira"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-turkish-lira(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-usd"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-usd")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-won"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-won(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-yen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-yen(alias)")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Text Editor Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-align-center"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-align-center")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-align-justify"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-align-justify")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-align-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-align-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-align-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-align-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bold"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bold")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chain"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chain(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chain-broken"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chain-broken")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-clipboard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-clipboard")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-columns"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-columns")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-copy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-copy(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cut"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cut(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dedent"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dedent(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eraser"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-eraser")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-text"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-text")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-file-text-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-file-text-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-files-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-files-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-floppy-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-floppy-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-font"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-font")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-header"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-header")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-indent"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-indent")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-italic"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-italic")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-link"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-link")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-list"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-list")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-list-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-list-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-list-ol"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-list-ol")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-list-ul"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-list-ul")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-outdent"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-outdent")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paperclip"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paperclip")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paragraph"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paragraph")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paste"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paste(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-repeat"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-repeat")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rotate-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rotate-left(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rotate-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rotate-right(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-save"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-save(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-scissors"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-scissors")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-strikethrough"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-strikethrough")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-subscript"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-subscript")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-superscript"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-superscript")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-table"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-table")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-text-height"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-text-height")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-text-width"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-text-width")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-th"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-th")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-th-large"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-th-large")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-th-list"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-th-list")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-underline"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-underline")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-undo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-undo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-unlink"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-unlink(alias)")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Directional Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-double-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-double-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-double-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-double-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-double-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-double-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-double-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-double-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angle-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angle-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrow-circle-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrow-circle-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrow-circle-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-o-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrow-circle-o-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-o-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-circle-o-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-circle-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-circle-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-circle-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-circle-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrow-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrow-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrows")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrows-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows-h"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrows-h")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows-v"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- arrows-v")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- caret-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- caret-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- caret-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- caret-square-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- caret-square-o-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-square-o-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-square-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-square-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-caret-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-caret-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-circle-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-circle-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-circle-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-circle-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-circle-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-circle-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-circle-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-circle-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chevron-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chevron-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-exchange"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-exchange")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hand-o-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hand-o-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-long-arrow-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-long-arrow-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-long-arrow-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-long-arrow-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-long-arrow-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-long-arrow-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-long-arrow-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-long-arrow-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-down(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-left(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-right(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-toggle-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-toggle-up(alias)")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Video Player Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-arrows-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-arrows-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-backward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-backward")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-compress"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-compress")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-eject"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-eject")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-expand"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-expand")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fast-backward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fast-backward")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fast-forward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fast-forward")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-forward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-forward")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pause"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pause")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pause-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pause-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pause-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pause-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-play"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-play")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-play-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-play-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-play-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-play-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-random"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-random")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-step-backward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-step-backward")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-step-forward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-step-forward")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stop-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stop-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stop-circle-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stop-circle-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-youtube-play"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-youtube-play")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Brand Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-500px"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-500px")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-adn"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- adn")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-amazon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-amazon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-android"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-android")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-angellist"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-angellist")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-apple"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-apple")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-behance"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-behance")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-behance-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-behance-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bitbucket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bitbucket")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bitbucket-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bitbucket-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bitcoin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bitcoin(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-black-tie"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-black-tie")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bluetooth"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bluetooth")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-bluetooth-b"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-bluetooth-b")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-btc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-btc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-buysellads"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-buysellads")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-amex"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-amex")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-diners-club"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-diners-club")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-discover"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-discover")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-jcb"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-jcb")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-mastercard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-mastercard")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-paypal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-paypal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-stripe"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-stripe")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-cc-visa"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-cc-visa")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-chrome"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-chrome")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-codepen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-codepen")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-codiepie"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-codiepie")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-connectdevelop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-connectdevelop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-contao"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-contao")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-css3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-css3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dashcube"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dashcube")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-delicious"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-delicious")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-deviantart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-deviantart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-digg"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-digg")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dribbble"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dribbble")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-dropbox"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-dropbox")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-drupal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-drupal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-edge"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-edge")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-empire"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-empire")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-envira"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-envira")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-expeditedssl"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-expeditedssl")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-facebook"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-facebook")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-facebook-f"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-facebook-f(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-facebook-official"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-facebook-official")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-facebook-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-facebook-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-firefox"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-firefox")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-flickr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-flickr")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fonticons"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fonticons")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-fort-awesome"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-fort-awesome")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-forumbee"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-forumbee")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-foursquare"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-foursquare")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ge"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ge(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-get-pocket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-get-pocket")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gg"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gg")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gg-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gg-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-git"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-git")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-git-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-git-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-github"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-github")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-github-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-github-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-github-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-github-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gitlab"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gitlab")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gittip"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-gittip(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-glide"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-glide")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-glide-g"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-glide-g")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-google"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-google")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-google-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-google-plus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-google-plus-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- google-plus-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-google-wallet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- google-wallet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-gratipay"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- gratipay")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hacker-news"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- hacker-news")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-houzz"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- houzz")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-html5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- html5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-instagram"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- instagram")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-internet-explorer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- internet-explorer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ioxhost"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- ioxhost")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-joomla"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- joomla")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-jsfiddle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- jsfiddle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-lastfm"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- lastfm")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-lastfm-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- lastfm-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-leanpub"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- leanpub")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-linkedin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- linkedin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-linkedin-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- linkedin-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-linux"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- linux")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-maxcdn"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- maxcdn")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-meanpath"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- meanpath")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-medium"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- medium")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-mixcloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- mixcloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-modx"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- modx")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-odnoklassniki"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- odnoklassniki")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-odnoklassniki-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-odnoklassniki-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-opencart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-opencart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-openid"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-openid")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-opera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-opera")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-optin-monster"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-optin-monster")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pagelines"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pagelines")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-paypal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-paypal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pied-piper"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pied-piper")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pied-piper-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pied-piper-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pinterest"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pinterest")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pinterest-p"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pinterest-p")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-pinterest-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-pinterest-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-product-hunt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-product-hunt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-qq"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-qq")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ra"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ra(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-rebel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-rebel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-reddit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-reddit")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-reddit-alien"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-reddit-alien")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-reddit-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-reddit-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-renren"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-renren")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-safari"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-safari")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-scribd"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-scribd")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-sellsy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-sellsy")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-share-alt-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-share-alt-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-shirtsinbulk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-shirtsinbulk")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-simplybuilt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-simplybuilt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-skyatlas"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-skyatlas")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-skype"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-skype")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-slack"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-slack")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-slideshare"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-slideshare")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-snapchat"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-snapchat")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-snapchat-ghost"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-snapchat-ghost")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-snapchat-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-snapchat-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-soundcloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-soundcloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-spotify"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-spotify")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stack-exchange"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stack-exchange")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stack-overflow"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stack-overflow")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-steam"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-steam")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-steam-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-steam-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stumbleupon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stumbleupon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stumbleupon-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stumbleupon-circle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tencent-weibo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tencent-weibo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-trello"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-trello")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tripadvisor"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tripadvisor")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tumblr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tumblr")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-tumblr-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-tumblr-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-twitch"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-twitch")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-twitter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-twitter")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-twitter-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-twitter-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-usb"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-usb")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-viacoin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- viacoin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-viadeo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- viadeo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-viadeo-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- viadeo-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-vimeo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- vimeo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-vimeo-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- vimeo-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-vine"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- vine")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-vk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-vk")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wechat"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wechat(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-weibo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- weibo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-weixin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- weixin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-whatsapp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- whatsapp")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wikipedia-w"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wikipedia-w")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-windows"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- windows")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wordpress"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wordpress")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wpbeginner"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wpbeginner")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wpforms"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- wpforms")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-xing"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- xing")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-xing-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- xing-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-y-combinator"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- y-combinator")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-y-combinator-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- y-combinator-square(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-yahoo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- yahoo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-yc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-yc(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-yc-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- yc-square(alias)")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-yelp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- yelp")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-youtube"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- youtube")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-youtube-play"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- youtube-play")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-youtube-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa- youtube-square")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h4', {
+    staticClass: "page-header"
+  }, [_vm._v("Medical Icons")]), _vm._v(" "), _c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-ambulance"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-ambulance")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-h-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-h-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-heart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-heart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-heart-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-heart-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-heartbeat"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-heartbeat")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-hospital-o"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-hospital-o")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-medkit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-medkit")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-plus-square"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-plus-square")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-stethoscope"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-stethoscope")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-user-md"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-user-md")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-wheelchair")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fa icon-fa-wheelchair-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fa-wheelchair-alt")])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-79c44448", module.exports)
+  }
+}
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(267),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\FpsLine.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] FpsLine.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-07417d11", Component.options)
+  } else {
+    hotAPI.reload("data-v-07417d11", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_c('div', {
+    staticClass: "page-header"
+  }, [_c('h3', {
+    staticClass: "page-title"
+  }, [_vm._v("FPS Line Icons")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Icons")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("FPS Line Icons")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', [_vm._v("Example Usage")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('pre', {
+    staticClass: "language-php"
+  }, [_c('code', [_vm._v("<i class=\"icon-fl icon-fl-heart\"></i>")])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-lg-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-heart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-heart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-clock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-clock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-presentation"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-presentation")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-camera")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-search1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-search1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-search2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-search2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-search3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-search3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-push"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-push")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-diagram"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-diagram")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-setting2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-setting2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-feedback"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-feedback")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-home"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-home")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-calendar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-calendar")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-diagram2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-diagram2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-feedback2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-feedback2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-email"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-email")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-twitter1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-twitter1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-facebook"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-facebook")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-linkedin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-linkedin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gplus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gplus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-feedback3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-feedback3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-map1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-map1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-map2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-map2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-map3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-map3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-email2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-email2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-register"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-register")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-padlock1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-padlock1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-download2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-download2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-lecturer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-lecturer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-theme"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-theme")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-house"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-house")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-download1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-download1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-badge"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-badge")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-trash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-trash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-bag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-bag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-twitter2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-twitter2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-upload1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-upload1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-setting3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-setting3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-padlock2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-padlock2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-chat2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-chat2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-pipette"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-pipette")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-nocloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-nocloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-drbag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-drbag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-user3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-user3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-upload2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-upload2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-eye"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-eye")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-user1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-user1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-pinterest"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-pinterest")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-vimeo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-vimeo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-youtube"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-youtube")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-skype"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-skype")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-user2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-user2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-chat1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-chat1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-evernote"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-evernote")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-dribbble"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-dribbble")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-behance"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-behance")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-pen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-pen")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-pencil"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-pencil")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-birdpen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-birdpen")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-users"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-users")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-brush"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-brush")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-paintcylinder"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-paintcylinder")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-flickr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-flickr")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-deviantart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-deviantart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-digg"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-digg")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon6"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon7"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon8"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon9"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon10"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon11"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon12"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon13"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon14"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon15"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon16"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon17"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon18"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon18")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon19"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon19")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon20"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon20")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon21"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon21")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon22"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon22")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon23"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon23")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon24"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon24")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon25"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon25")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-emoticon26"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-emoticon26")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-hammer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-hammer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-wrench1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-wrench1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-screwdriver"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-screwdriver")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-wrench2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-wrench2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cordlessscrewdriver"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cordlessscrewdriver")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-scissors"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-scissors")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather6"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather7"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather8"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather9"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather10"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather11"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather12"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather13"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather14"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather15"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather16"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather17"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather18"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather18")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather19"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather19")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather20"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather20")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather21"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather21")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather22"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather22")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather23"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather23")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather24"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather24")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather25"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather25")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-weather26"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-weather26")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-soundcloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-soundcloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery6"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-battery7"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-battery7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-mouse"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-mouse")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-imac"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-imac")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gamepad"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gamepad")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-laptop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-laptop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-printer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-printer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-headphone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-headphone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-keyboard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-keyboard")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-monitor"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-monitor")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-telephone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-telephone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-ipod"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-ipod")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-mic1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-mic1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-bakelitedisk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-bakelitedisk")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-usb1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-usb1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-mic2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-mic2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-calculator"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-calculator")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-floppydisk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-floppydisk")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cpu"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cpu")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-vlc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-vlc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-usb2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-usb2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-classictelephone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-classictelephone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-projector"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-projector")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-webcam"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-webcam")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-speaker1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-speaker1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-speaker2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-speaker2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-speaker3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-speaker3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-speaker4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-speaker4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-camera3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-camera3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-camera2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-camera2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-tv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-tv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-polaroid"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-polaroid")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-antenna"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-antenna")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-camera4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-camera4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-radio"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-radio")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow51"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow51")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow6"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow7"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow8"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow9"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow10"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow11"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow12"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow13"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow14"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow15"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow16"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow17"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow18"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow18")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow19"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow19")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow20"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow20")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow21"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow21")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow22"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow22")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow23"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow23")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow24"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow24")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow25"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow25")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow26"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow26")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow27"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow27")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow28"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow28")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow29"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow29")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow30"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow30")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow31"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow31")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow32"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow32")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow33"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow33")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow52"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow52")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow34"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow34")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow35"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow35")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow36"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow36")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow37"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow37")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow38"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow38")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow39"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow39")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow40"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow40")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow41"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow41")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow42"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow42")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow43"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow43")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow48"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow48")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow49"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow49")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow50"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow50")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow44"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow44")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow45"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow45")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow46"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow46")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow47"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow47")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-star1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-star1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-star2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-star2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-star3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-star3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cart3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cart3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cart31"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cart31")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cart32"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cart32")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-moneybag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-moneybag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-moneypig"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-moneypig")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-cart2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-cart2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gift"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gift")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-safe"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-safe")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gold1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gold1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gold2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gold2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gold3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gold3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gold4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gold4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-gold5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-gold5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-judicialgavel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-judicialgavel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-bankcard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-bankcard")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-bell"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-bell")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-bag2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-bag2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-money1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-money1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-money2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-money2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-money3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-money3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-money4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-money4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-shop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-shop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-blogger"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-blogger")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-lamp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-lamp")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-setting1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-setting1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-vote"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-vote")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-registration"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-registration")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow53"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow53")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow54"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow54")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow55"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow55")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow56"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow56")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow57"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow57")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow58"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow58")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow59"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow59")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow60"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow60")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow61"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow61")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow62"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow62")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow63"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow63")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow64"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow64")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow65"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow65")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow66"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow66")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow67"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow67")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow68"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow68")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow69"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow69")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow70"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow70")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow71"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow71")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow72"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow72")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow73"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow73")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow74"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow74")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow75"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow75")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow76"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow76")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow77"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow77")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow78"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow78")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-fl icon-fl-arrow79"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-fl-arrow79")])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-07417d11", module.exports)
+  }
+}
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(269),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\IcoMoon.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] IcoMoon.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-96c5516c", Component.options)
+  } else {
+    hotAPI.reload("data-v-96c5516c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_c('div', {
+    staticClass: "page-header"
+  }, [_c('h3', {
+    staticClass: "page-title"
+  }, [_vm._v("IcoMoon Icons")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Icons")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("IcoMoon")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', [_vm._v("Example Usage")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('pre', {
+    staticClass: "language-php"
+  }, [_c('code', [_vm._v("<i class=\"icon-im icon-im-home\"></i>")])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-home"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-home, "), _c('br'), _vm._v("icon-im-house")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-home2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-home2, "), _c('br'), _vm._v("icon-im-house2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-home3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-home3, "), _c('br'), _vm._v("icon-im-house3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-office"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-office, "), _c('br'), _vm._v("icon-im-buildings")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-newspaper"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-newspaper, "), _c('br'), _vm._v("icon-im-news")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pencil"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pencil, "), _c('br'), _vm._v("icon-im-write")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pencil2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pencil2, "), _c('br'), _vm._v("icon-im-write2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-quill"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-quill, "), _c('br'), _vm._v("icon-im-feather")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pen, "), _c('br'), _vm._v("icon-im-write3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-blog"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-blog, "), _c('br'), _vm._v("icon-im-pen2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-eyedropper"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-eyedropper, "), _c('br'), _vm._v("icon-im-color")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-droplet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-droplet, "), _c('br'), _vm._v("icon-im-color2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paint-format"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paint-format, "), _c('br'), _vm._v("icon-im-format")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-image"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-image, "), _c('br'), _vm._v("icon-im-picture")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-images"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-images, "), _c('br'), _vm._v("icon-im-pictures")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-camera, "), _c('br'), _vm._v("icon-im-photo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-headphones"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-headphones, "), _c('br'), _vm._v("icon-im-headset")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-music"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-music, "), _c('br'), _vm._v("icon-im-song")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-play"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-play, "), _c('br'), _vm._v("icon-im-video")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-film"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-film, "), _c('br'), _vm._v("icon-im-video2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-video-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-video-camera, "), _c('br'), _vm._v("icon-im-video3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-dice"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-dice, "), _c('br'), _vm._v("icon-im-game")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pacman"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pacman, "), _c('br'), _vm._v("icon-im-game2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spades"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spades, "), _c('br'), _vm._v("icon-im-cards")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-clubs"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-clubs, "), _c('br'), _vm._v("icon-im-cards2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-diamonds"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-diamonds, "), _c('br'), _vm._v("icon-im-cards3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bullhorn"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bullhorn, "), _c('br'), _vm._v("icon-im-megaphone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-connection"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-connection, "), _c('br'), _vm._v("icon-im-wifi")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-podcast"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-podcast, "), _c('br'), _vm._v("icon-im-broadcast")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-feed"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-feed, "), _c('br'), _vm._v("icon-im-wave")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mic"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mic, "), _c('br'), _vm._v("icon-im-microphone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-book"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-book, "), _c('br'), _vm._v("icon-im-read")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-books"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-books, "), _c('br'), _vm._v("icon-im-library")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-library"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-library2, "), _c('br'), _vm._v("icon-im-bank")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-text"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-text, "), _c('br'), _vm._v("icon-im-file")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-profile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-profile, "), _c('br'), _vm._v("icon-im-file2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-empty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-empty, "), _c('br'), _vm._v("icon-im-file3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-files-empty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-files-empty, "), _c('br'), _vm._v("icon-im-files")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-text2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', {
+    staticClass: "unit1"
+  }, [_vm._v("icon-file-text2, "), _c('br'), _vm._v("icon-im-file4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-picture"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', {
+    staticClass: "unit1"
+  }, [_vm._v("e927")]), _vm._v(" "), _c('span', [_vm._v("icon-im-file-picture, "), _c('br'), _vm._v("icon-im-file5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-music"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-music, "), _c('br'), _vm._v("icon-im-file6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-play"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-play, "), _c('br'), _vm._v("icon-im-file7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-video"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-video, "), _c('br'), _vm._v("icon-im-file8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-zip"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-zip, "), _c('br'), _vm._v("icon-im-file9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-copy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-copy, "), _c('br'), _vm._v("icon-im-duplicate")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paste"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paste, "), _c('br'), _vm._v("icon-im-clipboard-file")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stack"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stack, "), _c('br'), _vm._v("icon-im-layers")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-folder"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-folder, "), _c('br'), _vm._v("icon-im-directory")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-folder-open"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-folder-open, "), _c('br'), _vm._v("icon-im-directory2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-folder-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-folder-plus, "), _c('br'), _vm._v("icon-im-directory3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-folder-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-folder-minus, "), _c('br'), _vm._v("icon-im-directory4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-folder-download"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-folder-download, "), _c('br'), _vm._v("icon-im-directory5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-folder-upload"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-folder-upload, "), _c('br'), _vm._v("icon-im-directory6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-price-tag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-price-tag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-price-tags"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-price-tags")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-barcode"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-barcode")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-qrcode"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-qrcode")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ticket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ticket, "), _c('br'), _vm._v("icon-im-theater")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cart, "), _c('br'), _vm._v("icon-im-purchase")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-coin-dollar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-coin-dollar, "), _c('br'), _vm._v("icon-im-money")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-coin-euro"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-coin-euro, "), _c('br'), _vm._v("icon-im-money2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-coin-pound"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-coin-pound, "), _c('br'), _vm._v("icon-im-money3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-coin-yen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-coin-yen, "), _c('br'), _vm._v("icon-im-money4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-credit-card"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-credit-card, "), _c('br'), _vm._v("icon-im-money5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-calculator"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-calculator, "), _c('br'), _vm._v("icon-im-compute")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-lifebuoy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-lifebuoy, "), _c('br'), _vm._v("icon-im-support")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-phone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-phone, "), _c('br'), _vm._v("icon-im-telephone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-phone-hang-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-phone-hang-up, "), _c('br'), _vm._v("icon-im-telephone2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-address-book"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-address-book, "), _c('br'), _vm._v("icon-im-contact")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-envelop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-envelop, "), _c('br'), _vm._v("icon-im-mail")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pushpin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pushpin, "), _c('br'), _vm._v("icon-im-pin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-location"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-location, "), _c('br'), _vm._v("icon-im-map-marker")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-location2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-location2, "), _c('br'), _vm._v("icon-im-map-marker2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-compass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-compass, "), _c('br'), _vm._v("icon-im-direction")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-compass2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-compass2, "), _c('br'), _vm._v("icon-im-direction2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-map"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-map, "), _c('br'), _vm._v("icon-im-guide")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-map2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-map2, "), _c('br'), _vm._v("icon-im-guide2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-history"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-history, "), _c('br'), _vm._v("icon-im-time")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-clock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-clock, "), _c('br'), _vm._v("icon-im-time2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-clock2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-clock2, "), _c('br'), _vm._v("icon-im-time3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-alarm"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-alarm, "), _c('br'), _vm._v("icon-im-time4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bell"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bell, "), _c('br'), _vm._v("icon-im-alarm2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stopwatch"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stopwatch, "), _c('br'), _vm._v("icon-im-time5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-calendar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-calendar, "), _c('br'), _vm._v("icon-im-date")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-printer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-printer, "), _c('br'), _vm._v("icon-im-print")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-keyboard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-keyboard, "), _c('br'), _vm._v("icon-im-typing")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-display"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-display, "), _c('br'), _vm._v("icon-im-screen")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-laptop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-laptop, "), _c('br'), _vm._v("icon-im-computer")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mobile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mobile, "), _c('br'), _vm._v("icon-im-cell-phone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mobile2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mobile2, "), _c('br'), _vm._v("icon-im-cell-phone2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tablet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tablet, "), _c('br'), _vm._v("icon-im-mobile3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tv, "), _c('br'), _vm._v("icon-im-television")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-drawer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-drawer, "), _c('br'), _vm._v("icon-im-box")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-drawer2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-drawer2, "), _c('br'), _vm._v("icon-im-box2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-box-add"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-box-add, "), _c('br'), _vm._v("icon-im-box3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-box-remove"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-box-remove, "), _c('br'), _vm._v("icon-im-box4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-download"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-download, "), _c('br'), _vm._v("icon-im-save")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-upload"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-upload, "), _c('br'), _vm._v("icon-im-load")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-floppy-disk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-floppy-disk, "), _c('br'), _vm._v("icon-im-save2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-drive"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-drive, "), _c('br'), _vm._v("icon-im-save3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-database"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-database, "), _c('br'), _vm._v("icon-im-db")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-undo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-undo, "), _c('br'), _vm._v("icon-im-ccw")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-redo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-redo, "), _c('br'), _vm._v("icon-im-cw")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-undo2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-undo2, "), _c('br'), _vm._v("icon-im-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-redo2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-redo2, "), _c('br'), _vm._v("icon-im-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-forward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-forward, "), _c('br'), _vm._v("icon-im-right2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-reply"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-reply, "), _c('br'), _vm._v("icon-im-left2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bubble"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bubble, "), _c('br'), _vm._v("icon-im-comment")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bubbles"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bubbles, "), _c('br'), _vm._v("icon-im-comments")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bubbles2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bubbles2, "), _c('br'), _vm._v("icon-im-comments2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bubble2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bubble2, "), _c('br'), _vm._v("icon-im-comment2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bubbles3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bubbles3, "), _c('br'), _vm._v("icon-im-comments3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bubbles4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bubbles4, "), _c('br'), _vm._v("icon-im-comments4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-user"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-user, "), _c('br'), _vm._v("icon-im-profile2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-users"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-users, "), _c('br'), _vm._v("icon-im-group")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-user-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-user-plus, "), _c('br'), _vm._v("icon-im-user2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-user-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-user-minus, "), _c('br'), _vm._v("icon-im-user3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-user-check"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-user-check, "), _c('br'), _vm._v("icon-im-user4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-user-tie"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-user-tie, "), _c('br'), _vm._v("icon-im-user5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-quotes-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-quotes-left, "), _c('br'), _vm._v("icon-im-ldquo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-quotes-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-quotes-right, "), _c('br'), _vm._v("icon-im-rdquo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hour-glass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hour-glass, "), _c('br'), _vm._v("icon-im-loading")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner, "), _c('br'), _vm._v("icon-im-loading2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner2, "), _c('br'), _vm._v("icon-im-loading3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner3, "), _c('br'), _vm._v("icon-im-loading4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner4, "), _c('br'), _vm._v("icon-im-loading5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner5"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner5, "), _c('br'), _vm._v("icon-im-loading6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner6"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner6, "), _c('br'), _vm._v("icon-im-loading7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner7"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner7, "), _c('br'), _vm._v("icon-im-loading8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner8"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner8, "), _c('br'), _vm._v("icon-im-loading9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner9"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner9, "), _c('br'), _vm._v("icon-im-loading10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner10"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner10, "), _c('br'), _vm._v("icon-im-loading11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spinner11"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spinner11, "), _c('br'), _vm._v("icon-im-loading12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-binoculars"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-binoculars, "), _c('br'), _vm._v("icon-im-lookup")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-search"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-search, "), _c('br'), _vm._v("icon-im-magnifier")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-zoom-in"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-zoom-in, "), _c('br'), _vm._v("icon-im-magnifier2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-zoom-out"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-zoom-out, "), _c('br'), _vm._v("icon-im-magnifier3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-enlarge"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-enlarge, "), _c('br'), _vm._v("icon-im-expand")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shrink"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shrink, "), _c('br'), _vm._v("icon-im-collapse")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-enlarge2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-enlarge2, "), _c('br'), _vm._v("icon-im-expand2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shrink2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shrink2, "), _c('br'), _vm._v("icon-im-collapse2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-key"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-key, "), _c('br'), _vm._v("icon-im-password")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-key2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-key2, "), _c('br'), _vm._v("icon-im-password2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-lock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-lock, "), _c('br'), _vm._v("icon-im-secure")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-unlocked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-unlocked, "), _c('br'), _vm._v("icon-im-lock-open")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wrench"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wrench, "), _c('br'), _vm._v("icon-im-tool")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-equalizer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-equalizer, "), _c('br'), _vm._v("icon-im-sliders")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-equalizer2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-equalizer2, "), _c('br'), _vm._v("icon-im-sliders2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cog"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cog, "), _c('br'), _vm._v("icon-im-gear")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cogs"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cogs, "), _c('br'), _vm._v("icon-im-gears")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hammer"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hammer, "), _c('br'), _vm._v("icon-im-tool2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-magic-wand"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-magic-wand, "), _c('br'), _vm._v("icon-im-wizard")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-aid-kit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-aid-kit, "), _c('br'), _vm._v("icon-im-health")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bug"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bug, "), _c('br'), _vm._v("icon-im-virus")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pie-chart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pie-chart, "), _c('br'), _vm._v("icon-im-stats")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stats-dots"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stats-dots, "), _c('br'), _vm._v("icon-im-stats2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stats-bars"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stats-bars, "), _c('br'), _vm._v("icon-im-stats3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stats-bars2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stats-bars2, "), _c('br'), _vm._v("icon-im-stats4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-trophy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-trophy, "), _c('br'), _vm._v("icon-im-cup")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-gift"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-gift, "), _c('br'), _vm._v("icon-im-present")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-glass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-glass, "), _c('br'), _vm._v("icon-im-drink")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-glass2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-glass2, "), _c('br'), _vm._v("icon-im-drink2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mug"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mug, "), _c('br'), _vm._v("icon-im-drink3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spoon-knife"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spoon-knife, "), _c('br'), _vm._v("icon-im-food")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-leaf"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-leaf, "), _c('br'), _vm._v("icon-im-nature")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-rocket"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-rocket, "), _c('br'), _vm._v("icon-im-jet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-meter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-meter, "), _c('br'), _vm._v("icon-im-gauge")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-meter2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-meter2, "), _c('br'), _vm._v("icon-im-gauge2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hammer2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hammer2, "), _c('br'), _vm._v("icon-im-gavel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-fire"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-fire, "), _c('br'), _vm._v("icon-im-flame")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-lab"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-lab, "), _c('br'), _vm._v("icon-im-beta")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-magnet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-magnet, "), _c('br'), _vm._v("icon-im-attract")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bin, "), _c('br'), _vm._v("icon-im-trashcan")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bin2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bin2, "), _c('br'), _vm._v("icon-im-trashcan2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-briefcase"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-briefcase, "), _c('br'), _vm._v("icon-im-portfolio")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-airplane"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-airplane, "), _c('br'), _vm._v("icon-im-travel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-truck"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-truck, "), _c('br'), _vm._v("icon-im-transit")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-road"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-road, "), _c('br'), _vm._v("icon-im-asphalt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-accessibility"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-accessibility")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-target"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-target, "), _c('br'), _vm._v("icon-im-goal")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shield"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shield, "), _c('br'), _vm._v("icon-im-security")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-power"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-power, "), _c('br'), _vm._v("icon-im-lightning")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-switch"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-switch")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-power-cord"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-power-cord, "), _c('br'), _vm._v("icon-im-plugin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-clipboard"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-clipboard, "), _c('br'), _vm._v("icon-im-board")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-list-numbered"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-list-numbered, "), _c('br'), _vm._v("icon-im-options")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-list"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-list, "), _c('br'), _vm._v("icon-im-todo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-list2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-list2, "), _c('br'), _vm._v("icon-im-todo2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tree"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tree, "), _c('br'), _vm._v("icon-im-branches")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-menu"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-menu, "), _c('br'), _vm._v("icon-im-list3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-menu2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-menu2, "), _c('br'), _vm._v("icon-im-options2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-menu3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-menu3, "), _c('br'), _vm._v("icon-im-options3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-menu4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-menu4, "), _c('br'), _vm._v("icon-im-options4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cloud, "), _c('br'), _vm._v("icon-im-weather")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cloud-download"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cloud-download, "), _c('br'), _vm._v("icon-im-cloud2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cloud-upload"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cloud-upload, "), _c('br'), _vm._v("icon-im-cloud3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cloud-check"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cloud-check, "), _c('br'), _vm._v("icon-im-cloud4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-download2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-download2, "), _c('br'), _vm._v("icon-im-save4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-upload2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-upload2, "), _c('br'), _vm._v("icon-im-load2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-download3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-download3, "), _c('br'), _vm._v("icon-im-save5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-upload3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-upload3, "), _c('br'), _vm._v("icon-im-load3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sphere"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sphere, "), _c('br'), _vm._v("icon-im-globe")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-earth"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-earth, "), _c('br'), _vm._v("icon-im-globe2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-link"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-link, "), _c('br'), _vm._v("icon-im-chain")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-flag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-flag, "), _c('br'), _vm._v("icon-im-report")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-attachment"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-attachment, "), _c('br'), _vm._v("icon-im-paperclip")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-eye"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-eye, "), _c('br'), _vm._v("icon-im-views")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-eye-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-eye-plus, "), _c('br'), _vm._v("icon-im-views2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-eye-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-eye-minus, "), _c('br'), _vm._v("icon-im-views3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-eye-blocked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-eye-blocked, "), _c('br'), _vm._v("icon-im-views4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bookmark"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bookmark, "), _c('br'), _vm._v("icon-im-ribbon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bookmarks"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bookmarks, "), _c('br'), _vm._v("icon-im-ribbons")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sun"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sun, "), _c('br'), _vm._v("icon-im-weather2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-contrast"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-contrast")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-brightness-contrast"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-brightness-contrast")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-star-empty"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-star-empty, "), _c('br'), _vm._v("icon-im-rate")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-star-half"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-star-half, "), _c('br'), _vm._v("icon-im-rate2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-star-full"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-star-full, "), _c('br'), _vm._v("icon-im-rate3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-heart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-heart, "), _c('br'), _vm._v("icon-im-like")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-heart-broken"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-heart-broken, "), _c('br'), _vm._v("icon-im-heart2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-man"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-man, "), _c('br'), _vm._v("icon-im-male")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-woman"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', {
+    staticClass: "unit1"
+  }, [_vm._v("e9dd")]), _vm._v(" "), _c('span', [_vm._v("icon-im-woman, "), _c('br'), _vm._v("icon-im-female")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-man-woman"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-man-woman, "), _c('br'), _vm._v("icon-im-toilet")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-happy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-happy, "), _c('br'), _vm._v("icon-im-emoticon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-happy2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-happy2, "), _c('br'), _vm._v("icon-im-emoticon2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-smile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-smile, "), _c('br'), _vm._v("icon-im-emoticon3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-smile2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-smile2, "), _c('br'), _vm._v("icon-im-emoticon4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tongue"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tongue, "), _c('br'), _vm._v("icon-im-emoticon5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tongue2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tongue2, "), _c('br'), _vm._v("icon-im-emoticon6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sad"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sad, "), _c('br'), _vm._v("icon-im-emoticon7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sad2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sad2, "), _c('br'), _vm._v("icon-im-emoticon8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wink"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wink, "), _c('br'), _vm._v("icon-im-emoticon9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wink2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wink2, "), _c('br'), _vm._v("icon-im-emoticon10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-grin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-grin, "), _c('br'), _vm._v("icon-im-emoticon11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-grin2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-grin2, "), _c('br'), _vm._v("icon-im-emoticon12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cool"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cool, "), _c('br'), _vm._v("icon-im-emoticon13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cool2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cool2, "), _c('br'), _vm._v("icon-im-emoticon14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-angry"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-angry, "), _c('br'), _vm._v("icon-im-emoticon15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-angry2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-angry2, "), _c('br'), _vm._v("icon-im-emoticon16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-evil"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-evil, "), _c('br'), _vm._v("icon-im-emoticon17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-evil2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-evil2, "), _c('br'), _vm._v("icon-im-emoticon18")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shocked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shocked, "), _c('br'), _vm._v("icon-im-emoticon19")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shocked2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shocked2, "), _c('br'), _vm._v("icon-im-emoticon20")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-baffled"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-baffled, "), _c('br'), _vm._v("icon-im-emoticon21")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-baffled2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-baffled2, "), _c('br'), _vm._v("icon-im-emoticon22")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-confused"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-confused, "), _c('br'), _vm._v("icon-im-emoticon23")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-confused2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-confused2, "), _c('br'), _vm._v("icon-im-emoticon24")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-neutral"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-neutral, "), _c('br'), _vm._v("icon-im-emoticon25")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-neutral2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-neutral2, "), _c('br'), _vm._v("icon-im-emoticon26")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hipster"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hipster, "), _c('br'), _vm._v("icon-im-emoticon27")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hipster2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hipster2, "), _c('br'), _vm._v("icon-im-emoticon28")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wondering"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wondering, "), _c('br'), _vm._v("icon-im-emoticon29")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wondering2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wondering2, "), _c('br'), _vm._v("icon-im-emoticon30")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sleepy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sleepy, "), _c('br'), _vm._v("icon-im-emoticon31")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sleepy2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sleepy2, "), _c('br'), _vm._v("icon-im-emoticon32")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-frustrated"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-frustrated, "), _c('br'), _vm._v("icon-im-emoticon33")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-frustrated2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-frustrated2, "), _c('br'), _vm._v("icon-im-emoticon34")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-crying"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-crying, "), _c('br'), _vm._v("icon-im-emoticon35")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-crying2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-crying2, "), _c('br'), _vm._v("icon-im-emoticon36")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-point-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-point-up, "), _c('br'), _vm._v("icon-im-finger")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-point-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-point-right, "), _c('br'), _vm._v("icon-im-finger2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-point-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-point-down, "), _c('br'), _vm._v("icon-im-finger3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-point-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-point-left, "), _c('br'), _vm._v("icon-im-finger4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-warning"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-warning, "), _c('br'), _vm._v("icon-im-sign")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-notification"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-notification, "), _c('br'), _vm._v("icon-im-warning2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-question"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-question, "), _c('br'), _vm._v("icon-im-help")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-plus, "), _c('br'), _vm._v("icon-im-add")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-minus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-minus, "), _c('br'), _vm._v("icon-im-subtract")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-info"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-info, "), _c('br'), _vm._v("icon-im-information")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cancel-circle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cancel-circle, "), _c('br'), _vm._v("icon-im-close")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-blocked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-blocked, "), _c('br'), _vm._v("icon-im-forbidden")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-cross"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-cross, "), _c('br'), _vm._v("icon-im-cancel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-checkmark"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-checkmark, "), _c('br'), _vm._v("icon-im-tick")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-checkmark2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', {
+    staticClass: "unit1"
+  }, [_vm._v("ea11")]), _vm._v(" "), _c('span', [_vm._v("icon-im-checkmark2, "), _c('br'), _vm._v("icon-im-tick2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spell-check"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spell-check, "), _c('br'), _vm._v("icon-im-spelling")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-enter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-enter, "), _c('br'), _vm._v("icon-im-signin")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-exit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-exit, "), _c('br'), _vm._v("icon-im-signout")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-play2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-play2, "), _c('br'), _vm._v("icon-im-player")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pause"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pause, "), _c('br'), _vm._v("icon-im-player2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stop, "), _c('br'), _vm._v("icon-im-player3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-previous"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-previous, "), _c('br'), _vm._v("icon-im-player4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-next"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-next, "), _c('br'), _vm._v("icon-im-player5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-backward"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-backward, "), _c('br'), _vm._v("icon-im-player6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-forward2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-forward2, "), _c('br'), _vm._v("icon-im-player7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-play3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-play3, "), _c('br'), _vm._v("icon-im-player8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pause2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pause2, "), _c('br'), _vm._v("icon-im-player9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stop2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stop2, "), _c('br'), _vm._v("icon-im-player10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-backward2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-backward2, "), _c('br'), _vm._v("icon-im-player11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-forward3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-forward3, "), _c('br'), _vm._v("icon-im-player12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-first"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-first, "), _c('br'), _vm._v("icon-im-player13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-last"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-last, "), _c('br'), _vm._v("icon-im-player14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-previous2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-previous2, "), _c('br'), _vm._v("icon-im-player15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-next2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-next2, "), _c('br'), _vm._v("icon-im-player16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-eject"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-eject, "), _c('br'), _vm._v("icon-im-player17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-high"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-high, "), _c('br'), _vm._v("icon-im-volume")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-medium"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-medium, "), _c('br'), _vm._v("icon-im-volume2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-low"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-low, "), _c('br'), _vm._v("icon-im-volume3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-mute"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-mute, "), _c('br'), _vm._v("icon-im-volume4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-mute2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-mute2, "), _c('br'), _vm._v("icon-im-volume5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-increase"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-increase, "), _c('br'), _vm._v("icon-im-volume6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-volume-decrease"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-volume-decrease, "), _c('br'), _vm._v("icon-im-volume7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-loop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-loop, "), _c('br'), _vm._v("icon-im-repeat")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-loop2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-loop2, "), _c('br'), _vm._v("icon-im-repeat2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-infinite"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-infinite")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shuffle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shuffle, "), _c('br'), _vm._v("icon-im-random")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-up-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-up-left, "), _c('br'), _vm._v("icon-im-up-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-up, "), _c('br'), _vm._v("icon-im-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-up-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-up-right, "), _c('br'), _vm._v("icon-im-up-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-right, "), _c('br'), _vm._v("icon-im-right3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-down-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-down-right, "), _c('br'), _vm._v("icon-im-down-right")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-down, "), _c('br'), _vm._v("icon-im-down")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-down-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-down-left, "), _c('br'), _vm._v("icon-im-down-left")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-left, "), _c('br'), _vm._v("icon-im-left3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-up-left2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-up-left2, "), _c('br'), _vm._v("icon-im-up-left2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-up2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-up2, "), _c('br'), _vm._v("icon-im-up2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-up-right2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-up-right2, "), _c('br'), _vm._v("icon-im-up-right2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-right2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-right2, "), _c('br'), _vm._v("icon-im-right4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-down-right2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-down-right2, "), _c('br'), _vm._v("icon-im-down-right2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-down2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-down2, "), _c('br'), _vm._v("icon-im-down2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-down-left2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-down-left2, "), _c('br'), _vm._v("icon-im-down-left2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-arrow-left2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-arrow-left2, "), _c('br'), _vm._v("icon-im-left4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-circle-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-circle-up, "), _c('br'), _vm._v("icon-im-up3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-circle-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-circle-right, "), _c('br'), _vm._v("icon-im-right5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-circle-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-circle-down, "), _c('br'), _vm._v("icon-im-down3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-circle-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-circle-left, "), _c('br'), _vm._v("icon-im-left5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tab"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tab, "), _c('br'), _vm._v("icon-im-arrows")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-move-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-move-up, "), _c('br'), _vm._v("icon-im-sort")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-move-down"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-move-down, "), _c('br'), _vm._v("icon-im-sort2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sort-alpha-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sort-alpha-asc, "), _c('br'), _vm._v("icon-im-arrange")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sort-alpha-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sort-alpha-desc, "), _c('br'), _vm._v("icon-im-arrange2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sort-numeric-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sort-numeric-asc, "), _c('br'), _vm._v("icon-im-arrange3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sort-numberic-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sort-numberic-desc, "), _c('br'), _vm._v("icon-im-arrange4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sort-amount-asc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sort-amount-asc, "), _c('br'), _vm._v("icon-im-arrange5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sort-amount-desc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sort-amount-desc, "), _c('br'), _vm._v("icon-im-arrange6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-command"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-command, "), _c('br'), _vm._v("icon-im-cmd")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-shift"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-shift")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ctrl"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ctrl, "), _c('br'), _vm._v("icon-im-control")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-opt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-opt, "), _c('br'), _vm._v("icon-im-option")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-checkbox-checked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-checkbox-checked, "), _c('br'), _vm._v("icon-im-checkbox")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-checkbox-unchecked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-checkbox-unchecked, "), _c('br'), _vm._v("icon-im-checkbox2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-radio-checked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-radio-checked, "), _c('br'), _vm._v("icon-im-radio-button")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-radio-checked2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-radio-checked2, "), _c('br'), _vm._v("icon-im-radio-button2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-radio-unchecked"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-radio-unchecked, "), _c('br'), _vm._v("icon-im-radio-button3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-crop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-crop, "), _c('br'), _vm._v("icon-im-resize")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-make-group"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-make-group")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ungroup"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ungroup")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-scissors"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-scissors, "), _c('br'), _vm._v("icon-im-cut")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-filter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-filter, "), _c('br'), _vm._v("icon-im-funnel")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-font"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-font, "), _c('br'), _vm._v("icon-im-typeface")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ligature"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ligature, "), _c('br'), _vm._v("icon-im-typography")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ligature2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ligature2, "), _c('br'), _vm._v("icon-im-typography2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-text-height"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-text-height, "), _c('br'), _vm._v("icon-im-wysiwyg")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-text-width"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-text-width, "), _c('br'), _vm._v("icon-im-wysiwyg2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-font-size"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-font-size, "), _c('br'), _vm._v("icon-im-wysiwyg3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-bold"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-bold, "), _c('br'), _vm._v("icon-im-wysiwyg4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-underline"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-underline, "), _c('br'), _vm._v("icon-im-wysiwyg5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-italic"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-italic, "), _c('br'), _vm._v("icon-im-wysiwyg6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-strikethrough"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-strikethrough, "), _c('br'), _vm._v("icon-im-wysiwyg7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-omega"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-omega, "), _c('br'), _vm._v("icon-im-wysiwyg8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sigma"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sigma, "), _c('br'), _vm._v("icon-im-wysiwyg9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-page-break"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-page-break, "), _c('br'), _vm._v("icon-im-wysiwyg10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-superscript"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-superscript, "), _c('br'), _vm._v("icon-im-wysiwyg11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-subscript"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-subscript, "), _c('br'), _vm._v("icon-im-wysiwyg12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-superscript2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-superscript2, "), _c('br'), _vm._v("icon-im-wysiwyg13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-subscript2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-subscript2, "), _c('br'), _vm._v("icon-im-wysiwyg14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-text-color"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-text-color, "), _c('br'), _vm._v("icon-im-wysiwyg15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pagebreak"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pagebreak, "), _c('br'), _vm._v("icon-im-wysiwyg16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-clear-formatting"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-clear-formatting, "), _c('br'), _vm._v("icon-im-wysiwyg17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-table"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-table, "), _c('br'), _vm._v("icon-im-wysiwyg18")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-table2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-table2, "), _c('br'), _vm._v("icon-im-wysiwyg19")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-insert-template"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-insert-template, "), _c('br'), _vm._v("icon-im-wysiwyg20")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pilcrow"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pilcrow, "), _c('br'), _vm._v("icon-im-wysiwyg21")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ltr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ltr, "), _c('br'), _vm._v("icon-im-wysiwyg22")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-rtl"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-rtl, "), _c('br'), _vm._v("icon-im-wysiwyg23")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-section"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-section, "), _c('br'), _vm._v("icon-im-wysiwyg24")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paragraph-left"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paragraph-left, "), _c('br'), _vm._v("icon-im-wysiwyg25")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paragraph-center"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paragraph-center, "), _c('br'), _vm._v("icon-im-wysiwyg26")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paragraph-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paragraph-right, "), _c('br'), _vm._v("icon-im-wysiwyg27")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paragraph-justify"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paragraph-justify, "), _c('br'), _vm._v("icon-im-wysiwyg28")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-indent-increase"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-indent-increase, "), _c('br'), _vm._v("icon-im-wysiwyg29")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-indent-decrease"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-indent-decrease, "), _c('br'), _vm._v("icon-im-wysiwyg30")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-share"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-share, "), _c('br'), _vm._v("icon-im-out")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-new-tab"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-new-tab, "), _c('br'), _vm._v("icon-im-out2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-embed"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-embed, "), _c('br'), _vm._v("icon-im-code")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-embed2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-embed2, "), _c('br'), _vm._v("icon-im-code2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-terminal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-terminal, "), _c('br'), _vm._v("icon-im-console")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-share2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-share2, "), _c('br'), _vm._v("icon-im-social")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mail"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mail2, "), _c('br'), _vm._v("icon-im-contact2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mail2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mail3, "), _c('br'), _vm._v("icon-im-contact3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mail3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mail4, "), _c('br'), _vm._v("icon-im-contact4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-mail4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-mail5, "), _c('br'), _vm._v("icon-im-contact5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-amazon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-amazon, "), _c('br'), _vm._v("icon-im-brand")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google, "), _c('br'), _vm._v("icon-im-brand2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google2, "), _c('br'), _vm._v("icon-im-brand3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google3, "), _c('br'), _vm._v("icon-im-brand4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google-plus"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google-plus, "), _c('br'), _vm._v("icon-im-brand5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google-plus2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google-plus2, "), _c('br'), _vm._v("icon-im-brand6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google-plus3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google-plus3, "), _c('br'), _vm._v("icon-im-brand7")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hangouts"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hangouts, "), _c('br'), _vm._v("icon-im-brand8")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-google-drive"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-google-drive, "), _c('br'), _vm._v("icon-im-brand9")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-facebook"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-facebook, "), _c('br'), _vm._v("icon-im-brand10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-facebook2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-facebook2, "), _c('br'), _vm._v("icon-im-brand11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-instagram"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-instagram, "), _c('br'), _vm._v("icon-im-brand12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-whatsapp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-whatsapp, "), _c('br'), _vm._v("icon-im-brand13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-spotify"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-spotify, "), _c('br'), _vm._v("icon-im-brand14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-telegram"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-telegram, "), _c('br'), _vm._v("icon-im-brand15")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-twitter"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-twitter, "), _c('br'), _vm._v("icon-im-brand16")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-vine"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-vine, "), _c('br'), _vm._v("icon-im-brand17")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-vk"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-vk, "), _c('br'), _vm._v("icon-im-brand18")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-renren"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-renren, "), _c('br'), _vm._v("icon-im-brand19")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-sina-weibo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-sina-weibo, "), _c('br'), _vm._v("icon-im-brand20")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-rss"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-feed2, "), _c('br'), _vm._v("icon-im-rss")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-rss2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-feed3, "), _c('br'), _vm._v("icon-im-rss2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-youtube"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-youtube, "), _c('br'), _vm._v("icon-im-brand21")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-youtube2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-youtube2, "), _c('br'), _vm._v("icon-im-brand22")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-twitch"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-twitch, "), _c('br'), _vm._v("icon-im-brand23")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-vimeo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-vimeo, "), _c('br'), _vm._v("icon-im-brand24")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-vimeo2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-vimeo2, "), _c('br'), _vm._v("icon-im-brand25")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-lanyrd"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-lanyrd, "), _c('br'), _vm._v("icon-im-brand26")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-flickr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-flickr, "), _c('br'), _vm._v("icon-im-brand27")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-flickr2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-flickr2, "), _c('br'), _vm._v("icon-im-brand28")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-flickr3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-flickr3, "), _c('br'), _vm._v("icon-im-brand29")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-flickr4"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-flickr4, "), _c('br'), _vm._v("icon-im-brand30")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-dribbble"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-dribbble, "), _c('br'), _vm._v("icon-im-brand31")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-behance"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-behance, "), _c('br'), _vm._v("icon-im-brand32")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-behance2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-behance2, "), _c('br'), _vm._v("icon-im-brand33")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-deviantart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-deviantart, "), _c('br'), _vm._v("icon-im-brand34")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-500px"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-500px, "), _c('br'), _vm._v("icon-im-brand35")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-steam"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-steam, "), _c('br'), _vm._v("icon-im-brand36")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-steam2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-steam2, "), _c('br'), _vm._v("icon-im-brand37")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-dropbox"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-dropbox, "), _c('br'), _vm._v("icon-im-brand38")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-onedrive"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-onedrive, "), _c('br'), _vm._v("icon-im-brand39")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-github"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-github, "), _c('br'), _vm._v("icon-im-brand40")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-npm"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-npm, "), _c('br'), _vm._v("icon-im-brand41")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-basecamp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-basecamp, "), _c('br'), _vm._v("icon-im-brand42")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-trello"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-trello, "), _c('br'), _vm._v("icon-im-brand43")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wordpress"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wordpress, "), _c('br'), _vm._v("icon-im-brand44")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-joomla"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-joomla, "), _c('br'), _vm._v("icon-im-brand45")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-ello"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-ello, "), _c('br'), _vm._v("icon-im-brand46")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-blogger"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-blogger, "), _c('br'), _vm._v("icon-im-brand47")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-blogger2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-blogger2, "), _c('br'), _vm._v("icon-im-brand48")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tumblr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tumblr, "), _c('br'), _vm._v("icon-im-brand49")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tumblr2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tumblr2, "), _c('br'), _vm._v("icon-im-brand50")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-yahoo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', {
+    staticClass: "unit1"
+  }, [_vm._v("eabb")]), _vm._v(" "), _c('span', [_vm._v("icon-im-yahoo, "), _c('br'), _vm._v("icon-im-brand51")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-yahoo2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-yahoo2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-tux"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-tux, "), _c('br'), _vm._v("icon-im-brand52")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-appleinc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-apple, "), _c('br'), _vm._v("icon-im-brand53")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-finder"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-finder, "), _c('br'), _vm._v("icon-im-brand54")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-android"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-android, "), _c('br'), _vm._v("icon-im-brand55")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-windows"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-windows, "), _c('br'), _vm._v("icon-im-brand56")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-windows8"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-windows8, "), _c('br'), _vm._v("icon-im-brand57")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-soundcloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-soundcloud, "), _c('br'), _vm._v("icon-im-brand58")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-soundcloud2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-soundcloud2, "), _c('br'), _vm._v("icon-im-brand59")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-skype"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-skype, "), _c('br'), _vm._v("icon-im-brand60")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-reddit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-reddit, "), _c('br'), _vm._v("icon-im-brand61")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-hackernews"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-hackernews, "), _c('br'), _vm._v("icon-im-brand62")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-wikipedia"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-wikipedia, "), _c('br'), _vm._v("icon-im-brand63")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-linkedin"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-linkedin, "), _c('br'), _vm._v("icon-im-brand64")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-linkedin2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-linkedin2, "), _c('br'), _vm._v("icon-im-brand65")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-lastfm"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-lastfm, "), _c('br'), _vm._v("icon-im-brand66")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-lastfm2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-lastfm2, "), _c('br'), _vm._v("icon-im-brand67")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-delicious"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-delicious, "), _c('br'), _vm._v("icon-im-brand68")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stumbleupon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stumbleupon, "), _c('br'), _vm._v("icon-im-brand69")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stumbleupon2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stumbleupon2, "), _c('br'), _vm._v("icon-im-brand70")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-stackoverflow"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-stackoverflow, "), _c('br'), _vm._v("icon-im-brand71")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pinterest"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pinterest, "), _c('br'), _vm._v("icon-im-brand72")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-pinterest2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-pinterest2, "), _c('br'), _vm._v("icon-im-brand73")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-xing"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-xing, "), _c('br'), _vm._v("icon-im-brand74")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-xing2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-xing2, "), _c('br'), _vm._v("icon-im-brand75")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-flattr"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-flattr, "), _c('br'), _vm._v("icon-im-brand76")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-foursquare"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-foursquare, "), _c('br'), _vm._v("icon-im-brand77")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-yelp"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-yelp, "), _c('br'), _vm._v("icon-im-brand78")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-paypal"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-paypal, "), _c('br'), _vm._v("icon-im-brand79")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-chrome"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-chrome, "), _c('br'), _vm._v("icon-im-browser")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-firefox"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-firefox, "), _c('br'), _vm._v("icon-im-browser2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-IE"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-IE, "), _c('br'), _vm._v("icon-im-browser3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-edge"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-edge, "), _c('br'), _vm._v("icon-im-browser4")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-safari"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-safari, "), _c('br'), _vm._v("icon-im-browser5")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-opera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-opera, "), _c('br'), _vm._v("icon-im-browser6")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-pdf"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-pdf, "), _c('br'), _vm._v("icon-im-file10")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-openoffice"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-openoffice, "), _c('br'), _vm._v("icon-im-file11")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-word"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-word, "), _c('br'), _vm._v("icon-im-file12")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-file-excel"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-file-excel, "), _c('br'), _vm._v("icon-im-file13")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-libreoffice"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-libreoffice, "), _c('br'), _vm._v("icon-im-file14")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-html-five"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-html-five, "), _c('br'), _vm._v("icon-im-w3c")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-html-five2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-html-five2, "), _c('br'), _vm._v("icon-im-w3c2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-css3"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-css3, "), _c('br'), _vm._v("icon-im-w3c3")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-git"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-git, "), _c('br'), _vm._v("icon-im-brand80")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-codepen"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-codepen, "), _c('br'), _vm._v("icon-im-brand81")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-svg"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-svg")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-im icon-im-IcoMoon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-im-IcoMoon, "), _c('br'), _vm._v("icon-im-icomoon")])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-96c5516c", module.exports)
+  }
+}
+
+/***/ }),
+/* 270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(271),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Line.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Line.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c88c84e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-c88c84e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_c('div', {
+    staticClass: "page-header"
+  }, [_c('h3', {
+    staticClass: "page-title"
+  }, [_vm._v("Linecons Icons")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Icons")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Linecons Icons")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', [_vm._v("Example Usage")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('pre', {
+    staticClass: "language-php"
+  }, [_c('code', [_vm._v("<i class=\"icon-ln icon-ln-music\"></i>")])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-music"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-music")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-search"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-search")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-mail"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-mail")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-heart"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-heart")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-star"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-star")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-user"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-user")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-videocam"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-videocam")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-camera"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-camera")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-photo"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-photo")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-attach"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-attach")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-lock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-lock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-eye"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-eye")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-tag"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-tag")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-thumbs-up"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-thumbs-up")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-pencil"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-pencil")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-comment"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-comment")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-location"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-location")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-cup"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-cup")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-trash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-trash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-doc"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-doc")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-note"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-note")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-cog"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-cog")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-params"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-params")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-calendar"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-calendar")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-sound"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-sound")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-clock"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-clock")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-lightbulb"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-lightbulb")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-tv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-tv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-desktop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-desktop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-mobile"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-mobile")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-cd"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-cd")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-inbox"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-inbox")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-globe"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-globe")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-cloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-cloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-paper-plane"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-paper-plane")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-fire"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-fire")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-graduation-cap"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-graduation-cap")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-megaphone"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-megaphone")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-database"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-database")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-key"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-key")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-beaker"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-beaker")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-truck"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-truck")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-money"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-money")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-food"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-food")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-shop"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-shop")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-diamond"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-diamond")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-t-shirt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-t-shirt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-ln icon-ln-wallet"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-ln-wallet")])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c88c84e0", module.exports)
+  }
+}
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(273),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Meteo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Meteo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1116569a", Component.options)
+  } else {
+    hotAPI.reload("data-v-1116569a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 273 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_c('div', {
+    staticClass: "page-header"
+  }, [_c('h3', {
+    staticClass: "page-title"
+  }, [_vm._v("Meteocons Icons")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Icons")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Meteocons Icons")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', [_vm._v("Example Usage")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('pre', {
+    staticClass: "language-php"
+  }, [_c('code', [_vm._v("<i class=\"icon-mt icon-mt-compass\"></i>")])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('div', {
+    staticClass: "icon-container"
+  }, [_c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-compass"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-compass ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-na"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-na")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-celcius"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-celcius")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-fahrenheit"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-fahrenheit")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-clouds-flash-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-clouds-flash-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-sun-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-sun-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-moon-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-moon-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-snowflake"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-snowflake")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-sun"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-sun")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-moon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-moon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-fog-sun"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-fog-sun")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-fog-moon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-fog-moon")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-fog-cloud"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-fog-cloud")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-fog"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-fog")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-windy-rain"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-windy-rain")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-snow"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-snow")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-snow-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-snow-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-snow-heavy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-snow-heavy")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-hail"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-hail")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-clouds"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-clouds")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-clouds-flash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-clouds-flash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-sun-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-sun-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-moon-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-moon-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-flash-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-flash-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-drizzle-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-drizzle-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-rain-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-rain-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-flash"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-flash")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-cloud-flash-alt"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-cloud-flash-alt")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-drizzle"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-drizzle")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-rain"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-rain")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-windy"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-windy")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-windy-rain-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-windy-rain-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-snow-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-snow-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-snow-heavy-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-snow-heavy-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-hail-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-hail-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-clouds-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-clouds-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-clouds-flash-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-clouds-flash-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-temperature"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-temperature")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-windy-inv"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-windy-inv")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-sunrise"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-sunrise")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-sun-1"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-sun-1")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-moon-2"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-moon-2")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-eclipse"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-eclipse")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-mist"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-mist")])])]), _vm._v(" "), _c('div', {
+    staticClass: "demo-icon"
+  }, [_c('div', {
+    staticClass: "icon-box"
+  }, [_c('i', {
+    staticClass: "icon-mt icon-mt-wind"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "icon-classname"
+  }, [_c('span', [_vm._v("icon-mt-wind")])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1116569a", module.exports)
+  }
+}
+
+/***/ }),
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(275),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\General.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] General.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50513,7 +65844,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 263 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -50907,15 +66238,15 @@ if (false) {
 }
 
 /***/ }),
-/* 264 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(265),
+  __webpack_require__(277),
   /* template */
-  __webpack_require__(266),
+  __webpack_require__(278),
   /* styles */
   null,
   /* scopeId */
@@ -50923,7 +66254,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Advanced.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Advanced.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Advanced.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50947,7 +66278,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 265 */
+/* 277 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51473,7 +66804,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 266 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -52532,7 +67863,7 @@ if (false) {
 }
 
 /***/ }),
-/* 267 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -52540,7 +67871,7 @@ var Component = __webpack_require__(1)(
   /* script */
   null,
   /* template */
-  __webpack_require__(268),
+  __webpack_require__(280),
   /* styles */
   null,
   /* scopeId */
@@ -52548,7 +67879,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormLayouts.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormLayouts.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FormLayouts.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -52572,7 +67903,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 268 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -52787,15 +68118,15 @@ if (false) {
 }
 
 /***/ }),
-/* 269 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(270),
+  __webpack_require__(282),
   /* template */
-  __webpack_require__(271),
+  __webpack_require__(283),
   /* styles */
   null,
   /* scopeId */
@@ -52803,7 +68134,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormValidation.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormValidation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FormValidation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -52827,7 +68158,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 270 */
+/* 282 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52947,7 +68278,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 271 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -53051,15 +68382,15 @@ if (false) {
 }
 
 /***/ }),
-/* 272 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(273),
+  __webpack_require__(285),
   /* template */
-  __webpack_require__(274),
+  __webpack_require__(286),
   /* styles */
   null,
   /* scopeId */
@@ -53067,7 +68398,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Editors.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Editors.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Editors.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53091,7 +68422,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 273 */
+/* 285 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53154,7 +68485,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 274 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -53209,15 +68540,15 @@ if (false) {
 }
 
 /***/ }),
-/* 275 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(276),
+  __webpack_require__(288),
   /* template */
-  __webpack_require__(277),
+  __webpack_require__(289),
   /* styles */
   null,
   /* scopeId */
@@ -53225,7 +68556,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\VeeValidate.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\VeeValidate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] VeeValidate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53249,7 +68580,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 276 */
+/* 288 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53361,7 +68692,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 277 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -53646,7 +68977,7 @@ if (false) {
 }
 
 /***/ }),
-/* 278 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -53654,7 +68985,7 @@ var Component = __webpack_require__(1)(
   /* script */
   null,
   /* template */
-  __webpack_require__(279),
+  __webpack_require__(291),
   /* styles */
   null,
   /* scopeId */
@@ -53662,7 +68993,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\Settings.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\Settings.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Settings.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53686,7 +69017,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 279 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -53802,15 +69133,15 @@ if (false) {
 }
 
 /***/ }),
-/* 280 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(281),
+  __webpack_require__(293),
   /* template */
-  __webpack_require__(282),
+  __webpack_require__(294),
   /* styles */
   null,
   /* scopeId */
@@ -53818,7 +69149,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Login.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53842,12 +69173,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 281 */
+/* 293 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_auth__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_auth__ = __webpack_require__(9);
 //
 //
 //
@@ -53906,7 +69237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 282 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -54045,7 +69376,7 @@ if (false) {
 }
 
 /***/ }),
-/* 283 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -54053,7 +69384,7 @@ var Component = __webpack_require__(1)(
   /* script */
   null,
   /* template */
-  __webpack_require__(284),
+  __webpack_require__(296),
   /* styles */
   null,
   /* scopeId */
@@ -54061,7 +69392,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Register.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Register.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Register.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54085,7 +69416,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 284 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -54142,15 +69473,15 @@ if (false) {
 }
 
 /***/ }),
-/* 285 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(286),
+  __webpack_require__(298),
   /* template */
-  __webpack_require__(287),
+  __webpack_require__(299),
   /* styles */
   null,
   /* scopeId */
@@ -54158,7 +69489,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\errors\\404.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\errors\\404.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] 404.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54182,7 +69513,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 286 */
+/* 298 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54216,7 +69547,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 287 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -54244,7 +69575,7 @@ if (false) {
 }
 
 /***/ }),
-/* 288 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -54252,7 +69583,7 @@ var Component = __webpack_require__(1)(
   /* script */
   null,
   /* template */
-  __webpack_require__(289),
+  __webpack_require__(301),
   /* styles */
   null,
   /* scopeId */
@@ -54260,7 +69591,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\front\\Home.vue"
+Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\front\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54284,7 +69615,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 289 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -54307,23 +69638,23 @@ if (false) {
 }
 
 /***/ }),
-/* 290 */
+/* 302 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(303);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vee_validate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_ls__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_ls__ = __webpack_require__(16);
 
 
 
 
 
-window._ = __webpack_require__(311);
+window._ = __webpack_require__(323);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -54331,7 +69662,7 @@ window._ = __webpack_require__(311);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(10);
+window.Vue = __webpack_require__(13);
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
@@ -54339,7 +69670,7 @@ window.Vue = __webpack_require__(10);
  * included with Laravel will automatically verify the header's value.
  */
 
-window.axios = __webpack_require__(132);
+window.axios = __webpack_require__(135);
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -54382,7 +69713,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vee_validate___default.a);
 
 /***/ }),
-/* 291 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -57956,16 +73287,16 @@ return index;
 
 
 /***/ }),
-/* 292 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var bind = __webpack_require__(133);
-var Axios = __webpack_require__(294);
-var defaults = __webpack_require__(9);
+var bind = __webpack_require__(136);
+var Axios = __webpack_require__(306);
+var defaults = __webpack_require__(12);
 
 /**
  * Create an instance of Axios
@@ -57998,15 +73329,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(137);
-axios.CancelToken = __webpack_require__(309);
-axios.isCancel = __webpack_require__(136);
+axios.Cancel = __webpack_require__(140);
+axios.CancelToken = __webpack_require__(321);
+axios.isCancel = __webpack_require__(139);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(310);
+axios.spread = __webpack_require__(322);
 
 module.exports = axios;
 
@@ -58015,7 +73346,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 293 */
+/* 305 */
 /***/ (function(module, exports) {
 
 /*!
@@ -58042,18 +73373,18 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 294 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(9);
+var defaults = __webpack_require__(12);
 var utils = __webpack_require__(2);
-var InterceptorManager = __webpack_require__(304);
-var dispatchRequest = __webpack_require__(305);
-var isAbsoluteURL = __webpack_require__(307);
-var combineURLs = __webpack_require__(308);
+var InterceptorManager = __webpack_require__(316);
+var dispatchRequest = __webpack_require__(317);
+var isAbsoluteURL = __webpack_require__(319);
+var combineURLs = __webpack_require__(320);
 
 /**
  * Create a new instance of Axios
@@ -58135,7 +73466,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 295 */
+/* 307 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -58321,7 +73652,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 296 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58340,13 +73671,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 297 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(135);
+var createError = __webpack_require__(138);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -58373,7 +73704,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 298 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58401,7 +73732,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 299 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58476,7 +73807,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 300 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58520,7 +73851,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 301 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58595,7 +73926,7 @@ module.exports = (
 
 
 /***/ }),
-/* 302 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58638,7 +73969,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 303 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58698,7 +74029,7 @@ module.exports = (
 
 
 /***/ }),
-/* 304 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58757,16 +74088,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 305 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var transformData = __webpack_require__(306);
-var isCancel = __webpack_require__(136);
-var defaults = __webpack_require__(9);
+var transformData = __webpack_require__(318);
+var isCancel = __webpack_require__(139);
+var defaults = __webpack_require__(12);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -58843,7 +74174,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 306 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58870,7 +74201,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 307 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58891,7 +74222,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 308 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58912,13 +74243,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 309 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(137);
+var Cancel = __webpack_require__(140);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -58976,7 +74307,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 310 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59010,7 +74341,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 311 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -75997,10 +91328,10 @@ module.exports = function spread(callback) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11), __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(19)(module)))
 
 /***/ }),
-/* 312 */
+/* 324 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76098,7 +91429,7 @@ module.exports = function spread(callback) {
 });
 
 /***/ }),
-/* 313 */
+/* 325 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
