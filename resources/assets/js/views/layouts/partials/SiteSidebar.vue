@@ -34,14 +34,21 @@
                         <router-link to="/admin/components/datatables" tag="li"><a>Jquery Datatables</a></router-link>
                         <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
                         <router-link to="/admin/components/graphs" tag="li"><a>Graphs</a></router-link>
+                        <router-link to="/admin/components/image-cropper" tag="li"><a>ImageCropper</a></router-link>
+                        <router-link to="/admin/components/image-zoom" tag="li"><a>ImageZoom</a></router-link>
+                        <router-link to="/admin/components/calendar" tag="li"><a>Calendar</a></router-link>
+                        <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
+                        <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/chart') }">
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-bar-chart"></i> Charts <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">
-                        <router-link to="" tag="li"><a>Jquery Datatables</a></router-link>
-                        <router-link to="" tag="li"><a>Notifications</a></router-link>
-                        <router-link to="" tag="li"><a>Graphs</a></router-link>
+                        <router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>
+                        <router-link to="/admin/charts/sparkline" tag="li"><a>Sparkline</a></router-link>
+                        <router-link to="/admin/charts/amchart" tag="li"><a>AM Charts</a></router-link>
+                        <router-link to="/admin/charts/morris" tag="li"><a>Morris</a></router-link>
+                        <router-link to="/admin/charts/gauge" tag="li"><a>Gauges</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/icons') }">

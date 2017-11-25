@@ -32,6 +32,19 @@ import Tables from './views/admin/basic-ui/Tables.vue'
 import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import Graphs from './views/admin/components/Graphs.vue'
+import ImageCropper from './views/admin/components/ImageCropper.vue'
+import ImageZoom from './views/admin/components/ImageZoom.vue'
+import Calendar from './views/admin/components/Calendar.vue'
+import NestableTree from './views/admin/components/NestableTree.vue'
+import NestableList from './views/admin/components/NestableList.vue'
+
+//Charts
+import Amchart from './views/admin/charts/Amchart.vue'
+import Chartjs from './views/admin/charts/Chartjs.vue'
+import Gauge from './views/admin/charts/Gauge.vue'
+import Morris from './views/admin/charts/Morris.vue'
+import Sparkline from './views/admin/charts/Sparkline.vue'
+
 
 //Icons
 import Evil from './views/admin/icons/Evil.vue'
@@ -73,7 +86,7 @@ import NotFoundPage from './views/errors/404.vue'
 
 import Home from './views/front/Home.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     
@@ -188,8 +201,50 @@ const routes = [
                 path: 'components/graphs',
                 component: Graphs
             },
-            //chart
+            {
+                path: 'components/image-zoom',
+                component: ImageZoom
+            },
+            {
+                path: 'components/calendar',
+                component: Calendar
+            },
+            {
+                path: 'components/nestable-tree',
+                component: NestableTree
+            },
+            {
+                path: 'components/nestable-list',
+                component: NestableList
 
+            },
+
+            //chart
+            {
+                path: 'charts/amchart',
+                component: Amchart
+
+            },
+            {
+                path: 'charts/chartjs',
+                component:Chartjs
+
+            },
+            {
+                path: 'charts/gauge',
+                component: Gauge
+
+            },
+            {
+                path: 'charts/morris',
+                component: Morris
+
+            },
+            {
+                path: 'charts/sparkline',
+                component: Sparkline
+
+            },
             //Icons
             {
                 path: 'icons/evil',
@@ -215,6 +270,11 @@ const routes = [
                 path: 'icons/meteo',
                 component: Meteo
             },
+            {
+                path: 'components/image-cropper',
+                component: ImageCropper
+            },
+
 
             //Forms
             {

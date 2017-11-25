@@ -34,6 +34,7 @@
                         <li class=""><a href="../components/datatables.html">Datatables</a></li>
                         <li class=""><a href="../components/notifications.html">Notifications</a></li>
                         <li class=""><a href="../components/graphs.html">Graphs</a></li>
+                        <li class=""><a href="../components/image-cropper.html">ImageCropper</a></li>
                     </ul>
                 </li>
                 <li class="has-child">
