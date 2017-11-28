@@ -18,9 +18,7 @@ class TodosController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
-
-        return view('admin.pages.todos.index')->with('todos',$todos);
+       return  $todos = Todo::all();
     }
 
     /**
@@ -34,13 +32,12 @@ class TodosController extends Controller
         $todo = new Todo();
         $todo->title = $request->title;
         $todo->completed = $request->completed;
-        return $todo;
-//        $todo->save();
-//
-//        return response()->json([
-//            'message' => 'Todo Added Successfully',
-//            'todo' => $todo
-//        ],200);
+        $todo->save();
+
+        return response()->json([
+            'message' => 'Todo Added Successfully',
+            'todo' => $todo
+        ],200);
     }
 
     /**

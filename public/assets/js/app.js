@@ -1818,6 +1818,144 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Todos.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            newTodo: {
+                id: '',
+                title: '',
+                completed: false
+            },
+            todos: [{
+                title: 'Install the Template',
+                completed: false
+            }]
+        };
+    },
+    mounted: function mounted() {
+        var vm = this;
+        axios.get('/api/admin/todos').then(function (response) {
+            vm.todos = response.data;
+        });
+    },
+
+
+    props: ['yourTodos'],
+
+    methods: {
+        addTodo: function addTodo() {
+
+            var vm = this,
+                url = '/api/admin/todos';
+
+            if (vm.newTodo.title == '') {
+                return;
+            }
+
+            axios.post(url, vm.newTodo).then(function (request) {
+                //toastr['success'](request.data, "Success");
+
+                vm.todos.push({
+                    id: request.data.todo.id,
+                    title: request.data.todo.title,
+                    completed: false
+                });
+
+                vm.newTodo = {
+                    id: '',
+                    title: '',
+                    completed: false
+                };
+            }, function (error) {
+                alert('error');
+            });
+        },
+        removeTodo: function removeTodo(todo) {
+
+            var url = '/api/admin/todos/' + todo.id,
+                vm = this;
+
+            axios.post(url, { _method: 'DELETE' }).then(function (request) {
+                var index = vm.todos.indexOf(todo);
+                vm.todos.splice(index, 1);
+            }.bind(this), function (error) {
+                console.log(error);
+            });
+        },
+        toggleTodoComplete: function toggleTodoComplete(todo) {
+
+            var url = '/api/admin/todos/toggleTodo/' + todo.id,
+                vm = this;
+
+            axios.post(url, { completed: todo.completed }).then(function (request) {
+                console.log(request);
+            }.bind(this), function (error) {
+                console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/views/admin/Todos.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Todos_vue__ = __webpack_require__("./resources/assets/js/components/Todos.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Todos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Todos_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Todos: __WEBPACK_IMPORTED_MODULE_0__components_Todos_vue___default.a
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/views/admin/basic-ui/Buttons.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9829,108 +9967,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/views/admin/todos/Index.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-
-        this.todos = JSON.parse(this.yourTodos);
-    },
-    data: function data() {
-        return {
-            newTodo: {
-                id: '',
-                title: '',
-                completed: false
-            },
-            todos: [{
-                title: 'Install the Template',
-                completed: false
-            }]
-        };
-    },
-
-
-    props: ['yourTodos'],
-
-    methods: {
-        addTodo: function addTodo() {
-
-            var vm = this,
-                url = '/admin/todos';
-
-            if (vm.newTodo.title == '') {
-                return;
-            }
-
-            axios.post(url, vm.newTodo).then(function (request) {
-                //toastr['success'](request.data, "Success");
-
-                vm.todos.push({
-                    id: request.data.todo.id,
-                    title: request.data.todo.title,
-                    completed: false
-                });
-
-                vm.newTodo = {
-                    id: '',
-                    title: '',
-                    completed: false
-                };
-            }, function (error) {
-                alert('error');
-            });
-        },
-        removeTodo: function removeTodo(todo) {
-
-            var url = '/admin/todos/' + todo.id,
-                vm = this;
-
-            axios.post(url, { _method: 'DELETE' }).then(function (request) {
-                var index = vm.todos.indexOf(todo);
-                vm.todos.splice(index, 1);
-            }.bind(this), function (error) {
-                console.log(error);
-            });
-        },
-        toggleTodoComplete: function toggleTodoComplete(todo) {
-
-            var url = '/admin/todos/toggleTodo/' + todo.id,
-                vm = this;
-
-            axios.post(url, { completed: todo.completed }).then(function (request) {
-                console.log(request);
-            }.bind(this), function (error) {
-                console.log(error);
-            });
-        }
-    }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/views/auth/Login.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10197,7 +10233,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setLayoutClasses: function setLayoutClasses() {
             var body = $('body');
             body.removeClass();
-            body.addClass('login-page');
+            body.addClass('login-page login-1');
         }
     },
     mounted: function mounted() {
@@ -22070,7 +22106,7 @@ for (var name in colorNames) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* MIT license */
-var convert = __webpack_require__("./node_modules/color-convert/index.js");
+var convert = __webpack_require__("./node_modules/chartjs-color/node_modules/color-convert/index.js");
 var string = __webpack_require__("./node_modules/chartjs-color-string/color-string.js");
 
 var Color = function (obj) {
@@ -22558,7 +22594,7 @@ module.exports = Color;
 
 /***/ }),
 
-/***/ "./node_modules/color-convert/conversions.js":
+/***/ "./node_modules/chartjs-color/node_modules/color-convert/conversions.js":
 /***/ (function(module, exports) {
 
 /* MIT license */
@@ -23263,10 +23299,10 @@ for (var key in cssKeywords) {
 
 /***/ }),
 
-/***/ "./node_modules/color-convert/index.js":
+/***/ "./node_modules/chartjs-color/node_modules/color-convert/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-var conversions = __webpack_require__("./node_modules/color-convert/conversions.js");
+var conversions = __webpack_require__("./node_modules/chartjs-color/node_modules/color-convert/conversions.js");
 
 var convert = function() {
    return new Converter();
@@ -23547,21 +23583,6 @@ exports.push([module.i, "\n.graph-container {\n    height: 300px;\n}\n", ""]);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53edaff9\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/views/admin/todos/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n.todo-container{\n    background-color: #FFDE00;\n    padding:50px;\n    min-height: 500px;\n}\n.todo-field:focus{\n    border:1px solid #ccc;\n}\n.todo-title{\n    font-family: \"Roboto\",sans-serif;\n    font-weight: lighter;\n    text-align: center;\n}\n.todo-block h6{\n    text-align: center;\n    text-transform: uppercase;\n    color: gray;\n}\n.remove-link {\n    color: #f35a3d;\n    position: absolute;\n    top:0;\n    line-height: 50px;\n    right:5px;\n}\n.remove-link:hover{\n    color: #f35a3d;\n}\n.todo-block{\n    background: #fff;\n    padding: 0.375rem 0.75rem;\n    margin-top:30px;\n    height: 200px;\n    overflow: auto;\n}\n.todo-list {\n    list-style: none;\n    padding:0;\n    font-size:20px;\n}\n.todo-list li{\n    border-bottom: 1px solid #d9d9d9;\n    padding:10px;\n    position:relative;\n}\n.todo-list li label{\n    padding-left:70px;\n    margin:0;\n    color : #333;\n}\n.todo-list li input[type=checkbox]{\n    outline: none;\n    text-align: center;\n    width: 40px;\n    height:40px;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    margin: auto 0;\n    border: none;\n    -webkit-appearance: none;\n    appearance: none;\n}\n.todo-list li .toggle:after {\n    content: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewBox=\"-10 -18 100 135\"><circle cx=\"50\" cy=\"50\" r=\"50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"/></svg>');\n}\n.todo-list li .toggle:checked:after {\n    content: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewBox=\"-10 -18 100 135\"><circle cx=\"50\" cy=\"50\" r=\"50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"/><path fill=\"#4fc47f\" d=\"M72 25L42 71 27 56l-4 4 20 20 34-52z\"/></svg>');\n}\n@media (max-width: 768px) {\n.todos-container{\n        display: none;\n}\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67512a96\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/PieChart.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23571,6 +23592,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n.graph-container {\n    height: 300px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b82317a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/Todos.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.todo-container{\n    background-color: #FFDE00;\n    padding:50px;\n    min-height: 500px;\n}\n.todo-field:focus{\n    border:1px solid #ccc;\n}\n.todo-title{\n    font-family: \"Roboto\",sans-serif;\n    font-weight: lighter;\n    text-align: center;\n}\n.todo-block h6{\n    text-align: center;\n    text-transform: uppercase;\n    color: gray;\n}\n.remove-link {\n    color: #f35a3d;\n    position: absolute;\n    top:0;\n    line-height: 50px;\n    right:5px;\n}\n.remove-link:hover{\n    color: #f35a3d;\n}\n.todo-block{\n    background: #fff;\n    padding: 0.375rem 0.75rem;\n    margin-top:30px;\n    height: 200px;\n    overflow: auto;\n}\n.todo-list {\n    list-style: none;\n    padding:0;\n    font-size:20px;\n}\n.todo-list li{\n    border-bottom: 1px solid #d9d9d9;\n    padding:10px;\n    position:relative;\n}\n.todo-list li label{\n    padding-left:70px;\n    margin:0;\n    color : #333;\n}\n.todo-list li input[type=checkbox]{\n    outline: none;\n    text-align: center;\n    width: 40px;\n    height:40px;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    margin: auto 0;\n    border: none;\n    -webkit-appearance: none;\n    appearance: none;\n}\n.todo-list li .toggle:after {\n    content: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewBox=\"-10 -18 100 135\"><circle cx=\"50\" cy=\"50\" r=\"50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"/></svg>');\n}\n.todo-list li .toggle:checked:after {\n    content: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewBox=\"-10 -18 100 135\"><circle cx=\"50\" cy=\"50\" r=\"50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"/><path fill=\"#4fc47f\" d=\"M72 25L42 71 27 56l-4 4 20 20 34-52z\"/></svg>');\n}\n@media (max-width: 768px) {\n.todos-container{\n        display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -62919,6 +62955,50 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0c3591f6\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/views/admin/Todos.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "main-content"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('todos')], 1)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "page-header"
+  }, [_c('h3', {
+    staticClass: "page-title"
+  }, [_vm._v("Todos "), _c('small', {
+    staticClass: "text-muted"
+  }, [_vm._v("Built with Vue JS")])]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', {
+    staticClass: "breadcrumb-item"
+  }, [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    staticClass: "breadcrumb-item active"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Todos")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0c3591f6", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1116569a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/views/admin/icons/Meteo.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -66858,54 +66938,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-53edaff9\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/views/admin/todos/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "main-content"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "card"
-  }, [_c('div', {
-    staticClass: "card-body"
-  }, [_c('todos', {
-    attrs: {
-      "your-todos": _vm.todos
-    }
-  })], 1)])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "page-header"
-  }, [_c('h3', {
-    staticClass: "page-title"
-  }, [_vm._v("Todos "), _c('small', {
-    staticClass: "text-muted"
-  }, [_vm._v("Built with Vue JS")])]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }, [_c('li', {
-    staticClass: "breadcrumb-item"
-  }, [_c('a', {
-    attrs: {
-      "href": ""
-    }
-  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
-    staticClass: "breadcrumb-item active"
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Todos")])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-53edaff9", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-5e2881e8\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/views/admin/dashboard/Finance.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -69011,6 +69043,120 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-67512a96", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6b82317a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Todos.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "todo-container mx-auto col-lg-6 "
+  }, [_c('h5', {
+    staticClass: "todo-title"
+  }, [_vm._v("TODOS APP")]), _vm._v(" "), _c('p', {
+    staticClass: "text-sm-center"
+  }, [_vm._v("This Demo showcases a simple workflow with VueJS , Vue Resource and Laravel. ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newTodo.title),
+      expression: "newTodo.title"
+    }],
+    staticClass: "form-control todo-field",
+    attrs: {
+      "type": "text",
+      "placeholder": "New Todo"
+    },
+    domProps: {
+      "value": (_vm.newTodo.title)
+    },
+    on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.addTodo($event)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newTodo.title = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "todo-block scroll-pane"
+  }, [_c('ul', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.todos.length),
+      expression: "todos.length"
+    }],
+    staticClass: "todo-list"
+  }, _vm._l((_vm.todos), function(todo, index) {
+    return _c('li', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (todo.completed),
+        expression: "todo.completed"
+      }],
+      staticClass: "toggle",
+      attrs: {
+        "type": "checkbox",
+        "id": index,
+        "true-value": 1,
+        "false-value": 0
+      },
+      domProps: {
+        "checked": Array.isArray(todo.completed) ? _vm._i(todo.completed, null) > -1 : _vm._q(todo.completed, 1)
+      },
+      on: {
+        "change": function($event) {
+          _vm.toggleTodoComplete(todo)
+        },
+        "__c": function($event) {
+          var $$a = todo.completed,
+            $$el = $event.target,
+            $$c = $$el.checked ? (1) : (0);
+          if (Array.isArray($$a)) {
+            var $$v = null,
+              $$i = _vm._i($$a, $$v);
+            if ($$el.checked) {
+              $$i < 0 && (todo.completed = $$a.concat($$v))
+            } else {
+              $$i > -1 && (todo.completed = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            }
+          } else {
+            todo.completed = $$c
+          }
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": index
+      }
+    }, [_vm._v(_vm._s(todo.title))]), _vm._v(" "), _c('a', {
+      staticClass: "remove-link",
+      attrs: {
+        "href": "#"
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.removeTodo(todo)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "icon-fa icon-fa-close"
+    })])])
+  }))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6b82317a", module.exports)
   }
 }
 
@@ -81457,7 +81603,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('router-view'), _vm._v(" "), _vm._m(1)], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "brand-main"
+    staticClass: "logo-main"
   }, [_c('a', {
     attrs: {
       "href": "/admin"
@@ -86282,33 +86428,6 @@ if(false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53edaff9\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/views/admin/todos/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53edaff9\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/views/admin/todos/Index.vue");
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("5ceb6e97", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53edaff9\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Index.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53edaff9\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Index.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67512a96\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/PieChart.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -86326,6 +86445,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67512a96\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PieChart.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67512a96\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PieChart.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b82317a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/Todos.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b82317a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/Todos.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("233745d5", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b82317a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Todos.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b82317a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Todos.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -96780,10 +96926,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__router_js__ = __webpack_require__("./resources/assets/js/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_layout__ = __webpack_require__("./resources/assets/js/helpers/layout.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_plugin__ = __webpack_require__("./resources/assets/js/helpers/plugin.js");
-
-
-
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -96791,6 +96933,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  */
 
 __webpack_require__("./resources/assets/js/bootstrap.js");
+
+
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -96908,7 +97054,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\BarChart.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\BarChart.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] BarChart.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -96953,7 +97099,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\DoughnutGraph.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\DoughnutGraph.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] DoughnutGraph.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -96998,7 +97144,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\LineChart.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\LineChart.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LineChart.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97043,7 +97189,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\PieChart.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\PieChart.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] PieChart.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97057,6 +97203,51 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-67512a96", Component.options)
   } else {
     hotAPI.reload("data-v-67512a96", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Todos.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b82317a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/Todos.vue")
+}
+var Component = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")(
+  /* script */
+  __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Todos.vue"),
+  /* template */
+  __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6b82317a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Todos.vue"),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\components\\Todos.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Todos.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6b82317a", Component.options)
+  } else {
+    hotAPI.reload("data-v-6b82317a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -97274,8 +97465,8 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__views_admin_forms_Editors_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_39__views_admin_forms_Editors_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__views_admin_forms_VeeValidate_vue__ = __webpack_require__("./resources/assets/js/views/admin/forms/VeeValidate.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__views_admin_forms_VeeValidate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_40__views_admin_forms_VeeValidate_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__views_admin_todos_Index_vue__ = __webpack_require__("./resources/assets/js/views/admin/todos/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__views_admin_todos_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_41__views_admin_todos_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__views_admin_Todos_vue__ = __webpack_require__("./resources/assets/js/views/admin/Todos.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__views_admin_Todos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_41__views_admin_Todos_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__views_admin_Settings_vue__ = __webpack_require__("./resources/assets/js/views/admin/Settings.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__views_admin_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_42__views_admin_Settings_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__views_auth_Login_vue__ = __webpack_require__("./resources/assets/js/views/auth/Login.vue");
@@ -97555,7 +97746,7 @@ var routes = [
     //Todos
     {
         path: 'todos',
-        component: __WEBPACK_IMPORTED_MODULE_41__views_admin_todos_Index_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_41__views_admin_Todos_vue___default.a
     },
     //Settings
     {
@@ -97690,7 +97881,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\Settings.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\Settings.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Settings.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97704,6 +97895,47 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-304836aa", Component.options)
   } else {
     hotAPI.reload("data-v-304836aa", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/views/admin/Todos.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")(
+  /* script */
+  __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/views/admin/Todos.vue"),
+  /* template */
+  __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0c3591f6\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/views/admin/Todos.vue"),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\Todos.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Todos.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0c3591f6", Component.options)
+  } else {
+    hotAPI.reload("data-v-0c3591f6", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -97731,7 +97963,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Buttons.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Buttons.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Buttons.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97772,7 +98004,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Cards.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Cards.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Cards.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97813,7 +98045,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tables.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tables.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tables.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97854,7 +98086,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tabs.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Tabs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tabs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97895,7 +98127,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Typography.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\basic-ui\\Typography.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Typography.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97936,7 +98168,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Amchart.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Amchart.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Amchart.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -97977,7 +98209,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Chartjs.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Chartjs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Chartjs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98018,7 +98250,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Gauge.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Gauge.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Gauge.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98059,7 +98291,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Morris.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Morris.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Morris.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98100,7 +98332,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Sparkline.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\charts\\Sparkline.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Sparkline.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98141,7 +98373,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Calendar.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Calendar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Calendar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98182,7 +98414,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Datatables.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Datatables.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Datatables.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98223,7 +98455,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Graphs.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Graphs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Graphs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98264,7 +98496,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\ImageCropper.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\ImageCropper.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ImageCropper.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98305,7 +98537,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\ImageZoom.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\ImageZoom.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ImageZoom.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98346,7 +98578,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\NestableList.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\NestableList.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] NestableList.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98387,7 +98619,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\NestableTree.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\NestableTree.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] NestableTree.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98428,7 +98660,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Notifications.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\components\\Notifications.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Notifications.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98469,7 +98701,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Basic.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Basic.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Basic.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98510,7 +98742,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Ecommerce.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Ecommerce.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Ecommerce.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98551,7 +98783,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Finance.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\dashboard\\Finance.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Finance.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98592,7 +98824,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Advanced.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Advanced.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Advanced.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98633,7 +98865,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Editors.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\Editors.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Editors.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98674,7 +98906,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormLayouts.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormLayouts.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FormLayouts.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98715,7 +98947,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormValidation.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\FormValidation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FormValidation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98756,7 +98988,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\General.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\General.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] General.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98797,7 +99029,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\VeeValidate.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\forms\\VeeValidate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] VeeValidate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98838,7 +99070,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Evil.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Evil.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Evil.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98879,7 +99111,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Fontawesome.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Fontawesome.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Fontawesome.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98920,7 +99152,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\FpsLine.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\FpsLine.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FpsLine.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -98961,7 +99193,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\IcoMoon.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\IcoMoon.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] IcoMoon.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99002,7 +99234,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Line.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Line.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Line.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99043,7 +99275,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Meteo.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\icons\\Meteo.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Meteo.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99057,51 +99289,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-1116569a", Component.options)
   } else {
     hotAPI.reload("data-v-1116569a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/views/admin/todos/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53edaff9\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/views/admin/todos/Index.vue")
-}
-var Component = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")(
-  /* script */
-  __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/views/admin/todos/Index.vue"),
-  /* template */
-  __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-53edaff9\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/views/admin/todos/Index.vue"),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\todos\\Index.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Index.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-53edaff9", Component.options)
-  } else {
-    hotAPI.reload("data-v-53edaff9", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -99129,7 +99316,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Login.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99170,7 +99357,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Register.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\auth\\Register.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Register.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99211,7 +99398,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\errors\\404.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\errors\\404.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] 404.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99252,7 +99439,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\front\\Home.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\front\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99293,7 +99480,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutBasic.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutBasic.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutBasic.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99334,7 +99521,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutFront.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutFront.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutFront.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99375,7 +99562,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutHorizontal.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutHorizontal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutHorizontal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99416,7 +99603,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutIconSidebar.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutIconSidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutIconSidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99457,7 +99644,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutLogin.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\LayoutLogin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LayoutLogin.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99498,7 +99685,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteFooter.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteFooter.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteFooter.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99539,7 +99726,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeader.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteHeader.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99580,7 +99767,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeaderBottom.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteHeaderBottom.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteHeaderBottom.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -99621,7 +99808,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteSidebar.vue"
+Component.options.__file = "D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\layouts\\partials\\SiteSidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SiteSidebar.vue: functional components are not supported with templates, they should use render functions.")}
 

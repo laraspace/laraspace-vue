@@ -63,7 +63,7 @@ import Validation from './views/admin/forms/FormValidation.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 //Settings
-import index from './views/admin/todos/Index.vue'
+import index from './views/admin/Todos.vue'
 
 //Settings
 import Settings from './views/admin/Settings.vue'

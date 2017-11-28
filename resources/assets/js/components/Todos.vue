@@ -18,13 +18,7 @@
 <script>
     export default {
 
-        mounted () {
-
-            this.todos = JSON.parse(this.yourTodos);
-
-        },
-
-        data () {
+        data(){
             return {
                 newTodo : {
                     id : '',
@@ -39,14 +33,21 @@
                 ]
             }
         },
+        mounted() {
+            let vm = this;
+            axios.get('/api/admin/todos').then(function(response){
+                vm.todos = response.data;
+            });
+
+        },
 
         props: ['yourTodos'],
 
         methods : {
 
-            addTodo () {
+            addTodo(){
 
-                let vm = this,url = '/admin/todos';
+                let vm = this,url = '/api/admin/todos';
 
                 if(vm.newTodo.title == ''){
                     return;
@@ -75,7 +76,7 @@
 
             removeTodo (todo) {
 
-                let url = '/admin/todos/'+ todo.id,vm = this;
+                let url = '/api/admin/todos/'+ todo.id,vm = this;
 
                 axios.post(url, {_method : 'DELETE'}).then(function(request){
                     let index = vm.todos.indexOf(todo)
@@ -88,7 +89,7 @@
 
             toggleTodoComplete (todo) {
 
-                let url = '/admin/todos/toggleTodo/' + todo.id , vm = this;
+                let url = '/api/admin/todos/toggleTodo/' + todo.id , vm = this;
 
                 axios.post(url, {completed : todo.completed}).then(function(request){
                     console.log(request);

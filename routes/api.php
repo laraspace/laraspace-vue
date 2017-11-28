@@ -20,3 +20,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('check','AuthController@check');
 });
 
+Route::group(['prefix' => 'admin'],function (){
+
+    Route::resource('todos', 'Demo\TodosController');
+
+    Route::post('todos/toggleTodo/{id}', [
+        'as' => 'admin.todos.toggle', 'uses' => 'Demo\TodosController@toggleTodo'
+    ]);
+});
+
