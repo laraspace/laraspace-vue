@@ -9426,101 +9426,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -66139,115 +66044,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card"
   }, [_c('div', {
     staticClass: "card-header"
-  }, [_c('h6', [_vm._v("Bootstrap Select "), _c('a', {
-    staticClass: "source-link",
-    attrs: {
-      "href": "http://silviomoreto.github.io/bootstrap-select/",
-      "target": "_blank"
-    }
-  }, [_vm._v("source")])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-body"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-4 mb-3"
-  }, [_c('h5', {
-    staticClass: "section-semi-title"
-  }, [_vm._v("\n                        Single Select\n                    ")]), _vm._v(" "), _c('p', {
-    staticClass: "mb-4"
-  }, [_vm._v("Just apply "), _c('code', [_vm._v(".ls-bootstrap-select")]), _vm._v(" class to a select element")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ls-bootstrap-select"
-  }, [_c('option', [_vm._v("Mustard")]), _vm._v(" "), _c('option', [_vm._v("Ketchup")]), _vm._v(" "), _c('option', [_vm._v("Relish")])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4 mb-3"
-  }, [_c('h5', {
-    staticClass: "section-semi-title"
-  }, [_vm._v("\n                        with Groups\n                    ")]), _vm._v(" "), _c('p', {
-    staticClass: "mb-4"
-  }, [_vm._v("Just use "), _c('code', [_vm._v("optgroups")]), _vm._v(" with label attribute inside select element.")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ls-bootstrap-select"
-  }, [_c('optgroup', {
-    attrs: {
-      "label": "Picnic"
-    }
-  }, [_c('option', [_vm._v("Mustard")]), _vm._v(" "), _c('option', [_vm._v("Ketchup")]), _vm._v(" "), _c('option', [_vm._v("Relish")])]), _vm._v(" "), _c('optgroup', {
-    attrs: {
-      "label": "Camping"
-    }
-  }, [_c('option', [_vm._v("Tent")]), _vm._v(" "), _c('option', [_vm._v("Flashlight")]), _vm._v(" "), _c('option', [_vm._v("Toilet Paper")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4 mb-3"
-  }, [_c('h5', {
-    staticClass: "section-semi-title"
-  }, [_vm._v("\n                        Multiple Select\n                    ")]), _vm._v(" "), _c('p', {
-    staticClass: "mb-4"
-  }, [_vm._v("Just use "), _c('code', [_vm._v("multiple")]), _vm._v(" attribute inside select element.")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ls-bootstrap-select",
-    attrs: {
-      "multiple": ""
-    }
-  }, [_c('option', [_vm._v("Mustard")]), _vm._v(" "), _c('option', [_vm._v("Ketchup")]), _vm._v(" "), _c('option', [_vm._v("Relish")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-4 mb-3"
-  }, [_c('h5', {
-    staticClass: "section-semi-title"
-  }, [_vm._v("\n                        Live Search\n                    ")]), _vm._v(" "), _c('p', {
-    staticClass: "mb-4"
-  }, [_vm._v("Just use "), _c('code', [_vm._v("data-live-search=\"true\"")]), _vm._v(" attribute inside select element to\n                        enable live search.")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ls-bootstrap-select",
-    attrs: {
-      "data-live-search": "true"
-    }
-  }, [_c('option', [_vm._v("Hot Dog, Fries and a Soda")]), _vm._v(" "), _c('option', [_vm._v("Burger, Shake and a Smile")]), _vm._v(" "), _c('option', [_vm._v("Sugar, Spice and all things nice")])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4 mb-3"
-  }, [_c('h5', {
-    staticClass: "section-semi-title"
-  }, [_vm._v("\n                        Keywords\n                    ")]), _vm._v(" "), _c('p', {
-    staticClass: "mb-4"
-  }, [_vm._v("Add key words to options to improve their searchability using\n                        "), _c('code', [_vm._v("data-tokens")]), _vm._v(".")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ls-bootstrap-select",
-    attrs: {
-      "data-live-search": "true"
-    }
-  }, [_c('option', {
-    attrs: {
-      "data-tokens": "ketchup mustard"
-    }
-  }, [_vm._v("Hot Dog, Fries and a Soda")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "data-tokens": "mustard"
-    }
-  }, [_vm._v("Burger, Shake and a Smile")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "data-tokens": "frosting"
-    }
-  }, [_vm._v("Sugar, Spice and all things nice")])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4 mb-3"
-  }, [_c('h5', {
-    staticClass: "section-semi-title"
-  }, [_vm._v("\n                        Limit Selected Items\n                    ")]), _vm._v(" "), _c('p', {
-    staticClass: "mb-4"
-  }, [_vm._v("Limit the number of options that can be selected via the\n                        "), _c('code', [_vm._v("data-max-options")]), _vm._v(" attribute.")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ls-bootstrap-select",
-    attrs: {
-      "multiple": "multiple",
-      "data-max-options": "2"
-    }
-  }, [_c('option', {
-    attrs: {
-      "data-tokens": "ketchup mustard"
-    }
-  }, [_vm._v("Hot Dog, Fries and a Soda")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "data-tokens": "mustard"
-    }
-  }, [_vm._v("Burger, Shake and a Smile")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "data-tokens": "frosting"
-    }
-  }, [_vm._v("Sugar, Spice and all things nice")])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "card"
-  }, [_c('div', {
-    staticClass: "card-header"
   }, [_c('h6', [_vm._v("Multiple Select "), _c('a', {
     staticClass: "source-link",
     attrs: {
@@ -81464,7 +81260,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('img', {
     attrs: {
-      "src": "/assets/img/logo-large.png",
+      "src": "assets/img/logo-large.png",
       "alt": "Laraspace Logo"
     }
   })])])
@@ -97118,13 +96914,6 @@ module.exports = Component.exports
     },
     Select2: function Select2() {
         $(".ls-select2").select2();
-    },
-    BootstrapSelect: function BootstrapSelect() {
-        $(".ls-bootstrap-select").selectpicker({
-            iconBase: 'fa',
-            tickIcon: 'fa-check',
-            container: 'body'
-        });
     },
     SwitchToggles: function SwitchToggles() {
         var elems = $('.ls-switch');
