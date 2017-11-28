@@ -82,6 +82,9 @@
                         <!--<router-link :to="'/admin/pages/404'" tag="li"><a>404 Page</a></router-link>-->
                     <!--</ul>-->
                 <!--</li>-->
+                <li :class="{ active: isActive('/admin/todos') }">
+                    <router-link to="/admin/todos" tag="li"><a><i class="icon-fa icon-fa-check"></i> Todos </a></router-link>
+                </li>
                 <li :class="{ active: isActive('/admin/settings') }">
                     <router-link to="/admin/settings" tag="li"><a><i class="icon-fa icon-fa-cogs"></i> Settings </a></router-link>
                 </li>
