@@ -35224,7 +35224,7 @@ code,
 }
 
 .login-page.login-1 .login-wrapper::before {
-  background-image: url("/assets/admin/img/skynight.jpg");
+  background-image: url("/assets/img/skynight.jpg");
   background-position: center top;
   background-size: cover;
   content: '';
@@ -35298,7 +35298,7 @@ code,
 }
 
 .login-page.login-3::before {
-  background-image: url("/assets/admin/img/desk.jpg");
+  background-image: url("/assets/img/desk.jpg");
   background-position: center top;
   background-size: cover;
   content: '';

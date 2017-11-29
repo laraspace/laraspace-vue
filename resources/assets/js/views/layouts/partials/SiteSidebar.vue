@@ -72,6 +72,7 @@
                         <router-link to="/admin/forms/validation" tag="li"><a>Form Validation</a></router-link>
                         <router-link to="/admin/forms/editors" tag="li"><a>Editors</a></router-link>
                         <router-link to="/admin/forms/vee" tag="li"><a>Vee Validate</a></router-link>
+                        <router-link to="/admin/forms/vuelidate" tag="li"><a>Vuelidate</a></router-link>
                     </ul>
                 </li>
                 <!--<li :class="{ active: isActive('/admin/pages') }">-->
