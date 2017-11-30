@@ -62,6 +62,7 @@ import Layouts from './views/admin/forms/FormLayouts.vue'
 import Validation from './views/admin/forms/FormValidation.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
+import Vuelidate from './views/admin/forms/Vuelidate.vue'
 //Settings
 import index from './views/admin/Todos.vue'
 
@@ -302,6 +303,10 @@ const routes = [
             {
                 path: 'forms/vee',
                 component: VeeValidate
+            },
+            {
+                path: 'forms/vuelidate',
+                component: Vuelidate
             },
 
             //Todos
