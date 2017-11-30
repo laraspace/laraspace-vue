@@ -9983,7 +9983,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-//    import { required,  minLength } from 'vuelidate/lib/validators'
+//    import { required, sameAs, minLength } from 'vuelidate/lib/validators'
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [__WEBPACK_IMPORTED_MODULE_0_vuelidate__["validationMixin"]],
@@ -10031,11 +10031,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (value === '') return true;
 
                 // simulate async call, fail for all logins with even length
-                return new Promise(function (resolve, reject) {
+                var a = new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         resolve(typeof value === 'string' && value.length % 2 !== 0);
                     }, 350 + Math.random() * 300);
                 });
+                console.log(a);
+                return a;
             }
         }
     }

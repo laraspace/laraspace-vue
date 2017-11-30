@@ -96,11 +96,11 @@
     </div>
 </template>
 
-<script>
+<script type="text/babel">
     import { validationMixin } from 'vuelidate'
 
     import {required,sameAs, minLength, between} from 'vuelidate/lib/validators'
-//    import { required,  minLength } from 'vuelidate/lib/validators'
+//    import { required, sameAs, minLength } from 'vuelidate/lib/validators'
 
     export default {
         mixins: [validationMixin],
@@ -147,11 +147,13 @@
                     if (value === '') return true
 
                     // simulate async call, fail for all logins with even length
-                    return new Promise((resolve, reject) => {
+                 var a=new Promise((resolve, reject) => {
                         setTimeout(() => {
                             resolve(typeof value === 'string' && value.length % 2 !== 0)
                         }, 350 + Math.random() * 300)
                     })
+                    console.log(a);
+                    return a;
                 }
             }
         }

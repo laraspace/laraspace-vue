@@ -27,5 +27,9 @@ Route::group(['prefix' => 'admin'],function (){
     Route::post('todos/toggleTodo/{id}', [
         'as' => 'admin.todos.toggle', 'uses' => 'Demo\TodosController@toggleTodo'
     ]);
+    //For vuevalidate
+    Route::get('/email-exists', [
+        'as' => 'admin.vuelidate.email-exists', 'uses' => 'Demo\VuelidateController@email_validate'
+    ]);
 });
 
