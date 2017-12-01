@@ -9993,6 +9993,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             username: '',
             age: 0,
             password: '',
+            validate: '',
             repeatPassword: '',
             form: {
                 nestedA: '',
@@ -10031,17 +10032,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (value === '') return true;
 
                 // simulate async call, fail for all logins with even length
-
+                var vm = this;
                 axios.post('/api/admin/vuelidate/email-exist', { email: value }).then(function (response) {
-                    console.log(response.data);
+                    setTimeout(function () {
+                        vm.validate = response.data;
+                    }, 500 + Math.random() * 500);
                 });
-                return false;
-
-                //                    return new Promise((resolve, reject) => {
-                //                        setTimeout(() => {
-                //                            resolve(typeof value === 'string' && value.length % 2 !== 0)
-                //                        }, 350 + Math.random() * 300)
-                //                    });
+                console.log(vm.validate);
+                return vm.validate;
             }
         }
     }

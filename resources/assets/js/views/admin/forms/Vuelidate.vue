@@ -110,6 +110,7 @@
                 username: '',
                 age: 0,
                 password: '',
+                validate:'',
                 repeatPassword: '',
                 form: {
                     nestedA: '',
@@ -147,17 +148,15 @@
                     if (value === '') return true;
 
                     // simulate async call, fail for all logins with even length
-
+                    let vm = this;
                     axios.post('/api/admin/vuelidate/email-exist',{email:value}).then(function (response) {
-                        console.log(response.data);
+                        setTimeout(() => {
+                            vm.validate = response.data;
+                        }, 500 + Math.random() * 500)
                     });
-                    return false;
+                    console.log(vm.validate);
+                    return vm.validate;
 
-//                    return new Promise((resolve, reject) => {
-//                        setTimeout(() => {
-//                            resolve(typeof value === 'string' && value.length % 2 !== 0)
-//                        }, 350 + Math.random() * 300)
-//                    });
                 }
             }
         }
