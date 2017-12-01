@@ -27,6 +27,7 @@ mix.combine([
     pluginPath + 'select2/select2.js',
     pluginPath + 'datatables/jquery.dataTables.js',
     pluginPath + 'datatables/dataTables.bootstrap4.js',
+    pluginPath + 'datatables/dataTables.responsive.js',
     pluginPath + 'multiselect/jquery.multi-select.js',
     pluginPath + 'bootstrap-datepicker/bootstrap-datepicker.js',
     pluginPath + 'timepicker/jquery.timepicker.js',
@@ -71,6 +72,8 @@ mix.combine([
     pluginPath + 'ace-editor/ace.js',
     pluginPath + 'icons/evil.js',
     pluginPath + 'ace-editor/twilight.js',
+    pluginPath + 'dropzone/dropzone.js',
+    // pluginPath + 'dropzone/require.js',
 
     // ** Laraspace Inits **
     pluginPath + 'laraspace/laraspace-layout.js',

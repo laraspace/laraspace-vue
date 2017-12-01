@@ -513,7 +513,7 @@
 					return this.nodeType === 3 && (!this.nodeValue || /^\s+$/.test(this.nodeValue));
 				})
 				.remove();
-			this.element.html("<"+"ul class='jstree-container-ul jstree-children' role='group'><"+"li id='j"+this._id+"_loading' class='jstree-initial-node jstree-loading jstree-leaf jstree-last' role='tree-item'><i class='jstree-icons jstree-ocl'></i><"+"a class='jstree-anchor' href='#'><i class='jstree-icons jstree-themeicon-hidden'></i>" + this.get_string("Loading ...") + "</a></li></ul>");
+			this.element.html("<"+"ul class='jstree-container-ul jstree-children' role='group'><"+"li id='j"+this._id+"_loading' class='jstree-initial-node jstree-loading jstree-leaf jstree-last' role='tree-item'><i class='jstree-icon jstree-ocl'></i><"+"a class='jstree-anchor' href='#'><i class='jstree-icon jstree-themeicon-hidden'></i>" + this.get_string("Loading ...") + "</a></li></ul>");
 			this.element.attr('aria-activedescendant','j' + this._id + '_loading');
 			this._data.core.li_height = this.get_container_ul().children("li").first().outerHeight() || 24;
 			this._data.core.node = this._create_prototype_node();
@@ -554,7 +554,7 @@
 			var _node = document.createElement('LI'), _temp1, _temp2;
 			_node.setAttribute('role', 'treeitem');
 			_temp1 = document.createElement('I');
-			_temp1.className = 'jstree-icons jstree-ocl';
+			_temp1.className = 'jstree-icon jstree-ocl';
 			_temp1.setAttribute('role', 'presentation');
 			_node.appendChild(_temp1);
 			_temp1 = document.createElement('A');
@@ -562,7 +562,7 @@
 			_temp1.setAttribute('href','#');
 			_temp1.setAttribute('tabindex','-1');
 			_temp2 = document.createElement('I');
-			_temp2.className = 'jstree-icons jstree-themeicon';
+			_temp2.className = 'jstree-icon jstree-themeicon';
 			_temp2.setAttribute('role', 'presentation');
 			_temp1.appendChild(_temp2);
 			_node.appendChild(_temp1);
@@ -617,7 +617,7 @@
 						}
 					}, this))
 				.on("mousedown.jstree", ".jstree-ocl", function (e) {
-						e.preventDefault(); // prevent any node inside from losing focus when clicking the open/close icons
+						e.preventDefault(); // prevent any node inside from losing focus when clicking the open/close icon
 					})
 				.on("click.jstree", ".jstree-ocl", $.proxy(function (e) {
 						this.toggle_node(e.target);
@@ -3495,7 +3495,7 @@
 
 			var c = this.get_container_ul()[0].className;
 			if(!skip_loading) {
-				this.element.html("<"+"ul class='"+c+"' role='group'><"+"li class='jstree-initial-node jstree-loading jstree-leaf jstree-last' role='treeitem' id='j"+this._id+"_loading'><i class='jstree-icons jstree-ocl'></i><"+"a class='jstree-anchor' href='#'><i class='jstree-icons jstree-themeicon-hidden'></i>" + this.get_string("Loading ...") + "</a></li></ul>");
+				this.element.html("<"+"ul class='"+c+"' role='group'><"+"li class='jstree-initial-node jstree-loading jstree-leaf jstree-last' role='treeitem' id='j"+this._id+"_loading'><i class='jstree-icon jstree-ocl'></i><"+"a class='jstree-anchor' href='#'><i class='jstree-icon jstree-themeicon-hidden'></i>" + this.get_string("Loading ...") + "</a></li></ul>");
 				this.element.attr('aria-activedescendant','j'+this._id+'_loading');
 			}
 			this.load_node($.jstree.root, function (o, s) {
@@ -4685,10 +4685,10 @@
 		 */
 		toggle_ellipsis : function () { if(this._data.core.themes.ellipsis) { this.hide_ellipsis(); } else { this.show_ellipsis(); } },
 		/**
-		 * set the node icons for a node
-		 * @name set_icon(obj, icons)
+		 * set the node icon for a node
+		 * @name set_icon(obj, icon)
 		 * @param {mixed} obj
-		 * @param {String} icon the new icons - can be a path to an icons or a className, if using an image that is in the current directory use a `./` prefix, otherwise it will be detected as a class
+		 * @param {String} icon the new icon - can be a path to an icon or a className, if using an image that is in the current directory use a `./` prefix, otherwise it will be detected as a class
 		 */
 		set_icon : function (obj, icon) {
 			var t1, t2, dom, old;
@@ -4724,7 +4724,7 @@
 			return true;
 		},
 		/**
-		 * get the node icons for a node
+		 * get the node icon for a node
 		 * @name get_icon(obj)
 		 * @param {mixed} obj
 		 * @return {String}
@@ -4734,7 +4734,7 @@
 			return (!obj || obj.id === $.jstree.root) ? false : obj.icon;
 		},
 		/**
-		 * hide the icons on an individual node
+		 * hide the icon on an individual node
 		 * @name hide_icon(obj)
 		 * @param {mixed} obj
 		 */
@@ -4754,7 +4754,7 @@
 			return true;
 		},
 		/**
-		 * show the icons on an individual node
+		 * show the icon on an individual node
 		 * @name show_icon(obj)
 		 * @param {mixed} obj
 		 */
@@ -4893,7 +4893,7 @@
  */
 
 	var _i = document.createElement('I');
-	_i.className = 'jstree-icons jstree-checkbox';
+	_i.className = 'jstree-icon jstree-checkbox';
 	_i.setAttribute('role', 'presentation');
 	/**
 	 * stores all defaults for the checkbox plugin
@@ -5881,7 +5881,7 @@
 		 * * `label` - a string - the name of the action (could be a function returning a string)
 		 * * `title` - a string - an optional tooltip for the item
 		 * * `action` - a function to be executed if this item is chosen, the function will receive 
-		 * * `icons` - a string, can be a path to an icons or a className, if using an image that is in the current directory use a `./` prefix, otherwise it will be detected as a class
+		 * * `icon` - a string, can be a path to an icon or a className, if using an image that is in the current directory use a `./` prefix, otherwise it will be detected as a class
 		 * * `shortcut` - keyCode which will trigger the action if the menu is open (for example `113` for rename, which equals F2)
 		 * * `shortcut_label` - shortcut label (like for example `F2` for rename)
 		 * * `submenu` - an object with the same structure as $.jstree.defaults.contextmenu.items which can be used to create a submenu - each key will be rendered as a separate option in a submenu that will appear once the current item is hovered
@@ -5916,7 +5916,7 @@
 					/*!
 					"shortcut"			: 113,
 					"shortcut_label"	: 'F2',
-					"icons"				: "glyphicon glyphicon-leaf",
+					"icon"				: "glyphicon glyphicon-leaf",
 					*/
 					"action"			: function (data) {
 						var inst = $.jstree.reference(data.reference),
@@ -6558,7 +6558,7 @@
 		 */
 		large_drop_target : false,
 		/**
-		 * controls whether a drag can be initiated from any part of the node and not just the text/icons part, works best with the wholerow plugin. Keep in mind it can cause problems with tree scrolling on mobile depending on the interface - in that case set the touch option to "selected".
+		 * controls whether a drag can be initiated from any part of the node and not just the text/icon part, works best with the wholerow plugin. Keep in mind it can cause problems with tree scrolling on mobile depending on the interface - in that case set the touch option to "selected".
 		 * @name $.jstree.defaults.dnd.large_drag_target
 		 * @plugin dnd
 		 */
@@ -6604,7 +6604,7 @@
 								$.vakata.dnd._trigger('start', e, { 'helper': $(), 'element': elm, 'data': drg });
 							} else {
 								this.element.trigger('mousedown.jstree');
-								return $.vakata.dnd.start(e, drg, '<div id="jstree-dnd" class="jstree-' + this.get_theme() + ' jstree-' + this.get_theme() + '-' + this.get_theme_variant() + ' ' + ( this.settings.core.themes.responsive ? ' jstree-dnd-responsive' : '' ) + '"><i class="jstree-icons jstree-er"></i>' + txt + '<ins class="jstree-copy" style="display:none;">+</ins></div>');
+								return $.vakata.dnd.start(e, drg, '<div id="jstree-dnd" class="jstree-' + this.get_theme() + ' jstree-' + this.get_theme() + '-' + this.get_theme_variant() + ' ' + ( this.settings.core.themes.responsive ? ' jstree-dnd-responsive' : '' ) + '"><i class="jstree-icon jstree-er"></i>' + txt + '<ins class="jstree-copy" style="display:none;">+</ins></div>');
 							}
 						}
 					}, this));
@@ -6703,7 +6703,7 @@
 						if(ok) {
 							lastmv = { 'ins' : ins, 'par' : $.jstree.root, 'pos' : 'last' };
 							marker.hide();
-							data.helper.find('.jstree-icons').first().removeClass('jstree-er').addClass('jstree-ok');
+							data.helper.find('.jstree-icon').first().removeClass('jstree-er').addClass('jstree-ok');
 							if (data.event.originalEvent && data.event.originalEvent.dataTransfer) {
 								data.event.originalEvent.dataTransfer.dropEffect = is_copy ? 'copy' : 'move';
 							}
@@ -6779,7 +6779,7 @@
 									}
 									lastmv = { 'ins' : ins, 'par' : p, 'pos' : v === 'i' && ip === 'last' && i === 0 && !ins.is_loaded(tm) ? 'last' : i };
 									marker.css({ 'left' : l + 'px', 'top' : t + 'px' }).show();
-									data.helper.find('.jstree-icons').first().removeClass('jstree-er').addClass('jstree-ok');
+									data.helper.find('.jstree-icon').first().removeClass('jstree-er').addClass('jstree-ok');
 									if (data.event.originalEvent && data.event.originalEvent.dataTransfer) {
 										data.event.originalEvent.dataTransfer.dropEffect = is_copy ? 'copy' : 'move';
 									}
@@ -6794,7 +6794,7 @@
 				}
 				$('.jstree-dnd-parent').removeClass('jstree-dnd-parent');
 				lastmv = false;
-				data.helper.find('.jstree-icons').removeClass('jstree-ok').addClass('jstree-er');
+				data.helper.find('.jstree-icon').removeClass('jstree-ok').addClass('jstree-er');
 				if (data.event.originalEvent && data.event.originalEvent.dataTransfer) {
 					data.event.originalEvent.dataTransfer.dropEffect = 'none';
 				}
@@ -6805,7 +6805,7 @@
 				marker.hide();
 				lastmv = false;
 				lastev = false;
-				data.helper.find('.jstree-icons').first().removeClass('jstree-ok').addClass('jstree-er');
+				data.helper.find('.jstree-icon').first().removeClass('jstree-ok').addClass('jstree-er');
 			})
 			.on('dnd_stop.vakata.jstree', function (e, data) {
 				$('.jstree-dnd-parent').removeClass('jstree-dnd-parent');
@@ -7830,7 +7830,7 @@
 /**
  * ### Types plugin
  *
- * Makes it possible to add predefined types for groups of nodes, which make it possible to easily control nesting rules and icons for each group.
+ * Makes it possible to add predefined types for groups of nodes, which make it possible to easily control nesting rules and icon for each group.
  */
 
 	/**
@@ -7839,7 +7839,7 @@
 	 * * `max_children` the maximum number of immediate children this node type can have. Do not specify or set to `-1` for unlimited.
 	 * * `max_depth` the maximum number of nesting this node type can have. A value of `1` would mean that the node can have children, but no grandchildren. Do not specify or set to `-1` for unlimited.
 	 * * `valid_children` an array of node type strings, that nodes of this type can have as children. Do not specify or set to `-1` for no limits.
-	 * * `icons` a string - can be a path to an icons or a className, if using an image that is in the current directory use a `./` prefix, otherwise it will be detected as a class. Omit to use the default icons from your theme.
+	 * * `icon` a string - can be a path to an icon or a className, if using an image that is in the current directory use a `./` prefix, otherwise it will be detected as a class. Omit to use the default icon from your theme.
 	 * * `li_attr` an object of values which will be used to add HTML attributes on the resulting LI DOM node (merged with the node's own data)
 	 * * `a_attr` an object of values which will be used to add HTML attributes on the resulting A DOM node (merged with the node's own data)
 	 *
@@ -8364,7 +8364,7 @@
 						var tmp = $.Event('click', { metaKey : e.metaKey, ctrlKey : e.ctrlKey, altKey : e.altKey, shiftKey : e.shiftKey });
 						$(e.currentTarget).closest(".jstree-node").children(".jstree-anchor").first().trigger(tmp).focus();
 					}, this))
-				.on("mouseover.jstree", ".jstree-wholerow, .jstree-icons", $.proxy(function (e) {
+				.on("mouseover.jstree", ".jstree-wholerow, .jstree-icon", $.proxy(function (e) {
 						e.stopImmediatePropagation();
 						if(!this.is_disabled(e.currentTarget)) {
 							this.hover_node(e.currentTarget);

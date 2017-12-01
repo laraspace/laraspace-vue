@@ -17,6 +17,7 @@
 @import "../plugins/select2/select2.scss";
 @import "../plugins/select2/select2-bootstrap.scss";
 @import "../plugins/clockpicker/clockpicker.scss";
+@import "../plugins/datatables/responsive.dataTables";
 @import "../plugins/datatables/dataTables.bootstrap4";
 @import "../plugins/multiselect/multiselect.scss";
 @import "../plugins/bootstrap-datepicker/bootstrap-datepicker.scss";
@@ -42,6 +43,7 @@
 @import "../plugins/charts/amcharts/export.scss";
 @import "../plugins/charts/morris/morris.scss";
 @import "../plugins/prism/prism.scss";
+@import "../plugins/dropzone/dropzone";
 
 
 // Skins
@@ -92,7 +94,7 @@
 @import "components/gallery";
 @import "components/calendar";
 @import "components/ratings";
-@import "components/image-cropper";
+@import "components/dropzone";
 
 
 // Pages
