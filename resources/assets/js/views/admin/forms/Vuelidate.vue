@@ -144,16 +144,24 @@
                 required,
                 isUnique (value) {
                     // standalone validator ideally should not assume a field is required
-                    if (value === '') return true
+                    if (value === '') return true;
 
                     // simulate async call, fail for all logins with even length
-                 var a=new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            resolve(typeof value === 'string' && value.length % 2 !== 0)
-                        }, 350 + Math.random() * 300)
-                    })
-                    console.log(a);
-                    return a;
+                    let res;
+                    axios.post('/api/admin/vuelidate/email-exist',{email:value}).then(function (response) {
+                            res= response.data;
+                            return res;
+                    });
+//                    console.log(res);
+//                    alert("outer"+res);
+
+
+
+//                    return new Promise((resolve, reject) => {
+//                        setTimeout(() => {
+//                            resolve(typeof value === 'string' && value.length % 2 !== 0)
+//                        }, 350 + Math.random() * 300)
+//                    });
                 }
             }
         }

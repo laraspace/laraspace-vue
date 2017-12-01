@@ -22,14 +22,18 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['prefix' => 'admin'],function (){
 
+    //todos
     Route::resource('todos', 'Demo\TodosController');
 
     Route::post('todos/toggleTodo/{id}', [
         'as' => 'admin.todos.toggle', 'uses' => 'Demo\TodosController@toggleTodo'
     ]);
-    //For vuevalidate
-    Route::get('/email-exists', [
-        'as' => 'admin.vuelidate.email-exists', 'uses' => 'Demo\VuelidateController@email_validate'
-    ]);
+
+    //Vuelidate
+    Route::group(['prefix'=>'vuelidate'],function (){
+        Route::post('email-exist',[
+            'as'=>'admin.vuelidate.email-exist','uses'=>'Demo\VuelidateController@emailExist'
+        ]);
+    });
 });
 

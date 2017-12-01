@@ -10031,13 +10031,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (value === '') return true;
 
                 // simulate async call, fail for all logins with even length
-                var a = new Promise(function (resolve, reject) {
-                    setTimeout(function () {
-                        resolve(typeof value === 'string' && value.length % 2 !== 0);
-                    }, 350 + Math.random() * 300);
+                var res = void 0;
+                axios.post('/api/admin/vuelidate/email-exist', { email: value }).then(function (response) {
+                    res = response.data;
+                    return res;
                 });
-                console.log(a);
-                return a;
+                //                    console.log(res);
+                //                    alert("outer"+res);
+
+
+                //                    return new Promise((resolve, reject) => {
+                //                        setTimeout(() => {
+                //                            resolve(typeof value === 'string' && value.length % 2 !== 0)
+                //                        }, 350 + Math.random() * 300)
+                //                    });
             }
         }
     }
