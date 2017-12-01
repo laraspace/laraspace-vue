@@ -85,10 +85,10 @@
             <div class="card-body">
                 <div>
                     <div class="form-group">
-                        <label >Username</label>
+                        <label >Email</label>
                         <input class="form-control"  v-bind:class="{ 'is-invalid': $v.username.$error, 'form-group--loading': $v.username.$pending }" v-model.trim="username" @input="$v.username.$touch()">
-                    </div><span class="text-danger" v-if="!$v.username.required">Username is required.</span><span class="text-danger" v-if="!$v.username.isUnique">This username is already registered.</span>
-                    <pre>username: {{ $v.username }}</pre>
+                    </div><span class="text-danger" v-if="!$v.username.required">Email is required.</span><span class="text-danger" v-if="!$v.username.isUnique">This Email is already registered.</span>
+                    <pre>email: {{ $v.username }}</pre>
                 </div>
             </div>
         </div>
@@ -110,6 +110,7 @@
                 username: '',
                 age: 0,
                 password: '',
+                validate:'',
                 repeatPassword: '',
                 form: {
                     nestedA: '',
@@ -147,21 +148,14 @@
                     if (value === '') return true;
 
                     // simulate async call, fail for all logins with even length
-                    let res;
+                    let vm = this;
                     axios.post('/api/admin/vuelidate/email-exist',{email:value}).then(function (response) {
-                            res= response.data;
-                            return res;
+                        setTimeout(() => {
+                            vm.validate = response.data;
+                        }, 500 + Math.random() * 500)
                     });
-//                    console.log(res);
-//                    alert("outer"+res);
-
-
-
-//                    return new Promise((resolve, reject) => {
-//                        setTimeout(() => {
-//                            resolve(typeof value === 'string' && value.length % 2 !== 0)
-//                        }, 350 + Math.random() * 300)
-//                    });
+                    console.log(vm.validate);
+                    return vm.validate;
                 }
             }
         }

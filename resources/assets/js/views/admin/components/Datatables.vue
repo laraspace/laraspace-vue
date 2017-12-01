@@ -503,7 +503,8 @@
                         <h6>Responsive</h6>
                     </div>
                     <div class="card-body">
-                        <table id="responsive-datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <table id="responsive-datatable" class="table table-striped table-bordered" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -986,7 +987,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>

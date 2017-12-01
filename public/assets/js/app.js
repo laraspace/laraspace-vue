@@ -9993,6 +9993,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             username: '',
             age: 0,
             password: '',
+            validate: '',
             repeatPassword: '',
             form: {
                 nestedA: '',
@@ -10031,20 +10032,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (value === '') return true;
 
                 // simulate async call, fail for all logins with even length
-                var res = void 0;
+                var vm = this;
                 axios.post('/api/admin/vuelidate/email-exist', { email: value }).then(function (response) {
-                    res = response.data;
-                    return res;
+                    setTimeout(function () {
+                        vm.validate = response.data;
+                    }, 500 + Math.random() * 500);
                 });
-                //                    console.log(res);
-                //                    alert("outer"+res);
-
-
-                //                    return new Promise((resolve, reject) => {
-                //                        setTimeout(() => {
-                //                            resolve(typeof value === 'string' && value.length % 2 !== 0)
-                //                        }, 350 + Math.random() * 300)
-                //                    });
+                console.log(vm.validate);
+                return vm.validate;
             }
         }
     }
@@ -64448,7 +64443,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card-body"
   }, [_c('div', [_c('div', {
     staticClass: "form-group"
-  }, [_c('label', [_vm._v("Username")]), _vm._v(" "), _c('input', {
+  }, [_c('label', [_vm._v("Email")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model.trim",
@@ -64478,9 +64473,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), (!_vm.$v.username.required) ? _c('span', {
     staticClass: "text-danger"
-  }, [_vm._v("Username is required.")]) : _vm._e(), (!_vm.$v.username.isUnique) ? _c('span', {
+  }, [_vm._v("Email is required.")]) : _vm._e(), (!_vm.$v.username.isUnique) ? _c('span', {
     staticClass: "text-danger"
-  }, [_vm._v("This username is already registered.")]) : _vm._e(), _vm._v(" "), _c('pre', [_vm._v("username: " + _vm._s(_vm.$v.username))])])])])])
+  }, [_vm._v("This Email is already registered.")]) : _vm._e(), _vm._v(" "), _c('pre', [_vm._v("email: " + _vm._s(_vm.$v.username))])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "page-header"
