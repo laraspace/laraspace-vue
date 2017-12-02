@@ -20,7 +20,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('check','AuthController@check');
 });
 
-Route::group(['prefix' => 'admin'], function (){
+Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
 
     // Todos
     Route::resource('todos', 'Demo\TodosController');
@@ -30,7 +30,7 @@ Route::group(['prefix' => 'admin'], function (){
     ]);
 
     // Vuelidate
-    Route::group(['prefix '=> 'vuelidate', 'middleware' => 'api.auth'], function (){
+    Route::group(['prefix' => 'vuelidate'], function (){
 
         Route::post('email-exist',[
             'as' => 'admin.vuelidate.email-exist',

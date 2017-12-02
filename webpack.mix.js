@@ -83,7 +83,7 @@ mix.combine([
 
 .sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
 
-.version();
+// .version();
 
 /*
  |--------------------------------------------------------------------------

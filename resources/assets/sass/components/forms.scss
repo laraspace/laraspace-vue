@@ -42,6 +42,11 @@
     margin-top: 5px;
 }
 
+.pre-format {
+    padding: 10px 15px;
+    background: #f8f8f8
+}
+
 /*
 |--------------------------------------------------------------------------
 | Form Validation
@@ -66,10 +71,6 @@
 
 .form-control {
     border: 1px solid $ls-color-gray--dark;
-
-    &:focus {
-        border: 1px solid $ls-color-primary;
-    }
 }
 
 /*

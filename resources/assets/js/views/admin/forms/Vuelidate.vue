@@ -1,7 +1,7 @@
 <template>
     <div class="main-content">
         <div class="page-header">
-            <h3 class="page-title">Vuelidate Examples</h3>
+            <h3 class="page-title">Vuelidate Validation</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Forms</a></li>
@@ -10,29 +10,36 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Basic Form <a class="source-link" href="https://monterail.github.io/vuelidate/#sub-basic-usage"
-                                  target="_blank">source</a>
+                <h6>
+                    Basic Form
+                    <a class="source-link"
+                        href="https://monterail.github.io/vuelidate/#sub-basic-usage"
+                        target="_blank">
+                        source
+                    </a>
                 </h6>
             </div>
             <div class="card-body">
-                <div>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input class="form-control" v-bind:class="{ 'is-invalid': $v.name.$error }" v-model.trim="name"
-                               @input="$v.name.$touch()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" v-bind:class="{ 'is-invalid': $v.name.$error }" v-model.trim="name" @input="$v.name.$touch()">
+                    <div v-if="$v.name.$error">
+                        <span class="help-block help-block-error" v-if="!$v.name.required">Field is required</span>
+                        <span class="help-block help-block-error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</span>
                     </div>
-                    <span class="text-danger" v-if="!$v.name.required">Field is required</span><span
-                        class="text-danger"
-                        v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</span>
-                    <pre>name: {{ $v.name }}</pre>
-                    <div class="form-group">
-                        <label>Age</label>
-                        <input class="form-control" v-bind:class="{ 'is-invalid': $v.age.$error }" v-model.trim="age"
-                               @blur="$v.age.$touch()">
-                    </div>
-                    <span class="text-danger" v-if="!$v.age.between">Must be between {{$v.age.$params.between.min}} and {{$v.age.$params.between.max}}</span>
-                    <pre>age: {{ $v.age }}</pre>
                 </div>
+
+                <pre class="pre-format">name: {{ $v.name }}</pre>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input class="form-control" v-bind:class="{ 'is-invalid': $v.age.$error }" v-model.trim="age" @blur="$v.age.$touch()">
+                    <div v-if="$v.age.$error">
+                        <span class="help-block help-block-error" v-if="!$v.age.between">Must be between {{$v.age.$params.between.min}} and {{$v.age.$params.between.max}}</span>
+                    </div>
+                </div>
+
+                <pre class="pre-format">age: {{ $v.age }}</pre>
             </div>
         </div>
         <div class="card">
@@ -42,38 +49,22 @@
                 </h6>
             </div>
             <div class="card-body">
-                <div>
-                    <div class="form-group" >
-                        <label>Password</label>
-                        <input class="form-control" v-bind:class="{ 'is-invalid': $v.password.$error }" v-model.trim="password" @input="$v.password.$touch()">
-                    </div><span class="text-danger" v-if="!$v.password.required">Password is required.</span><span class="text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</span>
-                    <div class="form-group" >
-                        <label>Repeat password</label>
-                        <input class="form-control" v-bind:class="{ 'is-invalid': $v.password.$error }" v-model.trim="repeatPassword" @input="$v.repeatPassword.$touch()">
-                    </div><span class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">Passwords must be identical.</span>
-                    <pre>password: {{ $v.password }}repeatPassword: {{ $v.repeatPassword }}</pre>
+                <div class="form-group" >
+                    <label>Password</label>
+                    <input class="form-control" v-bind:class="{ 'is-invalid': $v.password.$error }" v-model.trim="password" @input="$v.password.$touch()">
+                    <div v-if="$v.password.$error">
+                        <span class="help-block help-block-error" v-if="!$v.password.required">Password is required.</span>
+                        <span class="help-block help-block-error" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">
-                <h6>Data Nesting <a class="source-link" href="https://monterail.github.io/vuelidate/#sub-data-nesting"
-                                        target="_blank">source</a>
-                </h6>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="form-group" v-bind:class="{ 'is-invalid': $v.form.nestedA.$error }">
-                        <label>Nested A</label>
-                        <input class="form-control" v-model.trim="form.nestedA" @input="$v.form.nestedA.$touch()">
-                    </div><span class="text-danger" v-if="!$v.form.nestedA.required">Field is required.</span>
-                    <div class="form-group" v-bind:class="{ 'is-invalid': $v.form.nestedB.$error }">
-                        <label>Nested B</label>
-                        <input class="form-control" v-model.trim="form.nestedB" @input="$v.form.nestedB.$touch()">
-                    </div><span class="text-danger" v-if="!$v.form.nestedB.required">Field is required.</span>
-                    <div class="form-group" v-bind:class="{ 'is-invalid': $v.form.$error }"></div><span class="text-danger" v-if="$v.form.$error">Form is invalid.</span>
-                    <pre>form: {{ $v.form }}</pre>
+                <div class="form-group" >
+                    <label>Repeat password</label>
+                    <input class="form-control" v-bind:class="{ 'is-invalid': $v.repeatPassword.$error }" v-model.trim="repeatPassword" @input="$v.repeatPassword.$touch()">
+                    <div v-if="$v.repeatPassword.$error">
+                        <span class="help-block help-block-error" v-if="!$v.repeatPassword.sameAsPassword">Passwords must be identical.</span>
+                    </div>
                 </div>
+                <pre class="pre-format">password: {{ $v.password }}repeatPassword: {{ $v.repeatPassword }}</pre>
             </div>
         </div>
         <div class="card">
@@ -83,13 +74,16 @@
                 </h6>
             </div>
             <div class="card-body">
-                <div>
-                    <div class="form-group">
-                        <label >Email</label>
-                        <input class="form-control"  v-bind:class="{ 'is-invalid': $v.username.$error, 'form-group--loading': $v.username.$pending }" v-model.trim="username" @input="$v.username.$touch()">
-                    </div><span class="text-danger" v-if="!$v.username.required">Email is required.</span><span class="text-danger" v-if="!$v.username.isUnique">This Email is already registered.</span>
-                    <pre>email: {{ $v.username }}</pre>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" v-bind:class="{ 'is-invalid': $v.email.$error, 'form-group--loading': $v.email.$pending }" v-model.trim.lazy="email" @change="$v.email.$touch()">
+                    <div v-if="$v.email.$error">
+                        <span class="help-block help-block-error" v-if="!$v.email.required">Email is required.</span>
+                        <span class="help-block help-block-error" v-if="!$v.email.isUnique">This email is already registered.</span>
+                    </div>
                 </div>
+                <p>The above input validation checks the database in realtime to make sure that user enters a unique email on blur event. You can test with <code>admin@laraspace.in</code></p>
+                <pre class="pre-format">email: {{ $v.email }}</pre>
             </div>
         </div>
 
@@ -100,22 +94,19 @@
     import { validationMixin } from 'vuelidate'
 
     import {required,sameAs, minLength, between} from 'vuelidate/lib/validators'
-//    import { required, sameAs, minLength } from 'vuelidate/lib/validators'
+
+    const touchMap = new WeakMap()
 
     export default {
         mixins: [validationMixin],
         data() {
             return {
                 name: '',
-                username: '',
+                email: '',
                 age: 0,
                 password: '',
                 validate:'',
                 repeatPassword: '',
-                form: {
-                    nestedA: '',
-                    nestedB: ''
-                }
             }
         },
         validations: {
@@ -133,15 +124,7 @@
             repeatPassword: {
                 sameAsPassword: sameAs('password')
             },
-            form: {
-                nestedA: {
-                    required
-                },
-                nestedB: {
-                    required
-                }
-            },
-            username: {
+            email: {
                 required,
                 isUnique (value) {
                     // standalone validator ideally should not assume a field is required
@@ -149,13 +132,10 @@
 
                     // simulate async call, fail for all logins with even length
                     let vm = this;
-                    axios.post('/api/admin/vuelidate/email-exist',{email:value}).then(function (response) {
-                        setTimeout(() => {
-                            vm.validate = response.data;
-                        }, 500 + Math.random() * 500)
+
+                    return axios.post('/api/admin/vuelidate/email-exist',{email: value}).then((response) => {
+                        return response.data
                     });
-                    console.log(vm.validate);
-                    return vm.validate;
                 }
             }
         }
