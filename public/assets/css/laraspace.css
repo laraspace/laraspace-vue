@@ -18029,8 +18029,8 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   font-family: "summernote";
   font-style: normal;
   font-weight: normal;
-  src: url("/assets/admin/fonts/summernote.eot?ad8d7e2d177d2473aecd9b35d16211fb");
-  src: url("/assets/admin/fonts/summernote.eot?#iefix") format("embedded-opentype"), url("/assets/admin/fonts/summernote.woff?ad8d7e2d177d2473aecd9b35d16211fb") format("woff"), url("/assets/admin/fonts/summernote.ttf?ad8d7e2d177d2473aecd9b35d16211fb") format("truetype");
+  src: url(/fonts/summernote.eot?372a2830643e759ed61f6a8590900192);
+  src: url(/fonts/summernote.eot?372a2830643e759ed61f6a8590900192) format("embedded-opentype"), url(/fonts/summernote.woff?608fd10666a860567740497e84492928) format("woff"), url(/fonts/summernote.ttf?ce9ce49a0e1ca283fa242ba2cf8e24d9) format("truetype");
 }
 
 [class^="note-icon-"]:before,
@@ -18045,6 +18045,65 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   vertical-align: middle;
   speak: none;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.note-icon-align-center:before,
+.note-icon-align-indent:before,
+.note-icon-align-justify:before,
+.note-icon-align-left:before,
+.note-icon-align-outdent:before,
+.note-icon-align-right:before,
+.note-icon-align:before,
+.note-icon-arrow-circle-down:before,
+.note-icon-arrow-circle-left:before,
+.note-icon-arrow-circle-right:before,
+.note-icon-arrow-circle-up:before,
+.note-icon-arrows-alt:before,
+.note-icon-arrows-h:before,
+.note-icon-arrows-v:before,
+.note-icon-bold:before,
+.note-icon-caret:before,
+.note-icon-chain-broken:before,
+.note-icon-circle:before,
+.note-icon-close:before,
+.note-icon-code:before,
+.note-icon-col-after:before,
+.note-icon-col-before:before,
+.note-icon-col-remove:before,
+.note-icon-eraser:before,
+.note-icon-font:before,
+.note-icon-frame:before,
+.note-icon-italic:before,
+.note-icon-link:before,
+.note-icon-magic:before,
+.note-icon-menu-check:before,
+.note-icon-minus:before,
+.note-icon-orderedlist:before,
+.note-icon-pencil:before,
+.note-icon-picture:before,
+.note-icon-question:before,
+.note-icon-redo:before,
+.note-icon-row-above:before,
+.note-icon-row-below:before,
+.note-icon-row-remove:before,
+.note-icon-special-character:before,
+.note-icon-square:before,
+.note-icon-strikethrough:before,
+.note-icon-subscript:before,
+.note-icon-summernote:before,
+.note-icon-superscript:before,
+.note-icon-table:before,
+.note-icon-text-height:before,
+.note-icon-trash:before,
+.note-icon-underline:before,
+.note-icon-undo:before,
+.note-icon-unorderedlist:before,
+.note-icon-video:before {
+  display: inline-block;
+  font-family: "summernote";
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
 }
 
 .note-icon-align-center:before {
@@ -18075,136 +18134,184 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   content: "\F107";
 }
 
-.note-icon-arrows-alt:before {
+.note-icon-arrow-circle-down:before {
   content: "\F108";
 }
 
-.note-icon-bold:before {
+.note-icon-arrow-circle-left:before {
   content: "\F109";
 }
 
-.note-icon-caret:before {
+.note-icon-arrow-circle-right:before {
   content: "\F10A";
 }
 
-.note-icon-chain-broken:before {
+.note-icon-arrow-circle-up:before {
   content: "\F10B";
 }
 
-.note-icon-circle:before {
+.note-icon-arrows-alt:before {
   content: "\F10C";
 }
 
-.note-icon-close:before {
+.note-icon-arrows-h:before {
   content: "\F10D";
 }
 
-.note-icon-code:before {
+.note-icon-arrows-v:before {
   content: "\F10E";
 }
 
-.note-icon-eraser:before {
+.note-icon-bold:before {
   content: "\F10F";
 }
 
-.note-icon-font:before {
+.note-icon-caret:before {
   content: "\F110";
 }
 
-.note-icon-frame:before {
+.note-icon-chain-broken:before {
   content: "\F111";
 }
 
-.note-icon-italic:before {
+.note-icon-circle:before {
   content: "\F112";
 }
 
-.note-icon-link:before {
+.note-icon-close:before {
   content: "\F113";
 }
 
-.note-icon-magic:before {
+.note-icon-code:before {
   content: "\F114";
 }
 
-.note-icon-menu-check:before {
+.note-icon-col-after:before {
   content: "\F115";
 }
 
-.note-icon-minus:before {
+.note-icon-col-before:before {
   content: "\F116";
 }
 
-.note-icon-orderedlist:before {
+.note-icon-col-remove:before {
   content: "\F117";
 }
 
-.note-icon-pencil:before {
+.note-icon-eraser:before {
   content: "\F118";
 }
 
-.note-icon-picture:before {
+.note-icon-font:before {
   content: "\F119";
 }
 
-.note-icon-question:before {
+.note-icon-frame:before {
   content: "\F11A";
 }
 
-.note-icon-redo:before {
+.note-icon-italic:before {
   content: "\F11B";
 }
 
-.note-icon-special-character:before {
+.note-icon-link:before {
   content: "\F11C";
 }
 
-.note-icon-square:before {
+.note-icon-magic:before {
   content: "\F11D";
 }
 
-.note-icon-strikethrough:before {
+.note-icon-menu-check:before {
   content: "\F11E";
 }
 
-.note-icon-subscript:before {
+.note-icon-minus:before {
   content: "\F11F";
 }
 
-.note-icon-summernote:before {
+.note-icon-orderedlist:before {
   content: "\F120";
 }
 
-.note-icon-superscript:before {
+.note-icon-pencil:before {
   content: "\F121";
 }
 
-.note-icon-table:before {
+.note-icon-picture:before {
   content: "\F122";
 }
 
-.note-icon-text-height:before {
+.note-icon-question:before {
   content: "\F123";
 }
 
-.note-icon-trash:before {
+.note-icon-redo:before {
   content: "\F124";
 }
 
-.note-icon-underline:before {
+.note-icon-row-above:before {
   content: "\F125";
 }
 
-.note-icon-undo:before {
+.note-icon-row-below:before {
   content: "\F126";
 }
 
-.note-icon-unorderedlist:before {
+.note-icon-row-remove:before {
   content: "\F127";
 }
 
-.note-icon-video:before {
+.note-icon-special-character:before {
   content: "\F128";
+}
+
+.note-icon-square:before {
+  content: "\F129";
+}
+
+.note-icon-strikethrough:before {
+  content: "\F12A";
+}
+
+.note-icon-subscript:before {
+  content: "\F12B";
+}
+
+.note-icon-summernote:before {
+  content: "\F12C";
+}
+
+.note-icon-superscript:before {
+  content: "\F12D";
+}
+
+.note-icon-table:before {
+  content: "\F12E";
+}
+
+.note-icon-text-height:before {
+  content: "\F12F";
+}
+
+.note-icon-trash:before {
+  content: "\F130";
+}
+
+.note-icon-underline:before {
+  content: "\F131";
+}
+
+.note-icon-undo:before {
+  content: "\F132";
+}
+
+.note-icon-unorderedlist:before {
+  content: "\F133";
+}
+
+.note-icon-video:before {
+  content: "\F134";
 }
 
 .note-editor {
@@ -18218,7 +18325,6 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   color: #87cefa;
   background-color: white;
   opacity: .95;
-  pointer-event: none;
 }
 
 .note-editor .note-dropzone .note-dropzone-message {
@@ -18253,6 +18359,14 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   vertical-align: sub;
 }
 
+.note-editor .note-editing-area img.note-float-left {
+  margin-right: 10px;
+}
+
+.note-editor .note-editing-area img.note-float-right {
+  margin-left: 10px;
+}
+
 .note-editor.note-frame {
   border: 1px solid #a9a9a9;
 }
@@ -18285,7 +18399,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   width: 100%;
   padding: 10px;
   margin-bottom: 0;
-  font-family: Menlo, Monaco, monospace, sans-serif;
+  font-family: Menlo,Monaco,monospace,sans-serif;
   font-size: 14px;
   color: #ccc;
   background-color: #222;
@@ -18304,7 +18418,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   top: 0;
   left: 0;
   z-index: 1050;
-  width: 100%;
+  width: 100% !important;
 }
 
 .note-editor.note-frame.fullscreen .note-editable {
@@ -18339,6 +18453,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 }
 
 .note-popover.popover {
+  display: none;
   max-width: none;
 }
 
@@ -18356,31 +18471,31 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 }
 
 .note-popover .popover-content,
-.panel-heading.note-toolbar {
+.card-header.note-toolbar {
   padding: 0 0 5px 5px;
   margin: 0;
 }
 
 .note-popover .popover-content > .btn-group,
-.panel-heading.note-toolbar > .btn-group {
+.card-header.note-toolbar > .btn-group {
   margin-top: 5px;
   margin-right: 5px;
   margin-left: 0;
 }
 
 .note-popover .popover-content .btn-group .note-table,
-.panel-heading.note-toolbar .btn-group .note-table {
+.card-header.note-toolbar .btn-group .note-table {
   min-width: 0;
   padding: 5px;
 }
 
 .note-popover .popover-content .btn-group .note-table .note-dimension-picker,
-.panel-heading.note-toolbar .btn-group .note-table .note-dimension-picker {
+.card-header.note-toolbar .btn-group .note-table .note-dimension-picker {
   font-size: 18px;
 }
 
 .note-popover .popover-content .btn-group .note-table .note-dimension-picker .note-dimension-picker-mousecatcher,
-.panel-heading.note-toolbar .btn-group .note-table .note-dimension-picker .note-dimension-picker-mousecatcher {
+.card-header.note-toolbar .btn-group .note-table .note-dimension-picker .note-dimension-picker-mousecatcher {
   position: absolute !important;
   z-index: 3;
   width: 10em;
@@ -18389,7 +18504,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 }
 
 .note-popover .popover-content .btn-group .note-table .note-dimension-picker .note-dimension-picker-unhighlighted,
-.panel-heading.note-toolbar .btn-group .note-table .note-dimension-picker .note-dimension-picker-unhighlighted {
+.card-header.note-toolbar .btn-group .note-table .note-dimension-picker .note-dimension-picker-unhighlighted {
   position: relative !important;
   z-index: 1;
   width: 5em;
@@ -18398,7 +18513,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 }
 
 .note-popover .popover-content .btn-group .note-table .note-dimension-picker .note-dimension-picker-highlighted,
-.panel-heading.note-toolbar .btn-group .note-table .note-dimension-picker .note-dimension-picker-highlighted {
+.card-header.note-toolbar .btn-group .note-table .note-dimension-picker .note-dimension-picker-highlighted {
   position: absolute !important;
   z-index: 2;
   width: 1em;
@@ -18407,53 +18522,55 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 }
 
 .note-popover .popover-content .note-style h1,
-.panel-heading.note-toolbar .note-style h1,
+.card-header.note-toolbar .note-style h1,
 .note-popover .popover-content .note-style h2,
-.panel-heading.note-toolbar .note-style h2,
+.card-header.note-toolbar .note-style h2,
 .note-popover .popover-content .note-style h3,
-.panel-heading.note-toolbar .note-style h3,
+.card-header.note-toolbar .note-style h3,
 .note-popover .popover-content .note-style h4,
-.panel-heading.note-toolbar .note-style h4,
+.card-header.note-toolbar .note-style h4,
 .note-popover .popover-content .note-style h5,
-.panel-heading.note-toolbar .note-style h5,
+.card-header.note-toolbar .note-style h5,
 .note-popover .popover-content .note-style h6,
-.panel-heading.note-toolbar .note-style h6,
+.card-header.note-toolbar .note-style h6,
 .note-popover .popover-content .note-style blockquote,
-.panel-heading.note-toolbar .note-style blockquote {
+.card-header.note-toolbar .note-style blockquote {
   margin: 0;
 }
 
 .note-popover .popover-content .note-color .dropdown-toggle,
-.panel-heading.note-toolbar .note-color .dropdown-toggle {
+.card-header.note-toolbar .note-color .dropdown-toggle {
   width: 20px;
   padding-left: 5px;
 }
 
 .note-popover .popover-content .note-color .dropdown-menu,
-.panel-heading.note-toolbar .note-color .dropdown-menu {
-  min-width: 340px;
+.card-header.note-toolbar .note-color .dropdown-menu {
+  min-width: 337px;
 }
 
-.note-popover .popover-content .note-color .dropdown-menu .btn-group,
-.panel-heading.note-toolbar .note-color .dropdown-menu .btn-group {
+.note-popover .popover-content .note-color .dropdown-menu .note-palette,
+.card-header.note-toolbar .note-color .dropdown-menu .note-palette {
+  display: inline-block;
+  width: 160px;
   margin: 0;
 }
 
-.note-popover .popover-content .note-color .dropdown-menu .btn-group:first-child,
-.panel-heading.note-toolbar .note-color .dropdown-menu .btn-group:first-child {
+.note-popover .popover-content .note-color .dropdown-menu .note-palette:first-child,
+.card-header.note-toolbar .note-color .dropdown-menu .note-palette:first-child {
   margin: 0 5px;
 }
 
-.note-popover .popover-content .note-color .dropdown-menu .btn-group .note-palette-title,
-.panel-heading.note-toolbar .note-color .dropdown-menu .btn-group .note-palette-title {
+.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-palette-title,
+.card-header.note-toolbar .note-color .dropdown-menu .note-palette .note-palette-title {
   margin: 2px 7px;
   font-size: 12px;
   text-align: center;
   border-bottom: 1px solid #eee;
 }
 
-.note-popover .popover-content .note-color .dropdown-menu .btn-group .note-color-reset,
-.panel-heading.note-toolbar .note-color .dropdown-menu .btn-group .note-color-reset {
+.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-color-reset,
+.card-header.note-toolbar .note-color .dropdown-menu .note-palette .note-color-reset {
   width: 100%;
   padding: 0 3px;
   margin: 3px;
@@ -18462,73 +18579,73 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   border-radius: 5px;
 }
 
-.note-popover .popover-content .note-color .dropdown-menu .btn-group .note-color-row,
-.panel-heading.note-toolbar .note-color .dropdown-menu .btn-group .note-color-row {
+.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-color-row,
+.card-header.note-toolbar .note-color .dropdown-menu .note-palette .note-color-row {
   height: 20px;
 }
 
-.note-popover .popover-content .note-color .dropdown-menu .btn-group .note-color-reset:hover,
-.panel-heading.note-toolbar .note-color .dropdown-menu .btn-group .note-color-reset:hover {
+.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-color-reset:hover,
+.card-header.note-toolbar .note-color .dropdown-menu .note-palette .note-color-reset:hover {
   background: #eee;
 }
 
 .note-popover .popover-content .note-para .dropdown-menu,
-.panel-heading.note-toolbar .note-para .dropdown-menu {
+.card-header.note-toolbar .note-para .dropdown-menu {
   min-width: 216px;
   padding: 5px;
 }
 
 .note-popover .popover-content .note-para .dropdown-menu > div:first-child,
-.panel-heading.note-toolbar .note-para .dropdown-menu > div:first-child {
+.card-header.note-toolbar .note-para .dropdown-menu > div:first-child {
   margin-right: 5px;
 }
 
 .note-popover .popover-content .dropdown-menu,
-.panel-heading.note-toolbar .dropdown-menu {
+.card-header.note-toolbar .dropdown-menu {
   min-width: 90px;
 }
 
 .note-popover .popover-content .dropdown-menu.right,
-.panel-heading.note-toolbar .dropdown-menu.right {
+.card-header.note-toolbar .dropdown-menu.right {
   right: 0;
   left: auto;
 }
 
 .note-popover .popover-content .dropdown-menu.right::before,
-.panel-heading.note-toolbar .dropdown-menu.right::before {
+.card-header.note-toolbar .dropdown-menu.right::before {
   right: 9px;
   left: auto !important;
 }
 
 .note-popover .popover-content .dropdown-menu.right::after,
-.panel-heading.note-toolbar .dropdown-menu.right::after {
+.card-header.note-toolbar .dropdown-menu.right::after {
   right: 10px;
   left: auto !important;
 }
 
-.note-popover .popover-content .dropdown-menu.note-check li a i,
-.panel-heading.note-toolbar .dropdown-menu.note-check li a i {
+.note-popover .popover-content .dropdown-menu.note-check a i,
+.card-header.note-toolbar .dropdown-menu.note-check a i {
   color: deepskyblue;
   visibility: hidden;
 }
 
-.note-popover .popover-content .dropdown-menu.note-check li a.checked i,
-.panel-heading.note-toolbar .dropdown-menu.note-check li a.checked i {
+.note-popover .popover-content .dropdown-menu.note-check a.checked i,
+.card-header.note-toolbar .dropdown-menu.note-check a.checked i {
   visibility: visible;
 }
 
 .note-popover .popover-content .note-fontsize-10,
-.panel-heading.note-toolbar .note-fontsize-10 {
+.card-header.note-toolbar .note-fontsize-10 {
   font-size: 10px;
 }
 
 .note-popover .popover-content .note-color-palette,
-.panel-heading.note-toolbar .note-color-palette {
+.card-header.note-toolbar .note-color-palette {
   line-height: 1;
 }
 
 .note-popover .popover-content .note-color-palette div .note-color-btn,
-.panel-heading.note-toolbar .note-color-palette div .note-color-btn {
+.card-header.note-toolbar .note-color-palette div .note-color-btn {
   width: 20px;
   height: 20px;
   padding: 0;
@@ -18537,7 +18654,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 }
 
 .note-popover .popover-content .note-color-palette div .note-color-btn:hover,
-.panel-heading.note-toolbar .note-color-palette div .note-color-btn:hover {
+.card-header.note-toolbar .note-color-palette div .note-color-btn:hover {
   border: 1px solid #000;
 }
 
@@ -35543,6 +35660,18 @@ code,
           justify-content: center;
   position: absolute !important;
   margin: auto;
+}
+
+.ls-summernote .dropdown-menu h1,
+.ls-summernote .dropdown-menu h2,
+.ls-summernote .dropdown-menu h3,
+.ls-summernote .dropdown-menu h4,
+.ls-summernote .dropdown-menu h5,
+.ls-summernote .dropdown-menu h6,
+.ls-summernote .dropdown-menu pre,
+.ls-summernote .dropdown-menu .note-palette-title,
+.ls-summernote .dropdown-menu .note-dimension-display {
+  color: #fff;
 }
 
 .dashbox {

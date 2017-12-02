@@ -22,7 +22,7 @@
 @import "../plugins/multiselect/multiselect.scss";
 @import "../plugins/bootstrap-datepicker/bootstrap-datepicker.scss";
 @import "../plugins/timepicker/timepicker";
-@import "../plugins/summernote/summernote.scss";
+@import "../plugins/summernote/summernote-bs4.scss";
 @import "../plugins/simplemde/simplemde.scss";
 @import "../plugins/pace/pace.scss";
 @import "../plugins/alertify/alertify.scss";
@@ -95,6 +95,7 @@
 @import "components/calendar";
 @import "components/ratings";
 @import "components/dropzone";
+@import "components/editors";
 
 
 // Pages

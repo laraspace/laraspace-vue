@@ -50,14 +50,16 @@
                     <div class="form-group" >
                         <label>Repeat password</label>
                         <input class="form-control" v-bind:class="{ 'is-invalid': $v.password.$error }" v-model.trim="repeatPassword" @input="$v.repeatPassword.$touch()">
-                    </div><span class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">Passwords must be identical.</span>
+                    </div>
+                    <span class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">Passwords must be identical.</span>
                     <pre>password: {{ $v.password }}repeatPassword: {{ $v.repeatPassword }}</pre>
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Data Nesting <a class="source-link" href="https://monterail.github.io/vuelidate/#sub-data-nesting"
+                <h6>Data Nesting
+                    <a class="source-link" href="https://monterail.github.io/vuelidate/#sub-data-nesting"
                                         target="_blank">source</a>
                 </h6>
             </div>
@@ -100,7 +102,6 @@
     import { validationMixin } from 'vuelidate'
 
     import {required,sameAs, minLength, between} from 'vuelidate/lib/validators'
-//    import { required,  minLength } from 'vuelidate/lib/validators'
 
     export default {
         mixins: [validationMixin],
