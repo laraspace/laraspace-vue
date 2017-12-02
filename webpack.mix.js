@@ -70,7 +70,7 @@ mix.combine([
     pluginPath + 'calendar/fullcalendar.js',
     pluginPath + 'imageCropper/cropper.js',
     pluginPath + 'ace-editor/ace.js',
-    pluginPath + 'icons/evil.js',
+    pluginPath + 'icons/evil-icons.min.js',
     pluginPath + 'ace-editor/twilight.js',
     pluginPath + 'dropzone/dropzone.js',
     // pluginPath + 'dropzone/require.js',
@@ -86,7 +86,7 @@ mix.combine([
 
 .sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
 
-.version();
+// .version();
 
 /*
  |--------------------------------------------------------------------------

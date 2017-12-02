@@ -63,8 +63,9 @@ import Validation from './views/admin/forms/FormValidation.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
-//Settings
-import index from './views/admin/Todos.vue'
+
+//Todos
+import Todos from './views/admin/Todos.vue'
 
 //Settings
 import Settings from './views/admin/Settings.vue'
@@ -89,10 +90,8 @@ import NotFoundPage from './views/errors/404.vue'
 
 import Home from './views/front/Home.vue'
 
-Vue.use(VueRouter);
-
 const routes = [
-    
+
     /*
      |--------------------------------------------------------------------------
      | Layout Routes for DEMO
@@ -312,7 +311,7 @@ const routes = [
             //Todos
             {
                 path: 'todos',
-                component: index
+                component: Todos
             },
             //Settings
             {
