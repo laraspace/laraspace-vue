@@ -32,10 +32,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
     // Vuelidate
     Route::group(['prefix' => 'vuelidate'], function (){
 
-        Route::post('email-exist',[
-            'as' => 'admin.vuelidate.email-exist',
-            'uses' => 'Demo\VuelidateController@emailExist'
-        ]);
+    Route::post('email-exist',[
+        'as' => 'admin.vuelidate.email-exist','uses' => 'Demo\VuelidateController@emailExist'
+    ]);
 
     });
 });
