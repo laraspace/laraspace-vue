@@ -57,7 +57,7 @@
                         vm.handlePieAndDoughnutChart();
                     }
                 };
-x            }();
+            }();
 
             this.$nextTick(() => {
                 ChartJS.init();

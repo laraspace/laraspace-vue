@@ -115,7 +115,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="emailInput" class="control-label">Email</label>
-                                <input type="email" class="form-control" id="emailInput" placeholder="jane.doe@example.com">
+                                <input type="email" class="form-control" id="emailInput"
+                                       placeholder="jane.doe@example.com">
                             </div>
                             <button type="submit" class="btn btn-primary">Send invitation</button>
                         </form>

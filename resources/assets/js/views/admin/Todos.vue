@@ -1,7 +1,9 @@
 <template>
     <div class="main-content">
         <div class="page-header">
-            <h3 class="page-title">Todos <small class="text-muted">Built with Vue JS</small></h3>
+            <h3 class="page-title">Todos
+                <small class="text-muted">Built with Vue JS</small>
+            </h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
                 <li class="breadcrumb-item active"><a href="#">Todos</a></li>
@@ -19,7 +21,7 @@
     import Todos from '../../components/Todos.vue'
 
     export default {
-        components : {
+        components: {
             Todos
         },
     }

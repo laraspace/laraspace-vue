@@ -762,7 +762,7 @@
                                     <i class="icon-im icon-im-tv"></i>
                                 </div>
                                 <div class="icon-classname">
-                                     <span>icon-im-tv, <br>icon-im-television</span>
+                                    <span>icon-im-tv, <br>icon-im-television</span>
                                 </div>
                             </div>
                             <div class="demo-icon">
@@ -866,7 +866,7 @@
                                     <i class="icon-im icon-im-redo2"></i>
                                 </div>
                                 <div class="icon-classname">
-                                   <span>icon-im-redo2, <br>icon-im-right</span>
+                                    <span>icon-im-redo2, <br>icon-im-right</span>
                                 </div>
                             </div>
                             <div class="demo-icon">

@@ -37,6 +37,9 @@ import ImageZoom from './views/admin/components/ImageZoom.vue'
 import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
+import BarRating from './views/admin/components/Rating/BarRating.vue'
+import StarRating from './views/admin/components/Rating/StarRating.vue'
+
 
 //Charts
 import Amchart from './views/admin/charts/Amchart.vue'
@@ -47,7 +50,7 @@ import Sparkline from './views/admin/charts/Sparkline.vue'
 
 
 //Icons
-import Evil from './views/admin/icons/Evil.vue'
+//import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
 import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
@@ -225,6 +228,16 @@ const routes = [
                 component: NestableList
 
             },
+            {
+                path: 'components/rating/bar-rating',
+                component: BarRating
+
+            },
+            {
+                path: 'components/rating/star-rating',
+                component: StarRating
+
+            },
 
             //chart
             {
@@ -254,10 +267,10 @@ const routes = [
             },
 
             //Icons
-            {
-                path: 'icons/evil',
-                component: Evil
-            },
+            // {
+            //     path: 'icons/evil',
+            //     component: Evil
+            // },
             {
                 path: 'icons/fontawesome',
                 component: Fontawesome

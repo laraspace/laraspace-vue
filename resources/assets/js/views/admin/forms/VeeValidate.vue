@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <h6>Basic Validation <a class="source-link" href="http://vee-validate.logaretm.com/#basic-example"
-                                       target="_blank">source</a>
+                                        target="_blank">source</a>
                 </h6>
             </div>
             <div class="card-body">
@@ -34,13 +34,14 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Form Validation <a class="source-link" href="http://vee-validate.logaretm.com/examples#validate-form"
+                <h6>Form Validation <a class="source-link"
+                                       href="http://vee-validate.logaretm.com/examples#validate-form"
                                        target="_blank">source</a>
                 </h6>
             </div>
             <div class="card-body">
 
-                <form  @submit="validateBeforeSubmit" >
+                <form @submit="validateBeforeSubmit">
 
                     <div :class="{'form-group' : true  }">
                         <label>Name </label>
@@ -85,7 +86,7 @@
 
 <script type="text/babel">
     export default {
-        data(){
+        data() {
             return {
                 email: '',
                 name: '',
@@ -93,7 +94,7 @@
             }
         },
         methods: {
-            validateBeforeSubmit(e){
+            validateBeforeSubmit(e) {
                 this.$validator.validateAll();
 
                 if (this.errors.any()) {

@@ -12,7 +12,8 @@
                     </span>
 
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
@@ -26,7 +27,8 @@
                       2000
                     </span>
                     <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
@@ -40,7 +42,8 @@
                       100
                     </span>
                     <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
@@ -54,7 +57,8 @@
                       59
                     </span>
                     <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
@@ -150,11 +154,11 @@
     export default {
         data() {
             return {
-                'header' : 'header'
+                'header': 'header'
             }
         },
-        components : {
-            LineGraph , BarGraph , PieGraph
+        components: {
+            LineGraph, BarGraph, PieGraph
         }
 
     }

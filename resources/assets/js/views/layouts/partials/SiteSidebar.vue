@@ -39,6 +39,14 @@
                         <router-link to="/admin/components/calendar" tag="li"><a>Calendar</a></router-link>
                         <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
+                        <li :class="{ active: isActive('/admin/components/rating') }">
+                            <a href="#" aria-expanded="true">Rating <span class="icon-fa arrow icon-fa-fw"></span></a>
+                            <ul aria-expanded="true">
+                                <router-link to="/admin/components/rating/bar-rating" tag="li"><a>Bar Rating</a></router-link>
+                                <router-link to="/admin/components/rating/star-rating" tag="li"><a>Star Rating </a></router-link>
+
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/chart') }">
@@ -55,7 +63,7 @@
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-eye"></i> Icons <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">
                         <router-link to="/admin/icons/icomoon" tag="li"><a>IcoMoon</a></router-link>
-                        <router-link to="/admin/icons/evil" tag="li"><a>Evil Icons</a></router-link>
+                        <!--<router-link to="/admin/icons/evil" tag="li"><a>Evil Icons</a></router-link>-->
                         <router-link to="/admin/icons/meteo" tag="li"><a>Meteo Icons</a></router-link>
                         <router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>
                         <router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>

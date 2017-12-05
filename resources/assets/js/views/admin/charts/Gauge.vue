@@ -105,9 +105,9 @@
 </template>
 <script>
     export default {
-        mounted(){
+        mounted() {
             let vm = this;
-            let GaugesChart = function(){
+            let GaugesChart = function () {
                 return {
                     //main function to initiate the module
                     init: function () {

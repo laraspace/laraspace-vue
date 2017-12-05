@@ -39,7 +39,8 @@
                         <form>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Email address</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter Email">
+                                <input type="email" class="form-control" id="exampleFormControlInput1"
+                                       placeholder="Enter Email">
                             </div>
 
                             <div class="form-group">
@@ -89,7 +90,8 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="validationDefault03">Last name</label>
-                                    <input type="text" class="form-control" id="validationDefault03" placeholder="Last name" required>
+                                    <input type="text" class="form-control" id="validationDefault03"
+                                           placeholder="Last name" required>
                                     <div class="invalid-feedback">
                                         Please provide Last name.
                                     </div>
@@ -104,12 +106,14 @@
                             </label>
                             <div class="custom-controls-stacked d-block my-3">
                                 <label class="custom-control custom-radio">
-                                    <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" required>
+                                    <input id="radioStacked1" name="radio-stacked" type="radio"
+                                           class="custom-control-input" required>
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">Toggle this custom radio</span>
                                 </label>
                                 <label class="custom-control custom-radio">
-                                    <input id="radioStacked2" name="radio-stacked" type="radio" class="custom-control-input" required>
+                                    <input id="radioStacked2" name="radio-stacked" type="radio"
+                                           class="custom-control-input" required>
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">Or toggle this other custom radio</span>
                                 </label>
@@ -122,7 +126,7 @@
                                 <option value="3">Three</option>
                             </select>
 
-                          
+
                         </form>
 
                         <h5 class="section-semi-title mt-4">
@@ -209,7 +213,8 @@
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                            <input type="radio" name="exampleRadios" id="exampleRadios2"
+                                                   value="option2">
                                             Option two can be something else and selecting it will deselect option one
                                         </label>
                                     </div>
@@ -226,13 +231,16 @@
                                 <h5 class="section-semi-title mt-4">Inline Radio</h5>
                                 <form>
                                     <label class="radio-inline">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                        1
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        2
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                        3
                                     </label>
                                 </form>
                             </div>
