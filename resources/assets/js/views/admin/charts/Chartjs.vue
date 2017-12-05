@@ -46,9 +46,7 @@
 </template>
 <script>
     export default {
-
-        methods: {},
-        mounted: function () {
+        mounted() {
             var ChartJS = function () {
 
                 var handleLineChart = function(){
@@ -180,9 +178,9 @@
 
             }();
 
-            jQuery(document).ready(function() {
+            this.$nextTick(() => {
                 ChartJS.init();
-            });
+            })
         }
     }
 </script>

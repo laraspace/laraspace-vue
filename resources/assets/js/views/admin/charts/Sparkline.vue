@@ -94,8 +94,6 @@
 </template>
 <script>
     export default {
-
-        methods: {},
         mounted: function () {
             var SparklineCharts = function () {
 
