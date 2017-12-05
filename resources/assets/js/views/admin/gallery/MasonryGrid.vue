@@ -279,7 +279,7 @@
                             sm: 6,
                             xs: 12
                         },
-                        distributeBy: {order: false, height: false, attr: 'data-order', attrOrder: 'asc'}, //default distribute by order, options => order: true/false, height: true/false, attr => 'data-order', attrOrder=> 'asc'/'desc'
+                        distributeBy: {order: false, height: false, attr: 'data-order', attrOrder: 'asc'},
                         onload: function (items) {
                             //make somthing with items
                         }

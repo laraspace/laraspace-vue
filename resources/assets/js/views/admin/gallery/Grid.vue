@@ -307,6 +307,7 @@
 </template>
 <script type="text/babel">
     export default {
+
         mounted() {
             let vm = this;
             let Gallery = function () {
@@ -337,5 +338,6 @@
                 });
             },
         },
+
     }
 </script>
