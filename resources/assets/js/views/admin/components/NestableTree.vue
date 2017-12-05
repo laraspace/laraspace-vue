@@ -99,7 +99,7 @@
 <script>
     export default {
 
-        mounted: function () {
+        mounted(){
             let vm = this;
             var NestableTree = function () {
                 return {

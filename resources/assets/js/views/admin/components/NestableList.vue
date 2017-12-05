@@ -155,7 +155,7 @@
 <script>
     export default {
 
-        mounted: function () {
+        mounted() {
             let vm = this;
             let NestableLists = function () {
                 return {

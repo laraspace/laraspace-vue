@@ -15,7 +15,7 @@
                     <ul aria-expanded="true">
                         <router-link to="/admin/layouts/sidebar" tag="li"><a>Sidebar</a></router-link>
                         <router-link to="/admin/layouts/horizontal" tag="li"><a>Horizontal</a></router-link>
-                        <router-link to="/admin/layouts/icon-sidebar" tag="li"><a>Icon Sidebar</a></router-link>
+                        <router-link to="/admin/layouts/icons-sidebar" tag="li"><a>Icon Sidebar</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active : isActive('/admin/basic-ui') }">
@@ -75,14 +75,14 @@
                         <router-link to="/admin/forms/vuelidate" tag="li"><a>Vuelidate</a></router-link>
                     </ul>
                 </li>
-                <!--<li :class="{ active: isActive('/admin/pages') }">-->
-                    <!--<a href="#" aria-expanded="true"><i class="icons-fa icons-fa-th-large"></i> Pages <span class="icons-fa arrow icons-fa-fw"></span></a>-->
-                    <!--<ul aria-expanded="true">-->
-                        <!--<router-link :to="'/admin/pages/login'" tag="li"><a>Login</a></router-link>-->
-                        <!--<router-link :to="'/admin/pages/register'" tag="li"><a>Register</a></router-link>-->
-                        <!--<router-link :to="'/admin/pages/404'" tag="li"><a>404 Page</a></router-link>-->
-                    <!--</ul>-->
-                <!--</li>-->
+                <li :class="{ active: isActive('/admin/gallery') }">
+                    <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-image"></i> Gallery <span class="icon-fa arrow icon-fa-fw"></span></a>
+                    <ul aria-expanded="true">
+                        <router-link to="/admin/gallery/grid" tag="li"><a>Grid</a></router-link>
+                        <router-link to="/admin/gallery/masonry-grid" tag="li"><a>Masonry Grid </a></router-link>
+
+                    </ul>
+                </li>
                 <li :class="{ active: isActive('/admin/todos') }">
                     <router-link to="/admin/todos" tag="li"><a><i class="icon-fa icon-fa-check"></i> Todos </a></router-link>
                 </li>

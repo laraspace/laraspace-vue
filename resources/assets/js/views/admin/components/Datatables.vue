@@ -994,7 +994,7 @@
 <script>
     export default {
 
-        mounted: function () {
+        mounted(){
 
             $('#default-datatable').DataTable();
 
