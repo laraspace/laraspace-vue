@@ -37191,16 +37191,20 @@ exports.clearImmediate = clearImmediate;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__views_admin_gallery_MasonryGrid_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_45__views_admin_gallery_MasonryGrid_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__views_admin_Todos_vue__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__views_admin_Todos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_46__views_admin_Todos_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__views_admin_Settings_vue__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__views_admin_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_47__views_admin_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_auth_Login_vue__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_48__views_auth_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_auth_Register_vue__ = __webpack_require__(224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_auth_Register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_49__views_auth_Register_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_errors_404_vue__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_errors_404_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_50__views_errors_404_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_front_Home_vue__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_front_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_51__views_front_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__views_admin_users_Users_vue__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__views_admin_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_47__views_admin_users_Users_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_admin_users_Profile_vue__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_admin_users_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_48__views_admin_users_Profile_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_admin_Settings_vue__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_admin_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_49__views_admin_Settings_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_auth_Login_vue__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_50__views_auth_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_auth_Register_vue__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_auth_Register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_51__views_auth_Register_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__views_errors_404_vue__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__views_errors_404_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_52__views_errors_404_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__views_front_Home_vue__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__views_front_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_53__views_front_Home_vue__);
 
 
 
@@ -37273,6 +37277,9 @@ exports.clearImmediate = clearImmediate;
 
 //Todos
 
+//users
+
+
 
 //Settings
 
@@ -37335,7 +37342,7 @@ var routes = [
     path: '/', component: __WEBPACK_IMPORTED_MODULE_10__views_layouts_LayoutFront_vue___default.a,
     children: [{
         path: '/',
-        component: __WEBPACK_IMPORTED_MODULE_51__views_front_Home_vue___default.a,
+        component: __WEBPACK_IMPORTED_MODULE_53__views_front_Home_vue___default.a,
         name: 'home'
     }]
 },
@@ -37404,7 +37411,9 @@ var routes = [
         path: 'components/nestable-list',
         component: __WEBPACK_IMPORTED_MODULE_23__views_admin_components_NestableList_vue___default.a
 
-    }, {
+    },
+    //Rating
+    {
         path: 'components/rating/bar-rating',
         component: __WEBPACK_IMPORTED_MODULE_24__views_admin_components_Rating_BarRating_vue___default.a
 
@@ -37492,6 +37501,14 @@ var routes = [
         path: 'gallery/masonry-grid',
         component: __WEBPACK_IMPORTED_MODULE_45__views_admin_gallery_MasonryGrid_vue___default.a
     },
+    //Users
+    {
+        path: 'users/profile',
+        component: __WEBPACK_IMPORTED_MODULE_48__views_admin_users_Profile_vue___default.a
+    }, {
+        path: 'users/users',
+        component: __WEBPACK_IMPORTED_MODULE_47__views_admin_users_Users_vue___default.a
+    },
 
     //Todos
     {
@@ -37501,7 +37518,7 @@ var routes = [
     //Settings
     {
         path: 'settings',
-        component: __WEBPACK_IMPORTED_MODULE_47__views_admin_Settings_vue___default.a
+        component: __WEBPACK_IMPORTED_MODULE_49__views_admin_Settings_vue___default.a
     }]
 },
 
@@ -37515,17 +37532,17 @@ var routes = [
     path: '/', component: __WEBPACK_IMPORTED_MODULE_9__views_layouts_LayoutLogin_vue___default.a,
     children: [{
         path: 'login',
-        component: __WEBPACK_IMPORTED_MODULE_48__views_auth_Login_vue___default.a,
+        component: __WEBPACK_IMPORTED_MODULE_50__views_auth_Login_vue___default.a,
         name: 'login'
     }, {
         path: 'register',
-        component: __WEBPACK_IMPORTED_MODULE_49__views_auth_Register_vue___default.a,
+        component: __WEBPACK_IMPORTED_MODULE_51__views_auth_Register_vue___default.a,
         name: 'register'
     }]
 },
 
 // DEFAULT ROUTE
-{ path: '*', component: __WEBPACK_IMPORTED_MODULE_50__views_errors_404_vue___default.a }];
+{ path: '*', component: __WEBPACK_IMPORTED_MODULE_52__views_errors_404_vue___default.a }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes,
@@ -40224,6 +40241,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -40630,6 +40655,29 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
+          _c("li", { class: { active: _vm.isActive("/admin/users") } }, [
+            _vm._m(9, false, false),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { attrs: { "aria-expanded": "true" } },
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: "/admin/users/profile", tag: "li" } },
+                  [_c("a", [_vm._v("Profile")])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: "/admin/users/users", tag: "li" } },
+                  [_c("a", [_vm._v("All Users ")])]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _c(
             "li",
             { class: { active: _vm.isActive("/admin/todos") } },
@@ -40753,6 +40801,16 @@ var staticRenderFns = [
     return _c("a", { attrs: { href: "#", "aria-expanded": "true" } }, [
       _c("i", { staticClass: "icon-fa icon-fa-image" }),
       _vm._v(" Gallery "),
+      _c("span", { staticClass: "icon-fa arrow icon-fa-fw" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#", "aria-expanded": "true" } }, [
+      _c("i", { staticClass: "icon-fa icon-fa-user" }),
+      _vm._v(" Users "),
       _c("span", { staticClass: "icon-fa arrow icon-fa-fw" })
     ])
   }
@@ -89508,6 +89566,915 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-975d92fc", module.exports)
+  }
+}
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(268)
+/* template */
+var __vue_template__ = __webpack_require__(269)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\views\\admin\\users\\Users.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b02b7b2c", Component.options)
+  } else {
+    hotAPI.reload("data-v-b02b7b2c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 268 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        var vm = this;
+        var Users = function () {
+            return {
+                //main function to initiate the module
+                init: function init() {
+                    vm.handleTables();
+                    vm.handleConfirmation();
+                }
+            };
+        }();
+
+        this.$nextTick(function () {
+            Users.init();
+        });
+    },
+
+    methods: {
+        handleTables: function handleTables() {
+            $('#users-datatable').DataTable({
+                responsive: true
+            });
+        },
+        handleConfirmation: function handleConfirmation() {
+
+            $('[data-confirmation="notie"]').on('click', function () {
+                $this = $(this);
+                notie.confirm('Are you sure?', 'Yes! Delete this User', 'Cancel', function () {
+                    deleteUser($this);
+                });
+                return false;
+            });
+        },
+        deleteUser: function deleteUser($this) {
+            var url = $this.attr('href'),
+                token = $this.data('token');
+            console.log(url);
+            $.ajax({
+                type: 'POST',
+                data: { _method: 'delete', _token: token },
+                url: url,
+                success: function success(data) {
+                    toastr['success']('User Deleted', "Success");
+                    window.setTimeout('location.reload()', 500);
+                },
+                error: function error(data) {
+                    toastr['error']('There was an error', "Error");
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function(){},staticRenderFns:[]}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b02b7b2c", module.exports)
+  }
+}
+
+/***/ }),
+/* 270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(271)
+/* template */
+var __vue_template__ = __webpack_require__(272)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\views\\admin\\users\\Profile.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-850189ea", Component.options)
+  } else {
+    hotAPI.reload("data-v-850189ea", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 271 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        var vm = this;
+        var Users = function () {
+            return {
+                //main function to initiate the module
+                init: function init() {
+                    vm.handleTables();
+                    vm.handleConfirmation();
+                }
+            };
+        }();
+
+        this.$nextTick(function () {
+            Users.init();
+        });
+    },
+
+    methods: {
+        handleTables: function handleTables() {
+            $('#users-datatable').DataTable({
+                responsive: true
+            });
+        },
+        handleConfirmation: function handleConfirmation() {
+
+            $('[data-confirmation="notie"]').on('click', function () {
+                $this = $(this);
+                notie.confirm('Are you sure?', 'Yes! Delete this User', 'Cancel', function () {
+                    deleteUser($this);
+                });
+                return false;
+            });
+        },
+        deleteUser: function deleteUser($this) {
+            var url = $this.attr('href'),
+                token = $this.data('token');
+            console.log(url);
+            $.ajax({
+                type: 'POST',
+                data: { _method: 'delete', _token: token },
+                url: url,
+                success: function success(data) {
+                    toastr['success']('User Deleted', "Success");
+                    window.setTimeout('location.reload()', 500);
+                },
+                error: function error(data) {
+                    toastr['error']('There was an error', "Error");
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0, false, false)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "main-content page-profile" }, [
+      _c("div", { staticClass: "page-header" }, [
+        _c("h3", { staticClass: "page-title" }, [_vm._v("User Profile")]),
+        _vm._v(" "),
+        _c("ol", { staticClass: "breadcrumb" }, [
+          _c("li", { staticClass: "breadcrumb-item" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "breadcrumb-item" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("Users")])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "breadcrumb-item active" }, [
+            _vm._v("Jane Doe")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "tabs tabs-default" }, [
+                _c(
+                  "ul",
+                  { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+                  [
+                    _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link active",
+                          attrs: {
+                            "data-toggle": "tab",
+                            href: "#profile",
+                            role: "tab"
+                          }
+                        },
+                        [_vm._v("Profile")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          attrs: {
+                            "data-toggle": "tab",
+                            href: "#messages",
+                            role: "tab"
+                          }
+                        },
+                        [_vm._v("Messages")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          attrs: {
+                            "data-toggle": "tab",
+                            href: "#friends",
+                            role: "tab"
+                          }
+                        },
+                        [_vm._v("Friends")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "tab-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane active",
+                      attrs: { id: "profile", role: "tabpanel" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-sm-3" }, [
+                          _c("div", { staticClass: "avatar-container" }, [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/admin/img/avatars/avatar-lg.png",
+                                alt: "Admin Avatar"
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-9" }, [
+                          _c("h4", [_vm._v("Jane Doe")]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "detail-row" }, [
+                            _c("i", {
+                              staticClass: "icon-fa icon-fa-map-marker"
+                            }),
+                            _vm._v(" New York , United States")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "detail-row" }, [
+                            _c("i", {
+                              staticClass: "icon-fa icon-fa-birthday-cake"
+                            }),
+                            _vm._v(" September 7, 1991")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "detail-row" }, [
+                            _c("i", { staticClass: "icon-fa icon-fa-wrench" }),
+                            _vm._v(" UI Designer / Pro Model")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row mt-4" }, [
+                        _c("div", { staticClass: "col-sm-12" }, [
+                          _c("h3", { staticClass: "section-semi-title" }, [
+                            _vm._v("Recent Activity")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            { staticClass: "media-list activity-list" },
+                            [
+                              _c("li", { staticClass: "media" }, [
+                                _c("div", { staticClass: "media-left" }, [
+                                  _c("a", { attrs: { href: "#" } }, [
+                                    _c("img", {
+                                      staticClass: "media-object img-thumbnail",
+                                      attrs: {
+                                        src: "/assets/img/avatars/avatar1.png",
+                                        alt: "Generic placeholder image"
+                                      }
+                                    })
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-body" }, [
+                                  _c("h4", { staticClass: "media-heading" }, [
+                                    _vm._v("Shane White "),
+                                    _c("span", [
+                                      _vm._v("just posted an update")
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("small", [_vm._v("Today at 3.50pm")]),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "mt-2" }, [
+                                    _vm._v(
+                                      '"Hello Everyone! Its been a fun morning!"'
+                                    )
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "media" }, [
+                                _c("div", { staticClass: "media-left" }, [
+                                  _c("a", { attrs: { href: "#" } }, [
+                                    _c("img", {
+                                      staticClass: "media-object img-thumbnail",
+                                      attrs: {
+                                        src: "/assets/img/avatars/avatar2.png",
+                                        alt: "Generic placeholder image"
+                                      }
+                                    })
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-body" }, [
+                                  _c("h4", { staticClass: "media-heading" }, [
+                                    _vm._v("Adam David "),
+                                    _c("span", [
+                                      _vm._v("just became friends with")
+                                    ]),
+                                    _vm._v(" Shane White ")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("small", [_vm._v("Yesterday at 9pm")])
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane",
+                      attrs: { id: "messages", role: "tabpanel" }
+                    },
+                    [
+                      _c("ul", { staticClass: "media-list activity-list" }, [
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object img-thumbnail",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar1.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Adam David "),
+                              _c("span", [_vm._v("sent a message")])
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("Today at 3.50pm")]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "mt-2" }, [
+                              _vm._v(
+                                "\"When you have children, you always have family. They will always be your priority, your responsibility.\n                                                And a man, a man provides. And he does it even when he's not appreciated or respected or even loved. He simply bears up and he does it. Because he's a man.\""
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object img-thumbnail",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar2.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Shane White "),
+                              _c("span", [_vm._v("sent a message")])
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("Yesterday at 9pm")]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "mt-2" }, [
+                              _vm._v(
+                                "\n                                                “Hey! How you doin?”\n                                            "
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane",
+                      attrs: { id: "friends", role: "tabpanel" }
+                    },
+                    [
+                      _c("ul", { staticClass: "media-list friends-list" }, [
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar1.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Shane White")
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("2000 friends")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar2.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Adam David")
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("200 friends")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar1.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Shane White")
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("2000 friends")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar2.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Adam David")
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("200 friends")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar1.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Shane White")
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("2000 friends")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-left" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "media-object",
+                                attrs: {
+                                  src: "/assets/img/avatars/avatar2.png",
+                                  alt: "Generic placeholder image"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h4", { staticClass: "media-heading" }, [
+                              _vm._v("Adam David")
+                            ]),
+                            _vm._v(" "),
+                            _c("small", [_vm._v("200 friends")])
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-850189ea", module.exports)
   }
 }
 

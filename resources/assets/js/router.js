@@ -74,6 +74,9 @@ import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
 
 //Todos
 import Todos from './views/admin/Todos.vue'
+//users
+import Users from './views/admin/users/Users.vue'
+import Profile from './views/admin/users/Profile.vue'
 
 //Settings
 import Settings from './views/admin/Settings.vue'
@@ -228,6 +231,7 @@ const routes = [
                 component: NestableList
 
             },
+            //Rating
             {
                 path: 'components/rating/bar-rating',
                 component: BarRating
@@ -334,6 +338,15 @@ const routes = [
             {
                 path: 'gallery/masonry-grid',
                 component: MasonryGrid
+            },
+            //Users
+            {
+                path: 'users/profile',
+                component: Profile
+            },
+            {
+                path: 'users/users',
+                component:Users
             },
 
             //Todos

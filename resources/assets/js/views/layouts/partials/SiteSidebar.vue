@@ -91,6 +91,14 @@
 
                     </ul>
                 </li>
+                <li :class="{ active: isActive('/admin/users') }">
+                    <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-user"></i> Users <span class="icon-fa arrow icon-fa-fw"></span></a>
+                    <ul aria-expanded="true">
+                        <router-link to="/admin/users/profile" tag="li"><a>Profile</a></router-link>
+                        <router-link to="/admin/users/users" tag="li"><a>All Users </a></router-link>
+
+                    </ul>
+                </li>
 
                 <li :class="{ active: isActive('/admin/todos') }">
                     <router-link to="/admin/todos" tag="li"><a><i class="icon-fa icon-fa-check"></i> Todos </a></router-link>
