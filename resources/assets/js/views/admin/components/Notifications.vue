@@ -234,7 +234,7 @@
     }
 
     },
-        mounted: function () {
+        mounted() {
 
             this.handleToastrNotifs();
             this.handleNotieNotifs();
