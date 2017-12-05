@@ -422,6 +422,5 @@
         mounted(){
             Plugin.initPlugins(['Select2','BootstrapSelect','TimePickers','MultiSelect','DatePicker','SwitchToggles'])
         }
-
     }
 </script>
