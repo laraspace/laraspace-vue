@@ -8,7 +8,6 @@ use Laraspace\User;
 
 class VuelidateController extends Controller
 {
-
     public function emailExist(Request $request){
         if(User::whereEmail($request->email)->first()){
             return 'false';
@@ -16,6 +15,5 @@ class VuelidateController extends Controller
         else{
             return 'true';
         }
-
     }
 }

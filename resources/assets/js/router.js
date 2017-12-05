@@ -247,6 +247,7 @@ const routes = [
                 component: Sparkline
 
             },
+
             //Icons
             {
                 path: 'icons/evil',

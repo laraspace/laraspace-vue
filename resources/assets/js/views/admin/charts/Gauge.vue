@@ -105,8 +105,6 @@
 </template>
 <script>
     export default {
-
-        methods: {},
         mounted: function () {
             var GaugesChart = function () {
 

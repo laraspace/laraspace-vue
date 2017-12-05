@@ -20,7 +20,6 @@
 
 }
 
-
 // Icons
 // -------------------------
 
@@ -124,33 +123,218 @@
   color: $ls-color-gray--very-dark;
 }
 
-// Basic UI
-// -------------------------
-
-.progress {
-  margin-top: 20px;
+//Media Storage
+[v-cloak] > * {
+  display: none;
 }
 
-//Tooltips
-.tooltips-demo{
-  .btn{
-    margin-bottom: 10px;
-  }
-  .static-tooltips-demo{
-    .tooltip{
-      position: relative;
-      opacity: 1;
-      display: inline-block;
-      margin: 10px 0;
+.media-manager {
 
-      &.bs-tooltip-top .arrow,&.bs-tooltip-bottom .arrow{
-        left: 40%;
+  .media-display {
+    .card {
+      margin-bottom: 0;
+    }
+    ul {
+
+      &.media-list {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1.25rem;
+
+        li {
+          min-width: 200px;
+          max-width: 250px;
+          list-style-type: none;
+          margin: 10px;
+          border-radius: 5px;
+          background-color: #efefef;
+          color: $ls-color-black--light;
+          margin-left: 20px;
+
+          &:hover {
+            cursor: pointer;
+          }
+          &.selected {
+            background-color: $ls-color-yellow;
+          }
+          .media-data {
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+
+            i {
+              margin-right: 10px;
+              flex: 1;
+            }
+            img {
+              width: 70px;
+              flex: 1;
+              height: 48px;
+              margin-right: 10px;
+            }
+            .media-info {
+              flex: 2;
+              overflow: hidden;
+
+              h4 {
+                margin: 0;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 1rem;
+                text-align: left;
+              }
+              small {
+                font-weight: 200;
+                display: block;
+                text-align: left;
+              }
+            }
+          }
+        }
       }
-      &.bs-tooltip-right .arrow,&.bs-tooltip-left .arrow{
-        top: 40%;
+    }
+    .media-body {
+      padding: 0;
+        .media-path {
+          ol.breadcrumb {
+            margin: 0;
+            border-radius: 0;
+            li:first-child {
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+      .media-type {
+        height: 100%;
+
+        .card {
+          height: 100%;
+          border-radius: 0;
+          .card-header {
+            padding: 50px 0;
+          }
+          .card-body {
+
+            .media-info {
+
+              .items {
+                display: flex;
+                flex-wrap: wrap;
+                font-size: 0.9rem;
+                a {
+                  color: lightblue;
+                  cursor: pointer;
+                  flex: 1;
+                }
+                p {
+                  flex: 1;
+                }
+                label {
+                  font-weight: bold;
+                  margin-right: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .progress {
+      margin-top: 0px;
+      height: 3px;
+    }
+  }
+
+//Modal-media-upload
+.modal-media {
+  .modal-dialog {
+    .modal-content {
+      .left-menu {
+        position: absolute;
+
+        .tabs-vertical .nav-tabs {
+          .nav-link {
+            border: none;
+            background-color: unset;
+          }
+          li {
+            a.active {
+              background-color: unset;
+              border: none;
+              color: #007dcc;
+            }
+          }
+        }
+      }
+      .media-upload-content {
+
+        .modal-header {
+          border: 0;
+          padding-bottom: 0;
+        }
+        .card {
+          margin: 0;
+        }
+      }
+      .modal-body {
+        padding: 0px;
       }
     }
   }
+}
+
+@media (max-width: $small-breakpoint) {
+  .modal-media {
+    .modal-dialog {
+      .modal-content {
+        overflow: hidden;
+        .side-menu {
+          background: black;
+          margin: 8px 10px 6px 10px;
+          width: 26px;
+          float: right;
+        }
+
+        .left-menu {
+          left: -127px;
+          display: block !important;
+          background: #333;
+          height: 100%;
+          top: 0;
+          z-index: 30;
+          transition: left 0.3s ease;
+          &.sidebar-open {
+            left: 0px;
+
+            .tabs-vertical.nav-tabs li a {
+              border-right-color: #333;
+            }
+
+          }
+          .tabs-vertical .nav-tabs li a.active {
+            background-color: unset;
+          }
+
+        }
+        .media-upload-content {
+          padding: 0px;
+        }
+        .modal-body {
+
+        }
+      }
+    }
+  }
+
+}
+
+//BASIC UI
+.progress {
+  margin-top: 20px;
 }
 
 // Skin Tools
@@ -248,3 +432,4 @@
     }
   }
 }
+

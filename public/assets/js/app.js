@@ -111711,6 +111711,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -111753,7 +111767,6 @@ var touchMap = new WeakMap();
                 if (value === '') return true;
 
                 // simulate async call, fail for all logins with even length
-                var vm = this;
 
                 return axios.post('/api/admin/vuelidate/email-exist', { email: value }).then(function (response) {
                     return response.data;
@@ -113373,7 +113386,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", [
       _vm._v(
-        "The above input validation checks the database in realtime to make sure that user enters a unique email on blur event. You can test with "
+        "\n                The above input validation checks the database in realtime to make sure that user enters a unique email on blur event. You can test with "
       ),
       _c("code", [_vm._v("admin@laraspace.in")])
     ])

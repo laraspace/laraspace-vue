@@ -17,18 +17,19 @@
 @import "../plugins/select2/select2.scss";
 @import "../plugins/select2/select2-bootstrap.scss";
 @import "../plugins/clockpicker/clockpicker.scss";
+@import "../plugins/datatables/responsive.dataTables";
 @import "../plugins/datatables/dataTables.bootstrap4";
 @import "../plugins/multiselect/multiselect.scss";
 @import "../plugins/bootstrap-datepicker/bootstrap-datepicker.scss";
 @import "../plugins/timepicker/timepicker";
-@import "../plugins/summernote/summernote.scss";
+@import "../plugins/summernote/summernote-bs4.scss";
 @import "../plugins/simplemde/simplemde.scss";
 @import "../plugins/pace/pace.scss";
 @import "../plugins/alertify/alertify.scss";
 @import "../plugins/easypiecharts/easypiecharts.scss";
 @import "../plugins/metisMenu/metisMenu.scss";
 @import "../plugins/nestable/nestable.scss";
-@import "../plugins/jstree/jstree.min.scss";
+@import "../plugins/jstree/jstree.scss";
 @import "../plugins/ace-editor/twilight.scss";
 @import "../plugins/icons/icons.scss";
 @import "../plugins/calendar/fullcalendar.scss";
@@ -42,6 +43,7 @@
 @import "../plugins/charts/amcharts/export.scss";
 @import "../plugins/charts/morris/morris.scss";
 @import "../plugins/prism/prism.scss";
+@import "../plugins/dropzone/dropzone";
 
 
 // Skins
@@ -92,7 +94,8 @@
 @import "components/gallery";
 @import "components/calendar";
 @import "components/ratings";
-@import "components/image-cropper";
+@import "components/dropzone";
+@import "components/editors";
 
 
 // Pages

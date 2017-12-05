@@ -16,6 +16,12 @@
 <script type="text/babel">
 
     export default {
+        mounted() {
+            this.setLayoutClasses()
+        },
+        watch: {
+            '$route': 'onRouteChange'
+        },
         methods: {
             setLayoutClasses(){
                 let body = $('body');
@@ -23,10 +29,7 @@
                 body.addClass('login-page login-1')
             },
         },
-        mounted() {
-            this.setLayoutClasses()
-        },
-        destroyed(){
+        onRouteChange(){
             $('body').removeClass('login-page')
         }
     }

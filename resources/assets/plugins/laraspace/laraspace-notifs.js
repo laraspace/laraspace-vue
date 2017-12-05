@@ -45,35 +45,35 @@ var LaraspaceNotifs = function () {
                     type : 1,
                     text : message,
                     time : timeout
-                })
+                });
                 break;
             case 'warning':
                 notie.alert({
                     type : 2,
                     text : message,
                     time : timeout
-                })
+                });
                 break;
             case 'info':
                 notie.alert({
                     type : 3,
                     text : message,
                     time : timeout
-                })
+                });
                 break;
             case 'error':
                 notie.alert({
                     type : 4,
                     text : message,
                     time : timeout
-                })
+                });
                 break;
             default:
                 notie.alert({
                     type : 1,
                     text : message,
                     time : timeout
-                })
+                });
 
         }
     };
