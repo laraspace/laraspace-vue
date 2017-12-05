@@ -37,6 +37,9 @@ import ImageZoom from './views/admin/components/ImageZoom.vue'
 import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
+import BarRating from './views/admin/components/Rating/BarRating.vue'
+import StarRating from './views/admin/components/Rating/StarRating.vue'
+
 
 //Charts
 import Amchart from './views/admin/charts/Amchart.vue'
@@ -223,6 +226,16 @@ const routes = [
             {
                 path: 'components/nestable-list',
                 component: NestableList
+
+            },
+            {
+                path: 'components/rating/bar-rating',
+                component: BarRating
+
+            },
+            {
+                path: 'components/rating/star-rating',
+                component: StarRating
 
             },
 
