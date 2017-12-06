@@ -34,19 +34,18 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-                            @foreach($users as $user)
+
                             <tr>
-                                <td>{{$user - > name}}</td>
-                                <td>{{$user - > email}}</td>
-                                <td>{{$user - > role}}</td>
-                                <td>{{$user - > created_at}}</td>
-                                <td><a href="{{route('users.show',$user->id)}}" class="btn btn-default btn-sm"><i
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="" class="btn btn-default btn-sm"><i
                                         class="icon-fa icon-fa-search"></i> View</a>
-                                    <a href="{{route('users.destroy',$user->id)}}" class="btn btn-default btn-sm"
-                                       data-token="{{csrf_token()}}" data-delete data-confirmation="notie"> <i
+                                    <a href="" class="btn btn-default btn-sm"
+                                       data-token="" data-delete data-confirmation="notie"> <i
                                             class="icon-fa icon-fa-trash"></i> Delete</a></td>
                             </tr>
-                            @endforeach
                             <tbody>
                             </tbody>
                         </table>
@@ -74,6 +73,15 @@
             this.$nextTick(() => {
                Users.init();
             });
+
+            axios.get('/api/admin/users')
+                .then(function (response) {
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
 
         },
         methods: {
