@@ -68,8 +68,8 @@
           }
         },
         mounted() {
-            this.getUsers();
             this.$nextTick(() => {
+                this.getUsers();
                 Plugin.initPlugins(['DataTables']);
             });
 

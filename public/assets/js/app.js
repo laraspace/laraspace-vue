@@ -88005,8 +88005,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        this.getUsers();
+        var _this = this;
+
         this.$nextTick(function () {
+            _this.getUsers();
             Plugin.initPlugins(['DataTables']);
         });
     },
