@@ -37505,7 +37505,7 @@ var routes = [
         path: 'users/profile',
         component: __WEBPACK_IMPORTED_MODULE_47__views_admin_users_Profile_vue___default.a
     }, {
-        path: 'users/users',
+        path: 'users',
         component: __WEBPACK_IMPORTED_MODULE_46__views_admin_users_Users_vue___default.a
     },
 
@@ -40668,7 +40668,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "router-link",
-                  { attrs: { to: "/admin/users/users", tag: "li" } },
+                  { attrs: { to: "/admin/users", tag: "li" } },
                   [_c("a", [_vm._v("All Users ")])]
                 )
               ],
@@ -47345,12 +47345,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
-
-        $('#default-datatable').DataTable();
-
-        $('#responsive-datatable').DataTable({
-            responsive: true
-        });
+        Plugin.initPlugins(['DataTables']);
     }
 });
 
@@ -87986,55 +87981,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            users: []
+        };
+    },
     mounted: function mounted() {
-        var vm = this;
-        var Users = function () {
-            return {
-                //main function to initiate the module
-                init: function init() {
-                    vm.handleTables();
-                    vm.handleConfirmation();
-                }
-            };
-        }();
-
+        this.getUsers();
         this.$nextTick(function () {
-            Users.init();
+            Plugin.initPlugins(['DataTables']);
         });
     },
 
     methods: {
-        handleTables: function handleTables() {
-            $('#users-datatable').DataTable({
-                responsive: true
+        getUsers: function getUsers() {
+            var vm = this;
+            axios.get('/api/admin/users/get').then(function (response) {
+                console.log(response.data);
+                vm.users = response.data;
+            }).catch(function (error) {
+                console.log(error);
             });
         },
-        handleConfirmation: function handleConfirmation() {
-
-            $('[data-confirmation="notie"]').on('click', function () {
-                $this = $(this);
-                notie.confirm('Are you sure?', 'Yes! Delete this User', 'Cancel', function () {
-                    deleteUser($this);
-                });
-                return false;
-            });
-        },
-        deleteUser: function deleteUser($this) {
-            var url = $this.attr('href'),
-                token = $this.data('token');
-            console.log(url);
-            $.ajax({
-                type: 'POST',
-                data: { _method: 'delete', _token: token },
-                url: url,
-                success: function success(data) {
-                    toastr['success']('User Deleted', "Success");
-                    window.setTimeout('location.reload()', 500);
+        deleteUser: function deleteUser(id) {
+            var vm = this;
+            notie.confirm({
+                text: 'Are you sure?',
+                cancelCallback: function cancelCallback() {
+                    toastr['info']('Cancel');
                 },
-                error: function error(data) {
-                    toastr['error']('There was an error', "Error");
+                submitCallback: function submitCallback() {
+                    axios.delete('/api/admin/users/' + id).then(function (response) {
+                        console.log(response.data);
+                        vm.users = response.data;
+                        toastr['success']('User Deleted', "Success");
+                    }).catch(function (error) {
+                        toastr['error']('There was an error', "Error");
+                    });
                 }
             });
         }
@@ -88049,83 +88049,147 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0, false, false)
+  return _c("div", { staticClass: "main-content" }, [
+    _vm._m(0, false, false),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(1, false, false),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              {
+                staticClass: "table table-striped table-bordered",
+                attrs: {
+                  id: "responsive-datatable",
+                  cellspacing: "0",
+                  width: "100%"
+                }
+              },
+              [
+                _vm._m(2, false, false),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(user.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.role))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.created_at))]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/admin/users/profile" } },
+                          [
+                            _c("a", { staticClass: "btn btn-default btn-sm" }, [
+                              _c("i", {
+                                staticClass: "icon-fa icon-fa-search"
+                              }),
+                              _vm._v(" View")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-default btn-sm",
+                            attrs: {
+                              "data-delete": "",
+                              "data-confirmation": "notie"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.deleteUser(user.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-fa icon-fa-trash" }),
+                            _vm._v("Delete\n                                ")
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                }),
+                _vm._v(" "),
+                _c("tbody")
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "main-content" }, [
-      _c("div", { staticClass: "page-header" }, [
-        _c("h3", { staticClass: "page-title" }, [_vm._v("Users")]),
-        _vm._v(" "),
-        _c("ol", { staticClass: "breadcrumb" }, [
-          _c("li", { staticClass: "breadcrumb-item" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "breadcrumb-item" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Users")])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Users")])
+    return _c("div", { staticClass: "page-header" }, [
+      _c("h3", { staticClass: "page-title" }, [_vm._v("Users")]),
+      _vm._v(" "),
+      _c("ol", { staticClass: "breadcrumb" }, [
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "page-actions" }, [
-          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "icon-fa icon-fa-plus" }),
-            _vm._v(" New User")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-danger" }, [
-            _c("i", { staticClass: "icon-fa icon-fa-trash" }),
-            _vm._v(" Delete ")
-          ])
-        ])
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Users")])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Users")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-12" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h6", [_vm._v("All Users")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-actions" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "table",
-                {
-                  staticClass: "table table-striped table-bordered",
-                  attrs: {
-                    id: "users-datatable",
-                    cellspacing: "0",
-                    width: "100%"
-                  }
-                },
-                [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("Name")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Email")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Role")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Registered On")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Actions")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody")
-                ]
-              )
-            ])
-          ])
+      _c("div", { staticClass: "page-actions" }, [
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _c("i", { staticClass: "icon-fa icon-fa-plus" }),
+          _vm._v(" New User")
+        ]),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-danger" }, [
+          _c("i", { staticClass: "icon-fa icon-fa-trash" }),
+          _vm._v(" Delete ")
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h6", [_vm._v("All Users")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-actions" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Role")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Registered On")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
       ])
     ])
   }
@@ -89527,6 +89591,14 @@ if (false) {
     isFunction: function isFunction(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    },
+    DataTables: function DataTables() {
+
+        $('#default-datatable').DataTable();
+
+        $('#responsive-datatable').DataTable({
+            responsive: true
+        });
     }
 });
 

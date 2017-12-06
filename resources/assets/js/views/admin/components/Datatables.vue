@@ -995,12 +995,7 @@
     export default {
 
         mounted(){
-
-            $('#default-datatable').DataTable();
-
-            $('#responsive-datatable').DataTable({
-                responsive: true
-            });
+            Plugin.initPlugins(['DataTables'])
         }
     }
 </script>

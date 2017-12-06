@@ -345,7 +345,7 @@ const routes = [
                 component: Profile
             },
             {
-                path: 'users/users',
+                path: 'users',
                 component:Users
             },
 

@@ -2,11 +2,11 @@
 
 namespace Laraspace\Http\Controllers\Demo;
 
+use Laraspace\User;
 use Illuminate\Http\Request;
 use Laraspace\Http\Controllers\Controller;
-use Laraspace\User;
 
-class VuelidateController extends Controller
+class PagesController extends Controller
 {
     public function emailExist(Request $request){
         if(User::whereEmail($request->email)->first()){
@@ -15,5 +15,16 @@ class VuelidateController extends Controller
         else{
             return 'true';
         }
+    }
+    public function allUsers(){
+       return $users = User::all();
+    }
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return $users = User::all();
     }
 }

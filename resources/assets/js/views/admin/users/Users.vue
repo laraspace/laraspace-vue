@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="users-datatable" class="table table-striped table-bordered" cellspacing="0"
+                        <table id="responsive-datatable" class="table table-striped table-bordered" cellspacing="0"
                                width="100%">
                             <thead>
                             <tr>
@@ -34,7 +34,22 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-
+                            <tr v-for="user in users">
+                                <td>{{user.name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.role}}</td>
+                                <td>{{user.created_at}}</td>
+                                <td>
+                                    <router-link to="/admin/users/profile">
+                                        <a  class="btn btn-default btn-sm">
+                                        <i class="icon-fa icon-fa-search"></i> View</a>
+                                    </router-link>
+                                    <a @click="deleteUser(user.id)" class="btn btn-default btn-sm"
+                                        data-delete data-confirmation="notie">
+                                        <i class="icon-fa icon-fa-trash"></i>Delete
+                                    </a>
+                                </td>
+                            </tr>
                             <tbody>
                             </tbody>
                         </table>
@@ -46,60 +61,51 @@
 </template>
 <script type="text/babel">
     export default {
+        data(){
+          return {
+              users:[],
+          }
+        },
         mounted() {
-            let vm = this;
-            var Users = function () {
-                return {
-                    //main function to initiate the module
-                    init: function () {
-                        vm.handleTables();
-                        vm.handleConfirmation();
-                    }
-                };
-
-            }();
-
+            this.getUsers();
             this.$nextTick(() => {
-               Users.init();
+                Plugin.initPlugins(['DataTables']);
             });
 
         },
         methods: {
-            handleTables() {
-                $('#users-datatable').DataTable({
-                    responsive: true
-                });
-            },
-
-            handleConfirmation() {
-
-                $('[data-confirmation="notie"]').on('click', function () {
-                    $this = $(this);
-                    notie.confirm('Are you sure?', 'Yes! Delete this User', 'Cancel', function () {
-                        deleteUser($this);
+            getUsers(){
+                let vm = this;
+                axios.get('/api/admin/users/get')
+                    .then(function (response) {
+                        console.log(response.data);
+                        vm.users = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
                     });
-                    return false;
-                });
-
             },
 
-            deleteUser($this) {
-                var url = $this.attr('href'), token = $this.data('token');
-                console.log(url);
-                $.ajax({
-                    type: 'POST',
-                    data: {_method: 'delete', _token: token},
-                    url: url,
-                    success: function (data) {
-                        toastr['success']('User Deleted', "Success");
-                        window.setTimeout('location.reload()', 500);
+            deleteUser(id) {
+                let vm = this;
+                notie.confirm({
+                    text: 'Are you sure?',
+                    cancelCallback: function () {
+                        toastr['info']('Cancel');
                     },
-                    error: function (data) {
-                        toastr['error']('There was an error', "Error");
+                    submitCallback: function () {
+                        axios.delete('/api/admin/users/'+id)
+                            .then(function (response) {
+                                console.log(response.data);
+                                vm.users = response.data;
+                                toastr['success']('User Deleted', "Success");
+                            })
+                            .catch(function (error) {
+                                toastr['error']('There was an error', "Error");
+                            });
                     }
                 });
             },
-
         }
     }
 </script>
