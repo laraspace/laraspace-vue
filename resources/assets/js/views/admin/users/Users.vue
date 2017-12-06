@@ -43,7 +43,8 @@
                                     <td>
                                         <router-link to="/admin/users/profile">
                                             <a  class="btn btn-default btn-sm">
-                                                <i class="icon-fa icon-fa-search"></i> View</a>
+                                                <i class="icon-fa icon-fa-search"></i> View
+                                            </a>
                                         </router-link>
                                         <a @click="deleteUser(user.id)" class="btn btn-default btn-sm"
                                            data-delete data-confirmation="notie">
