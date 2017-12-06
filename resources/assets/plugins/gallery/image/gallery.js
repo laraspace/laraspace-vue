@@ -51,12 +51,12 @@
                 return items;
             };
 
-// find nearest parent element
+            // find nearest parent element
             var closest = function closest(el, fn) {
                 return el && ( fn(el) ? el : closest(el.parentNode, fn) );
             };
 
-// triggers when user clicks on thumbnail
+            // triggers when user clicks on thumbnail
             var onThumbnailsClick = function (e) {
                 e = e || window.event;
                 e.preventDefault ? e.preventDefault() : e.returnValue = false;
@@ -100,7 +100,7 @@
                 return false;
             };
 
-// parse picture index and gallery index from URL (#&pid=1&gid=2)
+            // parse picture index and gallery index from URL (#&pid=1&gid=2)
             var photoswipeParseHash = function () {
                 var hash = window.location.hash.substring(1),
                     params = {};
@@ -186,7 +186,7 @@
                 gallery.init();
             };
 
-// loop through all gallery elements and bind events
+            // loop through all gallery elements and bind events
             var galleryElements = $(this);
 
             for (var i = 0, l = galleryElements.length; i < l; i++) {
@@ -194,7 +194,7 @@
                 galleryElements[i].onclick = onThumbnailsClick;
             }
 
-// Parse URL and open gallery if it contains #&pid=3&gid=1
+            // Parse URL and open gallery if it contains #&pid=3&gid=1
             var hashData = photoswipeParseHash();
             if (hashData.pid && hashData.gid) {
                 openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
