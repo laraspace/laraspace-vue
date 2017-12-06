@@ -94,5 +94,14 @@ export default {
     isFunction(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    },
+
+    DataTables(){
+
+        $('#default-datatable').DataTable();
+
+        $('#responsive-datatable').DataTable({
+            responsive: true
+        });
     }
 }

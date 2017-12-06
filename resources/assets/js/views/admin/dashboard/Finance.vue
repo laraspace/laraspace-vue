@@ -108,7 +108,9 @@
                         </div>
                         <div class="actions">
                             <div class="btn-group" role="group">
-                                <button id="summaryFilterDrop" type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <button id="summaryFilterDrop" type="button"
+                                        class="btn btn-sm btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="true">
                                     Filters
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="summaryFilterDrop">
@@ -157,13 +159,13 @@
     export default {
         data() {
             return {
-                'header' : 'header'
+                'header': 'header'
             }
         },
-        components : {
-            LineGraph , BarGraph , PieGraph
+        components: {
+            LineGraph, BarGraph, PieGraph
         },
-        mounted(){
+        mounted() {
             Plugin.initPlugins(['EasyPieChart'])
         }
 

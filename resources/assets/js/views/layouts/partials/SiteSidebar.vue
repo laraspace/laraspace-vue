@@ -15,7 +15,7 @@
                     <ul aria-expanded="true">
                         <router-link to="/admin/layouts/sidebar" tag="li"><a>Sidebar</a></router-link>
                         <router-link to="/admin/layouts/horizontal" tag="li"><a>Horizontal</a></router-link>
-                        <router-link to="/admin/layouts/icon-sidebar" tag="li"><a>Icon Sidebar</a></router-link>
+                        <router-link to="/admin/layouts/icons-sidebar" tag="li"><a>Icon Sidebar</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active : isActive('/admin/basic-ui') }">
@@ -39,6 +39,14 @@
                         <router-link to="/admin/components/calendar" tag="li"><a>Calendar</a></router-link>
                         <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
+                        <li :class="{ active: isActive('/admin/components/rating') }">
+                            <a href="#" aria-expanded="true">Rating <span class="icon-fa arrow icon-fa-fw"></span></a>
+                            <ul aria-expanded="true">
+                                <router-link to="/admin/components/rating/bar-rating" tag="li"><a>Bar Rating</a></router-link>
+                                <router-link to="/admin/components/rating/star-rating" tag="li"><a>Star Rating </a></router-link>
+
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/chart') }">
@@ -55,7 +63,7 @@
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-eye"></i> Icons <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">
                         <router-link to="/admin/icons/icomoon" tag="li"><a>IcoMoon</a></router-link>
-                        <router-link to="/admin/icons/evil" tag="li"><a>Evil Icons</a></router-link>
+                        <!--<router-link to="/admin/icons/evil" tag="li"><a>Evil Icons</a></router-link>-->
                         <router-link to="/admin/icons/meteo" tag="li"><a>Meteo Icons</a></router-link>
                         <router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>
                         <router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>
@@ -75,14 +83,22 @@
                         <router-link to="/admin/forms/vuelidate" tag="li"><a>Vuelidate</a></router-link>
                     </ul>
                 </li>
-                <!--<li :class="{ active: isActive('/admin/pages') }">-->
-                    <!--<a href="#" aria-expanded="true"><i class="icons-fa icons-fa-th-large"></i> Pages <span class="icons-fa arrow icons-fa-fw"></span></a>-->
-                    <!--<ul aria-expanded="true">-->
-                        <!--<router-link :to="'/admin/pages/login'" tag="li"><a>Login</a></router-link>-->
-                        <!--<router-link :to="'/admin/pages/register'" tag="li"><a>Register</a></router-link>-->
-                        <!--<router-link :to="'/admin/pages/404'" tag="li"><a>404 Page</a></router-link>-->
-                    <!--</ul>-->
-                <!--</li>-->
+                <li :class="{ active: isActive('/admin/gallery') }">
+                    <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-image"></i> Gallery <span class="icon-fa arrow icon-fa-fw"></span></a>
+                    <ul aria-expanded="true">
+                        <router-link to="/admin/gallery/grid" tag="li"><a>Grid</a></router-link>
+                        <router-link to="/admin/gallery/masonry-grid" tag="li"><a>Masonry Grid </a></router-link>
+
+                    </ul>
+                </li>
+                <li :class="{ active: isActive('/admin/users') }">
+                    <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-user"></i> Users <span class="icon-fa arrow icon-fa-fw"></span></a>
+                    <ul aria-expanded="true">
+                        <router-link to="/admin/users/profile" tag="li"><a>Profile</a></router-link>
+                        <router-link to="/admin/users" tag="li"><a>All Users </a></router-link>
+
+                    </ul>
+                </li>
                 <li :class="{ active: isActive('/admin/todos') }">
                     <router-link to="/admin/todos" tag="li"><a><i class="icon-fa icon-fa-check"></i> Todos </a></router-link>
                 </li>

@@ -37495,10 +37495,10 @@ var routes = [
     //Gallery
     {
         path: 'gallery/grid',
-        component: __WEBPACK_IMPORTED_MODULE_43__views_admin_gallery_Grid_vue__["default"]
+        component: __WEBPACK_IMPORTED_MODULE_43__views_admin_gallery_Grid_vue___default.a
     }, {
         path: 'gallery/masonry-grid',
-        component: __WEBPACK_IMPORTED_MODULE_44__views_admin_gallery_MasonryGrid_vue__["default"]
+        component: __WEBPACK_IMPORTED_MODULE_44__views_admin_gallery_MasonryGrid_vue___default.a
     },
     //Users
     {
@@ -85142,21 +85142,2271 @@ if (false) {
 
 /***/ }),
 /* 209 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\gallery\\Grid.vue'\n    at Error (native)");
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(210)
+/* template */
+var __vue_template__ = __webpack_require__(211)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\views\\admin\\gallery\\Grid.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7177954a", Component.options)
+  } else {
+    hotAPI.reload("data-v-7177954a", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
-/* 210 */,
-/* 211 */,
+/* 210 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        var vm = this;
+        var Gallery = function () {
+            return {
+                //main function to initiate the module
+                init: function init() {
+                    vm.handleImageGallery();
+                    vm.handleVideoGallery();
+                }
+            };
+        }();
+        this.$nextTick(function () {
+            Gallery.init();
+        });
+    },
+
+    methods: {
+        handleImageGallery: function handleImageGallery() {
+            $(".image-gallery").gallery();
+        },
+        handleVideoGallery: function handleVideoGallery() {
+            $(".demo").videoBox({
+                loop: true,
+                autoplay: false,
+                byline: true,
+                color: "00adef",
+                portrait: true,
+                title: ''
+            });
+        }
+    }
+
+});
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0, false, false)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "main-content" }, [
+      _c("div", { staticClass: "page-header" }, [
+        _c("h3", { staticClass: "page-title" }, [_vm._v("Gallery Grid")]),
+        _vm._v(" "),
+        _c("ol", { staticClass: "breadcrumb" }, [
+          _c("li", { staticClass: "breadcrumb-item" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "breadcrumb-item" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("Gallery")])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "breadcrumb-item active" }, [
+            _vm._v("Gallery Grid")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h6", [_vm._v("Image Gallery")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            {
+              staticClass: "my-gallery image-gallery",
+              attrs: { itemscope: "" }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/1.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/1.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 1")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/2.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/2.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 2")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/3.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/3.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 3")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/4.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/4.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 4")]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/5.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/5.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 1")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/6.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/6.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 2")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/7.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/7.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 3")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/8.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/8.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 4")]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/9.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/9.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 1")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/10.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/10.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 2")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/11.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/11.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 3")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "figure",
+                  {
+                    staticClass: "col-lg-3 col-md-6 col-xs-12",
+                    attrs: { itemprop: "associatedMedia", itemscope: "" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/assets/img/demo/gallery/12.jpg",
+                          itemprop: "contentUrl",
+                          "data-size": "480x360"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: {
+                            src: "/assets/img/demo/gallery/12.jpg",
+                            itemprop: "thumbnail",
+                            alt: "Image description"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "figcaption",
+                      { attrs: { itemprop: "caption description" } },
+                      [_vm._v("Image caption 4")]
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "pswp",
+              attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" }
+            },
+            [
+              _c("div", { staticClass: "pswp__bg" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "pswp__scroll-wrap" }, [
+                _c("div", { staticClass: "pswp__container" }, [
+                  _c("div", { staticClass: "pswp__item" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pswp__item" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pswp__item" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "pswp__ui pswp__ui--hidden" }, [
+                  _c("div", { staticClass: "pswp__top-bar" }, [
+                    _c("div", { staticClass: "pswp__counter" }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--close",
+                      attrs: { title: "Close (Esc)" }
+                    }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--share",
+                      attrs: { title: "Share" }
+                    }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--fs",
+                      attrs: { title: "Toggle fullscreen" }
+                    }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--zoom",
+                      attrs: { title: "Zoom in/out" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "pswp__preloader" }, [
+                      _c("div", { staticClass: "pswp__preloader__icn" }, [
+                        _c("div", { staticClass: "pswp__preloader__cut" }, [
+                          _c("div", { staticClass: "pswp__preloader__donut" })
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "pswp__share-modal pswp__share-modal--hidden pswp__single-tap"
+                    },
+                    [_c("div", { staticClass: "pswp__share-tooltip" })]
+                  ),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "pswp__button pswp__button--arrow--left",
+                    attrs: { title: "Previous (arrow left)" }
+                  }),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "pswp__button pswp__button--arrow--right",
+                    attrs: { title: "Next (arrow right)" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pswp__caption" }, [
+                    _c("div", { staticClass: "pswp__caption__center" })
+                  ])
+                ])
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h6", [_vm._v("YouTube Video Gallery")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "my-gallery youtube-video-gallery" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=3pn2SI4KGJc"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=6v2L2UGZJAM"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=ZN2SwwfeCRc"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=DjxEhLTRtPY"
+                      }
+                    })
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=Ce4tYw6IE70"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=3rHXrA80NH4"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=ftEJIZA7z-I"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6 " }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: {
+                        "data-youtube":
+                          "https://www.youtube.com/watch?v=k_GM1JA608Y"
+                      }
+                    })
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h6", [_vm._v("Vimeo Video Gallery")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "my-gallery vimeo-video-gallery" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/102787065" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/18554749" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/79142264" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/49614043" }
+                    })
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/74116395" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/113404928" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/143709971" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "embed-responsive embed-responsive-16by9" },
+                  [
+                    _c("div", {
+                      staticClass: "demo embed-responsive-item",
+                      attrs: { "data-vimeo": "https://vimeo.com/204895750" }
+                    })
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7177954a", module.exports)
+  }
+}
+
+/***/ }),
 /* 212 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\js\\views\\admin\\gallery\\MasonryGrid.vue'\n    at Error (native)");
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(213)
+/* template */
+var __vue_template__ = __webpack_require__(214)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\views\\admin\\gallery\\MasonryGrid.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-13ee8752", Component.options)
+  } else {
+    hotAPI.reload("data-v-13ee8752", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
-/* 213 */,
-/* 214 */,
+/* 213 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        var vm = this;
+        var Gallery = function () {
+            return {
+                //main function to initiate the module
+                init: function init() {
+                    vm.handleImageGallery();
+                    vm.handleVideoGallery();
+                }
+            };
+        }();
+        this.$nextTick(function () {
+            Gallery.init();
+        });
+        console.log('init');
+    },
+
+    methods: {
+        handleImageGallery: function handleImageGallery() {
+            $(".image-gallery").gallery();
+        },
+        handleVideoGallery: function handleVideoGallery() {
+            $(".demo").videoBox({
+                loop: false,
+                autoplay: false,
+                byline: true,
+                color: "00adef",
+                portrait: true,
+                title: ''
+            });
+
+            //masonry image gallery
+            $(".my-gallery-container").mpmansory({
+                childrenClass: 'item', // default is a div
+                columnClasses: 'group', //add classes to items
+                breakpoints: {
+                    lg: 3,
+                    md: 4,
+                    sm: 6,
+                    xs: 12
+                },
+                distributeBy: { order: false, height: false, attr: 'data-order', attrOrder: 'asc' },
+                onload: function onload(items) {
+                    //make somthing with items
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 214 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0, false, false)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "main-content" }, [
+      _c("div", { staticClass: "page-header" }, [
+        _c("h3", { staticClass: "page-title" }, [
+          _vm._v("Gallery Masonry Grid")
+        ]),
+        _vm._v(" "),
+        _c("ol", { staticClass: "breadcrumb" }, [
+          _c("li", { staticClass: "breadcrumb-item" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "breadcrumb-item" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("Gallery")])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "breadcrumb-item active" }, [
+            _vm._v("Gallery Masonry Grid")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h6", [_vm._v("Masonry Image Gallery")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            {
+              staticClass: "my-gallery image-gallery",
+              attrs: { itemscope: "" }
+            },
+            [
+              _c("div", { staticClass: "my-gallery-container" }, [
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "0" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/1.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x360"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/1.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "1" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/14.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x757"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/14.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "2" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/2.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x360"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/2.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "3" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/17.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x720"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/17.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "4" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/15.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x720"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/15.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "5" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/6.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x360"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/6.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "6" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/16.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x720"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/16.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "7" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/18.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x270"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/18.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "8" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/9.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x360"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/9.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "9" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/13.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x720"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/13.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "10" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/10.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x360"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/10.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "item", attrs: { "data-order": "11" } },
+                  [
+                    _c(
+                      "figure",
+                      { attrs: { itemprop: "associatedMedia", itemscope: "" } },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/assets/img/demo/gallery/12.jpg",
+                              itemprop: "contentUrl",
+                              "data-size": "480x360"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src: "/assets/img/demo/gallery/12.jpg",
+                                itemprop: "thumbnail",
+                                alt: "Image description"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "pswp",
+              attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" }
+            },
+            [
+              _c("div", { staticClass: "pswp__bg" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "pswp__scroll-wrap" }, [
+                _c("div", { staticClass: "pswp__container" }, [
+                  _c("div", { staticClass: "pswp__item" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pswp__item" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pswp__item" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "pswp__ui pswp__ui--hidden" }, [
+                  _c("div", { staticClass: "pswp__top-bar" }, [
+                    _c("div", { staticClass: "pswp__counter" }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--close",
+                      attrs: { title: "Close (Esc)" }
+                    }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--share",
+                      attrs: { title: "Share" }
+                    }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--fs",
+                      attrs: { title: "Toggle fullscreen" }
+                    }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "pswp__button pswp__button--zoom",
+                      attrs: { title: "Zoom in/out" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "pswp__preloader" }, [
+                      _c("div", { staticClass: "pswp__preloader__icn" }, [
+                        _c("div", { staticClass: "pswp__preloader__cut" }, [
+                          _c("div", { staticClass: "pswp__preloader__donut" })
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "pswp__share-modal pswp__share-modal--hidden pswp__single-tap"
+                    },
+                    [_c("div", { staticClass: "pswp__share-tooltip" })]
+                  ),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "pswp__button pswp__button--arrow--left",
+                    attrs: { title: "Previous (arrow left)" }
+                  }),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "pswp__button pswp__button--arrow--right",
+                    attrs: { title: "Next (arrow right)" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pswp__caption" }, [
+                    _c("div", { staticClass: "pswp__caption__center" })
+                  ])
+                ])
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h6", [_vm._v("Video Gallery")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "my-gallery youtube-video-gallery" }, [
+            _c("div", { staticClass: "my-gallery-container" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "0" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=3pn2SI4KGJc"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "1" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=6v2L2UGZJAM"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "2" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=ZN2SwwfeCRc"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "3" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=DjxEhLTRtPY"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "4" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=Ce4tYw6IE70"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "5" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=3rHXrA80NH4"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "6" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=ftEJIZA7z-I"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "item embed-responsive embed-responsive-16by9",
+                  attrs: { "data-order": "7" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "demo embed-responsive-item",
+                    attrs: {
+                      "data-youtube":
+                        "https://www.youtube.com/watch?v=k_GM1JA608Y"
+                    }
+                  })
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-13ee8752", module.exports)
+  }
+}
+
+/***/ }),
 /* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -87364,7 +89614,7 @@ if (false) {
 /* 241 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \r\n@import \"../plugins/gallery/image/photoswipe.scss\";\r\n^\r\n      File to import not found or unreadable: D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\plugins\\gallery\\image\\main.scss.\nParent style sheet: stdin\r\n      in D:\\SERVER\\laragon\\www\\laraspace-vue\\resources\\assets\\sass\\laraspace.scss (line 38, column 1)\n    at runLoaders (D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\webpack\\lib\\NormalModule.js:195:19)\n    at D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\sass-loader\\lib\\loader.js:55:13)\n    at Object.<anonymous> (D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\async\\dist\\async.js:2244:31)\n    at Object.callback (D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\async\\dist\\async.js:906:16)\n    at options.error (D:\\SERVER\\laragon\\www\\laraspace-vue\\node_modules\\node-sass\\lib\\index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

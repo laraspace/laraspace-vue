@@ -58,7 +58,8 @@
                         <form id="s">
                             <input type="search" id="q" class="form-control"/><br>
                             <button type="submit" class="btn btn-default">Search</button>
-                        </form><br />
+                        </form>
+                        <br/>
                         <div id="container3">
                             <ul>
                                 <li data-jstree='{"opened":true}'>Root node
@@ -98,65 +99,62 @@
 <script>
     export default {
 
-        methods: {},
-        mounted: function () {
+        mounted(){
+            let vm = this;
             var NestableTree = function () {
-
-                //js for container 1
-                var handleSimpleTree = function(){
-                    $('#container').jstree();
-                    $("#s").submit(function(e) {
-                        e.preventDefault();
-                        $("#container").jstree(true).search($("#q").val());
-                    });
-                };
-
-                //js for Tree With Drag & Drop
-                var handleDragAndDropTree = function(){
-                    $('#container2').jstree({
-                        "core" : { "check_callback" : true }, // so that operations work
-                        "plugins" : ["dnd"]
-                    });
-                };
-
-                // js for Tree With SearchBox
-                var handleTreeWithSearchBox = function(){
-                    $('#container3').jstree({
-                        "plugins" : ["search"]
-                    });
-                };
-
-                //js for With Icons
-                var handleTreeWithIcons = function(){
-                    $('#container4').jstree({
-                        "types" : {
-                            "default" : {
-                                "icon" : "fa fa-user"
-                            },
-                            "demo" : {
-                                "icon" : "fa fa-users"
-                            }
-                        },
-                        "plugins" : ["types"]
-                    });
-                };
-
                 return {
                     //main function to initiate the module
                     init: function () {
-                        handleSimpleTree();
-                        handleDragAndDropTree();
-                        handleTreeWithSearchBox();
-                        handleTreeWithIcons();
+                        vm.handleSimpleTree();
+                        vm.handleDragAndDropTree();
+                        vm.handleTreeWithSearchBox();
+                        vm.handleTreeWithIcons();
                     }
                 };
-
             }();
-
-            jQuery(document).ready(function() {
+            this.$nextTick(() => {
                 NestableTree.init();
             });
+        },
+        methods: {
+            //js for container 1
+            handleSimpleTree() {
+                $('#container').jstree();
+                $("#s").submit(function (e) {
+                    e.preventDefault();
+                    $("#container").jstree(true).search($("#q").val());
+                });
+            },
 
+            //js for Tree With Drag & Drop
+            handleDragAndDropTree() {
+                $('#container2').jstree({
+                    "core": {"check_callback": true}, // so that operations work
+                    "plugins": ["dnd"]
+                });
+            },
+
+            // js for Tree With SearchBox
+            handleTreeWithSearchBox() {
+                $('#container3').jstree({
+                    "plugins": ["search"]
+                });
+            },
+
+            //js for With Icons
+            handleTreeWithIcons() {
+                $('#container4').jstree({
+                    "types": {
+                        "default": {
+                            "icon": "fa fa-user"
+                        },
+                        "demo": {
+                            "icon": "fa fa-users"
+                        }
+                    },
+                    "plugins": ["types"]
+                });
+            },
         },
     }
 </script>

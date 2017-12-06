@@ -657,8 +657,11 @@
                 }
             }
         },
-        mounted: function (){
-            this.handleImageCropper();
+        mounted(){
+            let vm = this;
+            this.$nextTick(() => {
+                vm.handleImageCropper();
+            });
         },
     }
 </script>

@@ -131,7 +131,7 @@
                             </div>
                             <div class="demo-icon">
                                 <div class="icon-box"><i
-                                            class="icon-mt icon-mt-fog"></i>
+                                        class="icon-mt icon-mt-fog"></i>
                                 </div>
                                 <div class="icon-classname">
                                     <span>icon-mt-fog</span>
@@ -147,7 +147,7 @@
                             </div>
                             <div class="demo-icon">
                                 <div class="icon-box"><i
-                                            class="icon-mt icon-mt-snow"></i>
+                                        class="icon-mt icon-mt-snow"></i>
                                 </div>
                                 <div class="icon-classname">
                                     <span>icon-mt-snow</span>

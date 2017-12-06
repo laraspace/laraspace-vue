@@ -35,8 +35,8 @@
 @import "../plugins/calendar/fullcalendar.scss";
 @import "../plugins/form-wizard/wizard.scss";
 @import "../plugins/imageCropper/cropper.scss";
-@import "../plugins/gallery/image/photoswipe.scss";
-@import "../plugins/gallery/image/default-skin.scss";
+@import "../plugins/gallery/image/main.scss";
+@import "../plugins/gallery/image/default-skin/default-skin.scss";
 @import "../plugins/zoom/zoom.scss";
 @import "../plugins/bar-rating/bar-rating.scss";
 @import "../plugins/rating/jquery.raty.scss";
@@ -96,6 +96,7 @@
 @import "components/ratings";
 @import "components/dropzone";
 @import "components/editors";
+@import "components/image-cropper";
 
 
 // Pages
