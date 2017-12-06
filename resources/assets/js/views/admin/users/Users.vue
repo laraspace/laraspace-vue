@@ -70,7 +70,6 @@
         mounted() {
             this.$nextTick(() => {
                 this.getUsers();
-                Plugin.initPlugins(['DataTables']);
             });
 
         },
@@ -80,6 +79,9 @@
                 axios.get('/api/admin/users/get')
                     .then(function (response) {
                         vm.users = response.data;
+                    })
+                    .then(()=>{
+                        Plugin.initPlugins(['DataTables']);
                     })
                     .catch(function (error) {
                         toastr['error']('There was an error', "Error");

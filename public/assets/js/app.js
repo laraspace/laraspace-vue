@@ -88009,7 +88009,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.$nextTick(function () {
             _this.getUsers();
-            Plugin.initPlugins(['DataTables']);
         });
     },
 
@@ -88018,6 +88017,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var vm = this;
             axios.get('/api/admin/users/get').then(function (response) {
                 vm.users = response.data;
+            }).then(function () {
+                Plugin.initPlugins(['DataTables']);
             }).catch(function (error) {
                 toastr['error']('There was an error', "Error");
             });
