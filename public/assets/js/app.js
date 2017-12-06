@@ -15265,7 +15265,7 @@ function withParams(paramsOrClosure, maybeValidator) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(27);
-module.exports = __webpack_require__(242);
+module.exports = __webpack_require__(241);
 
 
 /***/ }),
@@ -15276,7 +15276,7 @@ module.exports = __webpack_require__(242);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__router_js__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_layout__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_plugin__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_plugin__ = __webpack_require__(240);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -37193,15 +37193,15 @@ exports.clearImmediate = clearImmediate;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__views_admin_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_46__views_admin_users_Users_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__views_admin_users_Profile_vue__ = __webpack_require__(226);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__views_admin_users_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_47__views_admin_users_Profile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_admin_Settings_vue__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_admin_Settings_vue__ = __webpack_require__(228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__views_admin_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_48__views_admin_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_auth_Login_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_auth_Login_vue__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__views_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_49__views_auth_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_auth_Register_vue__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_auth_Register_vue__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__views_auth_Register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_50__views_auth_Register_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_errors_404_vue__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_errors_404_vue__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__views_errors_404_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_51__views_errors_404_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__views_front_Home_vue__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__views_front_Home_vue__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__views_front_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_52__views_front_Home_vue__);
 
 
@@ -88014,10 +88014,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getUsers: function getUsers() {
             var vm = this;
             axios.get('/api/admin/users/get').then(function (response) {
-                console.log(response.data);
                 vm.users = response.data;
             }).catch(function (error) {
-                console.log(error);
+                toastr['error']('There was an error', "Error");
             });
         },
         deleteUser: function deleteUser(id) {
@@ -88029,7 +88028,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 },
                 submitCallback: function submitCallback() {
                     axios.delete('/api/admin/users/' + id).then(function (response) {
-                        console.log(response.data);
                         vm.users = response.data;
                         toastr['success']('User Deleted', "Success");
                     }).catch(function (error) {
@@ -88071,60 +88069,66 @@ var render = function() {
               [
                 _vm._m(2, false, false),
                 _vm._v(" "),
-                _vm._l(_vm.users, function(user) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(user.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.email))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.role))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.created_at))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { to: "/admin/users/profile" } },
-                          [
-                            _c("a", { staticClass: "btn btn-default btn-sm" }, [
-                              _c("i", {
-                                staticClass: "icon-fa icon-fa-search"
-                              }),
-                              _vm._v(" View")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-default btn-sm",
-                            attrs: {
-                              "data-delete": "",
-                              "data-confirmation": "notie"
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.deleteUser(user.id)
+                _c(
+                  "tbody",
+                  _vm._l(_vm.users, function(user) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(user.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.email))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.role))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.created_at))]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: "/admin/users/profile" } },
+                            [
+                              _c(
+                                "a",
+                                { staticClass: "btn btn-default btn-sm" },
+                                [
+                                  _c("i", {
+                                    staticClass: "icon-fa icon-fa-search"
+                                  }),
+                                  _vm._v(" View")
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-default btn-sm",
+                              attrs: {
+                                "data-delete": "",
+                                "data-confirmation": "notie"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteUser(user.id)
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "icon-fa icon-fa-trash" }),
-                            _vm._v("Delete\n                                ")
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ])
-                }),
-                _vm._v(" "),
-                _c("tbody")
-              ],
-              2
+                            },
+                            [
+                              _c("i", { staticClass: "icon-fa icon-fa-trash" }),
+                              _vm._v(
+                                "Delete\n                                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  })
+                )
+              ]
             )
           ])
         ])
@@ -88212,7 +88216,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(228)
+var __vue_template__ = __webpack_require__(227)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -88252,8 +88256,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 227 */,
-/* 228 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -88690,7 +88693,7 @@ if (false) {
 }
 
 /***/ }),
-/* 229 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -88698,7 +88701,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(230)
+var __vue_template__ = __webpack_require__(229)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -88738,7 +88741,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 230 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -88885,15 +88888,15 @@ if (false) {
 }
 
 /***/ }),
-/* 231 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(232)
+var __vue_script__ = __webpack_require__(231)
 /* template */
-var __vue_template__ = __webpack_require__(233)
+var __vue_template__ = __webpack_require__(232)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -88933,7 +88936,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 232 */
+/* 231 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88997,7 +89000,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 233 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -89168,7 +89171,7 @@ if (false) {
 }
 
 /***/ }),
-/* 234 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -89176,7 +89179,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(235)
+var __vue_template__ = __webpack_require__(234)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -89216,7 +89219,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 235 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -89294,15 +89297,15 @@ if (false) {
 }
 
 /***/ }),
-/* 236 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(237)
+var __vue_script__ = __webpack_require__(236)
 /* template */
-var __vue_template__ = __webpack_require__(238)
+var __vue_template__ = __webpack_require__(237)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -89342,7 +89345,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 237 */
+/* 236 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89376,7 +89379,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 238 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -89418,7 +89421,7 @@ if (false) {
 }
 
 /***/ }),
-/* 239 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -89426,7 +89429,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(240)
+var __vue_template__ = __webpack_require__(239)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -89466,7 +89469,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 240 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -89504,7 +89507,7 @@ if (false) {
 }
 
 /***/ }),
-/* 241 */
+/* 240 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89603,7 +89606,7 @@ if (false) {
 });
 
 /***/ }),
-/* 242 */
+/* 241 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -34,23 +34,23 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-                            <tr v-for="user in users">
-                                <td>{{user.name}}</td>
-                                <td>{{user.email}}</td>
-                                <td>{{user.role}}</td>
-                                <td>{{user.created_at}}</td>
-                                <td>
-                                    <router-link to="/admin/users/profile">
-                                        <a  class="btn btn-default btn-sm">
-                                        <i class="icon-fa icon-fa-search"></i> View</a>
-                                    </router-link>
-                                    <a @click="deleteUser(user.id)" class="btn btn-default btn-sm"
-                                        data-delete data-confirmation="notie">
-                                        <i class="icon-fa icon-fa-trash"></i>Delete
-                                    </a>
-                                </td>
-                            </tr>
                             <tbody>
+                                <tr v-for="user in users">
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.role}}</td>
+                                    <td>{{user.created_at}}</td>
+                                    <td>
+                                        <router-link to="/admin/users/profile">
+                                            <a  class="btn btn-default btn-sm">
+                                                <i class="icon-fa icon-fa-search"></i> View</a>
+                                        </router-link>
+                                        <a @click="deleteUser(user.id)" class="btn btn-default btn-sm"
+                                           data-delete data-confirmation="notie">
+                                            <i class="icon-fa icon-fa-trash"></i>Delete
+                                        </a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -78,11 +78,10 @@
                 let vm = this;
                 axios.get('/api/admin/users/get')
                     .then(function (response) {
-                        console.log(response.data);
                         vm.users = response.data;
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        toastr['error']('There was an error', "Error");
                     });
             },
 
@@ -96,7 +95,6 @@
                     submitCallback: function () {
                         axios.delete('/api/admin/users/'+id)
                             .then(function (response) {
-                                console.log(response.data);
                                 vm.users = response.data;
                                 toastr['success']('User Deleted', "Success");
                             })
