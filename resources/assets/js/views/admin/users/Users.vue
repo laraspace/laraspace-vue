@@ -35,14 +35,14 @@
                             </tr>
                             </thead>
 
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr v-for="user in users">
+                                <td v-text="user.name"></td>
+                                <td v-text="user.email"></td>
+                                <td v-text="user.role"></td>
+                                <td v-text="user.created_at"></td>
                                 <td><a href="" class="btn btn-default btn-sm"><i
                                         class="icon-fa icon-fa-search"></i> View</a>
-                                    <a href="" class="btn btn-default btn-sm"
+                                    <a  class="btn btn-default btn-sm"
                                        data-token="" data-delete data-confirmation="notie"> <i
                                             class="icon-fa icon-fa-trash"></i> Delete</a></td>
                             </tr>
@@ -57,6 +57,11 @@
 </template>
 <script type="text/babel">
     export default {
+        data(){
+            return{
+                    users:[],
+            }
+        },
         mounted() {
             let vm = this;
             var Users = function () {
@@ -76,7 +81,8 @@
 
             axios.get('/api/admin/users')
                 .then(function (response) {
-                    console.log(response.data);
+                    vm.users=response.data;
+//                    console.log(response.data);
                 })
                 .catch(function (error) {
                     console.log(error);
