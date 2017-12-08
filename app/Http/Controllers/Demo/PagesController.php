@@ -1,6 +1,7 @@
 <?php
 
 namespace Laraspace\Http\Controllers\Demo;
+
 use Laraspace\User;
 use Illuminate\Http\Request;
 use Laraspace\Http\Controllers\Controller;
@@ -16,6 +17,14 @@ class PagesController extends Controller
         }
     }
     public function allUsers(){
-       return $users=User::all();
+       return $users = User::all();
+    }
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return $users = User::all();
     }
 }

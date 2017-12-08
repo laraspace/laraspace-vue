@@ -27,6 +27,7 @@ import Cards from './views/admin/basic-ui/Cards.vue'
 import Tabs from './views/admin/basic-ui/Tabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
+import Modals from './views/admin/basic-ui/Modals.vue'
 
 //Components
 import Datatables from './views/admin/components/Datatables.vue'
@@ -50,7 +51,7 @@ import Sparkline from './views/admin/charts/Sparkline.vue'
 
 
 //Icons
-import Evil from './views/admin/icons/Evil.vue'
+//import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
 import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
@@ -200,6 +201,10 @@ const routes = [
                 path: 'basic-ui/tables',
                 component: Tables
             },
+            {
+                path: 'basic-ui/modals',
+                component: Modals
+            },
 
             //Components
             {
@@ -271,10 +276,10 @@ const routes = [
             },
 
             //Icons
-            {
-                path: 'icons/evil',
-                component: Evil
-            },
+            // {
+            //     path: 'icons/evil',
+            //     component: Evil
+            // },
             {
                 path: 'icons/fontawesome',
                 component: Fontawesome
@@ -345,7 +350,7 @@ const routes = [
                 component: Profile
             },
             {
-                path: 'users/users',
+                path: 'users',
                 component:Users
             },
 

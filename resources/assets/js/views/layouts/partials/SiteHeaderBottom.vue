@@ -14,7 +14,7 @@
                 <div class="dropdown-menu">
                     <router-link to="/admin/layouts/sidebar" class="dropdown-item">Sidebar</router-link>
                     <router-link to="/admin/layouts/horizontal" class="dropdown-item">Horizontal</router-link>
-                    <router-link to="/admin/layouts/icon-sidebar" class="dropdown-item">Icon Sidebar</router-link>
+                    <router-link to="/admin/layouts/icons-sidebar" class="dropdown-item">Icon Sidebar</router-link>
                 </div>
             </li>
             <li :class="{ active: isActive('/admin/settings') }">

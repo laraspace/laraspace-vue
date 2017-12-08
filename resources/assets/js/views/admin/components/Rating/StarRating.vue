@@ -114,12 +114,12 @@
 <script type="text/babel">
     export default {
 
-        mounted(){
-            let vm =this;
+        mounted() {
+            let vm = this;
             var StarRating = function () {
 
                 //main function to initiate the module
-                return{
+                return {
                     init: function () {
                         vm.handleDefaults();
                         vm.handleReadOnly();
@@ -134,78 +134,78 @@
 
                 };
             }();
-           this.$nextTick(() => {
+            this.$nextTick(() => {
                 StarRating.init();
-           });
+            });
         },
-        methods:{
+        methods: {
 
-                 handleDefaults(){
-                    $.fn.raty.defaults.starOn = 'icon-fa icon-fa-fw icon-fa-star color-orange';
-                    $.fn.raty.defaults.starOff = 'icon-fa icon-fa-fw icon-fa-star-o';
-                    $.fn.raty.defaults.starHalf = 'icon-fa icon-fa-fw icon-fa-star-half-o color-orange';
-                    $.fn.raty.defaults.cancelOff = 'icon-fa icon-fa-fw icon-fa-minus-square-o';
-                    $.fn.raty.defaults.cancelOn  = 'icon-fa icon-fa-fw icon-fa-minus-square';
-                    $.fn.raty.defaults.starType = 'i';
+            handleDefaults() {
+                $.fn.raty.defaults.starOn = 'icon-fa icon-fa-fw icon-fa-star color-orange';
+                $.fn.raty.defaults.starOff = 'icon-fa icon-fa-fw icon-fa-star-o';
+                $.fn.raty.defaults.starHalf = 'icon-fa icon-fa-fw icon-fa-star-half-o color-orange';
+                $.fn.raty.defaults.cancelOff = 'icon-fa icon-fa-fw icon-fa-minus-square-o';
+                $.fn.raty.defaults.cancelOn = 'icon-fa icon-fa-fw icon-fa-minus-square';
+                $.fn.raty.defaults.starType = 'i';
 
-                    $('#star-default').raty();
-                },
+                $('#star-default').raty();
+            },
 
-                 handleReadOnly(){
-                    $('#star-readonly').raty({
-                        readOnly: true
-                    });
-                },
+            handleReadOnly() {
+                $('#star-readonly').raty({
+                    readOnly: true
+                });
+            },
 
-                handleWithScore(){
-                    $('#star-score').raty({
-                        score : 2,
-                    });
-                },
+            handleWithScore() {
+                $('#star-score').raty({
+                    score: 2,
+                });
+            },
 
-                 handleWithNumberOfStars(){
-                    $('#star-number').raty({
-                        number   : 10
-                    });
-                },
+            handleWithNumberOfStars() {
+                $('#star-number').raty({
+                    number: 10
+                });
+            },
 
-                handleHalfStars(){
-                    $('#star-half').raty({
-                        half: true
-                    });
-                },
+            handleHalfStars() {
+                $('#star-half').raty({
+                    half: true
+                });
+            },
 
-                handleCancelButton(){
-                    $('#star-cancel').raty({
-                        cancel: true
-                    });
-                },
+            handleCancelButton() {
+                $('#star-cancel').raty({
+                    cancel: true
+                });
+            },
 
-                handleCustomIcons(){
-                    $('#star-custom').raty({
-                        starOn   : 'icon-fa icon-fa-fw icon-fa-heart color-red',
-                        starOff  : 'icon-fa icon-fa-fw icon-fa-heart-o'
-                    });
-                },
+            handleCustomIcons() {
+                $('#star-custom').raty({
+                    starOn: 'icon-fa icon-fa-fw icon-fa-heart color-red',
+                    starOff: 'icon-fa icon-fa-fw icon-fa-heart-o'
+                });
+            },
 
-                handleWithTarget(){
-                    $('#star-target').raty({
-                        target     : '#target',
-                        targetKeep : true
-                    });
-                },
+            handleWithTarget() {
+                $('#star-target').raty({
+                    target: '#target',
+                    targetKeep: true
+                });
+            },
 
-                 handleWithPercentage(){
-                    $('#star-percentage').raty({
-                        number   : 10,
-                        hints    : ['10%','20%','30%','40%','50%','60%','70%','80%','90%','100%'],
-                        target     : '#target-percentage',
-                        targetText : '0',
-                        targetKeep : true
-                    });
-                },
+            handleWithPercentage() {
+                $('#star-percentage').raty({
+                    number: 10,
+                    hints: ['10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'],
+                    target: '#target-percentage',
+                    targetText: '0',
+                    targetKeep: true
+                });
+            },
 
 
-            }
+        }
     }
 </script>

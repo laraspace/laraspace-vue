@@ -40,8 +40,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
     //Users Details
     Route::group(['prefix' => 'users'], function (){
 
-        Route::get('/',[
-            'as' => 'admin.users','uses' => 'Demo\PagesController@allUsers'
+        Route::get('/get',[
+            'as' => 'admin.users', 'uses' => 'Demo\PagesController@allUsers'
+        ]);
+
+        Route::delete('/{id}',[
+            'as' => 'admin.users.delete', 'uses' => 'Demo\PagesController@destroy'
         ]);
 
     });

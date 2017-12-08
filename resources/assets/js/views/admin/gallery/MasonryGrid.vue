@@ -192,101 +192,86 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Video Gallery</h6>
+                <h6>Vimeo Video Gallery</h6>
             </div>
             <div class="card-body">
-                <div class="my-gallery youtube-video-gallery">
-                    <div class="my-gallery-container">
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="0">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=3pn2SI4KGJc"></div>
+                <div class="my-gallery vimeo-video-gallery">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <div class="demo embed-responsive-item"
+                                     data-vimeo="https://vimeo.com/102787065"></div>
+                            </div>
                         </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="1">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=6v2L2UGZJAM"></div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <div class="demo embed-responsive-item"
+                                     data-vimeo="https://vimeo.com/18554749"></div>
+                            </div>
                         </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="2">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=ZN2SwwfeCRc"></div>
-                        </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="3">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=DjxEhLTRtPY"></div>
-                        </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="4">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=Ce4tYw6IE70"></div>
-                        </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="5">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=3rHXrA80NH4"></div>
-                        </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="6">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=ftEJIZA7z-I"></div>
-                        </div>
-                        <div class="item embed-responsive embed-responsive-16by9" data-order="7">
-                            <div class="demo embed-responsive-item"
-                                 data-youtube="https://www.youtube.com/watch?v=k_GM1JA608Y"></div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <div class="demo embed-responsive-item"
+                                     data-vimeo="https://vimeo.com/79142264"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
 </template>
 <script type="text/babel">
     export default {
         mounted() {
+            let vm = this;
             var Gallery = function () {
-
-                var handleImageGallery = function () {
-                    $(".image-gallery").gallery();
-                };
-
-                var handleVideoGallery = function () {
-                    $(".demo").videoBox({
-                        loop: false,
-                        autoplay: false,
-                        byline: true,
-                        color: "00adef",
-                        portrait: true,
-                        title: ''
-                    });
-
-                    //masonry image gallery
-                    $(".my-gallery-container").mpmansory(
-                        {
-                            childrenClass: 'item', // default is a div
-                            columnClasses: 'group', //add classes to items
-                            breakpoints: {
-                                lg: 3,
-                                md: 4,
-                                sm: 6,
-                                xs: 12
-                            },
-                            distributeBy: {order: false, height: false, attr: 'data-order', attrOrder: 'asc'}, //default distribute by order, options => order: true/false, height: true/false, attr => 'data-order', attrOrder=> 'asc'/'desc'
-                            onload: function (items) {
-                                //make somthing with items
-                            }
-                        }
-                    );
-                };
-
                 return {
                     //main function to initiate the module
                     init: function () {
-                        handleImageGallery();
-                        handleVideoGallery();
+                        vm.handleImageGallery();
+                        vm.handleVideoGallery();
                     }
                 };
 
             }();
-
             this.$nextTick(() => {
                 Gallery.init();
             })
+            console.log('init');
+        },
+        methods: {
+            handleImageGallery() {
+                $(".image-gallery").gallery();
+            },
+            handleVideoGallery() {
+                $(".demo").videoBox({
+                    loop: false,
+                    autoplay: false,
+                    byline: true,
+                    color: "00adef",
+                    portrait: true,
+                    title: ''
+                });
 
+                //masonry image gallery
+                $(".my-gallery-container").mpmansory(
+                    {
+                        childrenClass: 'item', // default is a div
+                        columnClasses: 'group', //add classes to items
+                        breakpoints: {
+                            lg: 3,
+                            md: 4,
+                            sm: 6,
+                            xs: 12
+                        },
+                        distributeBy: {order: false, height: false, attr: 'data-order', attrOrder: 'asc'},
+                        onload: function (items) {
+                            //make somthing with items
+                        }
+                    }
+                );
+            },
         }
     }
 </script>

@@ -30,7 +30,7 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="avatar-container">
-                                                <img src="/assets/admin/img/avatars/avatar-lg.png" alt="Admin Avatar" class="img-fluid">
+                                                <img src="/assets/img/avatars/avatar-lg.png" alt="Admin Avatar" class="img-fluid">
                                             </div>
                                         </div>
                                         <div class="col-sm-9">
@@ -180,64 +180,4 @@
             </div>
         </div>
     </div>
-
 </template>
-<script type="text/babel">
-    export default {
-        mounted() {
-            let vm = this;
-            var Users = function () {
-                return {
-                    //main function to initiate the module
-                    init: function () {
-                        vm.handleTables();
-                        vm.handleConfirmation();
-                    }
-                };
-
-            }();
-
-            this.$nextTick(() => {
-                Users.init();
-            });
-
-        },
-        methods: {
-            handleTables() {
-                $('#users-datatable').DataTable({
-                    responsive: true
-                });
-            },
-
-            handleConfirmation() {
-
-                $('[data-confirmation="notie"]').on('click', function () {
-                    $this = $(this);
-                    notie.confirm('Are you sure?', 'Yes! Delete this User', 'Cancel', function () {
-                        deleteUser($this);
-                    });
-                    return false;
-                });
-
-            },
-
-            deleteUser($this) {
-                var url = $this.attr('href'), token = $this.data('token');
-                console.log(url);
-                $.ajax({
-                    type: 'POST',
-                    data: {_method: 'delete', _token: token},
-                    url: url,
-                    success: function (data) {
-                        toastr['success']('User Deleted', "Success");
-                        window.setTimeout('location.reload()', 500);
-                    },
-                    error: function (data) {
-                        toastr['error']('There was an error', "Error");
-                    }
-                });
-            },
-
-        }
-    }
-</script>

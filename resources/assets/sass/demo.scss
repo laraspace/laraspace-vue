@@ -332,6 +332,7 @@
 
 }
 
+
 //BASIC UI
 .progress {
   margin-top: 20px;
@@ -402,6 +403,12 @@
     right: 0;
   }
 }
+//Galary
+//image-caption
+.pswp__caption__center{
+  text-align: center;
+}
+
 
 @media (max-width: $x-small-breakpoint) {
 

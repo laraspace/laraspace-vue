@@ -147,11 +147,11 @@
     export default {
         data() {
             return {
-                'header' : 'header'
+                'header': 'header'
             }
         },
-        components : {
-            LineGraph , BarGraph , PieGraph
+        components: {
+            LineGraph, BarGraph, PieGraph
         }
 
     }

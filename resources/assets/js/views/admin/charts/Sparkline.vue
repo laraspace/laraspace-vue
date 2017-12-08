@@ -123,27 +123,27 @@
             this.$nextTick(() => {
                 SparklineCharts.init();
             })
-           
+
         },
-        computed:{
-            barWidth(){
-                if($(window).width()>440){
-                    return $(window).width()/70;
+        computed: {
+            barWidth() {
+                if ($(window).width() > 440) {
+                    return $(window).width() / 70;
                 }
-                else{
-                   return  $(window).width()/50;
+                else {
+                    return $(window).width() / 50;
                 }
             },
-            width(){
-                if($(window).width()>440){
-                    return  Math.floor(($(window).width())/5);
+            width() {
+                if ($(window).width() > 440) {
+                    return Math.floor(($(window).width()) / 5);
                 }
-                else{
-                    return Math.floor(($(window).width())/4);
+                else {
+                    return Math.floor(($(window).width()) / 4);
                 }
             }
         },
-        methods:{
+        methods: {
             handledrawMouseSpeedChart() {
                 var mrefreshinterval = 500; // update display every 500ms
                 var lastmousex = -1;
@@ -204,7 +204,7 @@
                 $(".spl-bar-chart").sparkline('html', {
                     type: 'bar',
                     height: '100',
-                    barWidth:this.barWidth,
+                    barWidth: this.barWidth,
                     barSpacing: 3,
                 });
 
@@ -267,7 +267,7 @@
                 $(".spl-discreate1").sparkline('html', {
                     type: 'discrete',
                     height: '100',
-                    width:this.width,
+                    width: this.width,
                 });
             },
 
