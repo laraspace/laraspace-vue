@@ -48,9 +48,9 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Contextified validators <a class="source-link"
-                                               href="https://monterail.github.io/vuelidate/#sub-contextified-validators"
-                                               target="_blank">source</a>
+                <h6>Contextified validators
+                    <a class="source-link" href="https://monterail.github.io/vuelidate/#sub-contextified-validators"
+                       target="_blank">source</a>
                 </h6>
             </div>
             <div class="card-body">

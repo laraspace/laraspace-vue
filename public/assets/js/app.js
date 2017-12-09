@@ -40252,7 +40252,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -85081,7 +85080,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h6", [
-        _vm._v("Contextified validators "),
+        _vm._v("Contextified validators\n                "),
         _c(
           "a",
           {
@@ -86688,16 +86687,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         handleImageGallery: function handleImageGallery() {
             $(".image-gallery").gallery();
-        },
-        handleVideoGallery: function handleVideoGallery() {
-            $(".demo").videoBox({
-                loop: false,
-                autoplay: false,
-                byline: true,
-                color: "00adef",
-                portrait: true,
-                title: ''
-            });
 
             //masonry image gallery
             $(".my-gallery-container").mpmansory({
@@ -86709,10 +86698,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     sm: 6,
                     xs: 12
                 },
-                distributeBy: { order: false, height: false, attr: 'data-order', attrOrder: 'asc' },
-                onload: function onload(items) {
-                    //make somthing with items
-                }
+                distributeBy: { order: false, height: false, attr: 'data-order', attrOrder: 'asc' }
+            });
+        },
+        handleVideoGallery: function handleVideoGallery() {
+            $(".demo").videoBox({
+                loop: false,
+                autoplay: false,
+                byline: true,
+                color: "00adef",
+                portrait: true,
+                title: ''
             });
         }
     }

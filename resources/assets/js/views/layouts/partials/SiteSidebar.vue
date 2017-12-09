@@ -96,7 +96,6 @@
                     <ul aria-expanded="true">
                         <router-link to="/admin/users/profile" tag="li"><a>Profile</a></router-link>
                         <router-link to="/admin/users" tag="li"><a>All Users </a></router-link>
-
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/todos') }">

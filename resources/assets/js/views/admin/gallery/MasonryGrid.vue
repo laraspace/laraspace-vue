@@ -239,7 +239,7 @@
     export default {
         mounted() {
             let vm = this;
-            var Gallery = function () {
+            let Gallery = function () {
                 return {
                     //main function to initiate the module
                     init: function () {
@@ -247,26 +247,15 @@
                         vm.handleVideoGallery();
                     }
                 };
-
             }();
             this.$nextTick(() => {
                 Gallery.init();
-            })
+            });
             console.log('init');
         },
         methods: {
             handleImageGallery() {
                 $(".image-gallery").gallery();
-            },
-            handleVideoGallery() {
-                $(".demo").videoBox({
-                    loop: false,
-                    autoplay: false,
-                    byline: true,
-                    color: "00adef",
-                    portrait: true,
-                    title: ''
-                });
 
                 //masonry image gallery
                 $(".my-gallery-container").mpmansory(
@@ -280,11 +269,18 @@
                             xs: 12
                         },
                         distributeBy: {order: false, height: false, attr: 'data-order', attrOrder: 'asc'},
-                        onload: function (items) {
-                            //make somthing with items
-                        }
                     }
                 );
+            },
+            handleVideoGallery() {
+                $(".demo").videoBox({
+                    loop: false,
+                    autoplay: false,
+                    byline: true,
+                    color: "00adef",
+                    portrait: true,
+                    title: ''
+                });
             },
         }
     }
