@@ -26,6 +26,7 @@
                         <router-link to="/admin/basic-ui/tabs" tag="li"><a>Tabs &amp; Accordians</a></router-link>
                         <router-link to="/admin/basic-ui/typography" tag="li"><a>Typography</a></router-link>
                         <router-link to="/admin/basic-ui/tables" tag="li"><a>Tables</a></router-link>
+                        <router-link to="/admin/basic-ui/modals" tag="li"><a>Modals</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/components') }">

@@ -188,54 +188,22 @@
             <div class="card-body">
                 <div class="my-gallery youtube-video-gallery">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 ">
+                        <div class="col-lg-4 col-md-6 ">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div class="demo embed-responsive-item"
                                      data-youtube="https://www.youtube.com/watch?v=3pn2SI4KGJc"></div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 ">
+                        <div class="col-lg-4 col-md-6 ">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div class="demo embed-responsive-item"
                                      data-youtube="https://www.youtube.com/watch?v=6v2L2UGZJAM"></div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 ">
+                        <div class="col-lg-4 col-md-6 ">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div class="demo embed-responsive-item"
                                      data-youtube="https://www.youtube.com/watch?v=ZN2SwwfeCRc"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 ">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-youtube="https://www.youtube.com/watch?v=DjxEhLTRtPY"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 ">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-youtube="https://www.youtube.com/watch?v=Ce4tYw6IE70"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 ">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-youtube="https://www.youtube.com/watch?v=3rHXrA80NH4"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 ">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-youtube="https://www.youtube.com/watch?v=ftEJIZA7z-I"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 ">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-youtube="https://www.youtube.com/watch?v=k_GM1JA608Y"></div>
                             </div>
                         </div>
                     </div>
@@ -249,54 +217,22 @@
             <div class="card-body">
                 <div class="my-gallery vimeo-video-gallery">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div class="demo embed-responsive-item"
                                      data-vimeo="https://vimeo.com/102787065"></div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div class="demo embed-responsive-item"
                                      data-vimeo="https://vimeo.com/18554749"></div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div class="demo embed-responsive-item"
                                      data-vimeo="https://vimeo.com/79142264"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-vimeo="https://vimeo.com/49614043"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-vimeo="https://vimeo.com/74116395"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-vimeo="https://vimeo.com/113404928"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-vimeo="https://vimeo.com/143709971"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <div class="demo embed-responsive-item"
-                                     data-vimeo="https://vimeo.com/204895750"></div>
                             </div>
                         </div>
                     </div>

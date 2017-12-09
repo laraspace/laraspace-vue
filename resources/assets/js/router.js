@@ -27,6 +27,7 @@ import Cards from './views/admin/basic-ui/Cards.vue'
 import Tabs from './views/admin/basic-ui/Tabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
+import Modals from './views/admin/basic-ui/Modals.vue'
 
 //Components
 import Datatables from './views/admin/components/Datatables.vue'
@@ -199,6 +200,10 @@ const routes = [
             {
                 path: 'basic-ui/tables',
                 component: Tables
+            },
+            {
+                path: 'basic-ui/modals',
+                component: Modals
             },
 
             //Components

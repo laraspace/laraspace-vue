@@ -36766,6 +36766,10 @@ code,
   right: 0;
 }
 
+.pswp__caption__center {
+  text-align: center;
+}
+
 @media (max-width: 480px) {
   .skin-tools {
     top: 100px;
