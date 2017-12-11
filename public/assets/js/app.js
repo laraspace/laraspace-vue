@@ -46654,8 +46654,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -47865,7 +47863,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                                This is an error…\n\n                                "
+                        "\n                                This is an error…\n                                "
                       ),
                       _c(
                         "button",

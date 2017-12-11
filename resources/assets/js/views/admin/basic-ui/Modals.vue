@@ -48,7 +48,6 @@
                                 </sweet-modal>
                             </div>
                             <div class="modal-demo">
-
                                 <button type="button" v-on:click="$refs.blocking_modal.open()" class="btn btn-primary">
                                     Dark with Blocking Error
                                 </button>
@@ -56,7 +55,6 @@
                                              overlay-theme="dark"
                                              modal-theme="dark">
                                     This is an error…
-
                                     <button type="button" slot="button" class="btn btn-danger"
                                             v-on:click="$refs.blocking_modal.close('darkWithBlockingError')">
                                         Press this Button
