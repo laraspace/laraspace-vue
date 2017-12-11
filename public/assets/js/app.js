@@ -46563,6 +46563,99 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -46579,8 +46672,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         SweetModal: __WEBPACK_IMPORTED_MODULE_0_sweet_modal_vue__["a" /* SweetModal */],
         SweetModalTab: __WEBPACK_IMPORTED_MODULE_0_sweet_modal_vue__["b" /* SweetModalTab */]
     },
-    methods: {
-        open: function open() {}
+    install: function install(Vue, options) {
+        Vue.component('SweetModal', sweet - modal);
+        Vue.component('SweetModalTab', sweet - modalTab);
     }
 });
 
@@ -47587,34 +47681,350 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _vm._m(1, false, false),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-sm-6" },
-            [
-              _c("h5", { staticClass: "section-semi-title" }, [
-                _vm._v("Live Demo")
-              ]),
-              _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "demo-buttons" }, [
               _c(
-                "button",
-                {
-                  staticClass: "btn btn-theme",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.$refs.simple.open()
-                    }
-                  }
-                },
-                [_vm._v("Basic Modal\n                        ")]
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Regular Alert\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("sweet-modal", { ref: "modal" }, [
+                    _vm._v("This is an alert.")
+                  ])
+                ],
+                1
               ),
               _vm._v(" "),
-              _c("sweet-modal", { ref: "simple" }, [
-                _vm._v("This is an alert.")
-              ])
-            ],
-            1
-          )
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.success_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Success Alert\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    { ref: "success_modal", attrs: { icon: "success" } },
+                    [
+                      _vm._v(
+                        "\n                                This is a success!\n                            "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.warning_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Warning Alert\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    { ref: "warning_modal", attrs: { icon: "warning" } },
+                    [
+                      _vm._v(
+                        "\n                                This is a success!\n                            "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.error_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Alert with Error and Button\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    {
+                      ref: "error_modal",
+                      attrs: { icon: "error", title: "Oh noes…" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                This is an error…\n                                "
+                      ),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { slot: "button", type: "button" },
+                          slot: "button"
+                        },
+                        [_vm._v("That's fine!")]
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.blocking_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Dark with Blocking Error\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    {
+                      ref: "blocking_modal",
+                      attrs: {
+                        icon: "error",
+                        "hide-close-button": "",
+                        blocking: "",
+                        "overlay-theme": "dark",
+                        "modal-theme": "dark"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                This is an error…\n\n                                "
+                      ),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { slot: "button", type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.$refs.blocking_modal.close(
+                                "darkWithBlockingError"
+                              )
+                            }
+                          },
+                          slot: "button"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Press this Button\n                                "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.dark_html_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Dark with HTML Content\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    {
+                      ref: "dark_html_modal",
+                      attrs: { "modal-theme": "dark", "overlay-theme": "dark" }
+                    },
+                    [
+                      _vm._v("\n                                This is "),
+                      _c("b", [_vm._v("HTML")]),
+                      _vm._v("-"),
+                      _c("i", [_vm._v("Content")]),
+                      _vm._v(".\n                                "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("iframe", {
+                        attrs: {
+                          width: "560",
+                          height: "315",
+                          src: "https://www.youtube.com/embed/4xgx4k83zzc",
+                          frameborder: "0",
+                          allowfullscreen: ""
+                        }
+                      })
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.additional_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Additional Window Controls\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    { ref: "additional_modal", attrs: { title: "Alert" } },
+                    [
+                      _vm._v(
+                        "\n                                This is an alert.\n\n                                "
+                      ),
+                      _c("template", { slot: "box-action" }, [
+                        _c("a", { attrs: { href: "#" } }, [_vm._v("Action 1")]),
+                        _vm._v("  \n                                    "),
+                        _c("a", { attrs: { href: "#" } }, [_vm._v("Action 2")])
+                      ])
+                    ],
+                    2
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.wide_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Ultra Wide\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    {
+                      ref: "wide_modal",
+                      attrs: { title: "Ultra Wide", width: "100%" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                This is a very wide modal.\n                            "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
         ])
       ])
     ]),
@@ -47633,7 +48043,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-theme",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -47667,7 +48077,11 @@ var render = function() {
                       _c(
                         "sweet-modal-tab",
                         { attrs: { title: "Tab 3", id: "tab3", disabled: "" } },
-                        [_vm._v("Tab 3 is disabled")]
+                        [
+                          _vm._v(
+                            "Tab 3 is disabled\n                                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -47683,7 +48097,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-theme",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -47711,7 +48125,11 @@ var render = function() {
                             icon: _vm.icons_anchor
                           }
                         },
-                        [_vm._v("Contents of Tab 1")]
+                        [
+                          _vm._v(
+                            "Contents of Tab 1\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -47723,7 +48141,11 @@ var render = function() {
                             icon: _vm.icons_sun
                           }
                         },
-                        [_vm._v("Contents of Tab 2")]
+                        [
+                          _vm._v(
+                            "Contents of Tab 2\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -47736,7 +48158,11 @@ var render = function() {
                             disabled: ""
                           }
                         },
-                        [_vm._v("Tab 3 is disabled")]
+                        [
+                          _vm._v(
+                            "\n                                    Tab 3 is disabled\n                                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -47752,7 +48178,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-theme",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -47783,7 +48209,11 @@ var render = function() {
                             icon: _vm.icons_anchor
                           }
                         },
-                        [_vm._v("Contents of Tab 1")]
+                        [
+                          _vm._v(
+                            "Contents of Tab 1\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -47795,7 +48225,11 @@ var render = function() {
                             icon: _vm.icons_sun
                           }
                         },
-                        [_vm._v("Contents of Tab 2")]
+                        [
+                          _vm._v(
+                            "Contents of Tab 2\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -47808,7 +48242,11 @@ var render = function() {
                             disabled: ""
                           }
                         },
-                        [_vm._v("Tab 3 is disabled")]
+                        [
+                          _vm._v(
+                            "\n                                    Tab 3 is disabled\n                                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -47824,7 +48262,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-theme",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -47852,7 +48290,11 @@ var render = function() {
                             icon: _vm.icons_anchor
                           }
                         },
-                        [_vm._v("Contents of Tab 1")]
+                        [
+                          _vm._v(
+                            "Contents of Tab 1\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -47864,7 +48306,11 @@ var render = function() {
                             icon: _vm.icons_sun
                           }
                         },
-                        [_vm._v("Contents of Tab 2")]
+                        [
+                          _vm._v(
+                            "Contents of Tab 2\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -47877,13 +48323,17 @@ var render = function() {
                             disabled: ""
                           }
                         },
-                        [_vm._v("Tab 3 is disabled")]
+                        [
+                          _vm._v(
+                            "\n                                    Tab 3 is disabled\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-theme",
+                          staticClass: "btn btn-primary",
                           attrs: { slot: "button", type: "button" },
                           slot: "button"
                         },
@@ -47893,7 +48343,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-theme",
+                          staticClass: "btn btn-primary",
                           attrs: { slot: "button", type: "button" },
                           slot: "button"
                         },
@@ -47913,7 +48363,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-theme",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -47935,7 +48385,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-theme",
+                        staticClass: "btn btn-primary",
                         attrs: { slot: "button", type: "button" },
                         on: {
                           click: function($event) {
@@ -47968,7 +48418,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-theme",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -48024,7 +48474,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h6", [_vm._v("General Buttons")])
+      _c("h6", [_vm._v("Simple Modals")])
     ])
   },
   function() {
@@ -48032,7 +48482,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h6", [_vm._v("General Buttons")])
+      _c("h6", [_vm._v("Tabbed Buttons")])
     ])
   }
 ]
