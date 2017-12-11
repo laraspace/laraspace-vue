@@ -47575,7 +47575,469 @@ if (false) {
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "main-content sweet-modal-demo" }, [
+    _vm._m(0, false, false),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(1, false, false),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-sm-6" },
+            [
+              _c("h5", { staticClass: "section-semi-title" }, [
+                _vm._v("Live Demo")
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-theme",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.$refs.simple.open()
+                    }
+                  }
+                },
+                [_vm._v("Basic Modal\n                        ")]
+              ),
+              _vm._v(" "),
+              _c("sweet-modal", { ref: "simple" }, [
+                _vm._v("This is an alert.")
+              ])
+            ],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(2, false, false),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "demo-buttons" }, [
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-theme",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.tabbed_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Tabbed Modal\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    { ref: "tabbed_modal" },
+                    [
+                      _c(
+                        "sweet-modal-tab",
+                        { attrs: { title: "Tab 1", id: "tab1" } },
+                        [_vm._v("Contents of Tab 1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        { attrs: { title: "Tab 2", id: "tab2" } },
+                        [_vm._v("Contents of Tab 2")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        { attrs: { title: "Tab 3", id: "tab3", disabled: "" } },
+                        [_vm._v("Tab 3 is disabled")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-theme",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.tabbed_modal_icon.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Tabbed Modal with Icons\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    { ref: "tabbed_modal_icon" },
+                    [
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 1",
+                            id: "tab1",
+                            icon: _vm.icons_anchor
+                          }
+                        },
+                        [_vm._v("Contents of Tab 1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 2",
+                            id: "tab2",
+                            icon: _vm.icons_sun
+                          }
+                        },
+                        [_vm._v("Contents of Tab 2")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 3",
+                            id: "tab3",
+                            icon: _vm.icons_leaf,
+                            disabled: ""
+                          }
+                        },
+                        [_vm._v("Tab 3 is disabled")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-theme",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.tabbed_modal_title.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Tabbed Modal with Title\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    {
+                      ref: "tabbed_modal_title",
+                      attrs: { title: "This is a Tabbed Modal" }
+                    },
+                    [
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 1",
+                            id: "tab1",
+                            icon: _vm.icons_anchor
+                          }
+                        },
+                        [_vm._v("Contents of Tab 1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 2",
+                            id: "tab2",
+                            icon: _vm.icons_sun
+                          }
+                        },
+                        [_vm._v("Contents of Tab 2")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 3",
+                            id: "tab3",
+                            icon: _vm.icons_leaf,
+                            disabled: ""
+                          }
+                        },
+                        [_vm._v("Tab 3 is disabled")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-theme",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.tabbed_modal_icon_button.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Tabbed Modal with Icons and Buttons\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "sweet-modal",
+                    { ref: "tabbed_modal_icon_button" },
+                    [
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 1",
+                            id: "tab1",
+                            icon: _vm.icons_anchor
+                          }
+                        },
+                        [_vm._v("Contents of Tab 1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 2",
+                            id: "tab2",
+                            icon: _vm.icons_sun
+                          }
+                        },
+                        [_vm._v("Contents of Tab 2")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "sweet-modal-tab",
+                        {
+                          attrs: {
+                            title: "Tab 3",
+                            id: "tab3",
+                            icon: _vm.icons_leaf,
+                            disabled: ""
+                          }
+                        },
+                        [_vm._v("Tab 3 is disabled")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-theme",
+                          attrs: { slot: "button", type: "button" },
+                          slot: "button"
+                        },
+                        [_vm._v("Action1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-theme",
+                          attrs: { slot: "button", type: "button" },
+                          slot: "button"
+                        },
+                        [_vm._v("Action2")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-theme",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.nested.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Nested\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("sweet-modal", { ref: "nested" }, [
+                    _vm._v(
+                      "\n                                This is the parent modal.\n\n                                "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-theme",
+                        attrs: { slot: "button", type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.$refs.nestedChild.open()
+                          }
+                        },
+                        slot: "button"
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    Open Child Modal\n                                "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("sweet-modal", { ref: "nestedChild" }, [
+                    _vm._v(
+                      "\n                                This is the child modal.\n                            "
+                    )
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-demo" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-theme",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.$refs.long_modal.open()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Very Long Modal\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("sweet-modal", { ref: "long_modal" }, [
+                    _vm._v(
+                      "\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                            "
+                    )
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page-header" }, [
+      _c("h3", { staticClass: "page-title" }, [_vm._v("Modals")]),
+      _vm._v(" "),
+      _c("ol", { staticClass: "breadcrumb" }, [
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("UI Elements")])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Modals")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h6", [_vm._v("General Buttons")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h6", [_vm._v("General Buttons")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {

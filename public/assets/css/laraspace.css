@@ -36482,6 +36482,19 @@ code,
   color: #bababa;
 }
 
+.sweet-modal-demo .demo-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.sweet-modal-demo .demo-buttons .modal-demo {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
 [v-cloak] > * {
   display: none;
 }

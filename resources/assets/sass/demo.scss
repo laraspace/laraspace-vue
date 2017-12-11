@@ -123,6 +123,20 @@
   color: $ls-color-gray--very-dark;
 }
 
+//Sweet Modal
+.sweet-modal-demo{
+
+  .demo-buttons {
+    display: flex;
+    flex-wrap: wrap;
+
+    .modal-demo{
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
 //Media Storage
 [v-cloak] > * {
   display: none;
