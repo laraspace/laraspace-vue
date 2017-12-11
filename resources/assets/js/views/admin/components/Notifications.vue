@@ -57,10 +57,10 @@
                                 <button class="btn btn-danger" data-notie="error" data-message="Hello World">
                                     Error
                                 </button>
-                                <button class="btn btn-warning" data-notie="warning" data-message="Hello World">
+                                <button class="btn btn-warning"  data-notie="warning" data-message="Hello World">
                                     Warning
                                 </button>
-                                <button class="btn btn-primary" data-notie="confirm">
+                                <button class="btn btn-primary" @click="call" data-notie="confirm">
                                     Confirm
                                 </button>
                                 <button class="btn btn-outline-primary" data-notie="input">
@@ -102,11 +102,11 @@
             </div>
         </div>
     </div>
+
 </template>
 
 <script type="text/babel">
     export default {
-
         methods : {
             handleToastrNotifs(){
                 toastr.options = {
@@ -188,11 +188,15 @@
                 });
 
 
-            }
-        },
+            },
+            call(){
+                notie.alert({ text: 'Info!' })
+            },
+
+       },
         mounted: function () {
 
-            this.handleToastrNotifs()
+            this.handleToastrNotifs();
             this.handleNotieNotifs();
         }
     }

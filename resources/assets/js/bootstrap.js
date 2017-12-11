@@ -2,6 +2,8 @@ import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls'
+// import Notie from 'notie'
+
 
 window._ = require('lodash');
 
@@ -12,8 +14,9 @@ window._ = require('lodash');
  */
 
 window.Vue = require('vue');
-
-
+window.notie=require('notie');
+window.toastr=require('toastr');
+window.datatable=require('datatables.net-dt');
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -59,6 +62,5 @@ axios.interceptors.request.use(function (config) {
 
 
 
-Vue.use(VueRouter)
-
+Vue.use(VueRouter);
 Vue.use(VeeValidate);
