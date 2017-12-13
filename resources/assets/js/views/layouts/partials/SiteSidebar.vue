@@ -36,6 +36,12 @@
                         <router-link to="/admin/components/graphs" tag="li"><a>Graphs</a></router-link>
                     </ul>
                 </li>
+                <li :class="{ active: isActive('/admin/chart') }">
+                    <a href="#" aria-expanded="true"><i class="fa fa-bar-chart"></i> Charts <span class="fa arrow fa-fw"></span></a>
+                    <ul aria-expanded="true">
+                        <router-link to="/admin/charts/amchart" tag="li"><a>AM Charts</a></router-link>
+                    </ul>
+                </li>
                 <li :class="{ active: isActive('/admin/forms') }">
                     <a href="#" aria-expanded="true"><i class="fa fa-rocket"></i> Forms <span class="fa arrow fa-fw"></span></a>
                     <ul aria-expanded="true">

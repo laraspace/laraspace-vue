@@ -1,9 +1,16 @@
 import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
-import Ls from './services/ls'
-// import Notie from 'notie'
+import Ls from './services/ls';
 
+//notification
+import 'notie/src/notie.scss';
+import 'toastr/build/toastr.css';
+
+//datatable
+import 'datatables.net-responsive-bs4';
+import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
+import 'datatables.net-bs4/css/datatables.bootstrap4.css';
 
 window._ = require('lodash');
 
@@ -50,10 +57,10 @@ axios.interceptors.request.use(function (config) {
 /**
  * global required plugins
  */
-
-window.notie=require('notie');
-window.toastr=require('toastr');
-
+window.jquery = require('jquery');
+window.notie = require('notie');
+window.toastr = require('toastr');
+window.DataTable = require('datatables.net-bs4');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -68,7 +75,6 @@ window.toastr=require('toastr');
 //     key: 'your-pusher-key'
 // });
 
-
-
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
+

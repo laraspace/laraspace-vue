@@ -992,13 +992,14 @@
 </template>
 
 <script>
+
     export default {
 
         mounted: function () {
+            console.log(DataTable);
+            jquery('#default-datatable').DataTable();
 
-            $('#default-datatable').DataTable();
-
-            $('#responsive-datatable').DataTable({
+            jquery('#responsive-datatable').DataTable({
                 responsive: true
             });
         }

@@ -33,6 +33,9 @@ import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import Graphs from './views/admin/components/Graphs.vue'
 
+//Charts
+import Amchart from './views/admin/charts/Amchart.vue'
+
 //Forms
 import General from './views/admin/forms/General.vue'
 import Advanced from './views/admin/forms/Advanced.vue'
@@ -178,6 +181,13 @@ const routes = [
             {
                 path: 'components/graphs',
                 component: Graphs
+            },
+
+            //chart
+            {
+                path: 'charts/amchart',
+                component: Amchart
+
             },
 
             //Forms
