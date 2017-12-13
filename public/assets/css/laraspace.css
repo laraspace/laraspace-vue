@@ -2797,11 +2797,6 @@ pre code {
   opacity: 1;
 }
 
-.form-control::-ms-input-placeholder {
-  color: #636c72;
-  opacity: 1;
-}
-
 .form-control::placeholder {
   color: #636c72;
   opacity: 1;

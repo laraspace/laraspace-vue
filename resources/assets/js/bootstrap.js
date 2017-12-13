@@ -14,9 +14,7 @@ window._ = require('lodash');
  */
 
 window.Vue = require('vue');
-window.notie=require('notie');
-window.toastr=require('toastr');
-window.datatable=require('datatables.net-dt');
+
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -24,6 +22,8 @@ window.datatable=require('datatables.net-dt');
  */
 
 window.axios = require('axios');
+
+
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -46,6 +46,14 @@ axios.interceptors.request.use(function (config) {
     // Do something with request error
     return Promise.reject(error);
 });
+
+/**
+ * global required plugins
+ */
+
+window.notie=require('notie');
+window.toastr=require('toastr');
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
