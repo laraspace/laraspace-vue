@@ -996,7 +996,6 @@
     export default {
 
         mounted: function () {
-            console.log(DataTable);
             jquery('#default-datatable').DataTable();
 
             jquery('#responsive-datatable').DataTable({

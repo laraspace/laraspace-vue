@@ -203,12 +203,13 @@
     import 'amcharts3/amcharts/pie';
     import 'amcharts3/amcharts/xy';
     import 'amcharts3/amcharts/radar';
-    import 'amcharts3/amcharts/plugins/animate/animate';
-    import 'amcharts3/amcharts/plugins/export/export';
     import 'amcharts3/amcharts/themes/light';
     import 'ammap3';
     import 'ammap3/ammap/maps/js/worldLow';
     import 'amstock3/amcharts/amstock';
+    import 'amcharts3/amcharts/plugins/animate/animate';
+    import 'amcharts3/amcharts/plugins/export/export';
+    require('amcharts3/amcharts/images/');
 
     export default {
         mounted() {
@@ -639,7 +640,7 @@
                     "type": "serial",
                     "theme": "none",
                     "theme": "light",
-                    "pathToImages": "/assets/img/charts/",
+                    "pathToImages": "amcharts3/amcharts/images/",
                     "marginRight": 30,
                     "legend": {
                         "equalWidths": false,

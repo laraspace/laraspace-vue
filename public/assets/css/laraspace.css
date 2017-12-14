@@ -23053,6 +23053,133 @@ code,
   opacity: 0;
 }
 
+.sparkline-chart .sparkline-chart-type {
+  margin: 25px 40px !important;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-width: 25%;
+}
+
+.sparkline-chart .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.jqstooltip {
+  width: auto !important;
+  height: auto !important;
+}
+
+.amcharts {
+  width: 100%;
+  height: 500px;
+}
+
+.amcharts a {
+  display: none !important;
+}
+
+.amcharts .amcharts-export-menu {
+  display: none;
+}
+
+.amcharts .chart-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.amcharts .chart-controls .cylinder_chart_input,
+.amcharts .chart-controls .pie_donut_chart_input {
+  width: 100%;
+}
+
+.morris {
+  width: 100%;
+  height: 500px;
+}
+
+.morris a {
+  display: none !important;
+}
+
+.gauge {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.gauges-row .col {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 20px auto !important;
+}
+
+.gauge-lg .basic-gauge,
+.gauge-lg .donut-gauge,
+.gauge-lg .color-gauge {
+  height: 250px;
+}
+
+.gauge-lg .gauge-label {
+  font-size: 40px;
+}
+
+.gauge-md .basic-gauge,
+.gauge-md .donut-gauge,
+.gauge-md .color-gauge {
+  height: 180px;
+}
+
+.gauge-sm .basic-gauge,
+.gauge-sm .donut-gauge,
+.gauge-sm .color-gauge {
+  height: 120px;
+}
+
+.gauge-sm .gauge-label {
+  font-size: 20px;
+}
+
+.gauge-label {
+  display: inline-block;
+  position: absolute;
+  top: 60%;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.gauge-label.middle-label {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.gauge {
+  position: relative;
+}
+
 .dashbox {
   background-color: #fff;
   border: 1px solid #ddd;
