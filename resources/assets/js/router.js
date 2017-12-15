@@ -35,6 +35,9 @@ import Graphs from './views/admin/components/Graphs.vue'
 
 //Charts
 import Amchart from './views/admin/charts/Amchart.vue'
+import Gauge from './views/admin/charts/Gauge.vue'
+import Morris from './views/admin/charts/Morris.vue'
+import Sparkline from './views/admin/charts/Sparkline.vue'
 
 //Forms
 import General from './views/admin/forms/General.vue'
@@ -187,6 +190,21 @@ const routes = [
             {
                 path: 'charts/amchart',
                 component: Amchart
+
+            },
+            {
+                path: 'charts/gauge',
+                component: Gauge
+
+            },
+            {
+                path: 'charts/morris',
+                component: Morris
+
+            },
+            {
+                path: 'charts/sparkline',
+                component: Sparkline
 
             },
 

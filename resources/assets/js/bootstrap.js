@@ -58,6 +58,7 @@ axios.interceptors.request.use(function (config) {
  * global required plugins
  */
 window.jquery = require('jquery');
+window.Raphael = require('raphael/raphael');
 window.notie = require('notie');
 window.toastr = require('toastr');
 window.DataTable = require('datatables.net-bs4');
