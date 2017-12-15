@@ -29,7 +29,7 @@ mix.combine([
     pluginPath + 'jquery-validate/jquery.validate.js',
     pluginPath + 'jquery-validate/additional-methods.js',
     // pluginPath + 'clockpicker/bootstrap-clockpicker.js',
-    pluginPath + 'switchery/switchery.js',
+    // pluginPath + 'switchery/switchery.js',
     // pluginPath + 'select2/select2.js',
     // pluginPath + 'datatables/dataTables.min.js',
     // pluginPath + 'datatables/dataTables.bootstrap.js',

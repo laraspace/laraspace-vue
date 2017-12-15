@@ -511,13 +511,12 @@
 
 
 <script type="text/babel">
-
     export default {
 
         mounted(){
 
-            Plugin.initPlugins(['Select2','BootstrapSelect','TimePickers','MultiSelect','DatePicker','SwitchToggles'])
+            Plugin.initPlugins(['Select2','TimePickers','DatePicker','MultiSelect','BootstrapSelect','SwitchToggles'])
         }
-
+// '',
     }
 </script>

@@ -3,9 +3,14 @@ import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
 
+
+
 //notification
 import 'notie/src/notie.scss';
 import 'toastr/build/toastr.css';
+
+//bs-datepicker
+import "bootstrap-datepicker/dist/css/bootstrap-datepicker.css"
 
 //datatable
 import 'datatables.net-responsive-bs4';
@@ -23,6 +28,9 @@ import 'toastr/build/toastr.css';
 import 'datatables.net-responsive-bs4';
 import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
 import 'datatables.net-bs4/css/datatables.bootstrap4.css';
+
+//switchery css
+import "switchery/switchery.css"
 
 window._ = require('lodash');
 
@@ -73,6 +81,8 @@ window.jquery = require('jquery');
 window.clockpicker= require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
 window.metisMenu = require('metismenu');
+window.Switchery = require('switchery');
+
 window.multiSelect = require('multiselect');
 window.datepicker= require('bootstrap-datepicker/dist/js/bootstrap-datepicker');
 window.notie = require('notie');

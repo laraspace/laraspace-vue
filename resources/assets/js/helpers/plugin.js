@@ -49,7 +49,7 @@ export default {
     },
 
     TimePickers(){
-        jquery('.ls-clockpicker').clockpicker({
+        window.$('.ls-clockpicker').clockpicker({
             donetext: 'Done'
         });
 
