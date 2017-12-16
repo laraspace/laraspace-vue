@@ -143,9 +143,9 @@
 </template>
 
 <script type="text/babel">
-    import LineGraph from '../../../components/LineGraph.vue'
-    import BarGraph from '../../../components/BarGraph.vue'
-    import PieGraph from '../../../components/PieGraph.vue'
+    import LineGraph from '../../../components/LineChart.vue'
+    import BarGraph from '../../../components/BarChart.vue'
+    import PieGraph from '../../../components/PieChart.vue'
 
     export default {
         data() {

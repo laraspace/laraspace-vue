@@ -5,8 +5,6 @@
 </template>
 
 <script>
-    import Chart from 'chart.js';
-
     export default {
 
         props: [
@@ -16,16 +14,15 @@
             'hoverBgColors'
         ],
 
-        mounted: function () {
+        mounted () {
+            let context = this.$refs.graph.getContext('2d');
 
-            var context = this.$refs.graph.getContext('2d');
-
-            var options = {
+            let options = {
                 responsive: true,
                 maintainAspectRatio: false,
             };
 
-            var data = {
+            let data = {
                 labels: this.labels,
                 datasets: [
                     {
@@ -35,7 +32,7 @@
                     }]
             };
 
-            var myPieChart = new Chart(context,{
+            let myPieChart = new Chart(context,{
                 type: 'pie',
                 data: data,
                 options: options

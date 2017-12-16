@@ -5,8 +5,6 @@
 </template>
 
 <script>
-    import Chart from 'chart.js';
-
     export default {
 
         props : [
@@ -14,11 +12,10 @@
             'values'
         ],
 
-        mounted : function () {
+        mounted () {
+            let context = this.$refs.graph.getContext('2d');
 
-            var context = this.$refs.graph.getContext('2d');
-
-            var options = {
+            let options = {
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: {
@@ -27,7 +24,7 @@
             };
 
 
-            var data = {
+            let data = {
                 labels: this.labels,
                 datasets: [
                     {
@@ -54,7 +51,7 @@
                 ]
             };
 
-            var myLineChart = new Chart(context, {
+            let myLineChart = new Chart(context, {
                 type: 'line',
                 data: data,
                 options: options

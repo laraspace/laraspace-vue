@@ -1,54 +1,53 @@
 <template>
     <div class="main-content">
         <div class="page-header">
-            <h3 class="page-title">Graphs</h3>
+            <h3 class="page-title">Chart JS</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Components</a></li>
-                <li class="breadcrumb-item active">Graphs</li>
+                <li class="breadcrumb-item active">Charts</li>
             </ol>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h6>Chartjs</h6>
-                    </div>
                     <div class="card-block">
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Line Chart
                             </h5>
-                            <line-graph :labels="['Jan','Feb','Mar','June']" :values="[20,30,40,60]"></line-graph>
+                            <line-chart :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
+                                        :values="[65, 59, 80, 81, 56, 55, 40]"></line-chart>
                         </div>
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Bar Chart
                             </h5>
-                            <bar-graph :labels="['Jan','Feb','Mar','June']" :values="[20,30,40,60]"></bar-graph>
+                            <bar-Chart :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
+                                       :values="[65, 59, 80, 81, 56, 55, 40]"></bar-Chart>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <h5 class="section-semi-title">
                                     Pie Chart
                                 </h5>
-                                <pie-graph
+                                <pie-chart
                                         :labels="pieAndDoughtnut.labels"
                                         :values="pieAndDoughtnut.data"
                                         :bg-colors="pieAndDoughtnut.bgColors"
                                         :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
-                                ></pie-graph>
+                                ></pie-chart>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <h5 class="section-semi-title">
                                     Doughnut Chart
                                 </h5>
-                                <doughnut-graph
+                                <doughnut-chart
                                         :labels="pieAndDoughtnut.labels"
                                         :values="pieAndDoughtnut.data"
                                         :bg-colors="pieAndDoughtnut.bgColors"
                                         :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
-                                ></doughnut-graph>
+                                ></doughnut-chart>
                             </div>
                         </div>
                     </div>
@@ -60,10 +59,10 @@
 
 <script type="text/babel">
 
-    import LineGraph from '../../../components/LineGraph.vue'
-    import BarGraph from '../../../components/BarGraph.vue'
-    import PieGraph from '../../../components/PieGraph.vue'
-    import DoughnutGraph from '../../../components/DoughnutGraph.vue'
+    import LineChart from '../../../components/LineChart.vue'
+    import BarChart from '../../../components/BarChart.vue'
+    import PieChart from '../../../components/PieChart.vue'
+    import DoughnutChart from '../../../components/DoughnutGraph.vue'
 
     export default {
         data() {
@@ -85,7 +84,7 @@
             }
         },
         components : {
-            LineGraph , BarGraph , PieGraph , DoughnutGraph
+            LineChart , BarChart , PieChart , DoughnutChart
         }
     }
 </script>

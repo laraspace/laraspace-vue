@@ -19,6 +19,26 @@
     color: $ls-color-gray--very-dark;
 }
 
+// Image Zoom
+// -------------------------
+
+.image-zoom-demo {
+    text-align: justify;
+
+    .img-left {
+        float: left;
+        width: 20%;
+        margin: 20px 20px 20px 0;
+    }
+
+    .img-right {
+        float: right;
+        width: 20%;
+        margin: 0 20px 20px 20px;
+    }
+
+}
+
 // SKINS DEMO
 .skin-tools {
     position: fixed;
