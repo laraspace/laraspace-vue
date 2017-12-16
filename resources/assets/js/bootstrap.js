@@ -10,12 +10,14 @@ import 'notie/src/notie.scss';
 import 'toastr/build/toastr.css';
 
 //bs-datepicker
-import "bootstrap-datepicker/dist/css/bootstrap-datepicker.css"
+import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.css"
 
 //datatable
 import 'datatables.net-responsive-bs4';
 import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
 import 'datatables.net-bs4/css/datatables.bootstrap4.css';
+//Metis Menu
+import "metismenu/src/metisMenu.css"
 
 //MultiSelect
 import 'multiselect/css/multi-select.css'
@@ -31,6 +33,17 @@ import 'datatables.net-bs4/css/datatables.bootstrap4.css';
 
 //switchery css
 import "switchery/switchery.css"
+
+//Ladda .scss
+import "ladda/css/ladda.scss"
+
+//clock picker
+import "clockpicker/dist/bootstrap-clockpicker.css"
+
+//time picker
+import "timepicker/jquery.timepicker.css"
+//Select2
+import "select2/dist/css/select2.css"
 
 window._ = require('lodash');
 
@@ -81,13 +94,14 @@ window.jquery = require('jquery');
 window.clockpicker= require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
 window.metisMenu = require('metismenu');
-window.Switchery = require('switchery');
-
+window.Switchery = require('switchery/switchery');
+window.Ladda = require('ladda/js/ladda');
 window.multiSelect = require('multiselect');
 window.datepicker= require('bootstrap-datepicker/dist/js/bootstrap-datepicker');
 window.notie = require('notie');
 window.toastr = require('toastr');
 window.DataTable = require('datatables.net-bs4');
+window.timepicker = require('timepicker');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

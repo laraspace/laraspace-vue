@@ -7,7 +7,6 @@
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
-
   "devDependencies": {
     "copy-webpack-plugin": "^4.3.0",
     "laravel-mix": "1.4.2"
@@ -26,6 +25,7 @@
     "jquery": "^3.1.0",
     "lodash": "^4.16.2",
     "notie": "^4.3.1",
+    "timepicker": "^1.11.12",
     "toastr": "^2.1.4",
     "vee-validate": "^2.0.0-beta.18",
     "vue": "^2.5.3",

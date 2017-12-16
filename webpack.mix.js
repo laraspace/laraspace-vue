@@ -25,7 +25,7 @@ mix.combine([
 
     // ** Additional Plugins **
     pluginPath + 'ladda/spin.js',
-    pluginPath + 'ladda/ladda.js',
+    // pluginPath + 'ladda/ladda.js',
     pluginPath + 'jquery-validate/jquery.validate.js',
     pluginPath + 'jquery-validate/additional-methods.js',
     // pluginPath + 'clockpicker/bootstrap-clockpicker.js',
@@ -36,7 +36,7 @@ mix.combine([
     // pluginPath + 'multiselect/jquery.multi-select.js',
     pluginPath + 'bootstrapSelect/bootstrap-select.js',
     // pluginPath + 'bootstrap-datepicker/bootstrap-datepicker.js',
-    pluginPath + 'timepicker/jquery.timepicker.js',
+    // pluginPath + 'timepicker/jquery.timepicker.js',
     pluginPath + 'summernote/summernote.js',
     pluginPath + 'simplemde/simplemde.min.js',
     pluginPath + 'Chartjs/Chart.js',

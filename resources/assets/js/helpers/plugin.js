@@ -37,15 +37,23 @@ export default {
     SwitchToggles(){
         var elems = $('.ls-switch');
 
-        elems.each(function (index, element) {
+
+        var elems = $('.ls-switch');
+
+        elems.each(function(index,element) {
             var color = $(this).data('color') ? $(this).data('color') : '#ffde00';
             var size = $(this).data('size') ? $(this).data('size') : 'default';
 
             var switchery = new Switchery(this, {
-                color: color,
-                size: size
+                color : color,
+                size : size
             });
         });
+
+
+
+
+
     },
 
     TimePickers(){
@@ -60,7 +68,7 @@ export default {
             var timeFormat = $(this).data('format') ? $(this).data('format') : 'g:ia';
             var showDuration = $(this).data('duration') ? $(this).data('duration') : false;
 
-            $(this).timepicker({
+            window.jquery(this).timepicker({
                 timeFormat: timeFormat,
                 showDuration: showDuration,
                 minTime: '2:00pm',
