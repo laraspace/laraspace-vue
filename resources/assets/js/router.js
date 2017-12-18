@@ -32,6 +32,9 @@ import Tables from './views/admin/basic-ui/Tables.vue'
 import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import Graphs from './views/admin/components/Graphs.vue'
+//Ratings
+import BarRating from './views/admin/components/ratings/BarRating.vue'
+import StarRating from './views/admin/components/ratings/StarRating.vue'
 
 //Charts
 import Amchart from './views/admin/charts/Amchart.vue'
@@ -182,6 +185,16 @@ const routes = [
                 path: 'components/graphs',
                 component: Graphs
             },
+            {
+                path: 'components/ratings/bar-rating',
+                component: BarRating
+
+            },
+            {
+                path: 'components/ratings/star-rating',
+                component:StarRating
+
+            },
 
             //chart
             {
@@ -189,6 +202,8 @@ const routes = [
                 component: Amchart
 
             },
+
+
 
             //Forms
             {
