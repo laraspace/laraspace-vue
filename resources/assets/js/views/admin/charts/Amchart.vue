@@ -209,7 +209,6 @@
     import 'amstock3/amcharts/amstock';
     import 'amcharts3/amcharts/plugins/animate/animate';
     import 'amcharts3/amcharts/plugins/export/export';
-//    require('amcharts3/amcharts/images/');
 
     export default {
         mounted() {
@@ -640,8 +639,7 @@
                     "type": "serial",
                     "theme": "none",
                     "theme": "light",
-
-                    "pathToImages": "amcharts3/amcharts/images/",
+                    "pathToImages": "/assets/img/charts/",
                     "marginRight": 30,
                     "legend": {
                         "equalWidths": false,

@@ -10,42 +10,48 @@ import AuthService from './services/auth'
  */
 
 //Dashboard
-import Basic from './views/admin/dashboard/Basic.vue'
-import Ecommerce from './views/admin/dashboard/Ecommerce.vue'
-import Finance from './views/admin/dashboard/Finance.vue'
+import Basic from './views/admin/dashboard/Basic.vue';
+import Ecommerce from './views/admin/dashboard/Ecommerce.vue';
+import Finance from './views/admin/dashboard/Finance.vue';
 
 //Layouts
-import LayoutBasic from './views/layouts/LayoutBasic.vue'
-import LayoutHorizontal from './views/layouts/LayoutHorizontal.vue'
-import LayoutIconSidebar from './views/layouts/LayoutIconSidebar.vue'
-import LayoutLogin from './views/layouts/LayoutLogin.vue'
-import LayoutFront from './views/layouts/LayoutFront.vue'
+import LayoutBasic from './views/layouts/LayoutBasic.vue';
+import LayoutHorizontal from './views/layouts/LayoutHorizontal.vue';
+import LayoutIconSidebar from './views/layouts/LayoutIconSidebar.vue';
+import LayoutLogin from './views/layouts/LayoutLogin.vue';
+import LayoutFront from './views/layouts/LayoutFront.vue';
 
 //Basic UI
-import Buttons from './views/admin/basic-ui/Buttons.vue'
-import Cards from './views/admin/basic-ui/Cards.vue'
-import Tabs from './views/admin/basic-ui/Tabs.vue'
-import Typography from './views/admin/basic-ui/Typography.vue'
-import Tables from './views/admin/basic-ui/Tables.vue'
+import Buttons from './views/admin/basic-ui/Buttons.vue';
+import Cards from './views/admin/basic-ui/Cards.vue';
+import Tabs from './views/admin/basic-ui/Tabs.vue';
+import Typography from './views/admin/basic-ui/Typography.vue';
+import Tables from './views/admin/basic-ui/Tables.vue';
 
 //Components
-import Datatables from './views/admin/components/Datatables.vue'
-import Notifications from './views/admin/components/Notifications.vue'
-import Graphs from './views/admin/components/Graphs.vue'
+import Calendar from './views/admin/components/Calendar.vue';
+import Datatables from './views/admin/components/Datatables.vue';
+import ImageCropper from './views/admin/components/ImageCropper.vue';
+import ImageZoom from './views/admin/components/ImageZoom.vue';
+import Notifications from './views/admin/components/Notifications.vue';
 
 //Charts
-import Amchart from './views/admin/charts/Amchart.vue'
+import Amchart from './views/admin/charts/Amchart.vue';
+import ChartJS from './views/admin/charts/ChartJS.vue';
+import Gauge from './views/admin/charts/Gauge.vue';
+import Morris from './views/admin/charts/Morris.vue';
+import Sparkline from './views/admin/charts/Sparkline.vue';
 
 //Forms
-import General from './views/admin/forms/General.vue'
-import Advanced from './views/admin/forms/Advanced.vue'
-import Layouts from './views/admin/forms/FormLayouts.vue'
-import Validation from './views/admin/forms/FormValidation.vue'
-import Editors from './views/admin/forms/Editors.vue'
-import VeeValidate from './views/admin/forms/VeeValidate.vue'
+import General from './views/admin/forms/General.vue';
+import Advanced from './views/admin/forms/Advanced.vue';
+import Layouts from './views/admin/forms/FormLayouts.vue';
+import Validation from './views/admin/forms/FormValidation.vue';
+import Editors from './views/admin/forms/Editors.vue';
+import VeeValidate from './views/admin/forms/VeeValidate.vue';
 
 //Settings
-import Settings from './views/admin/Settings.vue'
+import Settings from './views/admin/Settings.vue';
 
 /*
  |--------------------------------------------------------------------------
@@ -54,10 +60,10 @@ import Settings from './views/admin/Settings.vue'
  */
 
 //Auth
-import Login from './views/auth/Login.vue'
-import Register from './views/auth/Register.vue'
+import Login from './views/auth/Login.vue';
+import Register from './views/auth/Register.vue';
 
-import NotFoundPage from './views/errors/404.vue'
+import NotFoundPage from './views/errors/404.vue';
 
 /*
  |--------------------------------------------------------------------------
@@ -65,9 +71,9 @@ import NotFoundPage from './views/errors/404.vue'
  |--------------------------------------------------------------------------|
  */
 
-import Home from './views/front/Home.vue'
+import Home from './views/front/Home.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     
@@ -171,6 +177,10 @@ const routes = [
 
             //Components
             {
+                path: 'components/calendar',
+                component: Calendar
+            },
+            {
                 path: 'components/datatables',
                 component: Datatables
             },
@@ -179,14 +189,40 @@ const routes = [
                 component: Notifications
             },
             {
-                path: 'components/graphs',
-                component: Graphs
+                path: 'components/image-cropper',
+                component: ImageCropper
+            },
+            {
+                path: 'components/image-zoom',
+                component: ImageZoom
+            },
+            {
+                path: 'components/notifications',
+                component: Notifications
             },
 
             //chart
             {
                 path: 'charts/amchart',
                 component: Amchart
+            },
+            {
+                path: 'charts/chartjs',
+                component: ChartJS
+            },
+            {
+                path: 'charts/gauge',
+                component: Gauge
+
+            },
+            {
+                path: 'charts/morris',
+                component: Morris
+
+            },
+            {
+                path: 'charts/sparkline',
+                component: Sparkline
 
             },
 

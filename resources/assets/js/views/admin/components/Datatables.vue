@@ -7,7 +7,7 @@
                 <li class="breadcrumb-item"><a href="#">Components</a></li>
                 <li class="breadcrumb-item active">Datatables</li>
             </ol>
-            
+
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -997,13 +997,12 @@
     export default {
 
         mounted: function () {
-
             jquery('#default-datatable').DataTable();
+
             jquery('#responsive-datatable').DataTable({
                 responsive: true
             });
         }
     }
 </script>
-<link rel="stylesheet" type="text/css" href="dataTables.bootstrap.css">
 

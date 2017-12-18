@@ -1,9 +1,8 @@
-import VueRouter from 'vue-router';
+
+import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
-
-
 
 //notification
 import 'notie/src/notie.scss';
@@ -16,6 +15,7 @@ import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.css"
 import 'datatables.net-responsive-bs4';
 import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
 import 'datatables.net-bs4/css/datatables.bootstrap4.css';
+
 //Metis Menu
 import "metismenu/src/metisMenu.css"
 
@@ -42,8 +42,10 @@ import "clockpicker/dist/bootstrap-clockpicker.css"
 
 //time picker
 import "timepicker/jquery.timepicker.css"
+
 //Select2
 import "select2/dist/css/select2.css"
+
 
 window._ = require('lodash');
 
@@ -102,6 +104,7 @@ window.notie = require('notie');
 window.toastr = require('toastr');
 window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
+window.Raphael = require('raphael/raphael');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
