@@ -2,7 +2,7 @@ import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
-
+// import summernote from 'summernote';
 
 
 //notification
@@ -102,7 +102,6 @@ window.notie = require('notie');
 window.toastr = require('toastr');
 window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
-
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
