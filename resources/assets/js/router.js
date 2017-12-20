@@ -33,6 +33,8 @@ import Calendar from './views/admin/components/Calendar.vue';
 import Datatables from './views/admin/components/Datatables.vue';
 import ImageCropper from './views/admin/components/ImageCropper.vue';
 import ImageZoom from './views/admin/components/ImageZoom.vue';
+import NestableList from './views/admin/components/NestableList.vue'
+import NestableTree from './views/admin/components/NestableTree.vue'
 import Notifications from './views/admin/components/Notifications.vue';
 
 //Charts
@@ -195,6 +197,15 @@ const routes = [
             {
                 path: 'components/image-zoom',
                 component: ImageZoom
+            },
+            {
+                path: 'components/nestable-list',
+                component: NestableList
+
+            },
+            {
+                path: 'components/nestable-tree',
+                component: NestableTree
             },
             {
                 path: 'components/notifications',

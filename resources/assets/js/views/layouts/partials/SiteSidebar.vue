@@ -35,6 +35,8 @@
                         <router-link to="/admin/components/datatables" tag="li"><a>Jquery Datatables</a></router-link>
                         <router-link to="/admin/components/image-cropper" tag="li"><a>ImageCropper</a></router-link>
                         <router-link to="/admin/components/image-zoom" tag="li"><a>ImageZoom</a></router-link>
+                        <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
+                        <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
                     </ul>
                 </li>
