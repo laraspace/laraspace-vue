@@ -36,6 +36,9 @@ import ImageZoom from './views/admin/components/ImageZoom.vue';
 import NestableList from './views/admin/components/NestableList.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import Notifications from './views/admin/components/Notifications.vue';
+    //1. Ratings
+import BarRating from './views/admin/components/ratings/BarRating.vue'
+import StarRating from './views/admin/components/ratings/StarRating.vue'
 
 //Charts
 import Amchart from './views/admin/charts/Amchart.vue';
@@ -211,6 +214,16 @@ const routes = [
                 path: 'components/notifications',
                 component: Notifications
             },
+            {
+                path: 'components/ratings/bar-rating',
+                component: BarRating
+
+            },
+            {
+                path: 'components/ratings/star-rating',
+                component:StarRating
+
+            },
 
             //chart
             {
@@ -236,6 +249,8 @@ const routes = [
                 component: Sparkline
 
             },
+
+
 
             //Forms
             {

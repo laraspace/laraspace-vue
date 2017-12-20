@@ -38,8 +38,18 @@
                         <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
                         <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
+                        <router-link to="/admin/components/graphs" tag="li"><a>Graphs</a></router-link>
+                        <li :class="{ active: isActive('/admin/components/ratings') }">
+                            <a href="#" aria-expanded="true">Rating <span class="fa arrow fa-fw"></span></a>
+                            <ul aria-expanded="true">
+                                <router-link to="/admin/components/ratings/star-rating" tag="li"><a>Star Ratings</a></router-link>
+                                <router-link to="/admin/components/ratings/bar-rating" tag="li"><a>Bar Ratings</a></router-link>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
+
+
                 <li :class="{ active: isActive('/admin/chart') }">
                     <a href="#" aria-expanded="true"><i class="fa fa-bar-chart"></i> Charts <span class="fa arrow fa-fw"></span></a>
                     <ul aria-expanded="true">
