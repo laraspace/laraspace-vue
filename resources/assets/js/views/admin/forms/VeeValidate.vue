@@ -84,6 +84,7 @@
 </template>
 
 <script type="text/babel">
+    import "vee-validate/dist/vee-validate"
     export default {
         data(){
             return {
