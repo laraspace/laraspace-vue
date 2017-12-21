@@ -112,7 +112,6 @@
     </div>
 </template>
 <script>
-    require('transition');
+    require('bootstrap/js/transition.js');
     require('zoom.js');
-    require('zoom.js/css/zoom.css');
 </script>

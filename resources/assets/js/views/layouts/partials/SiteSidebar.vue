@@ -38,7 +38,6 @@
                         <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
                         <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
-                        <router-link to="/admin/components/graphs" tag="li"><a>Graphs</a></router-link>
                         <li :class="{ active: isActive('/admin/components/ratings') }">
                             <a href="#" aria-expanded="true">Rating <span class="fa arrow fa-fw"></span></a>
                             <ul aria-expanded="true">
@@ -54,10 +53,10 @@
                     <a href="#" aria-expanded="true"><i class="fa fa-bar-chart"></i> Charts <span class="fa arrow fa-fw"></span></a>
                     <ul aria-expanded="true">
                         <router-link to="/admin/charts/amchart" tag="li"><a>AM Charts</a></router-link>
+                        <router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>
                         <router-link to="/admin/charts/gauge" tag="li"><a>Gauges</a></router-link>
                         <router-link to="/admin/charts/morris" tag="li"><a>Morris</a></router-link>
                         <router-link to="/admin/charts/sparkline" tag="li"><a>Sparkline</a></router-link>
-                        <router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/forms') }">
