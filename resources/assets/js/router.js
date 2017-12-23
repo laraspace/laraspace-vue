@@ -252,27 +252,22 @@ const routes = [
             {
                 path: 'charts/amchart',
                 component: Amchart
-
             },
             {
                 path: 'charts/chartjs',
                 component:Chartjs
-
             },
             {
                 path: 'charts/gauge',
                 component: Gauge
-
             },
             {
                 path: 'charts/morris',
                 component: Morris
-
             },
             {
                 path: 'charts/sparkline',
                 component: Sparkline
-
             },
 
             //Icons
