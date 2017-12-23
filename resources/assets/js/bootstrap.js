@@ -1,4 +1,3 @@
-
 import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';

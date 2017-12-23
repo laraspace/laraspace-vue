@@ -55,6 +55,9 @@ import Validation from './views/admin/forms/FormValidation.vue';
 import Editors from './views/admin/forms/Editors.vue';
 import VeeValidate from './views/admin/forms/VeeValidate.vue';
 
+//Todos
+import Todos from './views/admin/Todos.vue'
+
 //Settings
 import Settings from './views/admin/Settings.vue';
 
@@ -270,6 +273,12 @@ const routes = [
             {
                 path: 'forms/vee',
                 component: VeeValidate
+            },
+
+            //Todos
+            {
+                path: 'todos',
+                component: Todos
             },
 
             //Settings

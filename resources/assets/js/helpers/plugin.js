@@ -45,14 +45,9 @@ export default {
 
             var switchery = new Switchery(this, {
                 color : color,
-                size : size
+                size : size,
             });
         });
-
-
-
-
-
     },
 
     TimePickers(){
