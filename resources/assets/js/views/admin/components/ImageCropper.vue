@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="image-cropper">
                             <div class="row">
                                 <div class="col-8 img-cropper-col">
@@ -109,8 +109,13 @@
                                             <button type="button" class="btn btn-primary" data-method="move"
                                                     data-option="-10" data-second-option="0" title="Move Left">
                                             <span class="docs-tooltip" data-toggle="tooltip"
+<<<<<<< HEAD
                                                   title="$().cropper(&quot;move&quot;, -10, 0)"> <span
                                                     class="fa fa-arrow-left"></span>
+=======
+                                                  title="$().cropper(&quot;move&quot;, -10, 0)">
+                                                <span class="icon-fa icon-fa-arrow-left"></span>
+>>>>>>> 7fc60778ff9ec7eb7d80eb61a4ef7da3d9a5b003
                                             </span>
                                             </button>
                                             <button type="button" class="btn btn-primary" data-method="move"
@@ -424,7 +429,7 @@
 
 <script>
     import 'cropper/dist/cropper';
-    import 'cropper/dist/cropper.css';
+
     export default {
 
         methods: {

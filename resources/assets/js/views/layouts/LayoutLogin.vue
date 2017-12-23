@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrapper">
         <div class="login-box">
-            <div class="brand-main">
+            <div class="logo-main">
                 <a href="/admin"><img src="/assets/img/logo-large.png" alt="Laraspace Logo"></a>
             </div>
             <router-view></router-view>
@@ -16,17 +16,20 @@
 <script type="text/babel">
 
     export default {
+        mounted() {
+            this.setLayoutClasses()
+        },
+        watch: {
+            '$route': 'onRouteChange'
+        },
         methods: {
             setLayoutClasses(){
                 let body = $('body');
                 body.removeClass();
-                body.addClass('login-page')
+                body.addClass('login-page login-1')
             },
         },
-        mounted() {
-            this.setLayoutClasses()
-        },
-        destroyed(){
+        onRouteChange(){
             $('body').removeClass('login-page')
         }
     }

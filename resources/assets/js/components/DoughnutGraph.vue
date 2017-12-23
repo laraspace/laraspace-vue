@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import Chart from 'chart.js';
+    window.Chart = require('chart.js');
 
     export default {
 

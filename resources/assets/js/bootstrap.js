@@ -1,8 +1,8 @@
-
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
+
 
 //datatable
 import 'datatables.net-responsive-bs4';
@@ -79,6 +79,7 @@ window.Raphael = require('raphael/raphael');
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);

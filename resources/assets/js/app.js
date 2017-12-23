@@ -1,7 +1,3 @@
-import router from './router.js'
-
-import Layout from './helpers/layout'
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -9,6 +5,10 @@ import Layout from './helpers/layout'
  */
 
 require('./bootstrap');
+
+import router from './router.js'
+
+import Layout from './helpers/layout'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

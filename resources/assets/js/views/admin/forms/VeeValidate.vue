@@ -11,50 +11,51 @@
         <div class="card">
             <div class="card-header">
                 <h6>Basic Validation <a class="source-link" href="http://vee-validate.logaretm.com/#basic-example"
-                                       target="_blank">source</a>
+                                        target="_blank">source</a>
                 </h6>
             </div>
-            <div class="card-block">
-                <div :class="{'form-group' : true , 'has-danger': errors.has('name') }">
+            <div class="card-body">
+                <div :class="{'form-group' : true }">
                     <label>Name </label>
                     <input v-model="name" v-validate data-vv-rules="required" class="form-control"
-                           :class="{'form-control-danger': errors.has('name') }" name="name" type="text">
-                    <div class="form-control-feedback" v-show="errors.has('name')">{{ errors.first('name') }}</div>
+                           :class="{'is-invalid': errors.has('name') }" name="name" type="text">
+                    <div class="invalid-feedback" v-show="errors.has('name')">{{ errors.first('name') }}</div>
                 </div>
 
-                <div :class="{'form-group' : true , 'has-danger': errors.has('email') }">
+                <div :class="{'form-group' : true }">
                     <label>Email Address</label>
                     <input v-model="email" v-validate data-vv-rules="required|email"
-                           class="form-control" :class="{'form-control-danger': errors.has('email') }" name="email"
+                           class="form-control" :class="{'is-invalid': errors.has('email') }" name="email"
                            type="text">
-                    <div class="form-control-feedback" v-show="errors.has('email')">{{ errors.first('email') }}
+                    <div class="invalid-feedback" v-show="errors.has('email')">{{ errors.first('email') }}
                     </div>
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Form Validation <a class="source-link" href="http://vee-validate.logaretm.com/examples#validate-form"
+                <h6>Form Validation <a class="source-link"
+                                       href="http://vee-validate.logaretm.com/examples#validate-form"
                                        target="_blank">source</a>
                 </h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
 
                 <form @submit="validateBeforeSubmit">
 
-                    <div :class="{'form-group' : true , 'has-danger': errors.has('name') }">
+                    <div :class="{'form-group' : true  }">
                         <label>Name </label>
                         <input v-model="name" v-validate.initial="name" data-vv-rules="required" class="form-control"
-                               :class="{'form-control-danger': errors.has('name') }" name="name" type="text">
-                        <div class="form-control-feedback" v-show="errors.has('name')">{{ errors.first('name') }}</div>
+                               :class="{'is-invalid': errors.has('name') }" name="name" type="text">
+                        <div class="invalid-feedback" v-show="errors.has('name')">{{ errors.first('name') }}</div>
                     </div>
 
-                    <div :class="{'form-group' : true , 'has-danger': errors.has('email') }">
+                    <div :class="{'form-group' : true }">
                         <label>Email Address</label>
                         <input v-model="email" v-validate.initial="email" data-vv-rules="required|email"
-                               class="form-control" :class="{'form-control-danger': errors.has('email') }" name="email"
+                               class="form-control" :class="{'is-invalid': errors.has('email') }" name="email"
                                type="text">
-                        <div class="form-control-feedback" v-show="errors.has('email')">{{ errors.first('email') }}
+                        <div class="invalid-feedback" v-show="errors.has('email')">{{ errors.first('email') }}
                         </div>
                     </div>
 
@@ -68,7 +69,7 @@
                         <input type="password" name="password_confirmation" class="form-control"
                         >
                     </div>
-                    <div :class="{'form-group' : true , 'has-danger': errors.has('terms') }">
+                    <div :class="{'form-group' : true }">
                         <div class="checkbox checkbox-full">
                             <label>
                                 <input type="checkbox" name="terms" v-validate.initial="terms" data-vv-rules="required">
@@ -86,15 +87,15 @@
 <script type="text/babel">
     import "vee-validate/dist/vee-validate"
     export default {
-        data(){
+        data() {
             return {
                 email: '',
                 name: '',
-                terms: false
+                terms: false,
             }
         },
         methods: {
-            validateBeforeSubmit(e){
+            validateBeforeSubmit(e) {
                 this.$validator.validateAll();
 
                 if (this.errors.any()) {

@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h6>Toastr</h6>
                     </div>
-                    <div class="card-block buttons-demo">
+                    <div class="card-body buttons-demo">
                         <div class="row">
                             <div class="col-sm-12">
                                 <button class="btn btn-success" data-toastr="success" data-message="Hello World"
@@ -45,7 +45,7 @@
                     <div class="card-header">
                         <h6>Notie.js</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <button class="btn btn-success" data-notie="success" data-message="Hello World">
@@ -81,7 +81,7 @@
                     <div class="card-header">
                         <h6>Easy Flash Notifications</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <p>
@@ -110,7 +110,6 @@
 
     export default {
         methods: {
-
             handleToastrNotifs() {
                 toastr.options = {
                     "closeButton": true,
@@ -216,12 +215,24 @@
                                 ]
                             });
                             break;
+                        case 'date':
+                            notie.date({
+                                value: new Date(2015, 8, 27),
+                                cancelCallback: function (date) {
+                                    notie.alert({type: 3, text: 'You cancelled: ' + date.toISOString()})
+                                },
+                                submitCallback: function (date) {
+                                    notie.alert({type: 1, text: 'You selected: ' + date.toISOString()})
+                                }
+                            });
+                            break;
 
                         default:
                             notie.alert(1, 'Success!');
                     }
                 });
-            },
+            }
+
         },
         mounted() {
             this.handleToastrNotifs();

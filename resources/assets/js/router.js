@@ -22,38 +22,67 @@ import LayoutLogin from './views/layouts/LayoutLogin.vue';
 import LayoutFront from './views/layouts/LayoutFront.vue';
 
 //Basic UI
-import Buttons from './views/admin/basic-ui/Buttons.vue';
-import Cards from './views/admin/basic-ui/Cards.vue';
-import Tabs from './views/admin/basic-ui/Tabs.vue';
-import Typography from './views/admin/basic-ui/Typography.vue';
-import Tables from './views/admin/basic-ui/Tables.vue';
+import Buttons from './views/admin/basic-ui/Buttons.vue'
+import Cards from './views/admin/basic-ui/Cards.vue'
+import Tabs from './views/admin/basic-ui/Tabs.vue'
+import Typography from './views/admin/basic-ui/Typography.vue'
+import Tables from './views/admin/basic-ui/Tables.vue'
+import Modals from './views/admin/basic-ui/Modals.vue'
 
 //Components
-import Calendar from './views/admin/components/Calendar.vue';
-import Datatables from './views/admin/components/Datatables.vue';
-import ImageCropper from './views/admin/components/ImageCropper.vue';
-import ImageZoom from './views/admin/components/ImageZoom.vue';
-import NestableList from './views/admin/components/NestableList.vue'
+import Datatables from './views/admin/components/Datatables.vue'
+import Notifications from './views/admin/components/Notifications.vue'
+import ImageCropper from './views/admin/components/ImageCropper.vue'
+import ImageZoom from './views/admin/components/ImageZoom.vue'
+import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
-import Notifications from './views/admin/components/Notifications.vue';
-    //1. Ratings
+import NestableList from './views/admin/components/NestableList.vue'
 import BarRating from './views/admin/components/ratings/BarRating.vue'
 import StarRating from './views/admin/components/ratings/StarRating.vue'
 
+
 //Charts
-import Amchart from './views/admin/charts/Amchart.vue';
-import ChartJS from './views/admin/charts/ChartJS.vue';
-import Gauge from './views/admin/charts/Gauge.vue';
-import Morris from './views/admin/charts/Morris.vue';
-import Sparkline from './views/admin/charts/Sparkline.vue';
+import Amchart from './views/admin/charts/Amchart.vue'
+import Chartjs from './views/admin/charts/Chartjs.vue'
+import Gauge from './views/admin/charts/Gauge.vue'
+import Morris from './views/admin/charts/Morris.vue'
+import Sparkline from './views/admin/charts/Sparkline.vue'
+
+
+//Icons
+//import Evil from './views/admin/icons/Evil.vue'
+import Fontawesome from './views/admin/icons/Fontawesome.vue'
+import Fpsline from './views/admin/icons/FpsLine.vue'
+import IcoMoon from './views/admin/icons/IcoMoon.vue'
+import Line from './views/admin/icons/Line.vue'
+import Meteo from './views/admin/icons/Meteo.vue'
 
 //Forms
-import General from './views/admin/forms/General.vue';
-import Advanced from './views/admin/forms/Advanced.vue';
-import Layouts from './views/admin/forms/FormLayouts.vue';
-import Validation from './views/admin/forms/FormValidation.vue';
-import Editors from './views/admin/forms/Editors.vue';
-import VeeValidate from './views/admin/forms/VeeValidate.vue';
+import General from './views/admin/forms/General.vue'
+import Advanced from './views/admin/forms/Advanced.vue'
+import Layouts from './views/admin/forms/FormLayouts.vue'
+import Validation from './views/admin/forms/FormValidation.vue'
+import Editors from './views/admin/forms/Editors.vue'
+import VeeValidate from './views/admin/forms/VeeValidate.vue'
+import Vuelidate from './views/admin/forms/Vuelidate.vue'
+//form-wizards
+import Wizard from './views/admin/forms/Wizard.vue'
+import Wizard2 from './views/admin/forms/Wizard2.vue'
+import Wizard3 from './views/admin/forms/Wizard3.vue'
+
+
+
+//Gallery
+import Grid from './views/admin/gallery/Grid.vue'
+import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
+
+
+//Todos
+import Todos from './views/admin/Todos.vue';
+
+//users
+import Users from './views/admin/users/Users.vue'
+import Profile from './views/admin/users/Profile.vue'
 
 //Settings
 import Settings from './views/admin/Settings.vue';
@@ -81,7 +110,7 @@ import Home from './views/front/Home.vue';
 Vue.use(VueRouter);
 
 const routes = [
-    
+
     /*
      |--------------------------------------------------------------------------
      | Layout Routes for DEMO
@@ -110,7 +139,7 @@ const routes = [
         path: '/admin/layouts', component: LayoutIconSidebar,
         children: [
             {
-                path: 'icon-sidebar',
+                path: 'icons-sidebar',
                 component: Basic
             },
         ]
@@ -179,6 +208,10 @@ const routes = [
                 path: 'basic-ui/tables',
                 component: Tables
             },
+            {
+                path: 'basic-ui/modals',
+                component: Modals
+            },
 
             //Components
             {
@@ -188,10 +221,6 @@ const routes = [
             {
                 path: 'components/datatables',
                 component: Datatables
-            },
-            {
-                path: 'components/notifications',
-                component: Notifications
             },
             {
                 path: 'components/image-cropper',
@@ -213,8 +242,9 @@ const routes = [
                 path: 'components/notifications',
                 component: Notifications
             },
+            //Rating
             {
-                path: 'components/ratings/bar-rating',
+                path: 'components/rating/bar-rating',
                 component: BarRating
             },
             {
@@ -229,7 +259,7 @@ const routes = [
             },
             {
                 path: 'charts/chartjs',
-                component: ChartJS
+                component:Chartjs
             },
             {
                 path: 'charts/gauge',
@@ -244,7 +274,35 @@ const routes = [
                 component: Sparkline
             },
 
-
+            //Icons
+            // {
+            //     path: 'icons/evil',
+            //     component: Evil
+            // },
+            {
+                path: 'icons/fontawesome',
+                component: Fontawesome
+            },
+            {
+                path: 'icons/fpsline',
+                component: Fpsline
+            },
+            {
+                path: 'icons/icomoon',
+                component: IcoMoon
+            },
+            {
+                path: 'icons/line',
+                component: Line
+            },
+            {
+                path: 'icons/meteo',
+                component: Meteo
+            },
+            {
+                path: 'components/image-cropper',
+                component: ImageCropper
+            },
 
             //Forms
             {
@@ -271,7 +329,46 @@ const routes = [
                 path: 'forms/vee',
                 component: VeeValidate
             },
+            {
+                path: 'forms/vuelidate',
+                component: Vuelidate
+            },
+            {
+                path: 'forms/wizards',
+                component: Wizard
+            },
+            {
+                path: 'forms/wizards-2',
+                component: Wizard2
+            },
+            {
+                path: 'forms/wizards-3',
+                component: Wizard3
+            },
+            //Gallery
+            {
+                path: 'gallery/grid',
+                component: Grid
+            },
+            {
+                path: 'gallery/masonry-grid',
+                component: MasonryGrid
+            },
+            //Users
+            {
+                path: 'users/profile',
+                component: Profile
+            },
+            {
+                path: 'users',
+                component:Users
+            },
 
+            //Todos
+            {
+                path: 'todos',
+                component: Todos
+            },
             //Settings
             {
                 path: 'settings',

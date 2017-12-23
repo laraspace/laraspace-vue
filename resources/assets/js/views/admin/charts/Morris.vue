@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h6>Line Chart</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="morris" id="morris-line-chart"></div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="card-header">
                         <h6>Area Chart</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="morris" id="morris-area-chart"></div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="card-header">
                         <h6>Donut Chart</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="morris" id="morris-donut-chart"></div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="card-header">
                         <h6>Bar Chart</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="morris" id="morris-bar-chart"></div>
                     </div>
                 </div>
@@ -60,7 +60,6 @@
 </template>
 <script>
     import Morris from 'morris.js/morris';
-    import 'morris.js/morris.css';
 
     export default {
 
@@ -86,6 +85,7 @@
             handleLineChart() {
 
                 window.Morris.Line({
+
                     element: 'morris-line-chart',
                     data: [
                         {
@@ -161,6 +161,7 @@
             handleAreaChart() {
 
                 window.Morris.Area({
+
                     element: 'morris-area-chart',
                     data: [
                         {
@@ -237,6 +238,7 @@
             handleBarChart() {
 
                 window.Morris.Bar({
+
                     element: 'morris-bar-chart',
                     data: [
                         {
@@ -312,6 +314,7 @@
             handleDonutChart() {
 
                 window.Morris.Donut({
+
                     element: 'morris-donut-chart',
                     data: [
                         {

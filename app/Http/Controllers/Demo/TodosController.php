@@ -18,9 +18,7 @@ class TodosController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
-
-        return view('admin.pages.todos.index')->with('todos',$todos);
+        return  $todos = Todo::all();
     }
 
     /**

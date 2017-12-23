@@ -12,7 +12,7 @@
             <div class="col-sm-6">
                 <div class="checkbox">
                     <label class="c-input c-checkbox">
-                        <input type="checkbox" name="remember" v-model="loginData.remember">
+                        <input type="checkbox" name="remember" v-model="loginData.remember"/>
                         <span class="c-indicator"></span>
                         Remember Me
                     </label>

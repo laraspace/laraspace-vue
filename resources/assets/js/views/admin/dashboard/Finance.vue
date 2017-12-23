@@ -59,7 +59,7 @@
                 <div class="card with-tabs">
                     <div class="card-header">
                         <div class="caption">
-                            <h6><i class="fa fa-bar-chart text-success"></i> Total Expenses</h6>
+                            <h6><i class="icon-fa icon-fa-bar-chart text-success"></i> Total Expenses</h6>
                         </div>
 
                         <div class="actions tabs-simple">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
 
-                    <div class="card-block">
+                    <div class="card-body">
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="balanceSummry" role="tabpanel">
@@ -104,11 +104,13 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="caption">
-                            <h6><i class="fa fa-credit-card text-primary"></i> Summary</h6>
+                            <h6><i class="icon-fa icon-fa-credit-card text-primary"></i> Summary</h6>
                         </div>
                         <div class="actions">
                             <div class="btn-group" role="group">
-                                <button id="summaryFilterDrop" type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <button id="summaryFilterDrop" type="button"
+                                        class="btn btn-sm btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="true">
                                     Filters
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="summaryFilterDrop">
@@ -118,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <pie-graph
                                 :labels="['Revenue', 'Expense', 'Profit']"
                                 :values="[300, 50, 250]"
@@ -132,14 +134,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="caption">
-                            <h6><i class="fa fa-shopping-cart text-danger"></i> Total Revenue</h6>
+                            <h6><i class="icon-fa icon-fa-shopping-cart text-danger"></i> Total Revenue</h6>
                         </div>
                         <div class="actions">
                             <button class="btn btn-danger btn-sm"> Today</button>
                             <button class="btn btn-outline-danger btn-sm"> Past Month</button>
                         </div>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <bar-graph :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
                                    :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"></bar-graph>
                     </div>
@@ -157,13 +159,13 @@
     export default {
         data() {
             return {
-                'header' : 'header'
+                'header': 'header'
             }
         },
-        components : {
-            LineGraph , BarGraph , PieGraph
+        components: {
+            LineGraph, BarGraph, PieGraph
         },
-        mounted(){
+        mounted() {
             Plugin.initPlugins(['EasyPieChart'])
         }
 

@@ -73,22 +73,22 @@
     }
 }
 
-//@media (max-width: $large-breakpoint) {
-//
-//    .image-cropper {
-//
-//        .docs-buttons {
-//            max-width: 100%;
-//        }
-//
-//        .img-cropper-col {
-//            max-width: 100%;
-//            flex: 100%;
-//        }
-//
-//        .docs-data .input-group {
-//            max-width: 60%;
-//        }
-//
-//    }
-//}
+@media (max-width: $large-breakpoint) {
+
+    .image-cropper {
+
+        .docs-buttons {
+            max-width: 100%;
+        }
+
+        .img-cropper-col {
+            max-width: 100%;
+            flex: 100%;
+        }
+
+        .docs-data .input-group {
+            max-width: 60%;
+        }
+
+    }
+}

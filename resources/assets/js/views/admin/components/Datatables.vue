@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <h6>Default</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table id="default-datatable" class="table table-striped table-bordered" cellspacing="0"
                                width="100%">
                             <thead>
@@ -503,8 +503,9 @@
                     <div class="card-header">
                         <h6>Responsive</h6>
                     </div>
-                    <div class="card-block">
-                        <table id="responsive-datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <div class="card-body">
+                        <table id="responsive-datatable" class="table table-striped table-bordered" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -987,7 +988,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -996,12 +996,8 @@
 
     export default {
 
-        mounted: function () {
-            jquery('#default-datatable').DataTable();
-
-            jquery('#responsive-datatable').DataTable({
-                responsive: true
-            });
+        mounted(){
+            Plugin.initPlugins(['DataTables']);
         }
     }
 </script>

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+    window.Chart = require('chart.js');
+
     export default {
 
         props: [

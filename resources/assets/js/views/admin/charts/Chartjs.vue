@@ -11,7 +11,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-block">
+                    <div class="card-header">
+                        <h6>Chartjs</h6>
+                    </div>
+                    <div class="card-body">
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Line Chart
@@ -58,11 +61,10 @@
 </template>
 
 <script type="text/babel">
-
-    import LineChart from '../../../components/LineChart.vue'
-    import BarChart from '../../../components/BarChart.vue'
-    import PieChart from '../../../components/PieChart.vue'
-    import DoughnutChart from '../../../components/DoughnutGraph.vue'
+    import LineChart from '../../../components/LineChart.vue';
+    import BarChart from '../../../components/BarChart.vue';
+    import PieChart from '../../../components/PieChart.vue';
+    import DoughnutChart from '../../../components/DoughnutGraph.vue';
 
     export default {
         data() {

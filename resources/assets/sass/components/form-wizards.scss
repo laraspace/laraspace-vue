@@ -1,0 +1,114 @@
+.wizard {
+
+  .steps {
+
+    ul {
+      display: flex;
+      list-style: none !important;
+      padding: 0;
+      margin: 0;
+
+      li {
+        a {
+          & > .icon-fa {
+            margin-left: -10px;
+          }
+          .current-info {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    margin: 1em;
+    //top: 50px;
+    display: block;
+    min-height: 25em;
+    overflow: hidden;
+    position: relative;
+    width: auto;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: none !important;
+
+    & > .body {
+      float: left;
+      position: absolute;
+      width: 95%;
+      height: 95%;
+      padding: 2.5%;
+
+      .select2-container {
+        width: 100% !important;
+      }
+      .title {
+        display: none;
+      }
+      .form-group {
+        margin-bottom: 2rem;
+
+        .form-control.error {
+          border-color: $ls-color-red;
+        }
+        label.error {
+          color: $ls-color-red;
+          position: absolute;
+        }
+      }
+    }
+  }
+
+  & > .actions {
+    position: relative;
+    display: block;
+    text-align: right;
+    width: 100%;
+    ul{
+      display: inline-block;
+      text-align: right;
+
+      li{
+        margin: 0 0.5em;
+
+        &.disabled {
+          a, a:hover, a:active {
+            background: #eee;
+            color: #aaa;
+          }
+        }
+        a, a:hover, a:active {
+          background: $ls-color-blue;
+          color: $white;
+          display: block;
+          padding: 0.5em 1em;
+          text-decoration: none;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+
+  .steps, & > .actions {
+
+    & > ul{
+      & > li{
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        float: left;
+
+      }
+    }
+  }
+}
+
+
+@import "form-wizard-1";
+@import "form-wizard-2";
+@import "form-wizard-3";
