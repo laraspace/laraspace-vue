@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h6>Chartjs</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Line Chart
@@ -60,9 +60,9 @@
 
 <script type="text/babel">
 
-    import LineGraph from '../../../components/LineGraph.vue'
-    import BarGraph from '../../../components/BarGraph.vue'
-    import PieGraph from '../../../components/PieGraph.vue'
+    import LineGraph from '../../../components/LineChart.vue'
+    import BarGraph from '../../../components/BarChart.vue'
+    import PieGraph from '../../../components/PieChart.vue'
     import DoughnutGraph from '../../../components/DoughnutGraph.vue'
 
     export default {

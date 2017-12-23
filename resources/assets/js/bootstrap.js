@@ -1,7 +1,7 @@
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
-import Ls from './services/ls'
+import Ls from './services/ls';
 
 window._ = require('lodash');
 
@@ -59,6 +59,7 @@ axios.interceptors.request.use(function (config) {
 
 
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 Vue.use(VeeValidate);
+

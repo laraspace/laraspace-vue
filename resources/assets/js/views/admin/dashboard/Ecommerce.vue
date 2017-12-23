@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-6 col-xl-3">
                 <a class="dashbox dashbox-line-progress" href="#">
-                    <i class="fa fa-tags text-primary"></i>
+                    <i class="icon-fa icon-fa-tags text-primary"></i>
                     <span class="desc">
                       Categories
                     </span>
@@ -12,13 +12,14 @@
                     </span>
 
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
             <div class="col-md-12 col-lg-6 col-xl-3">
                 <a class="dashbox dashbox-line-progress" href="#">
-                    <i class="fa fa-star text-success"></i>
+                    <i class="icon-fa icon-fa-star text-success"></i>
                     <span class="desc">
                       Products
                     </span>
@@ -26,13 +27,14 @@
                       2000
                     </span>
                     <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
             <div class="col-md-12 col-lg-6 col-xl-3">
                 <a class="dashbox dashbox-line-progress" href="#">
-                    <i class="fa fa-shopping-cart text-danger"></i>
+                    <i class="icon-fa icon-fa-shopping-cart text-danger"></i>
                     <span class="desc">
                       New Orders
                     </span>
@@ -40,13 +42,14 @@
                       100
                     </span>
                     <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
             <div class="col-md-12 col-lg-6 col-xl-3">
                 <a class="dashbox dashbox-line-progress" href="#">
-                    <i class="fa fa-comments text-info"></i>
+                    <i class="icon-fa icon-fa-comments text-info"></i>
                     <span class="desc">
                       Reviews
                     </span>
@@ -54,7 +57,8 @@
                       59
                     </span>
                     <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80"
+                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </a>
             </div>
@@ -63,9 +67,9 @@
             <div class="col-lg-12 mt-2">
                 <div class="card">
                     <div class="card-header">
-                        <h6><i class="fa fa-line-chart text-primary"></i> Monthly Sales</h6>
+                        <h6><i class="icon-fa icon-fa-line-chart text-primary"></i> Monthly Sales</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <line-graph :labels="['Jan','Feb','Mar','June']" :values="[20,30,40,60]"></line-graph>
                     </div>
                 </div>
@@ -75,9 +79,9 @@
             <div class="col-lg-12 col-xl-6 mt-2">
                 <div class="card">
                     <div class="card-header">
-                        <h6><i class="fa fa-shopping-cart text-danger"></i> Pending Orders</h6>
+                        <h6><i class="icon-fa icon-fa-shopping-cart text-danger"></i> Pending Orders</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
@@ -108,9 +112,9 @@
             <div class="col-lg-12 col-xl-6 mt-2">
                 <div class="card">
                     <div class="card-header">
-                        <h6><i class="fa fa-users text-info"></i> New Customers</h6>
+                        <h6><i class="icon-fa icon-fa-users text-info"></i> New Customers</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
@@ -143,18 +147,18 @@
 </template>
 
 <script type="text/babel">
-    import LineGraph from '../../../components/LineGraph.vue'
-    import BarGraph from '../../../components/BarGraph.vue'
-    import PieGraph from '../../../components/PieGraph.vue'
+    import LineGraph from '../../../components/LineChart.vue'
+    import BarGraph from '../../../components/BarChart.vue'
+    import PieGraph from '../../../components/PieChart.vue'
 
     export default {
         data() {
             return {
-                'header' : 'header'
+                'header': 'header'
             }
         },
-        components : {
-            LineGraph , BarGraph , PieGraph
+        components: {
+            LineGraph, BarGraph, PieGraph
         }
 
     }

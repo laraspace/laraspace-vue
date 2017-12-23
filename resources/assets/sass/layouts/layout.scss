@@ -74,14 +74,13 @@
     }
 }
 
-
-.template-container{
+.template-container {
     height: 100%;
 }
 
 //Layout Horizontal
 
-@include media-breakpoint-down(sm) {
+@media(max-width: $small-breakpoint-below) {
     .sidebar-left {
         left: -240px;
         transition: left .3s ease;

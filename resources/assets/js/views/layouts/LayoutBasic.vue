@@ -10,7 +10,6 @@
 </template>
 
 <script type="text/babel">
-
     import SiteHeader from './partials/SiteHeader.vue'
     import SiteFooter from './partials/SiteFooter.vue'
     import SiteSidebar from './partials/SiteSidebar.vue'

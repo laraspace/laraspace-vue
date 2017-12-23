@@ -26,13 +26,6 @@ export default {
         $(".ls-select2").select2();
     },
 
-    BootstrapSelect(){
-        $(".ls-bootstrap-select").selectpicker({
-            iconBase: 'fa',
-            tickIcon: 'fa-check',
-            container: 'body'
-        });
-    },
 
     SwitchToggles(){
         var elems = $('.ls-switch');
@@ -101,5 +94,14 @@ export default {
     isFunction(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    },
+
+    DataTables(){
+
+        $('#default-datatable').DataTable();
+
+        $('#responsive-datatable').DataTable({
+            responsive: true
+        });
     }
 }

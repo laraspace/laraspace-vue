@@ -27,11 +27,37 @@ import Cards from './views/admin/basic-ui/Cards.vue'
 import Tabs from './views/admin/basic-ui/Tabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
+import Modals from './views/admin/basic-ui/Modals.vue'
 
 //Components
 import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import Graphs from './views/admin/components/Graphs.vue'
+import ImageCropper from './views/admin/components/ImageCropper.vue'
+import ImageZoom from './views/admin/components/ImageZoom.vue'
+import Calendar from './views/admin/components/Calendar.vue'
+import NestableTree from './views/admin/components/NestableTree.vue'
+import NestableList from './views/admin/components/NestableList.vue'
+import BarRating from './views/admin/components/Rating/BarRating.vue'
+import StarRating from './views/admin/components/Rating/StarRating.vue'
+
+
+//Charts
+import Amchart from './views/admin/charts/Amchart.vue'
+import Chartjs from './views/admin/charts/Chartjs.vue'
+import Gauge from './views/admin/charts/Gauge.vue'
+import Morris from './views/admin/charts/Morris.vue'
+import Sparkline from './views/admin/charts/Sparkline.vue'
+
+
+//Icons
+//import Evil from './views/admin/icons/Evil.vue'
+import Fontawesome from './views/admin/icons/Fontawesome.vue'
+import Fpsline from './views/admin/icons/FpsLine.vue'
+import IcoMoon from './views/admin/icons/IcoMoon.vue'
+import Line from './views/admin/icons/Line.vue'
+import Meteo from './views/admin/icons/Meteo.vue'
+
 
 //Forms
 import General from './views/admin/forms/General.vue'
@@ -40,6 +66,18 @@ import Layouts from './views/admin/forms/FormLayouts.vue'
 import Validation from './views/admin/forms/FormValidation.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
+import Vuelidate from './views/admin/forms/Vuelidate.vue'
+
+//Gallery
+import Grid from './views/admin/gallery/Grid.vue'
+import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
+
+
+//Todos
+import Todos from './views/admin/Todos.vue'
+//users
+import Users from './views/admin/users/Users.vue'
+import Profile from './views/admin/users/Profile.vue'
 
 //Settings
 import Settings from './views/admin/Settings.vue'
@@ -64,10 +102,8 @@ import NotFoundPage from './views/errors/404.vue'
 
 import Home from './views/front/Home.vue'
 
-Vue.use(VueRouter)
-
 const routes = [
-    
+
     /*
      |--------------------------------------------------------------------------
      | Layout Routes for DEMO
@@ -96,7 +132,7 @@ const routes = [
         path: '/admin/layouts', component: LayoutIconSidebar,
         children: [
             {
-                path: 'icon-sidebar',
+                path: 'icons-sidebar',
                 component: Basic
             },
         ]
@@ -165,6 +201,10 @@ const routes = [
                 path: 'basic-ui/tables',
                 component: Tables
             },
+            {
+                path: 'basic-ui/modals',
+                component: Modals
+            },
 
             //Components
             {
@@ -179,6 +219,92 @@ const routes = [
                 path: 'components/graphs',
                 component: Graphs
             },
+            {
+                path: 'components/image-zoom',
+                component: ImageZoom
+            },
+            {
+                path: 'components/calendar',
+                component: Calendar
+            },
+            {
+                path: 'components/nestable-tree',
+                component: NestableTree
+            },
+            {
+                path: 'components/nestable-list',
+                component: NestableList
+
+            },
+            //Rating
+            {
+                path: 'components/rating/bar-rating',
+                component: BarRating
+
+            },
+            {
+                path: 'components/rating/star-rating',
+                component: StarRating
+
+            },
+
+            //chart
+            {
+                path: 'charts/amchart',
+                component: Amchart
+
+            },
+            {
+                path: 'charts/chartjs',
+                component:Chartjs
+
+            },
+            {
+                path: 'charts/gauge',
+                component: Gauge
+
+            },
+            {
+                path: 'charts/morris',
+                component: Morris
+
+            },
+            {
+                path: 'charts/sparkline',
+                component: Sparkline
+
+            },
+
+            //Icons
+            // {
+            //     path: 'icons/evil',
+            //     component: Evil
+            // },
+            {
+                path: 'icons/fontawesome',
+                component: Fontawesome
+            },
+            {
+                path: 'icons/fpsline',
+                component: Fpsline
+            },
+            {
+                path: 'icons/icomoon',
+                component: IcoMoon
+            },
+            {
+                path: 'icons/line',
+                component: Line
+            },
+            {
+                path: 'icons/meteo',
+                component: Meteo
+            },
+            {
+                path: 'components/image-cropper',
+                component: ImageCropper
+            },
+
 
             //Forms
             {
@@ -205,7 +331,34 @@ const routes = [
                 path: 'forms/vee',
                 component: VeeValidate
             },
+            {
+                path: 'forms/vuelidate',
+                component: Vuelidate
+            },
+            //Gallery
+            {
+                path: 'gallery/grid',
+                component: Grid
+            },
+            {
+                path: 'gallery/masonry-grid',
+                component: MasonryGrid
+            },
+            //Users
+            {
+                path: 'users/profile',
+                component: Profile
+            },
+            {
+                path: 'users',
+                component:Users
+            },
 
+            //Todos
+            {
+                path: 'todos',
+                component: Todos
+            },
             //Settings
             {
                 path: 'settings',

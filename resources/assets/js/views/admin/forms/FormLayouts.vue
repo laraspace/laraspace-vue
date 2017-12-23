@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h6>Basic Form</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <form>
                             <div class="row">
                                 <div class="form-group col-sm-6">
@@ -65,7 +65,7 @@
                     <div class="card-header">
                         <h6>Horizontal Form</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <form>
                             <div class="form-group row">
                                 <label class="col-sm-2 form-control-label">First Name</label>
@@ -107,7 +107,7 @@
                     <div class="card-header">
                         <h6>Inline Form</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <form class="form-inline">
                             <div class="form-group">
                                 <label for="nameInput" class="control-label">Name</label>
@@ -115,7 +115,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="emailInput" class="control-label">Email</label>
-                                <input type="email" class="form-control" id="emailInput" placeholder="jane.doe@example.com">
+                                <input type="email" class="form-control" id="emailInput"
+                                       placeholder="jane.doe@example.com">
                             </div>
                             <button type="submit" class="btn btn-primary">Send invitation</button>
                         </form>

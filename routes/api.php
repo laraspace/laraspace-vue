@@ -20,3 +20,35 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('check','AuthController@check');
 });
 
+Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
+
+    // Todos
+    Route::resource('todos', 'Demo\TodosController');
+
+    Route::post('todos/toggleTodo/{id}', [
+        'as' => 'admin.todos.toggle', 'uses' => 'Demo\TodosController@toggleTodo'
+    ]);
+
+    // Vuelidate
+    Route::group(['prefix' => 'vuelidate'], function (){
+
+    Route::post('email-exist',[
+        'as' => 'admin.vuelidate.email-exist','uses' => 'Demo\PagesController@emailExist'
+    ]);
+
+    });
+    //Users Details
+    Route::group(['prefix' => 'users'], function (){
+
+        Route::get('/get',[
+            'as' => 'admin.users', 'uses' => 'Demo\PagesController@allUsers'
+        ]);
+
+        Route::delete('/{id}',[
+            'as' => 'admin.users.delete', 'uses' => 'Demo\PagesController@destroy'
+        ]);
+
+    });
+
+});
+

@@ -1,0 +1,228 @@
+.form-wizard-2 {
+     > .steps > ul {
+        a {
+            background: none !important;
+            color: $ls-color-black!important;
+            margin: 0;
+            margin-top: 50px;
+            padding: 0;
+        }
+
+        > li:after,
+        > li:before {
+            content: '';
+            width: 50%;
+            height: 3px;
+            top: 23px;
+            background: #eee;
+            position: absolute;
+            z-index: 0;
+        }
+
+        > li:after {
+            right: 0;
+        }
+
+        > li:before {
+            left: 0;
+        }
+
+        .number {
+            font-size: 18px;
+            position: absolute;
+            background: #FFFFFF;
+            border: 2px solid #eee;
+            width: 48px;
+            border-radius: 50%;
+            line-height: 2.45;
+            text-align: center;
+            top: 0;
+            margin-left: -2px;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .current .number,
+        .done .number {
+            border: 2px solid $ls-color-primary;
+        }
+
+        .done .number {
+            background: $ls-color-primary;
+        }
+
+        .error .number {
+            border: 2px solid $ls-color-red;
+        }
+
+        .current:before,
+        .current:after,
+        .done:after,
+        .done:before {
+            background: $ls-color-primary;
+        }
+
+        .current:after,
+        .current ~ li:after,
+        .current ~ li:before {
+            background: #eee !important;
+        }
+
+        .current.last.done:after {
+            background: $ls-color-primary !important;
+        }
+    }
+
+    &.icon-wizard > .steps > ul {
+
+        .number {
+            display: none !important;
+        }
+
+        .current i,
+        .done i {
+            border: 2px solid $ls-color-primary;
+        }
+
+        .done i {
+            background: $ls-color-primary;
+        }
+
+        .error i {
+            border: 2px solid $ls-color-red;
+        }
+
+        i {
+            font-size: 18px;
+            position: absolute;
+            background: #FFFFFF;
+            border: 2px solid #eee;
+            width: 48px;
+            border-radius: 50%;
+            line-height: 2.45;
+            text-align: center;
+            top: 0;
+            margin-left: -2px !important;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+    }
+
+    &.vertical-wizard {
+
+        display: flex;
+        flex-wrap: wrap;
+
+        .content {
+            flex: 4;
+        }
+        .steps{
+            flex:1;
+            width: auto;
+        }
+        .steps > ul {
+            flex-direction: column;
+            height: 100%;
+            align-items: center;
+            width:100%;
+            margin-left: 5px;
+            a {
+                width:100%;
+                margin-top: 0 !important;
+                padding-left: 60px;
+            }
+
+            .number {
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            > li {
+                flex: 1;
+                position: relative;
+                min-width:160px;
+                align-items: center;
+            }
+
+            > li:before,
+            > li:last-child:after{
+                display: none;
+            }
+
+            > li:not(:last-child):after {
+                content: '';
+                width: 3px;
+                height: 100%;
+                top: 50%;
+                background: #eee;
+                position: absolute;
+                z-index: 0;
+                left: 20px;
+            }
+
+            .done:after {
+                background: #ffde00 !important;
+            }
+        }
+
+    }
+}
+
+@media (max-width: $medium-breakpoint){
+    .form-wizard-2 {
+
+        .content {
+            margin:0;
+            min-height: 520px;
+        }
+        &.vertical-wizard {
+
+            .steps > ul {
+                > li {
+                    margin:0;
+                    width: 100%;
+                    min-width:120px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: $small-breakpoint){
+    .form-wizard-2 {
+
+        > .steps > ul {
+
+            .number {
+                width: 40px;
+                line-height: 2.1;
+                margin-left: 2px !important;
+            }
+            > li:after,
+            > li:before {
+                top: 20px;
+            }
+        }
+        &.icon-wizard > .steps > ul {
+            i {
+                width: 40px;
+                line-height: 2.1;
+                margin-left: 2px !important;
+            }
+        }
+        &.vertical-wizard {
+
+            .steps > ul {
+
+                a {
+                    padding-left: 50px;
+                }
+                >li{
+                    width: 100%;
+
+                }
+            }
+        }
+    }
+}
