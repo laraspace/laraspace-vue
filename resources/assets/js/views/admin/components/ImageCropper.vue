@@ -63,8 +63,8 @@
                                             <button type="button" class="btn btn-primary" data-method="setDragMode"
                                                     data-option="move" title="Move">
                                             <span class="docs-tooltip" data-toggle="tooltip"
-                                                  title="$().cropper(&quot;setDragMode&quot;, &quot;move&quot;)"> <span
-                                                    class="icon-fa icon-fa-arrows"></span>
+                                                  title="jquery().cropper(&quot;setDragMode&quot;, &quot;move&quot;)"> <span
+                                                    class="fa fa-arrows"></span>
                                             </span>
                                             </button>
                                             <button type="button" class="btn btn-primary" data-method="setDragMode"
@@ -109,8 +109,8 @@
                                             <button type="button" class="btn btn-primary" data-method="move"
                                                     data-option="-10" data-second-option="0" title="Move Left">
                                             <span class="docs-tooltip" data-toggle="tooltip"
-                                                  title="$().cropper(&quot;move&quot;, -10, 0)"> <span
-                                                    class="icon-fa icon-fa-arrow-left"></span>
+                                                  title="$().cropper(&quot;move&quot;, -10, 0)">
+                                                <span class="icon-fa icon-fa-arrow-left"></span>
                                             </span>
                                             </button>
                                             <button type="button" class="btn btn-primary" data-method="move"
@@ -423,21 +423,23 @@
 </template>
 
 <script>
+    import 'cropper/dist/cropper';
+
     export default {
 
         methods: {
             handleImageCropper(){
 
                 var console = window.console || { log: function () {} };
-                var $image = $('#image');
-                var $download = $('#download');
-                var $dataX = $('#dataX');
-                var $dataY = $('#dataY');
-                var $dataHeight = $('#dataHeight');
-                var $dataWidth = $('#dataWidth');
-                var $dataRotate = $('#dataRotate');
-                var $dataScaleX = $('#dataScaleX');
-                var $dataScaleY = $('#dataScaleY');
+                var $image = jquery('#image');
+                var $download = jquery('#download');
+                var $dataX = jquery('#dataX');
+                var $dataY = jquery('#dataY');
+                var $dataHeight = jquery('#dataHeight');
+                var $dataWidth = jquery('#dataWidth');
+                var $dataRotate = jquery('#dataRotate');
+                var $dataScaleX = jquery('#dataScaleX');
+                var $dataScaleY = jquery('#dataScaleY');
                 var options = {
                     aspectRatio: 16 / 9,
                     preview: '.img-preview',

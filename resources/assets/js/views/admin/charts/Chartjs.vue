@@ -5,37 +5,52 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Components</a></li>
-                <li class="breadcrumb-item active">Chart JS</li>
+                <li class="breadcrumb-item active">Charts</li>
             </ol>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+                    <div class="card-header">
+                        <h6>Chartjs</h6>
+                    </div>
                     <div class="card-body">
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Line Chart
                             </h5>
-                            <canvas id="lineChart" width="400" height="400"></canvas>
+                            <line-chart :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
+                                        :values="[65, 59, 80, 81, 56, 55, 40]"></line-chart>
                         </div>
                         <div class="mb-4">
                             <h5 class="section-semi-title">
                                 Bar Chart
                             </h5>
-                            <canvas id="barChart" width="400" height="400"></canvas>
+                            <bar-Chart :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
+                                       :values="[65, 59, 80, 81, 56, 55, 40]"></bar-Chart>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <h5 class="section-semi-title">
                                     Pie Chart
                                 </h5>
-                                <canvas id="pieChart" width="400" height="400"></canvas>
+                                <pie-chart
+                                        :labels="pieAndDoughtnut.labels"
+                                        :values="pieAndDoughtnut.data"
+                                        :bg-colors="pieAndDoughtnut.bgColors"
+                                        :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
+                                ></pie-chart>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <h5 class="section-semi-title">
                                     Doughnut Chart
                                 </h5>
-                                <canvas id="doughnutChart" width="400" height="400"></canvas>
+                                <doughnut-chart
+                                        :labels="pieAndDoughtnut.labels"
+                                        :values="pieAndDoughtnut.data"
+                                        :bg-colors="pieAndDoughtnut.bgColors"
+                                        :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
+                                ></doughnut-chart>
                             </div>
                         </div>
                     </div>
@@ -44,143 +59,34 @@
         </div>
     </div>
 </template>
-<script>
+
+<script type="text/babel">
+    import LineChart from '../../../components/LineChart.vue';
+    import BarChart from '../../../components/BarChart.vue';
+    import PieChart from '../../../components/PieChart.vue';
+    import DoughnutChart from '../../../components/DoughnutGraph.vue';
+
     export default {
-        mounted() {
-            let vm = this;
-            let ChartJS = function () {
-                return {
-                    //main function to initiate the module
-                    init: function () {
-                        vm.handleBarChart();
-                        vm.handleLineChart();
-                        vm.handlePieAndDoughnutChart();
-                    }
-                };
-            }();
-
-            this.$nextTick(() => {
-                ChartJS.init();
-            })
-        },
-        methods: {
-            handleLineChart() {
-
-                var ctx = $('#lineChart');
-
-                var data = {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [
-                        {
-                            label: "My First dataset",
-                            fill: false,
-                            lineTension: 0.1,
-                            backgroundColor: "rgba(75,192,192,0.4)",
-                            borderColor: "rgba(75,192,192,1)",
-                            borderCapStyle: 'butt',
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            borderJoinStyle: 'miter',
-                            pointBorderColor: "rgba(75,192,192,1)",
-                            pointBackgroundColor: "#fff",
-                            pointBorderWidth: 1,
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                            pointHoverBorderColor: "rgba(220,220,220,1)",
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 1,
-                            pointHitRadius: 10,
-                            data: [65, 59, 80, 81, 56, 55, 40],
-                        }
-                    ]
-                };
-
-                var options = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                };
-
-                var myLineChart = new Chart(ctx, {
-                    type: 'line',
-                    data: data,
-                    options: options
-                });
-            },
-
-            handleBarChart() {
-
-                var ctx = $('#barChart');
-
-                var data = {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [
-                        {
-                            label: "My First dataset",
-                            backgroundColor: "rgba(255,99,132,0.2)",
-                            borderColor: "rgba(255,99,132,1)",
-                            borderWidth: 1,
-                            hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                            hoverBorderColor: "rgba(255,99,132,1)",
-                            data: [65, 59, 80, 81, 56, 55, 40],
-                        }
-                    ]
-                };
-
-                var options = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                };
-
-                var myBarChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: data,
-                    options: options
-                });
-            },
-
-            handlePieAndDoughnutChart() {
-
-                var data = {
-                    labels: [
-                        "Red",
-                        "Blue",
-                        "Yellow"
+        data() {
+            return {
+                pieAndDoughtnut : {
+                    labels : ['Red','Blue','Yellow'],
+                    data : [300, 50, 100],
+                    bgColors : [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
                     ],
-                    datasets: [
-                        {
-                            data: [300, 50, 100],
-                            backgroundColor: [
-                                "#FF6384",
-                                "#36A2EB",
-                                "#FFCE56"
-                            ],
-                            hoverBackgroundColor: [
-                                "#FF6384",
-                                "#36A2EB",
-                                "#FFCE56"
-                            ]
-                        }]
-                };
-
-                var pieCtx = $('#pieChart'), doughCtx = $('#doughnutChart');
-
-                var options = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                };
-
-                var myPieChart = new Chart(pieCtx, {
-                    type: 'pie',
-                    data: data,
-                    options: options
-                });
-
-                var myDoughnutChart = new Chart(doughCtx, {
-                    type: 'doughnut',
-                    data: data,
-                    options: options
-                });
-            },
+                    hoverBgColors : [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }
+            }
+        },
+        components : {
+            LineChart , BarChart , PieChart , DoughnutChart
         }
     }
 </script>

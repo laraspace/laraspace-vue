@@ -18,7 +18,7 @@ class TodosController extends Controller
      */
     public function index()
     {
-       return  $todos = Todo::all();
+        return  $todos = Todo::all();
     }
 
     /**

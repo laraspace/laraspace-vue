@@ -103,7 +103,11 @@
         </div>
     </div>
 </template>
+
 <script>
+
+    import {Gauge,Donut} from 'gaugeJS';
+
     export default {
         mounted() {
             let vm = this;
@@ -136,7 +140,7 @@
                     strokeColor: '#E0E0E0'   // to see which ones work best for you
                 };
 
-                $(".basic-gauge").each(function () {
+                jquery(".basic-gauge").each(function () {
 
                     if (opts_basic !== false) {
 
@@ -163,7 +167,7 @@
                     generateGradient: true,
                     highDpiSupport: true     // High resolution support
                 };
-                $(".donut-gauge").each(function () {
+                jquery(".donut-gauge").each(function () {
                     if (opts_donuts !== false) {
                         // $('.gauge-lg .donut-gauge').attr({'width': '500', 'height': '250'});
                         // $('.gauge-lg .donut-gauge').attr({'width': '500', 'height': '250'});
@@ -207,7 +211,7 @@
                     ],
                 };
 
-                $(".color-gauge").each(function () {
+                jquery(".color-gauge").each(function () {
                     if (opts_color_gauge !== false) {
                         var colorgauge = new Gauge(this).setOptions(opts_color_gauge);
                         colorgauge.maxValue = 3000; // set max gauge value

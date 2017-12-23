@@ -23,26 +23,28 @@ export default {
     },
 
     Select2(){
-        $(".ls-select2").select2();
+        jquery(".ls-select2").select2();
     },
 
 
     SwitchToggles(){
+
         var elems = $('.ls-switch');
 
-        elems.each(function (index, element) {
+        elems.each(function(index,element) {
+
             var color = $(this).data('color') ? $(this).data('color') : '#ffde00';
             var size = $(this).data('size') ? $(this).data('size') : 'default';
 
             var switchery = new Switchery(this, {
-                color: color,
-                size: size
+                color : color,
+                size : size,
             });
         });
     },
 
     TimePickers(){
-        $('.ls-clockpicker').clockpicker({
+        window.$('.ls-clockpicker').clockpicker({
             donetext: 'Done'
         });
 
@@ -53,15 +55,15 @@ export default {
             var timeFormat = $(this).data('format') ? $(this).data('format') : 'g:ia';
             var showDuration = $(this).data('duration') ? $(this).data('duration') : false;
 
-            $(this).timepicker({
+            window.jquery(this).timepicker({
+
                 timeFormat: timeFormat,
                 showDuration: showDuration,
                 minTime: '2:00pm',
                 maxTime: '11:30pm'
             });
         });
-
-
+        
     },
 
     MultiSelect(){
@@ -69,11 +71,11 @@ export default {
     },
 
     DatePicker(){
-        $('.ls-datepicker').datepicker();
+        jquery('.ls-datepicker').datepicker();
     },
 
     Editors(){
-        $('.ls-summernote').summernote();
+        jquery('.ls-summernote').summernote();
 
         var editor = $('.ls-simplemde')[0];
 
@@ -95,13 +97,22 @@ export default {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     },
+    CustomScrollBars() {
+
+        // setTimeout(function(){
+        //     $(".scroll-pane").mCustomScrollbar({theme:"minimal-dark"});
+        // },1000);
+
+        jquery(".scroll-pane").mCustomScrollbar({theme: "minimal-dark"});
+    },
 
     DataTables(){
 
-        $('#default-datatable').DataTable();
+        jquery('#default-datatable').DataTable();
 
-        $('#responsive-datatable').DataTable({
+        jquery('#responsive-datatable').DataTable({
             responsive: true
         });
     }
+
 }

@@ -3,9 +3,9 @@
         <div class="page-header">
             <h3 class="page-title">Bar Ratings</h3>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Components</a></li>
-                <li class="breadcrumb-item"><a href="#">Ratings</a></li>
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item"><a href="">Components</a></li>
+                <li class="breadcrumb-item"><a href="">Ratings</a></li>
                 <li class="breadcrumb-item active">Bar</li>
             </ol>
         </div>
@@ -161,9 +161,11 @@
     </div>
 </template>
 <script type="text/babel">
+    require('jquery-bar-rating/jquery.barrating');
+
     export default {
         mounted() {
-            let vm = this;
+            let vm=this;
             let BarRating = function () {
                 return {
                     //main function to initiate the module
@@ -178,31 +180,30 @@
                         vm.handleCSS();
                     }
                 };
-
             }();
-
             this.$nextTick(() => {
                 BarRating.init();
             });
         },
         methods: {
+
             handleNumber() {
-                $('#bar-number').barrating('show', {
+                jquery('#bar-number').barrating('show', {
                     theme: 'bars-1to10'
                 });
             },
 
             handleMovie() {
-                $('#bar-movie').barrating('show', {
+                jquery('#bar-movie').barrating('show', {
                     theme: 'bars-movie'
                 });
 
-                $('#bar-movie').barrating('set', 'Mediocre');
+                jquery('#bar-movie').barrating('set', 'Mediocre');
             },
 
             handleSquare() {
 
-                $('#bar-square').barrating('show', {
+                jquery('#bar-square').barrating('show', {
                     theme: 'bars-square',
                     showValues: true,
                     showSelectedRating: false
@@ -210,7 +211,7 @@
             },
 
             handlePill() {
-                $('#bar-pill').barrating('show', {
+                jquery('#bar-pill').barrating('show', {
                     theme: 'bars-pill',
                     initialRating: 'A',
                     showValues: true,
@@ -224,7 +225,7 @@
             },
 
             handleReversed() {
-                $('#bar-reversed').barrating('show', {
+                jquery('#bar-reversed').barrating('show', {
                     theme: 'bars-reversed',
                     showSelectedRating: true,
                     reverse: true
@@ -232,7 +233,7 @@
             },
 
             handleHorizontal() {
-                $('#bar-horizontal').barrating('show', {
+                jquery('#bar-horizontal').barrating('show', {
                     theme: 'bars-horizontal',
                     reverse: true,
                     hoverState: false
@@ -240,20 +241,18 @@
             },
 
             handleFontAwesome() {
-                $('#bar-fontawesome').barrating({
+                jquery('#bar-fontawesome').barrating({
                     theme: 'fontawesome-stars',
                     showSelectedRating: false
                 });
             },
 
             handleCSS() {
-                $('#bar-css').barrating({
+                jquery('#bar-css').barrating({
                     theme: 'css-stars',
                     showSelectedRating: false
                 });
-            },
-
+            }
         }
-
     }
 </script>

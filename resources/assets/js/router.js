@@ -10,16 +10,16 @@ import AuthService from './services/auth'
  */
 
 //Dashboard
-import Basic from './views/admin/dashboard/Basic.vue'
-import Ecommerce from './views/admin/dashboard/Ecommerce.vue'
-import Finance from './views/admin/dashboard/Finance.vue'
+import Basic from './views/admin/dashboard/Basic.vue';
+import Ecommerce from './views/admin/dashboard/Ecommerce.vue';
+import Finance from './views/admin/dashboard/Finance.vue';
 
 //Layouts
-import LayoutBasic from './views/layouts/LayoutBasic.vue'
-import LayoutHorizontal from './views/layouts/LayoutHorizontal.vue'
-import LayoutIconSidebar from './views/layouts/LayoutIconSidebar.vue'
-import LayoutLogin from './views/layouts/LayoutLogin.vue'
-import LayoutFront from './views/layouts/LayoutFront.vue'
+import LayoutBasic from './views/layouts/LayoutBasic.vue';
+import LayoutHorizontal from './views/layouts/LayoutHorizontal.vue';
+import LayoutIconSidebar from './views/layouts/LayoutIconSidebar.vue';
+import LayoutLogin from './views/layouts/LayoutLogin.vue';
+import LayoutFront from './views/layouts/LayoutFront.vue';
 
 //Basic UI
 import Buttons from './views/admin/basic-ui/Buttons.vue'
@@ -32,14 +32,13 @@ import Modals from './views/admin/basic-ui/Modals.vue'
 //Components
 import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
-import Graphs from './views/admin/components/Graphs.vue'
 import ImageCropper from './views/admin/components/ImageCropper.vue'
 import ImageZoom from './views/admin/components/ImageZoom.vue'
 import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
-import BarRating from './views/admin/components/Rating/BarRating.vue'
-import StarRating from './views/admin/components/Rating/StarRating.vue'
+import BarRating from './views/admin/components/ratings/BarRating.vue'
+import StarRating from './views/admin/components/ratings/StarRating.vue'
 
 
 //Charts
@@ -58,7 +57,6 @@ import IcoMoon from './views/admin/icons/IcoMoon.vue'
 import Line from './views/admin/icons/Line.vue'
 import Meteo from './views/admin/icons/Meteo.vue'
 
-
 //Forms
 import General from './views/admin/forms/General.vue'
 import Advanced from './views/admin/forms/Advanced.vue'
@@ -74,13 +72,14 @@ import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
 
 
 //Todos
-import Todos from './views/admin/Todos.vue'
+import Todos from './views/admin/Todos.vue';
+
 //users
 import Users from './views/admin/users/Users.vue'
 import Profile from './views/admin/users/Profile.vue'
 
 //Settings
-import Settings from './views/admin/Settings.vue'
+import Settings from './views/admin/Settings.vue';
 
 /*
  |--------------------------------------------------------------------------
@@ -89,10 +88,10 @@ import Settings from './views/admin/Settings.vue'
  */
 
 //Auth
-import Login from './views/auth/Login.vue'
-import Register from './views/auth/Register.vue'
+import Login from './views/auth/Login.vue';
+import Register from './views/auth/Register.vue';
 
-import NotFoundPage from './views/errors/404.vue'
+import NotFoundPage from './views/errors/404.vue';
 
 /*
  |--------------------------------------------------------------------------
@@ -100,7 +99,9 @@ import NotFoundPage from './views/errors/404.vue'
  |--------------------------------------------------------------------------|
  */
 
-import Home from './views/front/Home.vue'
+import Home from './views/front/Home.vue';
+
+Vue.use(VueRouter);
 
 const routes = [
 
@@ -208,33 +209,32 @@ const routes = [
 
             //Components
             {
+                path: 'components/calendar',
+                component: Calendar
+            },
+            {
                 path: 'components/datatables',
                 component: Datatables
             },
             {
-                path: 'components/notifications',
-                component: Notifications
-            },
-            {
-                path: 'components/graphs',
-                component: Graphs
+                path: 'components/image-cropper',
+                component: ImageCropper
             },
             {
                 path: 'components/image-zoom',
                 component: ImageZoom
             },
             {
-                path: 'components/calendar',
-                component: Calendar
+                path: 'components/nestable-list',
+                component: NestableList
             },
             {
                 path: 'components/nestable-tree',
                 component: NestableTree
             },
             {
-                path: 'components/nestable-list',
-                component: NestableList
-
+                path: 'components/notifications',
+                component: Notifications
             },
             //Rating
             {
@@ -304,7 +304,6 @@ const routes = [
                 path: 'components/image-cropper',
                 component: ImageCropper
             },
-
 
             //Forms
             {

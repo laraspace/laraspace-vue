@@ -3,6 +3,11 @@ import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
 
+
+//datatable
+import 'datatables.net-responsive-bs4';
+
+
 window._ = require('lodash');
 
 /**
@@ -13,7 +18,6 @@ window._ = require('lodash');
 
 window.Vue = require('vue');
 
-
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -21,6 +25,8 @@ window.Vue = require('vue');
  */
 
 window.axios = require('axios');
+
+
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -45,6 +51,23 @@ axios.interceptors.request.use(function (config) {
 });
 
 /**
+ * global required plugins
+ */
+window.jquery = require('jquery');
+window.clockpicker= require('clockpicker/dist/bootstrap-clockpicker');
+window.select2 = require('select2');
+window.metisMenu = require('metismenu');
+window.Switchery = require('switchery/switchery');
+window.Ladda = require('ladda/js/ladda');
+window.multiSelect = require('multiselect');
+window.datepicker= require('bootstrap-datepicker/dist/js/bootstrap-datepicker');
+window.notie = require('notie');
+window.toastr = require('toastr');
+window.DataTable = require('datatables.net-bs4');
+window.timepicker = require('timepicker');
+window.Raphael = require('raphael/raphael');
+
+/**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
@@ -58,8 +81,6 @@ axios.interceptors.request.use(function (config) {
 // });
 
 
-
 Vue.use(VueRouter);
-
 Vue.use(VeeValidate);
 

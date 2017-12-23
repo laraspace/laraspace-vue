@@ -32,20 +32,18 @@
                 <li :class="{ active: isActive('/admin/components') }">
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-puzzle-piece"></i> Components <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">
+                        <router-link to="/admin/components/calendar" tag="li"><a>Calendar</a></router-link>
                         <router-link to="/admin/components/datatables" tag="li"><a>Jquery Datatables</a></router-link>
-                        <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
-                        <router-link to="/admin/components/graphs" tag="li"><a>Graphs</a></router-link>
                         <router-link to="/admin/components/image-cropper" tag="li"><a>ImageCropper</a></router-link>
                         <router-link to="/admin/components/image-zoom" tag="li"><a>ImageZoom</a></router-link>
-                        <router-link to="/admin/components/calendar" tag="li"><a>Calendar</a></router-link>
-                        <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
+                        <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
+                        <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
                         <li :class="{ active: isActive('/admin/components/rating') }">
                             <a href="#" aria-expanded="true">Rating <span class="icon-fa arrow icon-fa-fw"></span></a>
                             <ul aria-expanded="true">
                                 <router-link to="/admin/components/rating/bar-rating" tag="li"><a>Bar Rating</a></router-link>
                                 <router-link to="/admin/components/rating/star-rating" tag="li"><a>Star Rating </a></router-link>
-
                             </ul>
                         </li>
                     </ul>
@@ -53,7 +51,7 @@
                 <li :class="{ active: isActive('/admin/chart') }">
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-bar-chart"></i> Charts <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">
-                        <router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>
+                        <!--<router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>-->
                         <router-link to="/admin/charts/sparkline" tag="li"><a>Sparkline</a></router-link>
                         <router-link to="/admin/charts/amchart" tag="li"><a>AM Charts</a></router-link>
                         <router-link to="/admin/charts/morris" tag="li"><a>Morris</a></router-link>
@@ -69,7 +67,6 @@
                         <router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>
                         <router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>
                         <router-link to="/admin/icons/fontawesome" tag="li"><a>Font Awesome</a></router-link>
-
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/forms') }">
@@ -84,6 +81,14 @@
                         <router-link to="/admin/forms/vuelidate" tag="li"><a>Vuelidate</a></router-link>
                     </ul>
                 </li>
+                <!--<li :class="{ active: isActive('/admin/pages') }">-->
+                    <!--<a href="#" aria-expanded="true"><i class="fa fa-th-large"></i> Pages <span class="fa arrow fa-fw"></span></a>-->
+                    <!--<ul aria-expanded="true">-->
+                        <!--<router-link :to="'/admin/pages/login'" tag="li"><a>Login</a></router-link>-->
+                        <!--<router-link :to="'/admin/pages/register'" tag="li"><a>Register</a></router-link>-->
+                        <!--<router-link :to="'/admin/pages/404'" tag="li"><a>404 Page</a></router-link>-->
+                    <!--</ul>-->
+                <!--</li>-->
                 <li :class="{ active: isActive('/admin/gallery') }">
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-image"></i> Gallery <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">

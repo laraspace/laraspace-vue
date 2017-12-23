@@ -59,9 +59,10 @@
     </div>
 </template>
 <script>
+    import Morris from 'morris.js/morris';
+
     export default {
 
-        methods: {},
         mounted() {
             let vm = this;
             let MorrisChart = function () {
@@ -83,7 +84,8 @@
             //Handle Line Chart
             handleLineChart() {
 
-                Morris.Line({
+                window.Morris.Line({
+
                     element: 'morris-line-chart',
                     data: [
                         {
@@ -158,7 +160,8 @@
             //Handle Area Chart
             handleAreaChart() {
 
-                Morris.Area({
+                window.Morris.Area({
+
                     element: 'morris-area-chart',
                     data: [
                         {
@@ -234,7 +237,8 @@
             //Handle Bar Chart
             handleBarChart() {
 
-                Morris.Bar({
+                window.Morris.Bar({
+
                     element: 'morris-bar-chart',
                     data: [
                         {
@@ -309,7 +313,8 @@
             //Handle Donut Chart
             handleDonutChart() {
 
-                Morris.Donut({
+                window.Morris.Donut({
+
                     element: 'morris-donut-chart',
                     data: [
                         {

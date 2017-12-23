@@ -49,6 +49,11 @@
 </template>
 
 <script type="text/babel">
+     import summernote from 'summernote';
+//     window.summernote=require('summernote/dist/summernote-bs4');
+     import "summernote/dist/summernote.css";
+//     import "summernote/src/js/bs4/settings.js"
+
     export default {
         mounted() {
             Plugin.initPlugins(['Editors'])

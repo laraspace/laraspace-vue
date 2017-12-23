@@ -103,11 +103,12 @@
             </div>
         </div>
     </div>
+
 </template>
 
 <script type="text/babel">
-    export default {
 
+    export default {
         methods: {
             handleToastrNotifs() {
                 toastr.options = {
@@ -230,15 +231,13 @@
                             notie.alert(1, 'Success!');
                     }
                 });
-
-
             }
 
         },
         mounted() {
-
             this.handleToastrNotifs();
             this.handleNotieNotifs();
+
         }
     }
 </script>

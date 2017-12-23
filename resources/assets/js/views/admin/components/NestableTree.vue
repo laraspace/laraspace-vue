@@ -97,6 +97,8 @@
 
 </template>
 <script>
+    import 'jstree/dist/jstree';
+
     export default {
 
         mounted(){
@@ -119,16 +121,17 @@
         methods: {
             //js for container 1
             handleSimpleTree() {
-                $('#container').jstree();
-                $("#s").submit(function (e) {
+                jquery('#container').jstree();
+                jquery("#s").submit(function (e) {
                     e.preventDefault();
-                    $("#container").jstree(true).search($("#q").val());
+                    jquery("#container").jstree(true).search(jquery("#q").val());
                 });
             },
 
             //js for Tree With Drag & Drop
             handleDragAndDropTree() {
-                $('#container2').jstree({
+                jquery('#container2').jstree({
+
                     "core": {"check_callback": true}, // so that operations work
                     "plugins": ["dnd"]
                 });
@@ -136,14 +139,14 @@
 
             // js for Tree With SearchBox
             handleTreeWithSearchBox() {
-                $('#container3').jstree({
+                jquery('#container3').jstree({
                     "plugins": ["search"]
                 });
             },
 
             //js for With Icons
             handleTreeWithIcons() {
-                $('#container4').jstree({
+               jquery('#container4').jstree({
                     "types": {
                         "default": {
                             "icon": "fa fa-user"

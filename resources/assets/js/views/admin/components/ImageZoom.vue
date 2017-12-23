@@ -21,8 +21,7 @@
                                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                             </p>
-                            <img src="/assets/img/demo/gallery/13.jpg" data-action="zoom"
-                                 class="img-left img-fluid">
+                            <img src="/assets/img/demo/gallery/13.jpg" data-action="zoom" class="img-left img-fluid">
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -113,3 +112,8 @@
         </div>
     </div>
 </template>
+<script>
+    require('bootstrap/js/transition.js');
+    require('zoom.js');
+</script>
+

@@ -93,6 +93,8 @@
     </div>
 </template>
 <script>
+    import 'jquery-sparkline';
+
     export default {
         mounted() {
             let vm = this;
@@ -127,19 +129,19 @@
         },
         computed: {
             barWidth() {
-                if ($(window).width() > 440) {
-                    return $(window).width() / 70;
+                if (jquery(window).width() > 440) {
+                    return jquery(window).width() / 70;
                 }
                 else {
-                    return $(window).width() / 50;
+                    return jquery(window).width() / 50;
                 }
             },
             width() {
-                if ($(window).width() > 440) {
-                    return Math.floor(($(window).width()) / 5);
+                if (jquery(window).width() > 440) {
+                    return Math.floor((jquery(window).width()) / 5);
                 }
                 else {
-                    return Math.floor(($(window).width()) / 4);
+                    return Math.floor((jquery(window).width()) / 4);
                 }
             }
         },
@@ -152,7 +154,7 @@
                 var mousetravel = 0;
                 var mpoints = [];
                 var mpoints_max = 30;
-                $('html').mousemove(function (e) {
+                jquery('html').mousemove(function (e) {
                     var mousex = e.pageX;
                     var mousey = e.pageY;
                     if (lastmousex > -1) {
@@ -170,7 +172,7 @@
                         if (mpoints.length > mpoints_max)
                             mpoints.splice(0, 1);
                         mousetravel = 0;
-                        $('.spl-mousespeed').sparkline(mpoints, {
+                        jquery('.spl-mousespeed').sparkline(mpoints, {
                             width: mpoints.length * 2,
                             tooltipSuffix: ' pixels per second',
                             height: '100',
@@ -185,7 +187,7 @@
             },
 
             handlePieChart() {
-                $(".spl-pie-chart").sparkline('html', {
+                jquery(".spl-pie-chart").sparkline('html', {
                     type: 'pie',
                     width: '100%',
                     height: '300'
@@ -193,7 +195,7 @@
             },
 
             handleLineChart() {
-                $(".spl-line-chart").sparkline([5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
+                jquery(".spl-line-chart").sparkline([5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
                     type: 'line',
                     width: '100%',
                     height: '100'
@@ -201,7 +203,7 @@
             },
 
             handleBarChart() {
-                $(".spl-bar-chart").sparkline('html', {
+                jquery(".spl-bar-chart").sparkline('html', {
                     type: 'bar',
                     height: '100',
                     barWidth: this.barWidth,
@@ -211,14 +213,14 @@
             },
 
             handleCompositBarChart() {
-                $('.spl-cp-bar-chart').sparkline('html', {
+                jquery('.spl-cp-bar-chart').sparkline('html', {
                     type: 'bar',
                     barColor: '#aaf',
                     height: '100',
                     barWidth: this.barWidth,
                     barSpacing: 3
                 });
-                $('.spl-cp-bar-chart').sparkline([4, 1, 5, 7, 9, 9, 8, 7, 6, 6, 4, 7, 8, 4, 3, 2, 2, 5, 6, 7], {
+                jquery('.spl-cp-bar-chart').sparkline([4, 1, 5, 7, 9, 9, 8, 7, 6, 6, 4, 7, 8, 4, 3, 2, 2, 5, 6, 7], {
                     composite: true,
                     fillColor: false,
                     lineColor: 'red',
@@ -228,7 +230,7 @@
             },
 
             handleCompositeInline() {
-                $('.spl-cp-inline').sparkline('html', {
+                jquery('.spl-cp-inline').sparkline('html', {
                     fillColor: false,
                     changeRangeMin: 0,
                     chartRangeMax: 10,
@@ -236,7 +238,7 @@
                     height: '100'
                 });
 
-                $('.spl-cp-inline').sparkline([4, 1, 5, 7, 9, 9, 8, 7, 6, 6, 4, 7, 8, 4, 3, 2, 2, 5, 6, 7], {
+                jquery('.spl-cp-inline').sparkline([4, 1, 5, 7, 9, 9, 8, 7, 6, 6, 4, 7, 8, 4, 3, 2, 2, 5, 6, 7], {
                     composite: true,
                     fillColor: false,
                     lineColor: 'red',
@@ -248,14 +250,14 @@
             },
 
             handleInlineChart() {
-                $('.spl-inline').sparkline('html', {
+                jquery('.spl-inline').sparkline('html', {
                     width: '100%',
                     height: '100'
                 });
             },
 
             handleBarNegativeChart() {
-                $('.spl-bar-negative').sparkline('html', {
+                jquery('.spl-bar-negative').sparkline('html', {
                     type: 'bar',
                     barWidth: '100%',
                     barSpacing: 3,
@@ -264,7 +266,7 @@
             },
 
             handleDiscreateChart() {
-                $(".spl-discreate1").sparkline('html', {
+                jquery(".spl-discreate1").sparkline('html', {
                     type: 'discrete',
                     height: '100',
                     width: this.width,
@@ -272,7 +274,7 @@
             },
 
             handleDiscreateWithThresholdChart() {
-                $('.spl-discreate2').sparkline('html', {
+                jquery('.spl-discreate2').sparkline('html', {
                     type: 'discrete',
                     lineColor: 'blue',
                     thresholdColor: 'red',
@@ -283,7 +285,7 @@
             },
 
             handleTristateChart() {
-                $(".spl-tristate").sparkline('html', {
+                jquery(".spl-tristate").sparkline('html', {
                     type: 'tristate',
                     barWidth: this.barWidth,
                     barSpacing: 3,
@@ -292,7 +294,7 @@
             },
 
             handleTristateColorChart() {
-                $('.spl-tristate-color').sparkline('html', {
+                jquery('.spl-tristate-color').sparkline('html', {
                     type: 'tristate',
                     colorMap: {'-2': '#fa7', '2': '#44f'},
                     barWidth: this.barWidth,
@@ -302,7 +304,7 @@
             },
 
             handleBoxplotChart() {
-                $('.spl-boxplot').sparkline('html', {
+                jquery('.spl-boxplot').sparkline('html', {
                     type: 'box',
                     target: 6,
                     width: '80%',
@@ -311,7 +313,7 @@
             },
 
             handleBoxPlotRawChart() {
-                $('.spl-boxplotraw').sparkline('html', {
+                jquery('.spl-boxplotraw').sparkline('html', {
                     type: 'box',
                     raw: true,
                     showOutliers: true,
@@ -322,7 +324,7 @@
             },
 
             handleBulletChart() {
-                $('.spl-bullet').sparkline('html', {
+                jquery('.spl-bullet').sparkline('html', {
                     type: 'bullet',
                     width: '80%',
                     height: '30'

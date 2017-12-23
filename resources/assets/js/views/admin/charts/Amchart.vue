@@ -126,23 +126,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h6>Radar Chart</h6>
                     </div>
+
                     <div class="card-body">
+
                         <div class="amcharts" id="radar-chart"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h6>Polar Scatter Chart</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="amcharts" id="polar-scatter-chart"></div>
                     </div>
                 </div>
             </div>
@@ -153,7 +145,9 @@
                     <div class="card-header">
                         <h6>Animations along lines Map</h6>
                     </div>
+
                     <div class="card-body">
+
                         <div class="amcharts" id="map-chart"></div>
                     </div>
                 </div>
@@ -165,7 +159,9 @@
                     <div class="card-header">
                         <h6>Capitals map</h6>
                     </div>
+
                     <div class="card-body">
+
                         <div class="amcharts" id="capital-map-chart"></div>
                     </div>
                 </div>
@@ -177,7 +173,9 @@
                     <div class="card-header">
                         <h6>Zoomable Bubble & XY Chart</h6>
                     </div>
+
                     <div class="card-body">
+
                         <div class="amcharts" id="xy-and-bubble-chart"></div>
                     </div>
                 </div>
@@ -189,7 +187,9 @@
                     <div class="card-header">
                         <h6>Multiple Data Sets Stock Chart</h6>
                     </div>
+
                     <div class="card-body">
+
                         <div class="amcharts" id="multiple-data-sets-chart"></div>
                     </div>
                 </div>
@@ -198,6 +198,22 @@
     </div>
 </template>
 <script>
+    import AmCharts from 'amcharts3';
+    import 'amcharts3/amcharts/serial';
+    import 'amcharts3/amcharts/pie';
+    import 'amcharts3/amcharts/xy';
+    import 'amcharts3/amcharts/radar';
+    import 'amcharts3/amcharts/themes/light';
+    import 'ammap3';
+    import 'ammap3/ammap/maps/js/worldLow';
+    import 'amstock3/amcharts/amstock';
+    import 'amcharts3/amcharts/plugins/animate/animate';
+    import 'amcharts3/amcharts/plugins/export/export';
+    import 'amcharts3/amcharts/images/dragIconRoundBig.svg';
+    import 'amcharts3/amcharts/images/dragIconRoundBigH.svg';
+    import 'amcharts3/amcharts/images/lens.svg';
+
+
     export default {
         mounted() {
             let vm = this;
@@ -213,7 +229,6 @@
                         vm.handleAnimatedTimeLinePieChart();
                         vm.handle3dDonutChart();
                         vm.handleRadarChart();
-                        vm.handlePolarScatterChart();
                         vm.handleAnimationsAlongLinesMap();
                         vm.handleCapitalsMap();
                         vm.handleZoomableBubbleAndXYChart();
@@ -222,13 +237,16 @@
                 };
 
             }();
+            console.log(window.image);
             this.$nextTick(() => {
+
                 AMCharts.init();
             });
         },
+
         methods: {
             handleColumnAndLineChart() {
-                var columnAndLineChart = AmCharts.makeChart("bar-line-chart", {
+                var columnAndLineChart = window.AmCharts.makeChart("bar-line-chart", {
                     "type": "serial",
                     "addClassNames": true,
                     "theme": "light",
@@ -318,7 +336,7 @@
             },
 
             handleClusterBarChart() {
-                var clusterBarChart = AmCharts.makeChart("clust-bar-chart", {
+                var clusterBarChart = window.AmCharts.makeChart("clust-bar-chart", {
                     "type": "serial",
                     "categoryField": "year",
                     "theme": "light",
@@ -397,7 +415,7 @@
 
             handleDurationOnValueAxisChart() {
 
-                var durationOnValueAxisChart = AmCharts.makeChart("line-area-value-axis", {
+                var durationOnValueAxisChart = window.AmCharts.makeChart("line-area-value-axis", {
                     "type": "serial",
                     "theme": "none",
                     "theme": "light",
@@ -622,11 +640,11 @@
             },
 
             handleStackAreaChart() {
-                var stackAreaChart = AmCharts.makeChart("stack-area-chart", {
+                var stackAreaChart = window.AmCharts.makeChart("stack-area-chart", {
                     "type": "serial",
-                    "theme": "none",
                     "theme": "light",
-                    "pathToImages": "/assets/img/charts/",
+                    "pathToImages": '/fonts/vendor/amcharts3/amcharts/images/',
+
                     "marginRight": 30,
                     "legend": {
                         "equalWidths": false,
@@ -809,9 +827,10 @@
 
             handle3dCylinderChart() {
 
-                var cylinderChart = AmCharts.makeChart("3d-cylinder-chart", {
+                var cylinderChart = window.AmCharts.makeChart("3d-cylinder-chart", {
                     "theme": "light",
-                    "type": "serial",
+                    "type": 'serial',
+
                     "startDuration": 2,
                     "dataProvider": [{
                         "country": "USA",
@@ -1105,7 +1124,7 @@
                  * Create the chart
                  */
                 var currentYear = 1995;
-                var animatedTimeLinePieChart = AmCharts.makeChart("animated-pie-chart", {
+                var animatedTimeLinePieChart = window.AmCharts.makeChart("animated-pie-chart", {
                     "type": "pie",
                     "theme": "light",
                     "dataProvider": [],
@@ -1166,7 +1185,7 @@
             },
 
             handle3dDonutChart() {
-                var donutChart = AmCharts.makeChart("3d-donut-chart", {
+                var donutChart = window.AmCharts.makeChart("3d-donut-chart", {
                     "type": "pie",
                     "theme": "light",
                     "titles": [{
@@ -1220,7 +1239,7 @@
 
             handleRadarChart() {
 
-                var radarchart = AmCharts.makeChart("radar-chart", {
+                var radarchart = window.AmCharts.makeChart("radar-chart", {
                     "type": "radar",
                     "theme": "light",
                     "dataProvider": [{
@@ -1261,62 +1280,6 @@
                 });
             },
 
-            handlePolarScatterChart() {
-                var polarScatterChart = AmCharts.makeChart("polar-scatter-chart", {
-                    "type": "radar",
-                    "theme": "light",
-                    "dataProvider": [],
-                    "valueAxes": [{
-                        "gridType": "circles",
-                        "minimum": 0
-                    }],
-                    "startDuration": 1,
-                    "polarScatter": {
-                        "minimum": 0,
-                        "maximum": 359,
-                        "step": 1
-                    },
-                    "legend": {
-                        "position": "right"
-                    },
-                    "graphs": [{
-                        "title": "Trial #1",
-                        "balloonText": "[[category]]: [[value]] m/s",
-                        "bullet": "round",
-                        "lineAlpha": 0,
-                        "series": [[83, 5.1], [44, 5.8], [76, 9], [2, 1.4], [100, 8.3], [96, 1.7],
-                            [68, 3.9], [0, 3], [100, 4.1], [16, 5.5], [71, 6.8], [100, 7.9],
-                            [9, 6.8], [85, 8.3], [51, 6.7], [95, 3.8], [95, 4.4], [1, 0.2],
-                            [107, 9.7], [50, 4.2], [42, 9.2], [35, 8], [44, 6], [64, 0.7],
-                            [53, 3.3], [92, 4.1], [43, 7.3], [15, 7.5], [43, 4.3], [90, 9.9]]
-                    }, {
-                        "title": "Trial #2",
-                        "balloonText": "[[category]]: [[value]] m/s",
-                        "bullet": "round",
-                        "lineAlpha": 0,
-                        "series": [[178, 1.3], [129, 3.4], [99, 2.4], [80, 9.9], [118, 9.4], [103, 8.7],
-                            [91, 4.2], [151, 1.2], [168, 5.2], [168, 1.6], [152, 1.2], [149, 3.4],
-                            [182, 8.8], [106, 6.7], [111, 9.2], [130, 6.3], [147, 2.9], [81, 8.1],
-                            [138, 7.7], [107, 3.9], [124, 0.7], [130, 2.6], [86, 9.2], [169, 7.5],
-                            [122, 9.9], [100, 3.8], [172, 4.1], [140, 7.3], [161, 2.3], [141, 0.9]]
-                    }, {
-                        "title": "Trial #3",
-                        "balloonText": "[[category]]: [[value]] m/s",
-                        "bullet": "round",
-                        "lineAlpha": 0,
-                        "series": [[419, 4.9], [417, 5.5], [434, 0.1], [344, 2.5],
-                            [279, 7.5], [307, 8.4], [279, 9], [220, 8.4], [204, 8], [446, 0.9], [397, 8.9],
-                            [351, 1.7], [393, 0.7], [254, 1.8], [260, 0.4], [300, 3.5], [199, 2.7],
-                            [182, 5.8], [173, 2], [201, 9.7], [288, 1.2], [333, 7.4], [308, 1.9],
-                            [330, 8], [408, 1.7], [274, 0.8], [296, 3.1], [279, 4.3], [379, 5.6],
-                            [175, 6.8]]
-                    }],
-                    "export": {
-                        "enabled": true
-                    }
-                });
-            },
-
             handleAnimationsAlongLinesMap() {
                 /**
                  * SVG path for target icon
@@ -1334,7 +1297,7 @@
                 /**
                  * Create the map
                  */
-                var animationsAlongLinesMap = AmCharts.makeChart("map-chart", {
+                var animationsAlongLinesMap = window.AmCharts.makeChart("map-chart", {
                     "type": "map",
                     "theme": "light",
 
@@ -1438,7 +1401,7 @@
                 /**
                  * Create the map
                  */
-                var capitalsMap = AmCharts.makeChart("capital-map-chart", {
+                var capitalsMap = window.AmCharts.makeChart("capital-map-chart", {
                     "type": "map",
                     "projection": "winkel3",
                     "theme": "light",
@@ -2622,10 +2585,10 @@
 
             handleZoomableBubbleAndXYChart() {
 
-                var xyandbubblechart = AmCharts.makeChart("xy-and-bubble-chart", {
+                var xyandbubblechart = window.AmCharts.makeChart("xy-and-bubble-chart", {
                     "type": "xy",
                     "theme": "light",
-                    "pathToImages": "/assets/img/charts/",
+                    "pathToImages": "/fonts/vendor/amcharts3/amcharts/images/",
                     "marginRight": 80,
                     "marginTop": 17,
                     "dataProvider": [{
@@ -2776,10 +2739,10 @@
                     ;
                 };
 
-                var multipleDataSetsStockChart = AmCharts.makeChart("multiple-data-sets-chart", {
+                var multipleDataSetsStockChart = window.AmCharts.makeChart("multiple-data-sets-chart", {
                     "type": "stock",
                     "theme": "light",
-                    "pathToImages": "/assets/img/charts/",
+                    "pathToImages": "/fonts/vendor/amcharts3/amcharts/images/",
                     "dataSets": [{
                         "title": "first data set",
                         "fieldMappings": [{

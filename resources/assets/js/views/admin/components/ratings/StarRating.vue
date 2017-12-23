@@ -16,7 +16,7 @@
                         <div class="card-header">
                             <h6>Default</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-default" class="star-rating"></div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <div class="card-header">
                             <h6>Read Only</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-readonly" class="star-rating"></div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="card-header">
                             <h6>Start with Score</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-score" class="star-rating"></div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                         <div class="card-header">
                             <h6>Number of Stars</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-number" class="star-rating"></div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <div class="card-header">
                             <h6>Half Star</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-half" class="star-rating"></div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="card-header">
                             <h6>Cancel Button</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-cancel" class="star-rating"></div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <div class="card-header">
                             <h6>Custom Icons</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-custom" class="star-rating"></div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                         <div class="card-header">
                             <h6>With Target</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-target" class="star-rating"></div>
                             <div id="target" class="star-rating-hint"></div>
                         </div>
@@ -101,7 +101,7 @@
                         <div class="card-header">
                             <h6>With Percentage</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-block">
                             <div id="star-percentage" class="star-rating"></div>
                             <div id="target-percentage" class="star-rating-hint"></div>
                         </div>
@@ -112,14 +112,14 @@
     </div>
 </template>
 <script type="text/babel">
+    import "raty-js/lib/jquery.raty";
+
     export default {
-
         mounted() {
-            let vm = this;
-            var StarRating = function () {
-
-                //main function to initiate the module
+            let vm=this;
+            let StarRating = function () {
                 return {
+                    //main function to initiate the module
                     init: function () {
                         vm.handleDefaults();
                         vm.handleReadOnly();
@@ -131,60 +131,54 @@
                         vm.handleWithTarget();
                         vm.handleWithPercentage();
                     }
-
                 };
             }();
             this.$nextTick(() => {
                 StarRating.init();
             });
-        },
-        methods: {
 
+        },
+
+        methods: {
             handleDefaults() {
-                $.fn.raty.defaults.starOn = 'icon-fa icon-fa-fw icon-fa-star color-orange';
-                $.fn.raty.defaults.starOff = 'icon-fa icon-fa-fw icon-fa-star-o';
-                $.fn.raty.defaults.starHalf = 'icon-fa icon-fa-fw icon-fa-star-half-o color-orange';
-                $.fn.raty.defaults.cancelOff = 'icon-fa icon-fa-fw icon-fa-minus-square-o';
-                $.fn.raty.defaults.cancelOn = 'icon-fa icon-fa-fw icon-fa-minus-square';
+                $.fn.raty.defaults.starOn = 'fa fa-fw fa-star color-orange';
+                $.fn.raty.defaults.starOff = 'fa fa-fw fa-star-o';
+                $.fn.raty.defaults.starHalf = 'fa fa-fw fa-star-half-o color-orange';
+                $.fn.raty.defaults.cancelOff = 'fa fa-fw fa-minus-square-o';
+                $.fn.raty.defaults.cancelOn = 'fa fa-fw fa-minus-square';
                 $.fn.raty.defaults.starType = 'i';
 
                 $('#star-default').raty();
             },
-
             handleReadOnly() {
                 $('#star-readonly').raty({
                     readOnly: true
                 });
             },
-
             handleWithScore() {
                 $('#star-score').raty({
                     score: 2,
                 });
             },
-
             handleWithNumberOfStars() {
                 $('#star-number').raty({
                     number: 10
                 });
             },
-
             handleHalfStars() {
                 $('#star-half').raty({
                     half: true
                 });
             },
-
             handleCancelButton() {
                 $('#star-cancel').raty({
                     cancel: true
                 });
             },
-
             handleCustomIcons() {
                 $('#star-custom').raty({
-                    starOn: 'icon-fa icon-fa-fw icon-fa-heart color-red',
-                    starOff: 'icon-fa icon-fa-fw icon-fa-heart-o'
+                    starOn: 'fa fa-fw fa-heart color-red',
+                    starOff: 'fa fa-fw fa-heart-o'
                 });
             },
 
@@ -203,9 +197,9 @@
                     targetText: '0',
                     targetKeep: true
                 });
-            },
-
-
+            }
         }
     }
+
+    //
 </script>

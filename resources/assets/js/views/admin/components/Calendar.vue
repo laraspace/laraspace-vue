@@ -38,6 +38,9 @@
     </div>
 </template>
 <script>
+    import fullCalendar from 'fullcalendar';
+    import 'fullcalendar/dist/fullcalendar.css';
+
     export default {
 
         mounted(){
@@ -48,7 +51,7 @@
         },
         methods:{
             handleCalendar(){
-                $('#calendar').fullCalendar({
+                jquery('#calendar').fullCalendar({
                     header: {
                         left: 'prev,next today',
                         center: 'title',

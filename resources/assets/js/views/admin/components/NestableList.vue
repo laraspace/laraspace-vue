@@ -114,45 +114,49 @@
                         </div>
                     </div>
                 </div>
-
-                <h5 class="section-semi-title mt-4">List with Draggable Handles</h5>
-
-                <div class="dd" id="nestable3">
-                    <ol class="dd-list">
-                        <li class="dd-item dd3-item" data-id="13">
-                            <div class="dd-handle dd3-handle">Drag</div>
-                            <div class="dd3-content">Item 13</div>
-                        </li>
-                        <li class="dd-item dd3-item" data-id="14">
-                            <div class="dd-handle dd3-handle">Drag</div>
-                            <div class="dd3-content">Item 14</div>
-                        </li>
-                        <li class="dd-item dd3-item" data-id="15">
-                            <div class="dd-handle dd3-handle">Drag</div>
-                            <div class="dd3-content">Item 15</div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dd" id="nestable3">
+                            <h5 class="section-semi-title mt-4">List with Draggable Handles</h5>
                             <ol class="dd-list">
-                                <li class="dd-item dd3-item" data-id="16">
+                                <li class="dd-item dd3-item" data-id="13">
                                     <div class="dd-handle dd3-handle">Drag</div>
-                                    <div class="dd3-content">Item 16</div>
+                                    <div class="dd3-content">Item 13</div>
                                 </li>
-                                <li class="dd-item dd3-item" data-id="17">
+                                <li class="dd-item dd3-item" data-id="14">
                                     <div class="dd-handle dd3-handle">Drag</div>
-                                    <div class="dd3-content">Item 17</div>
+                                    <div class="dd3-content">Item 14</div>
                                 </li>
-                                <li class="dd-item dd3-item" data-id="18">
+                                <li class="dd-item dd3-item" data-id="15">
                                     <div class="dd-handle dd3-handle">Drag</div>
-                                    <div class="dd3-content">Item 18</div>
+                                    <div class="dd3-content">Item 15</div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item dd3-item" data-id="16">
+                                            <div class="dd-handle dd3-handle">Drag</div>
+                                            <div class="dd3-content">Item 16</div>
+                                        </li>
+                                        <li class="dd-item dd3-item" data-id="17">
+                                            <div class="dd-handle dd3-handle">Drag</div>
+                                            <div class="dd3-content">Item 17</div>
+                                        </li>
+                                        <li class="dd-item dd3-item" data-id="18">
+                                            <div class="dd-handle dd3-handle">Drag</div>
+                                            <div class="dd3-content">Item 18</div>
+                                        </li>
+                                    </ol>
                                 </li>
                             </ol>
-                        </li>
-                    </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
+
 <script>
+    import 'nestable/jquery.nestable';
+
     export default {
 
         mounted() {

@@ -2,7 +2,6 @@
 
 // Image Zoom
 // -------------------------
-
 .image-zoom-demo {
   text-align: justify;
 
@@ -19,10 +18,8 @@
   }
 
 }
-
 // Icons
 // -------------------------
-
 .icon-container {
 
   .demo-icon {
@@ -103,7 +100,6 @@
 
 // Buttons
 // -------------------------
-
 .buttons-demo {
   .btn {
     margin-bottom: 10px;
@@ -262,44 +258,6 @@
       height: 3px;
     }
   }
-
-//Modal-media-upload
-.modal-media {
-  .modal-dialog {
-    .modal-content {
-      .left-menu {
-        position: absolute;
-
-        .tabs-vertical .nav-tabs {
-          .nav-link {
-            border: none;
-            background-color: unset;
-          }
-          li {
-            a.active {
-              background-color: unset;
-              border: none;
-              color: #007dcc;
-            }
-          }
-        }
-      }
-      .media-upload-content {
-
-        .modal-header {
-          border: 0;
-          padding-bottom: 0;
-        }
-        .card {
-          margin: 0;
-        }
-      }
-      .modal-body {
-        padding: 0px;
-      }
-    }
-  }
-}
 
 @media (max-width: $small-breakpoint) {
   .modal-media {
