@@ -154,6 +154,7 @@
 </template>
 <script>
     import 'nestable/jquery.nestable';
+    import 'nestable/index.html';
 
     export default {
 
@@ -186,13 +187,13 @@
 
             handleLists() {
                 // activate Nestable for list 1
-                jquery('#nestable').nestable({group: 1}).on('change', this.updateOutput);
+                $('#nestable').nestable({group: 1}).on('change', this.updateOutput);
 
                 // activate Nestable for list 2
-                jquery('#nestable2').nestable({group: 1}).on('change', this.updateOutput)
+               $('#nestable2').nestable({group: 1}).on('change', this.updateOutput)
 
                 // Draggable
-                jquery('#nestable3').nestable();
+                $('#nestable3').nestable();
             },
 
             handleOutput() {
@@ -205,10 +206,10 @@
                     let target = $(e.target), action = target.data('action');
 
                     if (action === 'expand-all') {
-                        jquery('.dd').nestable('expandAll');
+                        $('.dd').nestable('expandAll');
                     }
                     if (action === 'collapse-all') {
-                        jquery('.dd').nestable('collapseAll');
+                        $('.dd').nestable('collapseAll');
                     }
                 });
             }

@@ -4,47 +4,8 @@ import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
 
-//notification
-import 'notie/src/notie.scss';
-import 'toastr/build/toastr.css';
-
-//bs-datepicker
-import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.css"
-
 //datatable
 import 'datatables.net-responsive-bs4';
-import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
-import 'datatables.net-bs4/css/datatables.bootstrap4.css';
-
-//Metis Menu
-import "metismenu/src/metisMenu.css"
-
-//MultiSelect
-import 'multiselect/css/multi-select.css'
-
-//notification
-import 'notie/src/notie.scss';
-import 'toastr/build/toastr.css';
-
-//datatable
-import 'datatables.net-responsive-bs4';
-import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
-import 'datatables.net-bs4/css/datatables.bootstrap4.css';
-
-//switchery css
-import "switchery/switchery.css"
-
-//Ladda .scss
-import "ladda/css/ladda.scss"
-
-//clock picker
-import "clockpicker/dist/bootstrap-clockpicker.css"
-
-//time picker
-import "timepicker/jquery.timepicker.css"
-
-//Select2
-import "select2/dist/css/select2.css"
 
 
 window._ = require('lodash');

@@ -123,9 +123,9 @@
             //js for container 1
             handleSimpleTree() {
                 jquery('#container').jstree();
-                $("#s").submit(function (e) {
+                jquery("#s").submit(function (e) {
                     e.preventDefault();
-                    $("#container").jstree(true).search($("#q").val());
+                    jquery("#container").jstree(true).search(jquery("#q").val());
                 });
             },
 

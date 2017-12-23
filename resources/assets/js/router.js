@@ -204,7 +204,6 @@ const routes = [
             {
                 path: 'components/nestable-list',
                 component: NestableList
-
             },
             {
                 path: 'components/nestable-tree',
@@ -217,12 +216,10 @@ const routes = [
             {
                 path: 'components/ratings/bar-rating',
                 component: BarRating
-
             },
             {
                 path: 'components/ratings/star-rating',
                 component:StarRating
-
             },
 
             //chart
@@ -237,17 +234,14 @@ const routes = [
             {
                 path: 'charts/gauge',
                 component: Gauge
-
             },
             {
                 path: 'charts/morris',
                 component: Morris
-
             },
             {
                 path: 'charts/sparkline',
                 component: Sparkline
-
             },
 
 
