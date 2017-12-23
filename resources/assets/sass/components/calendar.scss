@@ -58,56 +58,56 @@
 
 }
 
-//@media(max-width: $medium-breakpoint) {
-//
-//    .calendar {
-//
-//        .fc-header-toolbar {
-//            display: flex;
-//            flex-direction: column;
-//            justify-content: space-around;
-//            align-items: center;
-//
-//            .fc-left, .fc-center, .fc-right {
-//                flex: 1;
-//                margin-bottom: 10px;
-//            }
-//        }
-//
-//        .calendar-event .fc-event-list:after {
-//            content: "";
-//            flex: auto;
-//            min-width: 120px;
-//        }
-//
-//    }
-//
-//}
+@media(max-width: $medium-breakpoint) {
 
-//@media(max-width: $large-breakpoint) {
-//
-//    .calendar {
-//
-//        .fc-toolbar h2 {
-//            font-size: 1.5rem;
-//        }
-//
-//        .calendar-event {
-//            position: relative !important;
-//            max-width: 100%;
-//            right: 0 !important;
-//            width: 100% !important;
-//        }
-//
-//        .calendar-event ol {
-//            display: flex;
-//            flex-wrap: wrap;
-//            justify-content: space-around;
-//        }
-//
-//        .calendar-event ol li {
-//            flex: 120px;
-//        }
-//    }
-//
-//}
+    .calendar {
+
+        .fc-header-toolbar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+
+            .fc-left, .fc-center, .fc-right {
+                flex: 1;
+                margin-bottom: 10px;
+            }
+        }
+
+        .calendar-event .fc-event-list:after {
+            content: "";
+            flex: auto;
+            min-width: 120px;
+        }
+
+    }
+
+}
+
+@media(max-width: $large-breakpoint) {
+
+    .calendar {
+
+        .fc-toolbar h2 {
+            font-size: 1.5rem;
+        }
+
+        .calendar-event {
+            position: relative !important;
+            max-width: 100%;
+            right: 0 !important;
+            width: 100% !important;
+        }
+
+        .calendar-event ol {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .calendar-event ol li {
+            flex: 120px;
+        }
+    }
+
+}

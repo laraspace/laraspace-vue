@@ -162,16 +162,6 @@
 </template>
 <script type="text/babel">
     require('jquery-bar-rating/jquery.barrating');
-    import "jquery-bar-rating/dist/themes/bars-1to10.css"
-    import "jquery-bar-rating/dist/themes/bars-horizontal.css"
-    import "jquery-bar-rating/dist/themes/bars-movie.css"
-    import "jquery-bar-rating/dist/themes/bars-pill.css"
-    import "jquery-bar-rating/dist/themes/bars-reversed.css"
-    import "jquery-bar-rating/dist/themes/bars-square.css"
-    import "jquery-bar-rating/dist/themes/bootstrap-stars.css"
-    import "jquery-bar-rating/dist/themes/css-stars.css"
-    import "jquery-bar-rating/dist/themes/fontawesome-stars.css"
-    import "jquery-bar-rating/dist/themes/fontawesome-stars-o.css"
 
     export default {
         mounted() {

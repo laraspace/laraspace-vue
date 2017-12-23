@@ -10,7 +10,7 @@
             </ol>
         </div>
         <div class="card">
-            <div class="card-block">
+            <div class="card-body">
                 <todos></todos>
             </div>
         </div>
@@ -18,12 +18,12 @@
 </template>
 
 <script>
-    import Todos from '../../components/Todos.vue';
+    import Todos from '../../components/Todos.vue'
 
     export default {
         components: {
             Todos
-        }
+        },
     }
 </script>
 

@@ -113,7 +113,6 @@
 </template>
 <script type="text/babel">
     import "raty-js/lib/jquery.raty";
-    import "raty-js/lib/jquery.raty.css";
 
     export default {
         mounted() {

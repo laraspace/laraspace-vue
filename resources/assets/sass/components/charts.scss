@@ -21,14 +21,14 @@
     height: auto !important;
 }
 
-//@media(max-width: $small-breakpoint) {
-//    .sparkline-chart {
-//        .sparkline-chart-type {
-//            margin: 25px 40px !important;
-//            min-width: 30%;
-//        }
-//    }
-//}
+@media(max-width: $small-breakpoint) {
+    .sparkline-chart {
+        .sparkline-chart-type {
+            margin: 25px 40px !important;
+            min-width: 30%;
+        }
+    }
+}
 
 // AM Charts
 // -------------------------
@@ -139,19 +139,19 @@
     position: relative;
 }
 
-//@media(max-width: $x-small-breakpoint) {
-//
-//    .gauge-lg {
-//
-//        .basic-gauge, .donut-gauge, .color-gauge {
-//            height: 180px !important;
-//            width: auto !important;
-//        }
-//
-//        .gauge-label {
-//            font-size: 28px;
-//        }
-//
-//    }
-//
-//}
+@media(max-width: $x-small-breakpoint) {
+
+    .gauge-lg {
+
+        .basic-gauge, .donut-gauge, .color-gauge {
+            height: 180px !important;
+            width: auto !important;
+        }
+
+        .gauge-label {
+            font-size: 28px;
+        }
+
+    }
+
+}

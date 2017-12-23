@@ -1,12 +1,16 @@
-// Laraspace.scss - Bootstraps all the sass files into one
+// Variables
+//----------------------------------
 
 @import 'variables';
 
+
 // Plugins
+//----------------------------------
+
 @import '../plugins/bootstrap/scss/bootstrap';
 @import '../plugins/fontawesome/font-awesome';
 @import '../plugins/customScrollBar/customScrollBar';
-@import "../plugins/bootstrapSelect/bootstrap-select";
+//@import "../plugins/bootstrapSelect/bootstrap-select";
 @import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
 @import "../plugins/pace/pace";
@@ -27,50 +31,86 @@
 @import "../../../node_modules/metismenu/dist/metisMenu.css";
 @import "../../../node_modules/multiselect/css/multi-select.css";
 @import "../../../node_modules/zoom.js/css/zoom.css";
+@import "../../../node_modules/cropper/dist/cropper.css";
+@import "../../../node_modules/jstree/dist/themes/default/style.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bars-1to10.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bars-horizontal.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bars-movie.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bars-pill.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bars-reversed.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bars-square.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/bootstrap-stars.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/css-stars.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/fontawesome-stars.css";
+@import "../../../node_modules/jquery-bar-rating/dist/themes/fontawesome-stars-o.css";
+@import "../../../node_modules/raty-js/lib/jquery.raty.css";
+@import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
+@import '../../../node_modules/morris.js/morris.css';
 
-
-// Option Skin.
+// Skins
+//----------------------------------
 @import 'skins/skin-tyrell';
 @import 'skins/skin-arryn';
 @import 'skins/skin-targaryen';
 @import 'skins/skin-lannister';
 @import 'skins/skin-stark';
 
-// Content Styles
+
+// Site Base
+//----------------------------------
+
 @import 'base';
 
+
 // Layouts
+//----------------------------------
+
 @import 'layouts/layout';
 @import "layouts/layout-icon-sidebar";
 @import "layouts/layout-horizontal";
 
-//Partials
+
+// Partials
+//----------------------------------
+
 @import 'partials/header';
 @import 'partials/sidebar';
 @import 'partials/footer';
 
 // Components
+//----------------------------------
+
 @import 'components/forms';
 @import 'components/buttons';
 @import 'components/cards';
 @import 'components/tabs';
 @import 'components/tables';
+@import "components/modals";
 @import 'components/hamburgers';
 @import "components/transitions";
 @import "components/charts";
 @import "components/image-cropper";
 @import "components/calendar";
+@import "components/gallery";
+@import "components/form-wizard-1";
+@import "components/form-wizard-2";
+@import "components/form-wizard-3";
+@import "components/editors";
+@import "components/breadcrumbs";
 @import "components/ratings";
 @import "components/nestable";
 
-//Pages
+
+// Pages
+//----------------------------------
 @import 'pages/dashboard';
 @import 'pages/login';
+@import "pages/login-1";
+@import 'pages/login-2';
+@import 'pages/login-3';
 @import 'pages/user-profile';
 @import 'pages/404';
+@import 'pages/settings';
 
-//Front
-@import "front";
 
 @import "demo";
-

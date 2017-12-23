@@ -26,13 +26,6 @@ export default {
         jquery(".ls-select2").select2();
     },
 
-    BootstrapSelect(){
-        $(".ls-bootstrap-select").selectpicker({
-            iconBase: 'fa',
-            tickIcon: 'fa-check',
-            container: 'body'
-        });
-    },
 
     SwitchToggles(){
 
@@ -70,8 +63,7 @@ export default {
                 maxTime: '11:30pm'
             });
         });
-
-
+        
     },
 
     MultiSelect(){
@@ -111,7 +103,16 @@ export default {
         //     $(".scroll-pane").mCustomScrollbar({theme:"minimal-dark"});
         // },1000);
 
-        $(".scroll-pane").mCustomScrollbar({theme: "minimal-dark"});
+        jquery(".scroll-pane").mCustomScrollbar({theme: "minimal-dark"});
+    },
+
+    DataTables(){
+
+        jquery('#default-datatable').DataTable();
+
+        jquery('#responsive-datatable').DataTable({
+            responsive: true
+        });
     }
 
 }

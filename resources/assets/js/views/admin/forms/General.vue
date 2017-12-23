@@ -14,19 +14,19 @@
                     <div class="card-header">
                         <h6>Basic Inputs</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <h5 class="section-semi-title">Horizontal</h5>
 
                         <form>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 form-control-label">Email</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
 
                                 <div class="col-sm-10">
                                     <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 form-control-label">Password</label>
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
 
                                 <div class="col-sm-10">
                                     <input type="password" class="form-control" id="inputPassword3"
@@ -37,85 +37,96 @@
                         <h5 class="section-semi-title mt-4">Vertical</h5>
 
                         <form>
-                            <fieldset class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                       placeholder="Enter email">
-                                <small class="text-muted">We'll never share your email with anyone else.</small>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                       placeholder="Password">
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <label for="exampleSelect1">Example select</label>
-                                <select class="form-control" id="exampleSelect1">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Email address</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput1"
+                                       placeholder="Enter Email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Example select</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
                                     <option>5</option>
                                 </select>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <label for="exampleSelect2">Example multiple select</label>
-                                <select multiple class="form-control" id="exampleSelect2">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect2">Example multiple select</label>
+                                <select multiple class="form-control" id="exampleFormControlSelect2">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
                                     <option>5</option>
                                 </select>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <label for="exampleTextarea">Example textarea</label>
-                                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <label for="exampleInputFile">File input</label>
-                                <input type="file" class="form-control-file" id="exampleInputFile">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Example textarea</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">Example file input</label>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
                                 <small class="text-muted">This is some placeholder block-level help text for the above
                                     input. It's a bit lighter and easily wraps to a new line.
                                 </small>
-                            </fieldset>
+                            </div>
                         </form>
+
                         <h5 class="section-semi-title mt-4">
                             Validation States
                         </h5>
+                        <form class="was-validated">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationDefault01">First name</label>
+                                    <input type="text" class="form-control" id="validationDefault01"
+                                           placeholder="First name" value="Mark" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationDefault03">Last name</label>
+                                    <input type="text" class="form-control" id="validationDefault03"
+                                           placeholder="Last name" required>
+                                    <div class="invalid-feedback">
+                                        Please provide Last name.
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="was-validated">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" required>
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Check this custom checkbox</span>
+                            </label>
+                            <div class="custom-controls-stacked d-block my-3">
+                                <label class="custom-control custom-radio">
+                                    <input id="radioStacked1" name="radio-stacked" type="radio"
+                                           class="custom-control-input" required>
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Toggle this custom radio</span>
+                                </label>
+                                <label class="custom-control custom-radio">
+                                    <input id="radioStacked2" name="radio-stacked" type="radio"
+                                           class="custom-control-input" required>
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Or toggle this other custom radio</span>
+                                </label>
+                            </div>
 
-                        <form>
-                            <div class="form-group has-success">
-                                <label class="form-control-label" for="inputSuccess1">Input with success</label>
-                                <input type="text" class="form-control form-control-success" id="inputSuccess1">
-                            </div>
-                            <div class="form-group has-warning">
-                                <label class="form-control-label" for="inputWarning1">Input with warning</label>
-                                <input type="text" class="form-control form-control-warning" id="inputWarning1">
-                            </div>
-                            <div class="form-group has-danger">
-                                <label class="form-control-label" for="inputDanger1">Input with danger</label>
-                                <input type="text" class="form-control form-control-danger" id="inputDanger1">
-                            </div>
+                            <select class="custom-select d-block my-3" required>
+                                <option value="">Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
 
-                            <div class="checkbox has-success">
-                                <label>
-                                    <input type="checkbox" id="checkboxSuccess" value="option1">
-                                    Checkbox with success
-                                </label>
-                            </div>
-                            <div class="checkbox has-warning">
-                                <label>
-                                    <input type="checkbox" id="checkboxWarning" value="option1">
-                                    Checkbox with warning
-                                </label>
-                            </div>
-                            <div class="checkbox has-danger">
-                                <label>
-                                    <input type="checkbox" id="checkboxDanger" value="option1">
-                                    Checkbox with danger
-                                </label>
-                            </div>
+
                         </form>
 
                         <h5 class="section-semi-title mt-4">
@@ -127,14 +138,14 @@
                                 <label class="col-sm-2 form-control-label">Email</label>
 
                                 <div class="col-sm-10">
-                                    <p class="form-control-static">mohit@laraspace.in</p>
+                                    <p class="form-control-plaintext">mohit@laraspace.in</p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 form-control-label">username</label>
 
                                 <div class="col-sm-10">
-                                    <p class="form-control-static">laraspace</p>
+                                    <p class="form-control-plaintext">laraspace</p>
                                 </div>
                             </div>
                         </form>
@@ -148,7 +159,7 @@
                     <div class="card-header">
                         <h6>Checkbox & Radios</h6>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
                                 <h5 class="section-semi-title">
@@ -202,7 +213,8 @@
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                            <input type="radio" name="exampleRadios" id="exampleRadios2"
+                                                   value="option2">
                                             Option two can be something else and selecting it will deselect option one
                                         </label>
                                     </div>
@@ -219,13 +231,16 @@
                                 <h5 class="section-semi-title mt-4">Inline Radio</h5>
                                 <form>
                                     <label class="radio-inline">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                        1
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        2
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                        3
                                     </label>
                                 </form>
                             </div>

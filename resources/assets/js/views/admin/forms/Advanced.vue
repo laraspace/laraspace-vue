@@ -12,7 +12,7 @@
             <div class="card-header">
                 <h6>Select 2 <a class="source-link" href="https://select2.github.io/" target="_blank">source</a></h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4 col-md-6 mb-4">
                         <h5 class="section-semi-title">
@@ -118,104 +118,9 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Bootstrap Select <a class="source-link" href="http://silviomoreto.github.io/bootstrap-select/"
-                                        target="_blank">source</a></h6>
-            </div>
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="section-semi-title">
-                            Single Select
-                        </h5>
-
-                        <p class="mb-4">Just apply <code>.ls-bootstrap-select</code> class to a select element</p>
-                        <select class="form-control ls-bootstrap-select">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h5 class="section-semi-title">
-                            with Groups
-                        </h5>
-
-                        <p class="mb-4">Just use <code>optgroups</code> with label attribute inside select element.</p>
-                        <select class="form-control ls-bootstrap-select">
-                            <optgroup label="Picnic">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
-                            </optgroup>
-                            <optgroup label="Camping">
-                                <option>Tent</option>
-                                <option>Flashlight</option>
-                                <option>Toilet Paper</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h5 class="section-semi-title">
-                            Multiple Select
-                        </h5>
-
-                        <p class="mb-4">Just use <code>multiple</code> attribute inside select element.</p>
-                        <select class="form-control ls-bootstrap-select" multiple>
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="section-semi-title">
-                            Live Search
-                        </h5>
-
-                        <p class="mb-4">Just use <code>data-live-search="true"</code> attribute inside select element to
-                            enable live search.</p>
-                        <select class="form-control ls-bootstrap-select" data-live-search="true">
-                            <option>Hot Dog, Fries and a Soda</option>
-                            <option>Burger, Shake and a Smile</option>
-                            <option>Sugar, Spice and all things nice</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h5 class="section-semi-title">
-                            Keywords
-                        </h5>
-
-                        <p class="mb-4">Add key words to options to improve their searchability using
-                            <code>data-tokens</code>.</p>
-                        <select class="form-control ls-bootstrap-select" data-live-search="true">
-                            <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                            <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                            <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h5 class="section-semi-title">
-                            Limit Selected Items
-                        </h5>
-
-                        <p class="mb-4">Limit the number of options that can be selected via the
-                            <code>data-max-options</code> attribute.</p>
-                        <select class="form-control ls-bootstrap-select" multiple="multiple" data-max-options="2">
-                            <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                            <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                            <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">
                 <h6>Multiple Select <a class="source-link" href="http://loudev.com/" target="_blank">source</a></h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4 mb-4">
                         <h5 class="section-semi-title">
@@ -326,7 +231,7 @@
                 <h6>Switch Toggles <a class="source-link" href="http://abpetkov.github.io/switchery/"
                                       target="_blank">source</a></h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4 mb-4">
                         <h5 class="section-semi-title">
@@ -367,7 +272,7 @@
                 <h6>Clock Time Picker <a class="source-link" href="http://weareoutman.github.io/clockpicker/"
                                          target="_blank">source</a></h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4  col-md-6 mb-4">
                         <h5 class="section-semi-title">
@@ -380,7 +285,7 @@
                         <div class="input-group ls-clockpicker" data-autoclose="false">
                             <input type="text" class="form-control" value="09:30">
                             <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
+                                <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
                         </div>
                     </div>
@@ -397,7 +302,7 @@
                              data-autoclose="true">
                             <input type="text" class="form-control" value="09:30">
                             <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
+                                <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
                         </div>
                     </div>
@@ -409,7 +314,7 @@
                 <h6>Date Picker <a class="source-link" href="https://github.com/eternicode/bootstrap-datepicker"
                                    target="_blank">source</a></h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4 col-lg-6 mb-4">
                         <h5 class="section-semi-title">
@@ -420,7 +325,7 @@
 
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
+                                <i class="icon-fa icon-fa-calendar"></i>
                             </span>
                             <input type="text" class="form-control ls-datepicker" value="09:30">
                         </div>
@@ -458,7 +363,7 @@
                 <h6>Time Picker <a class="source-link" href="http://jonthornton.github.io/jquery-timepicker/"
                                    target="_blank">source</a></h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4 mb-4">
                         <h5 class="section-semi-title">
@@ -470,7 +375,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control ls-timepicker" value="09:30">
                             <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
+                                <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
                         </div>
                     </div>
@@ -484,7 +389,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control ls-timepicker" value="09:30" data-duration="true">
                             <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
+                                <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
                         </div>
                     </div>
@@ -498,7 +403,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control ls-timepicker" value="09:30" data-format="H:i:s">
                             <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
+                                <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
                         </div>
                     </div>
@@ -515,5 +420,6 @@
         mounted(){
             Plugin.initPlugins(['Select2','TimePickers','DatePicker','MultiSelect','BootstrapSelect','SwitchToggles'])
         },
+
     }
 </script>
