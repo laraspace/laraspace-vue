@@ -345,6 +345,7 @@ const routes = [
                 path: 'forms/wizards-3',
                 component: Wizard3
             },
+
             //Gallery
             {
                 path: 'gallery/grid',
