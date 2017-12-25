@@ -54,6 +54,8 @@ axios.interceptors.request.use(function (config) {
  * global required plugins
  */
 window.jquery = require('jquery');
+window.Popper=require('popper.js');
+require('bootstrap-beta');
 window.clockpicker= require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
 window.metisMenu = require('metismenu');

@@ -7,18 +7,20 @@
 // Plugins
 //----------------------------------
 
-@import '../plugins/bootstrap/scss/bootstrap';
+//@import '../plugins/bootstrap/scss/bootstrap';
 @import '../plugins/fontawesome/font-awesome';
-@import '../plugins/customScrollBar/customScrollBar';
+//@import '../plugins/customScrollBar/customScrollBar';
 //@import "../plugins/bootstrapSelect/bootstrap-select";
 @import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
 @import "../plugins/pace/pace";
 @import "../plugins/alertify/alertify";
-@import "../plugins/easypiecharts/easypiecharts";
+//@import "../plugins/easypiecharts/easypiecharts";
 
 //node_module
 @import "../../../node_modules/select2/src/scss/core";
+@import "../../../node_modules/bootstrap-beta/scss/bootstrap";
+
 @import "../../../node_modules/timepicker/jquery.timepicker.css";
 @import "../../../node_modules/switchery/switchery.css";
 @import "../../../node_modules/ladda/css/ladda";
