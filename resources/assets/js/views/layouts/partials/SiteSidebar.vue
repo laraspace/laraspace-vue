@@ -51,11 +51,11 @@
                 <li :class="{ active: isActive('/admin/chart') }">
                     <a href="#" aria-expanded="true"><i class="icon-fa icon-fa-bar-chart"></i> Charts <span class="icon-fa arrow icon-fa-fw"></span></a>
                     <ul aria-expanded="true">
-                        <!--<router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>-->
-                        <router-link to="/admin/charts/sparkline" tag="li"><a>Sparkline</a></router-link>
                         <router-link to="/admin/charts/amchart" tag="li"><a>AM Charts</a></router-link>
-                        <router-link to="/admin/charts/morris" tag="li"><a>Morris</a></router-link>
+                        <router-link to="/admin/charts/chartjs" tag="li"><a>Chart JS</a></router-link>
                         <router-link to="/admin/charts/gauge" tag="li"><a>Gauges</a></router-link>
+                        <router-link to="/admin/charts/morris" tag="li"><a>Morris</a></router-link>
+                        <router-link to="/admin/charts/sparkline" tag="li"><a>Sparkline</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/icons') }">
@@ -63,9 +63,9 @@
                     <ul aria-expanded="true">
                         <router-link to="/admin/icons/icomoon" tag="li"><a>IcoMoon</a></router-link>
                         <!--<router-link to="/admin/icons/evil" tag="li"><a>Evil Icons</a></router-link>-->
-                        <router-link to="/admin/icons/meteo" tag="li"><a>Meteo Icons</a></router-link>
-                        <router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>
-                        <router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>
+                        <!--<router-link to="/admin/icons/meteo" tag="li"><a>Meteo Icons</a></router-link>-->
+                        <!--<router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>-->
+                        <!--<router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>-->
                         <router-link to="/admin/icons/fontawesome" tag="li"><a>Font Awesome</a></router-link>
                     </ul>
                 </li>

@@ -50,12 +50,12 @@ import Sparkline from './views/admin/charts/Sparkline.vue'
 
 
 //Icons
-//import Evil from './views/admin/icons/Evil.vue'
+// import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
-import Fpsline from './views/admin/icons/FpsLine.vue'
+// import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
-import Line from './views/admin/icons/Line.vue'
-import Meteo from './views/admin/icons/Meteo.vue'
+// import Line from './views/admin/icons/Line.vue'
+// import Meteo from './views/admin/icons/Meteo.vue'
 
 //Forms
 import General from './views/admin/forms/General.vue'
@@ -252,30 +252,25 @@ const routes = [
             {
                 path: 'charts/amchart',
                 component: Amchart
-
             },
             {
                 path: 'charts/chartjs',
                 component:Chartjs
-
             },
             {
                 path: 'charts/gauge',
                 component: Gauge
-
             },
             {
                 path: 'charts/morris',
                 component: Morris
-
             },
             {
                 path: 'charts/sparkline',
                 component: Sparkline
-
             },
 
-            //Icons
+            // Icons
             // {
             //     path: 'icons/evil',
             //     component: Evil
@@ -284,26 +279,22 @@ const routes = [
                 path: 'icons/fontawesome',
                 component: Fontawesome
             },
-            {
-                path: 'icons/fpsline',
-                component: Fpsline
-            },
+            // {
+            //     path: 'icons/fpsline',
+            //     component: Fpsline
+            // },
             {
                 path: 'icons/icomoon',
                 component: IcoMoon
             },
-            {
-                path: 'icons/line',
-                component: Line
-            },
-            {
-                path: 'icons/meteo',
-                component: Meteo
-            },
-            {
-                path: 'components/image-cropper',
-                component: ImageCropper
-            },
+            // {
+            //     path: 'icons/line',
+            //     component: Line
+            // },
+            // {
+            //     path: 'icons/meteo',
+            //     component: Meteo
+            // },
 
             //Forms
             {

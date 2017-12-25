@@ -8,7 +8,7 @@
 //----------------------------------
 
 @import '../plugins/bootstrap/scss/bootstrap';
-@import '../plugins/fontawesome/font-awesome';
+//@import '../plugins/fontawesome/font-awesome';
 @import '../plugins/customScrollBar/customScrollBar';
 //@import "../plugins/bootstrapSelect/bootstrap-select";
 @import "../plugins/summernote/summernote";
@@ -46,6 +46,8 @@
 @import "../../../node_modules/raty-js/lib/jquery.raty.css";
 @import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
 @import '../../../node_modules/morris.js/morris.css';
+@import '../../../node_modules/font-awesome/scss/font-awesome.scss';
+
 
 // Skins
 //----------------------------------
@@ -99,6 +101,7 @@
 @import "components/breadcrumbs";
 @import "components/ratings";
 @import "components/nestable";
+@import "components/ico-moon";
 
 
 // Pages

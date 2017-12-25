@@ -149,10 +149,10 @@
                jquery('#container4').jstree({
                     "types": {
                         "default": {
-                            "icon": "fa fa-user"
+                            "icon": "icon-fa icon-fa-user"
                         },
                         "demo": {
-                            "icon": "fa fa-users"
+                            "icon": "icon-fa icon-fa-users"
                         }
                     },
                     "plugins": ["types"]
