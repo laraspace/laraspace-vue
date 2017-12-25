@@ -23,7 +23,6 @@ mix.combine([
     pluginPath + 'prism/prism.js',
     pluginPath + 'alertify/alertify.js',
     pluginPath + 'easypiecharts/jquery.easypiechart.js',
-    pluginPath + 'metisMenu/metisMenu.js',
     pluginPath + 'form-wizard/jquery.steps.js',
     pluginPath + 'gallery/image/photoswipe.js',
     pluginPath + 'gallery/image/photoswipe-ui-default.js',
@@ -38,11 +37,11 @@ mix.combine([
 
 ], 'public/assets/js/core/plugins.js')
 
-.js('resources/assets/js/app.js', 'public/assets/js/')
+    .js('resources/assets/js/app.js', 'public/assets/js/')
 
-.sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
+    .sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
 
-// .version();
+    .version();
 
 /*
  |--------------------------------------------------------------------------

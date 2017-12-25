@@ -63,9 +63,9 @@
                     <ul aria-expanded="true">
                         <router-link to="/admin/icons/icomoon" tag="li"><a>IcoMoon</a></router-link>
                         <!--<router-link to="/admin/icons/evil" tag="li"><a>Evil Icons</a></router-link>-->
-                        <router-link to="/admin/icons/meteo" tag="li"><a>Meteo Icons</a></router-link>
-                        <router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>
-                        <router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>
+                        <!--<router-link to="/admin/icons/meteo" tag="li"><a>Meteo Icons</a></router-link>-->
+                        <!--<router-link to="/admin/icons/line" tag="li"><a>Line Icons</a></router-link>-->
+                        <!--<router-link to="/admin/icons/fpsline" tag="li"><a>FPS Line</a></router-link>-->
                         <router-link to="/admin/icons/fontawesome" tag="li"><a>Font Awesome</a></router-link>
                     </ul>
                 </li>
