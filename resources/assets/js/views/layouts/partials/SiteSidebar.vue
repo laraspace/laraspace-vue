@@ -76,6 +76,9 @@
                         <router-link to="/admin/forms/advanced" tag="li"><a>Advanced Elements</a></router-link>
                         <router-link to="/admin/forms/layouts" tag="li"><a>Form Layouts</a></router-link>
                         <router-link to="/admin/forms/validation" tag="li"><a>Form Validation</a></router-link>
+                        <router-link to="/admin/forms/wizards" tag="li"><a>Form Wizard</a></router-link>
+                        <router-link to="/admin/forms/wizards-2" tag="li"><a>Form Wizard 2</a></router-link>
+                        <router-link to="/admin/forms/wizards-3" tag="li"><a>Form Wizard 3</a></router-link>
                         <router-link to="/admin/forms/editors" tag="li"><a>Editors</a></router-link>
                         <router-link to="/admin/forms/vee" tag="li"><a>Vee Validate</a></router-link>
                         <router-link to="/admin/forms/vuelidate" tag="li"><a>Vuelidate</a></router-link>

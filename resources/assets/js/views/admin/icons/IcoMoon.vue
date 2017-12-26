@@ -3971,5 +3971,5 @@
 
 <script>
     require('icomoon-free-npm/Font/IcoMoon-Free.ttf');
-
 </script>
+

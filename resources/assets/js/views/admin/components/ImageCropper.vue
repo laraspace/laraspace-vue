@@ -64,7 +64,7 @@
                                                     data-option="move" title="Move">
                                             <span class="docs-tooltip" data-toggle="tooltip"
                                                   title="jquery().cropper(&quot;setDragMode&quot;, &quot;move&quot;)"> <span
-                                                    class="fa fa-arrows"></span>
+                                                    class="icon-fa icon-fa-arrows"></span>
                                             </span>
                                             </button>
                                             <button type="button" class="btn btn-primary" data-method="setDragMode"
@@ -109,7 +109,7 @@
                                             <button type="button" class="btn btn-primary" data-method="move"
                                                     data-option="-10" data-second-option="0" title="Move Left">
                                             <span class="docs-tooltip" data-toggle="tooltip"
-                                                  title="$().cropper(&quot;move&quot;, -10, 0)">
+                                              title="$().cropper(&quot;move&quot;, -10, 0)">
                                                 <span class="icon-fa icon-fa-arrow-left"></span>
                                             </span>
                                             </button>
