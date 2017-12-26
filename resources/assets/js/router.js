@@ -66,6 +66,12 @@ import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
+    //form-wizards
+import Wizard from './views/admin/forms/Wizard.vue'
+import Wizard2 from './views/admin/forms/Wizard2.vue'
+import Wizard3 from './views/admin/forms/Wizard3.vue'
+
+
 //Gallery
 import Grid from './views/admin/gallery/Grid.vue'
 import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
@@ -240,12 +246,10 @@ const routes = [
             {
                 path: 'components/rating/bar-rating',
                 component: BarRating
-
             },
             {
                 path: 'components/rating/star-rating',
                 component: StarRating
-
             },
 
             //chart
@@ -325,6 +329,19 @@ const routes = [
                 path: 'forms/vuelidate',
                 component: Vuelidate
             },
+            {
+                path: 'forms/wizards',
+                component: Wizard
+            },
+            {
+                path: 'forms/wizards-2',
+                component: Wizard2
+            },
+            {
+                path: 'forms/wizards-3',
+                component: Wizard3
+            },
+
             //Gallery
             {
                 path: 'gallery/grid',
@@ -334,6 +351,7 @@ const routes = [
                 path: 'gallery/masonry-grid',
                 component: MasonryGrid
             },
+
             //Users
             {
                 path: 'users/profile',
@@ -349,6 +367,7 @@ const routes = [
                 path: 'todos',
                 component: Todos
             },
+
             //Settings
             {
                 path: 'settings',

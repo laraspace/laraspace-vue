@@ -39,7 +39,7 @@
 </template>
 <script>
     import fullCalendar from 'fullcalendar';
-    import 'fullcalendar/dist/fullcalendar.css';
+    import "fullcalendar/dist/fullcalendar.css";
 
     export default {
 

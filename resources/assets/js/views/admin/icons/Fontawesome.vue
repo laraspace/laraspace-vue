@@ -180,7 +180,6 @@
                                     <span>icon-fa-bar-chart-o</span>
                                 </div>
                             </div>
-
                             <div class="demo-icon">
                                 <div class="icon-box">
                                     <i class="icon-fa icon-fa-barcode"></i>
@@ -7005,3 +7004,4 @@
         </div>
     </div>
 </template>
+

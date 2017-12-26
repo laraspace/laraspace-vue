@@ -8,8 +8,6 @@
 //----------------------------------
 
 @import '../plugins/bootstrap/scss/bootstrap';
-//@import '../plugins/fontawesome/font-awesome';
-@import '../plugins/customScrollBar/customScrollBar';
 //@import "../plugins/bootstrapSelect/bootstrap-select";
 @import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
@@ -18,6 +16,7 @@
 @import "../plugins/easypiecharts/easypiecharts";
 
 //node_module
+@import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 @import "../../../node_modules/select2/src/scss/core";
 @import "../../../node_modules/timepicker/jquery.timepicker.css";
 @import "../../../node_modules/switchery/switchery.css";
@@ -46,8 +45,7 @@
 @import "../../../node_modules/raty-js/lib/jquery.raty.css";
 @import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
 @import '../../../node_modules/morris.js/morris.css';
-@import '../../../node_modules/font-awesome/scss/font-awesome.scss';
-
+@import '../../../node_modules/jquery-steps/demo/css/jquery.steps.css';
 
 // Skins
 //----------------------------------
@@ -89,20 +87,17 @@
 @import 'components/tables';
 @import "components/modals";
 @import 'components/hamburgers';
-@import "components/transitions";
-@import "components/charts";
+@import 'components/transitions';
+@import 'components/charts';
 @import "components/image-cropper";
 @import "components/calendar";
 @import "components/gallery";
-@import "components/form-wizard-1";
-@import "components/form-wizard-2";
-@import "components/form-wizard-3";
+@import "components/form-wizards";
 @import "components/editors";
 @import "components/breadcrumbs";
 @import "components/ratings";
 @import "components/nestable";
 @import "components/ico-moon";
-
 
 // Pages
 //----------------------------------

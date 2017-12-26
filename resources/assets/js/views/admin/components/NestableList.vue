@@ -156,6 +156,7 @@
 
 <script>
     import 'nestable/jquery.nestable';
+    import 'nestable/index.html';
 
     export default {
 
