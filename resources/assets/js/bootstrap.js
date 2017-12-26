@@ -3,10 +3,8 @@ import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
 
-
 //datatable
 import 'datatables.net-responsive-bs4';
-
 
 window._ = require('lodash');
 
@@ -26,7 +24,7 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
-
+global.$ = global.jQuery = require('jquery');
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -50,7 +48,10 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-window.jquery= require('jquery');
+/**
+ * Global Plugins
+ */
+
 window.metisMenu = require('metismenu');
 window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');

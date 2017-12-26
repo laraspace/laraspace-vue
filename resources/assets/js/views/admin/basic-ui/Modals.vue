@@ -306,8 +306,8 @@
             SweetModalTab
         },
         install(Vue, options) {
-            Vue.component('SweetModal', sweet - modal)
-            Vue.component('SweetModalTab', sweet - modalTab)
+            Vue.component('SweetModal', SweetModal)
+            Vue.component('SweetModalTab', SweetModalTab)
         },
 
     }
