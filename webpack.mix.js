@@ -11,8 +11,8 @@ var pluginPath = 'resources/assets/plugins/';
 mix.combine([
     // ** Required Plugins **
     pluginPath + 'jquery/jquery.js',
-    pluginPath + 'bootstrap/popper.js',
-    pluginPath + 'bootstrap/bootstrap.js',
+    // pluginPath + 'bootstrap/popper.js',
+    // pluginPath + 'bootstrap/bootstrap.js',
 
     // ** Additional Plugins **
     // pluginPath + 'ladda/spin.js',
