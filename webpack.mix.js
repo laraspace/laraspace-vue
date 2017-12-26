@@ -41,6 +41,10 @@ mix.combine([
 
     .version();
 
+mix.autoload({
+    jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
+});
+
 /*
  |--------------------------------------------------------------------------
  | Front

@@ -50,6 +50,10 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
+/**
+ * Interceptors
+ */
+
 window.jquery= require('jquery');
 window.metisMenu = require('metismenu');
 window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker');
