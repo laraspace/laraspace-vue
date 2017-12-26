@@ -68,6 +68,7 @@ window.toastr = require('toastr');
 window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
 window.Raphael = require('raphael/raphael');
+window.Prismjs = require('prismjs');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

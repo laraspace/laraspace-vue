@@ -18,7 +18,6 @@ mix.combine([
     pluginPath + 'jquery-validate/additional-methods.js',
     // pluginPath + 'bootstrapSelect/bootstrap-select.js',
     pluginPath + 'simplemde/simplemde.min.js',
-    pluginPath + 'prism/prism.js',
     pluginPath + 'alertify/alertify.js',
     pluginPath + 'easypiecharts/jquery.easypiechart.js',
     pluginPath + 'metisMenu/metisMenu.js',
