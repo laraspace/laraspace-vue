@@ -595,6 +595,21 @@
         </div>
     </div>
 </template>
+<script>
+    import Icons from 'evil-icons/assets/evil-icons';
+    import 'evil-icons/assets/evil-icons.css';
+    import 'evil-icons/assets/sprite.svg';
+    import 'evil-icons/evil-icons.svg';
+
+    export default {
+
+        mounted(){
+            console.log(Icons);
+            //window.Icons.icon("ei-*", {class: "icon-ei icon-ei-*"})
+        }
+    }
+
+</script>
 
 
 

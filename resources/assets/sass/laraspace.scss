@@ -10,6 +10,7 @@
 //@import '../plugins/bootstrap/scss/bootstrap';
 @import '../plugins/fontawesome/font-awesome';
 //@import '../plugins/customScrollBar/customScrollBar';
+//@import '../plugins/bootstrap/scss/bootstrap';
 //@import "../plugins/bootstrapSelect/bootstrap-select";
 @import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
@@ -18,6 +19,7 @@
 //@import "../plugins/easypiecharts/easypiecharts";
 
 //node_module
+@import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 @import "../../../node_modules/select2/src/scss/core";
 @import "../../../node_modules/bootstrap-beta/scss/bootstrap";
 
@@ -103,6 +105,7 @@
 @import "components/breadcrumbs";
 @import "components/ratings";
 @import "components/nestable";
+@import "components/ico-moon";
 
 // Pages
 //----------------------------------

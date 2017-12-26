@@ -5,17 +5,26 @@
         padding: 0;
         display: flex;
 
-        li > a{
-            &,&:hover,&:active{
-                border-radius: 0;
-                display: block;
-                width: 100%;
-                text-align: center;
-                padding: 10px 0;
-                border-bottom: 1px solid #d9d9d9;
-                transition: all 0.3s ease-in-out;
-                margin: 0 10px;
-                color: #aaa;
+        li {
+
+            & > a {
+
+                &, &:hover, &:active {
+                    border-radius: 0;
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    padding: 10px 0;
+                    border-bottom: 1px solid #d9d9d9;
+                    transition: all 0.3s ease-in-out;
+                    margin: 0 10px;
+                    color: #aaa;
+                }
+            }
+            &.disabled {
+                a, a:hover, a:active{
+                    background: none;
+                }
             }
         }
 

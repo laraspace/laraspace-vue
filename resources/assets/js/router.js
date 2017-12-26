@@ -50,12 +50,12 @@ import Sparkline from './views/admin/charts/Sparkline.vue'
 
 
 //Icons
-//import Evil from './views/admin/icons/Evil.vue'
+// import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
-import Fpsline from './views/admin/icons/FpsLine.vue'
+// import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
-import Line from './views/admin/icons/Line.vue'
-import Meteo from './views/admin/icons/Meteo.vue'
+// import Line from './views/admin/icons/Line.vue'
+// import Meteo from './views/admin/icons/Meteo.vue'
 
 //Forms
 import General from './views/admin/forms/General.vue'
@@ -65,11 +65,11 @@ import Validation from './views/admin/forms/FormValidation.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
-//form-wizards
+
+    //form-wizards
 import Wizard from './views/admin/forms/Wizard.vue'
 import Wizard2 from './views/admin/forms/Wizard2.vue'
 import Wizard3 from './views/admin/forms/Wizard3.vue'
-
 
 
 //Gallery
@@ -248,8 +248,8 @@ const routes = [
                 component: BarRating
             },
             {
-                path: 'components/ratings/star-rating',
-                component:StarRating
+                path: 'components/rating/star-rating',
+                component: StarRating
             },
 
             //chart
@@ -274,7 +274,7 @@ const routes = [
                 component: Sparkline
             },
 
-            //Icons
+            // Icons
             // {
             //     path: 'icons/evil',
             //     component: Evil
@@ -283,26 +283,22 @@ const routes = [
                 path: 'icons/fontawesome',
                 component: Fontawesome
             },
-            {
-                path: 'icons/fpsline',
-                component: Fpsline
-            },
+            // {
+            //     path: 'icons/fpsline',
+            //     component: Fpsline
+            // },
             {
                 path: 'icons/icomoon',
                 component: IcoMoon
             },
-            {
-                path: 'icons/line',
-                component: Line
-            },
-            {
-                path: 'icons/meteo',
-                component: Meteo
-            },
-            {
-                path: 'components/image-cropper',
-                component: ImageCropper
-            },
+            // {
+            //     path: 'icons/line',
+            //     component: Line
+            // },
+            // {
+            //     path: 'icons/meteo',
+            //     component: Meteo
+            // },
 
             //Forms
             {
@@ -355,6 +351,7 @@ const routes = [
                 path: 'gallery/masonry-grid',
                 component: MasonryGrid
             },
+
             //Users
             {
                 path: 'users/profile',
@@ -370,6 +367,7 @@ const routes = [
                 path: 'todos',
                 component: Todos
             },
+
             //Settings
             {
                 path: 'settings',

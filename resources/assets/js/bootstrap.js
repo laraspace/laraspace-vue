@@ -59,16 +59,19 @@ require('bootstrap-beta');
 window.clockpicker= require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
 window.metisMenu = require('metismenu');
+window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker');
+window.select2 = require('select2');
 window.Switchery = require('switchery/switchery');
 window.Ladda = require('ladda/js/ladda');
 window.multiSelect = require('multiselect');
-window.datepicker= require('bootstrap-datepicker/dist/js/bootstrap-datepicker');
+window.datepicker = require('bootstrap-datepicker/dist/js/bootstrap-datepicker');
 window.notie = require('notie');
 window.toastr = require('toastr');
 window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
 window.Raphael = require('raphael/raphael');
 window.Prismjs = require('prismjs');
+// window.steps = require('jquery-steps/build/jquery.steps');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

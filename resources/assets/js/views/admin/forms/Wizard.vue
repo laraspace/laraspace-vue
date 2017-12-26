@@ -382,7 +382,6 @@
             </div>
         </div>
     </div>
-
 </template>
 <script>
     import "jquery-steps/build/jquery.steps";
@@ -400,10 +399,11 @@
                         vm.handleBasicWizardFour();
                     }
                 };
-
             }();
+
             this.$nextTick(() => {
                 FormWizard.init();
+                Plugin.initPlugins(['Select2','DatePicker']);
             });
         },
 

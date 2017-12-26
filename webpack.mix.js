@@ -16,12 +16,10 @@ mix.combine([
     // pluginPath + 'ladda/spin.js',
     pluginPath + 'jquery-validate/jquery.validate.js',
     pluginPath + 'jquery-validate/additional-methods.js',
-    // pluginPath + 'bootstrapSelect/bootstrap-select.js',
     pluginPath + 'simplemde/simplemde.min.js',
     pluginPath + 'alertify/alertify.js',
     pluginPath + 'easypiecharts/jquery.easypiechart.js',
-    pluginPath + 'metisMenu/metisMenu.js',
-    pluginPath + 'form-wizard/jquery.steps.js',
+    // pluginPath + 'form-wizard/jquery.steps.js',
     pluginPath + 'gallery/image/photoswipe.js',
     pluginPath + 'gallery/image/photoswipe-ui-default.js',
     pluginPath + 'gallery/image/mp.mansory.js',
@@ -31,15 +29,14 @@ mix.combine([
     pluginPath + 'icons/evil-icons.min.js',
     pluginPath + 'ace-editor/twilight.js',
     pluginPath + 'dropzone/dropzone.js',
-    // pluginPath + 'dropzone/require.js',
 
 ], 'public/assets/js/core/plugins.js')
 
-.js('resources/assets/js/app.js', 'public/assets/js/')
+    .js('resources/assets/js/app.js', 'public/assets/js/')
 
-.sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
+    .sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
 
-// .version();
+    .version();
 
 /*
  |--------------------------------------------------------------------------

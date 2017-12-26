@@ -177,8 +177,8 @@
             },
             handleCustomIcons() {
                 $('#star-custom').raty({
-                    starOn: 'fa fa-fw fa-heart color-red',
-                    starOff: 'fa fa-fw fa-heart-o'
+                    starOn: 'icon-fa icon-fa-fw fa-heart color-red',
+                    starOff: 'icon-fa icon-fa-fw fa-heart-o'
                 });
             },
 
