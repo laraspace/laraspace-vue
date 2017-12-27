@@ -3,10 +3,8 @@ import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
 
-
 //datatable
 import 'datatables.net-responsive-bs4';
-
 
 window._ = require('lodash');
 
@@ -26,7 +24,7 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
-
+global.$ = global.jQuery = require('jquery');
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -50,11 +48,11 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
+
 /**
  * Global plugins
  */
 
-window.jquery = require('jquery');
 window.Popper=require('popper.js');
 require('bootstrap-beta');
 window.metisMenu = require('metismenu');
@@ -72,6 +70,7 @@ window.Raphael = require('raphael/raphael');
 window.steps = require('jquery-steps/build/jquery.steps');
 window.Prismjs = require('prismjs');
 // window.easyPieChart = require('easy-pie-chart/src/easypiechart');
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

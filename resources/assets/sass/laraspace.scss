@@ -6,8 +6,7 @@
 
 // Plugins
 //----------------------------------
-@import '../plugins/fontawesome/font-awesome';
-@import "../plugins/summernote/summernote";
+//@import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
 @import "../plugins/pace/pace";
 @import "../plugins/alertify/alertify";
@@ -45,6 +44,7 @@
 @import '../../../node_modules/morris.js/morris.css';
 @import '../../../node_modules/jquery-steps/demo/css/jquery.steps.css';
 @import '../../../node_modules/prismjs/themes/prism-solarizedlight.css';
+@import '../../../node_modules/summernote/src/less/summernote-bs4';
 
 
 
