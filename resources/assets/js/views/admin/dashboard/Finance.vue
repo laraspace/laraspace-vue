@@ -155,7 +155,7 @@
     import LineGraph from '../../../components/LineChart.vue'
     import BarGraph from '../../../components/BarChart.vue'
     import PieGraph from '../../../components/PieChart.vue'
-
+    import EasyPieChart from 'easy-pie-chart/src/easypiechart';
     export default {
         data() {
             return {
@@ -166,7 +166,31 @@
             LineGraph, BarGraph, PieGraph
         },
         mounted() {
-            Plugin.initPlugins(['EasyPieChart'])
+            var elems = jquery('.easy-pie-chart');
+
+            elems.each(function (index, element) {
+                var color = jquery(this).data('color') ? jquery(this).data('color') : '#ffde00';
+
+                var chart = new EasyPieChart(jquery(this),{
+                    scaleColor: false,
+                    barColor: color,
+                    trackColor: '#f8f8f8',
+                    size: 80,
+                    onStep: function (from, to, percent) {
+                        jquery(this.el).find('.percent').text(Math.round(percent));
+                    }
+            });
+//                $(this).easyPieChart({
+//                    scaleColor: false,
+//                    barColor: color,
+//                    trackColor: '#f8f8f8',
+//                    size: 80,
+//                    onStep: function (from, to, percent) {
+//                        $(this.el).find('.percent').text(Math.round(percent));
+//                    }
+//                });
+            });
+
         }
 
     }

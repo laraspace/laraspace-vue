@@ -51,10 +51,12 @@ axios.interceptors.request.use(function (config) {
 });
 
 /**
- * Interceptors
+ * Global plugins
  */
 
-window.jquery= require('jquery');
+window.jquery = require('jquery');
+window.Popper=require('popper.js');
+require('bootstrap-beta');
 window.metisMenu = require('metismenu');
 window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
@@ -68,6 +70,8 @@ window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
 window.Raphael = require('raphael/raphael');
 window.steps = require('jquery-steps/build/jquery.steps');
+window.Prismjs = require('prismjs');
+// window.easyPieChart = require('easy-pie-chart/src/easypiechart');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -383,7 +383,6 @@
 
 </template>
 <script>
-
     export default {
 
         mounted() {

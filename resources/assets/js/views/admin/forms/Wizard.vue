@@ -384,7 +384,8 @@
     </div>
 </template>
 <script>
-
+    import "jquery-steps/build/jquery.steps";
+    import "jquery-validation/dist/jquery.validate";
     export default {
 
         mounted() {
@@ -399,12 +400,11 @@
                         vm.handleBasicWizardFour();
                     }
                 };
-
             }();
 
             this.$nextTick(() => {
                 FormWizard.init();
-                Plugin.initPlugins(['Select2','DatePicker']);
+                Plugin.initPlugins(['Select2', 'DatePicker']);
             });
         },
 
@@ -416,10 +416,8 @@
                     transitionEffect: "slideLeft",
                     autoFocus: true,
                     titleTemplate: '<span class=\"number\">#index#</span> #title#',
-
                 });
             },
-
             handleBasicWizardTwo() {
                 $("#basic-wizard-2").steps({
                     headerTag: "h3",
@@ -468,12 +466,8 @@
                     transitionEffect: "slideLeft",
                     autoFocus: true,
                     titleTemplate: '<span class=\"number\">#index#</span> #title#',
-
                 });
-
             },
-
         }
     }
-
 </script>
