@@ -48,7 +48,6 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-
 /**
  * Global plugins
  */
@@ -68,8 +67,7 @@ window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
 window.Raphael = require('raphael/raphael');
 window.steps = require('jquery-steps/build/jquery.steps');
-window.Prismjs = require('prismjs');
-// window.easyPieChart = require('easy-pie-chart/src/easypiechart');
+window.EasyPieChart = require('easy-pie-chart/dist/easypiechart');
 
 
 /**

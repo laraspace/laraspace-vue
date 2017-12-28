@@ -10,14 +10,8 @@ var pluginPath = 'resources/assets/plugins/';
 
 mix.combine([
     // ** Required Plugins **
-    // pluginPath + 'jquery/jquery.js',
-    // pluginPath + 'bootstrap/popper.js',
-    // pluginPath + 'bootstrap/bootstrap.js',
 
     // ** Additional Plugins **
-    // pluginPath + 'ladda/spin.js',
-    // pluginPath + 'form-wizard/jquery.steps.js',
-    // pluginPath + 'jquery-validate/jquery.validate.js',
     // pluginPath + 'jquery-validate/additional-methods.js',
     // pluginPath + 'simplemde/simplemde.min.js',
     // pluginPath + 'prism/prism.js',

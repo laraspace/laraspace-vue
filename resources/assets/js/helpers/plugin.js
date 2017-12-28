@@ -6,7 +6,7 @@ export default {
         elems.each(function (index, element) {
             var color = $(this).data('color') ? $(this).data('color') : '#ffde00';
 
-            jquery(this).easyPieChart({
+            let myBarChart = new EasyPieChart(element, {
                 scaleColor: false,
                 barColor: color,
                 trackColor: '#f8f8f8',
