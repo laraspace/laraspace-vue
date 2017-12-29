@@ -3971,13 +3971,6 @@
 
 <script>
     require('icomoon-free-npm/Font/IcoMoon-Free.ttf');
-    import Prism from 'prismjs';
 
-    export default {
-        mounted(){
-                Prism.highlight();
-                Prism.tokenize();
-        }
-    }
 </script>
 

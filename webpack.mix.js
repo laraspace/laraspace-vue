@@ -13,19 +13,9 @@ mix.combine([
 
     // ** Additional Plugins **
     // pluginPath + 'jquery-validate/additional-methods.js',
-    // pluginPath + 'simplemde/simplemde.min.js',
-    // pluginPath + 'prism/prism.js',
     // pluginPath + 'alertify/alertify.js',
-    // pluginPath + 'easypiecharts/jquery.easypiechart.js',
-    // pluginPath + 'gallery/image/photoswipe.js',
-    // pluginPath + 'gallery/image/photoswipe-ui-default.js',
-    // pluginPath + 'gallery/image/mp.mansory.js',
-    // pluginPath + 'gallery/image/gallery.js',
-    // pluginPath + 'gallery/video/videobox.js',
     // pluginPath + 'ace-editor/ace.js',
-    // pluginPath + 'icons/evil-icons.min.js',
     // pluginPath + 'ace-editor/twilight.js',
-    // pluginPath + 'dropzone/dropzone.js',
 
 ], 'public/assets/js/core/plugins.js')
 

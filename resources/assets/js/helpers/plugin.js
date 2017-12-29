@@ -74,7 +74,7 @@ export default {
     },
 
     Editors(){
-        jquery('.ls-summernote').summernote();
+        $('.ls-summernote').summernote();
 
         var editor = $('.ls-simplemde')[0];
 
