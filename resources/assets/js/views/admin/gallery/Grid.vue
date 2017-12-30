@@ -242,10 +242,16 @@
     </div>
 </template>
 <script type="text/babel">
+    import PhotoSwipe from 'photoswipe/dist/photoswipe';
+    import PhotoSwipeUI_Default from  'photoswipe/dist/photoswipe-ui-default';
+    import 'photoswipe/dist/photoswipe.css';
+    import 'photoswipe/dist/default-skin/default-skin.css';
+
     export default {
 
         mounted() {
             let vm = this;
+
             let Gallery = function () {
                 return {
                     //main function to initiate the module
@@ -261,7 +267,33 @@
         },
         methods: {
             handleImageGallery() {
-                $(".image-gallery").gallery();
+               // $(".image-gallery").gallery();
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+
+                // build items array
+                var items = [
+                    {
+                        src: '/assets/img/demo/gallery/11.jpg',
+                        w: 600,
+                        h: 400
+                    },
+                    {
+                        src: '/assets/img/demo/gallery/12.jpg',
+                        w: 1200,
+                        h: 900
+                    }
+                ];
+
+                // define options (if needed)
+                var options = {
+                    // optionName: 'option value'
+                    // for example:
+                    index: 0 // start at first slide
+                };
+
+                // Initializes and opens PhotoSwipe
+                var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+                gallery.init();
             },
             handleVideoGallery() {
                 $(".demo").videoBox({

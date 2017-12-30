@@ -6,17 +6,15 @@
 
 // Plugins
 //----------------------------------
-
-@import '../plugins/bootstrap/scss/bootstrap';
-@import "../plugins/summernote/summernote";
+//@import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
 @import "../plugins/pace/pace";
 @import "../plugins/alertify/alertify";
-@import "../plugins/easypiecharts/easypiecharts";
 
 //node_module
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 @import "../../../node_modules/select2/src/scss/core";
+@import "../../../node_modules/bootstrap-beta/scss/bootstrap";
 @import "../../../node_modules/timepicker/jquery.timepicker.css";
 @import "../../../node_modules/switchery/switchery.css";
 @import "../../../node_modules/ladda/css/ladda";
@@ -45,6 +43,8 @@
 @import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
 @import '../../../node_modules/morris.js/morris.css';
 @import '../../../node_modules/jquery-steps/demo/css/jquery.steps.css';
+@import '../../../node_modules/prismjs/themes/prism.css';
+
 
 // Skins
 //----------------------------------
@@ -97,6 +97,7 @@
 @import "components/ratings";
 @import "components/nestable";
 @import "components/ico-moon";
+@import "components/easy-pie-chart";
 
 // Pages
 //----------------------------------

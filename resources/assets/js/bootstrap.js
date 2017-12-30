@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Axios from 'axios';
 import Ls from './services/ls';
+import VuePrism from 'vue-prism';
 
 //datatable
 import 'datatables.net-responsive-bs4';
@@ -49,9 +50,11 @@ axios.interceptors.request.use(function (config) {
 });
 
 /**
- * Global Plugins
+ * Global plugins
  */
 
+window.Popper=require('popper.js');
+require('bootstrap-beta');
 window.metisMenu = require('metismenu');
 window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
@@ -65,6 +68,9 @@ window.DataTable = require('datatables.net-bs4');
 window.timepicker = require('timepicker');
 window.Raphael = require('raphael/raphael');
 window.steps = require('jquery-steps/build/jquery.steps');
+window.EasyPieChart = require('easy-pie-chart/dist/easypiechart');
+
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -82,4 +88,4 @@ window.steps = require('jquery-steps/build/jquery.steps');
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
-
+Vue.use(VuePrism);

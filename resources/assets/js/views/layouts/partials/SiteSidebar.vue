@@ -46,6 +46,7 @@
                                 <router-link to="/admin/components/rating/star-rating" tag="li"><a>Star Rating </a></router-link>
                             </ul>
                         </li>
+                        <router-link to="/admin/components/sweet-modals" tag="li"><a>SweetModals</a></router-link>
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/chart') }">
