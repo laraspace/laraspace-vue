@@ -10,29 +10,12 @@ var pluginPath = 'resources/assets/plugins/';
 
 mix.combine([
     // ** Required Plugins **
-    // pluginPath + 'jquery/jquery.js',
-    // pluginPath + 'bootstrap/popper.js',
-    // pluginPath + 'bootstrap/bootstrap.js',
 
     // ** Additional Plugins **
-    // pluginPath + 'ladda/spin.js',
-    // pluginPath + 'form-wizard/jquery.steps.js',
-
-    // pluginPath + 'jquery-validate/jquery.validate.js',
     // pluginPath + 'jquery-validate/additional-methods.js',
-    // pluginPath + 'simplemde/simplemde.min.js',
-    // pluginPath + 'prism/prism.js',
     // pluginPath + 'alertify/alertify.js',
-    // pluginPath + 'easypiecharts/jquery.easypiechart.js',
-    // pluginPath + 'gallery/image/photoswipe.js',
-    // pluginPath + 'gallery/image/photoswipe-ui-default.js',
-    // pluginPath + 'gallery/image/mp.mansory.js',
-    // pluginPath + 'gallery/image/gallery.js',
-    // pluginPath + 'gallery/video/videobox.js',
     // pluginPath + 'ace-editor/ace.js',
-    // pluginPath + 'icons/evil-icons.min.js',
     // pluginPath + 'ace-editor/twilight.js',
-    // pluginPath + 'dropzone/dropzone.js',
 
 ], 'public/assets/js/core/plugins.js')
 
@@ -45,6 +28,10 @@ mix.combine([
     })
 
     .version();
+
+// mix.autoload({
+//     jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
+// });
 
 /*
  |--------------------------------------------------------------------------

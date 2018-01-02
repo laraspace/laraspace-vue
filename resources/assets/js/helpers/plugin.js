@@ -6,7 +6,7 @@ export default {
         elems.each(function (index, element) {
             var color = $(this).data('color') ? $(this).data('color') : '#ffde00';
 
-            $(this).easyPieChart({
+            let myBarChart = new EasyPieChart(element, {
                 scaleColor: false,
                 barColor: color,
                 trackColor: '#f8f8f8',
@@ -25,7 +25,6 @@ export default {
     Select2(){
         jquery(".ls-select2").select2();
     },
-
 
     SwitchToggles(){
 
@@ -75,7 +74,7 @@ export default {
     },
 
     Editors(){
-        jquery('.ls-summernote').summernote();
+        $('.ls-summernote').summernote();
 
         var editor = $('.ls-simplemde')[0];
 

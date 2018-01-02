@@ -15,7 +15,7 @@
                         <h6>Example Usage</h6>
                     </div>
                     <div class="card-body">
-                        <pre class="language-php"><code>&lt;i class="icon-im icon-im-home"&gt;&lt;/i&gt;</code></pre>
+                        <pre  class="language-html"><code>&lt;i class="icon-im icon-im-home"&gt;&lt;/i&gt;</code></pre>
                     </div>
                 </div>
             </div>
@@ -3971,5 +3971,6 @@
 
 <script>
     require('icomoon-free-npm/Font/IcoMoon-Free.ttf');
+
 </script>
 

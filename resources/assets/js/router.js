@@ -38,10 +38,10 @@ import ImageZoom from './views/admin/components/ImageZoom.vue'
 import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
+    //1. Ratings
 import BarRating from './views/admin/components/ratings/BarRating.vue'
 import StarRating from './views/admin/components/ratings/StarRating.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
-
 
 
 //Charts
@@ -261,6 +261,10 @@ const routes = [
             {
                 path: 'components/rating/star-rating',
                 component: StarRating
+            },
+            {
+                path: 'components/sweet-modals',
+                component: SweetModals
             },
 
             //chart

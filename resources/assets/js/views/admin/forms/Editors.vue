@@ -49,10 +49,14 @@ Unordered lists can be started using the toolbar or by typing `* `, `- `, or `+ 
 </template>
 
 <script type="text/babel">
-     import summernote from 'summernote';
-//     window.summernote=require('summernote/dist/summernote-bs4');
-     import "summernote/dist/summernote.css";
-//     import "summernote/src/js/bs4/settings.js"
+    //summernote
+    import summernote from 'summernote/dist/summernote-bs4';
+    import 'summernote/dist/summernote-bs4.css';
+
+    //simpleMDE
+    window.SimpleMDE = require('simplemde/src/js/simplemde');
+    import 'simplemde/src/css/simplemde.css';
+
 
     export default {
         mounted() {
