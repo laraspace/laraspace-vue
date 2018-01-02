@@ -66,8 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label>Retype Password</label>
-                        <input type="password" name="password_confirmation" class="form-control"
-                        >
+                        <input type="password" name="password_confirmation" class="form-control">
                     </div>
                     <div :class="{'form-group' : true }">
                         <div class="checkbox checkbox-full">
@@ -95,6 +94,7 @@
             }
         },
         methods: {
+
             validateBeforeSubmit(e) {
                 this.$validator.validateAll();
 

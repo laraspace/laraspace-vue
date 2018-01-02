@@ -143,7 +143,8 @@
                             Pre-Selected Options
                         </h5>
 
-                        <p class="mb-4">Just use <code>selected</code> attribute on the options which you want to keep as
+                        <p class="mb-4">Just use <code>selected</code> attribute on the options which you want to keep
+                            as
                             selected</p>
                         <select class="form-control ls-multi-select" multiple="multiple">
                             <option value="AK" selected>Alaska</option>
@@ -269,41 +270,42 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Clock Time Picker <a class="source-link" href="http://weareoutman.github.io/clockpicker/"
-                                         target="_blank">source</a></h6>
+                <h6>Clock Time Picker
+                    <a class="source-link" href="http://weareoutman.github.io/clockpicker/" target="_blank">source</a>
+                </h6>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4  col-md-6 mb-4">
-                        <h5 class="section-semi-title">
-                            Default
-                        </h5>
+                        <h5 class="section-semi-title">Default</h5>
 
-                        <p class="mb-4">Just apply <code>.ls-clockpicker</code> class to an input to make it a clockpicker
+                        <p class="mb-4">Just apply <code>.ls-clockpicker</code> class to an input to make it a
+                            clockpicker
                         </p>
 
                         <div class="input-group ls-clockpicker" data-autoclose="false">
                             <input type="text" class="form-control" value="09:30">
-                            <span class="input-group-addon">
-                                <i class="icon-fa icon-fa-clock-o"></i>
-                            </span>
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="icon-fa icon-fa-clock-o"></i></span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-6 mb-4">
-                        <h5 class="section-semi-title">
-                            Autoclose and align top left
-                        </h5>
+                        <h5 class="section-semi-title">Autoclose and align top left</h5>
 
                         <p class="mb-4">use <code>data-autoclose="true"</code> attribute to auto-close clockpicker after
-                            the date is selected and <code>data-placement="left"</code>,<code>data-align="top"</code> for
+                            the date is selected and <code>data-placement="left"</code>,<code>data-align="top"</code>
+                            for
                             placement of the clockpicker</p>
 
                         <div class="input-group ls-clockpicker" data-placement="left" data-align="top"
                              data-autoclose="true">
                             <input type="text" class="form-control" value="09:30">
-                            <span class="input-group-addon">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
                                 <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -317,30 +319,30 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4 col-lg-6 mb-4">
-                        <h5 class="section-semi-title">
-                            Default
-                        </h5>
+                        <h5 class="section-semi-title">Default</h5>
 
                         <p class="mb-4">Just apply <code>.ls-datepicker</code> class to a input.</p>
 
                         <div class="input-group">
-                            <span class="input-group-addon">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
                                 <i class="icon-fa icon-fa-calendar"></i>
-                            </span>
+                                </span>
+                            </div>
                             <input type="text" class="form-control ls-datepicker" value="09:30">
                         </div>
                     </div>
 
                     <div class="col-xl-4 col-lg-6 mb-4">
-                        <h5 class="section-semi-title">
-                            Date Range
-                        </h5>
+                        <h5 class="section-semi-title">Date Range</h5>
 
                         <p class="mb-4">Just apply <code>.ls-datepicker</code> classes to both inputs.</p>
 
                         <div class="input-group input-daterange">
                             <input type="text" class="form-control ls-datepicker">
-                            <span class="input-group-addon">to</span>
+                            <div class="input-group-prepend input-group-append">
+                                <span class="input-group-text">to</span>
+                            </div>
                             <input type="text" class="form-control ls-datepicker">
                         </div>
                     </div>
@@ -366,50 +368,51 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-4 mb-4">
-                        <h5 class="section-semi-title">
-                            Default
-                        </h5>
+                        <h5 class="section-semi-title">Default</h5>
 
                         <p class="mb-4">Just apply <code>.ls-timepicker</code> class to an input.</p>
 
                         <div class="input-group">
                             <input type="text" class="form-control ls-timepicker" value="09:30">
-                            <span class="input-group-addon">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
                                 <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-4 mb-4">
-                        <h5 class="section-semi-title">
-                            Show Duration
-                        </h5>
+                        <h5 class="section-semi-title">Show Duration</h5>
 
                         <p class="mb-4">Use <code>data-duration="true"</code> attribute to show the time duration.</p>
 
                         <div class="input-group">
                             <input type="text" class="form-control ls-timepicker" value="09:30" data-duration="true">
-                            <span class="input-group-addon">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
                                 <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-4 mb-4">
-                        <h5 class="section-semi-title">
-                            Time Format
-                        </h5>
+                        <h5 class="section-semi-title">Time Format</h5>
 
                         <p class="mb-4">Use <code>data-format="H:i:s"</code> attribute to change the time format.</p>
 
                         <div class="input-group">
                             <input type="text" class="form-control ls-timepicker" value="09:30" data-format="H:i:s">
-                            <span class="input-group-addon">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
                                 <i class="icon-fa icon-fa-clock-o"></i>
                             </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 

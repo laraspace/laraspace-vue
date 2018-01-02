@@ -10,12 +10,11 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h6>Jquery Validate <a class="source-link" href="https://jqueryvalidation.org/"
-                                       target="_blank">source</a>
+                <h6>Jquery Validate <a class="source-link" href="https://jqueryvalidation.org/" target="_blank">source</a>
                 </h6>
             </div>
             <div class="card-body">
-                <form id="validateForm">
+                <form id="validateForm"  novalidate>
                     <div class="form-group">
                         <label>Email address</label>
                         <input type="email" class="form-control" name="email"
@@ -88,12 +87,13 @@
 
                     highlight: function (element) { // hightlight error inputs
                         $(element)
-                            .closest('.form-group').addClass('has-danger'); // set danger class to the control group
+                            .closest('.form-group .form-control').addClass('is-invalid'); // set danger class to the control group
                     },
 
                     unhighlight: function (element) { // revert the change done by hightlight
                         $(element)
-                            .closest('.form-group').removeClass('has-danger'); // set danger class to the control group
+                            .closest('.form-group .form-control').removeClass('is-invalid') // set danger class to the control group
+                            .closest('.form-group .form-control').addClass('is-valid'); // set danger class to the control group
                     },
                     errorPlacement: function (error, element) {
                         if (element.parent('.input-group').length || element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
@@ -104,7 +104,7 @@
                     },
                     success: function (label) {
                         label
-                            .closest('.form-group').removeClass('has-danger'); // set success class to the control group
+                            .closest('.form-group .form-control').removeClass('is-invalid'); // set success class to the control group
                     },
                 });
             }

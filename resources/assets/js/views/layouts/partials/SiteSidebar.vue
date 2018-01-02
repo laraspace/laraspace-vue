@@ -27,6 +27,8 @@
                         <router-link to="/admin/basic-ui/typography" tag="li"><a>Typography</a></router-link>
                         <router-link to="/admin/basic-ui/tables" tag="li"><a>Tables</a></router-link>
                         <router-link to="/admin/basic-ui/modals" tag="li"><a>Modals</a></router-link>
+                        <router-link to="/admin/basic-ui/progress-bars" tag="li"><a>Progress Bar</a></router-link>
+
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/components') }">
@@ -39,6 +41,8 @@
                         <router-link to="/admin/components/nestable-list" tag="li"><a>Nestable List</a></router-link>
                         <router-link to="/admin/components/nestable-tree" tag="li"><a>Nestable Tree</a></router-link>
                         <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
+                        <router-link to="/admin/components/sweet-modals" tag="li"><a>Sweet Modals</a></router-link>
+
                         <li :class="{ active: isActive('/admin/components/rating') }">
                             <a href="#" aria-expanded="true">Rating <span class="icon-fa arrow icon-fa-fw"></span></a>
                             <ul aria-expanded="true">

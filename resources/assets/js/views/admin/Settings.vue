@@ -24,7 +24,7 @@
                         <h6>Example Social Settings</h6>
                     </div>
                     <div class="card-body">
-                        <form action="/admin/settings/social" method="post">
+                        <form action="/api/admin/settings/social" method="post">
                             <div class="form-body">
                                 <div class="form-group row">
                                     <label class="col-md-4 col-lg-2 form-control-label">Facebook Page URL</label>
@@ -60,6 +60,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>

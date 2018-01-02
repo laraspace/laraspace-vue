@@ -28,6 +28,7 @@ import Tabs from './views/admin/basic-ui/Tabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
 import Modals from './views/admin/basic-ui/Modals.vue'
+import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 
 //Components
 import Datatables from './views/admin/components/Datatables.vue'
@@ -39,6 +40,8 @@ import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
 import BarRating from './views/admin/components/ratings/BarRating.vue'
 import StarRating from './views/admin/components/ratings/StarRating.vue'
+import SweetModals from './views/admin/components/SweetModals.vue'
+
 
 
 //Charts
@@ -212,6 +215,10 @@ const routes = [
                 path: 'basic-ui/modals',
                 component: Modals
             },
+            {
+                path: 'basic-ui/progress-bars',
+                component: ProgressBar
+            },
 
             //Components
             {
@@ -241,6 +248,10 @@ const routes = [
             {
                 path: 'components/notifications',
                 component: Notifications
+            },
+            {
+                path: 'components/sweet-modals',
+                component: SweetModals
             },
             //Rating
             {

@@ -31,9 +31,11 @@
                                         <label>DOB</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control ls-datepicker" value="06/10/2017">
-                                            <span class="input-group-addon">
-                                                <i class="icon-fa icon-fa-calendar"></i>
-                                            </span>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                        <i class="icon-fa icon-fa-calendar"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -153,9 +155,11 @@
                                         <label>DOB</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control ls-datepicker" value="06/10/2017">
-                                            <span class="input-group-addon">
-                                                <i class="icon-fa icon-fa-calendar"></i>
-                                            </span>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                        <i class="icon-fa icon-fa-calendar"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +175,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Occupation</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" >
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +241,7 @@
                         <section>
                             <div class="form-group">
                                 <label>Facebook</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label>Twitter</label>
@@ -277,9 +281,11 @@
                                         <label>DOB</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control ls-datepicker" value="06/10/2017">
-                                            <span class="input-group-addon">
-                                                <i class="icon-fa icon-fa-calendar"></i>
-                                            </span>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                        <i class="icon-fa icon-fa-calendar"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +302,7 @@
                                     <div class="form-group">
                                         <label>Occupation *</label>
                                         <input type="text" id="occupation" name="occupation"
-                                               class="form-control required">
+                                               class="form-control required" >
                                     </div>
                                 </div>
                             </div>

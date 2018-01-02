@@ -7,7 +7,7 @@
 // Plugins
 //----------------------------------
 
-@import '../plugins/bootstrap/scss/bootstrap';
+//@import '../plugins/bootstrap/scss/bootstrap';
 @import "../plugins/summernote/summernote";
 @import "../plugins/simplemde/simplemde";
 @import "../plugins/pace/pace";
@@ -15,6 +15,7 @@
 @import "../plugins/easypiecharts/easypiecharts";
 
 //node_module
+@import "../../../node_modules/bootstrap/scss/bootstrap";
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 @import "../../../node_modules/select2/src/scss/core";
 @import "../../../node_modules/timepicker/jquery.timepicker.css";
