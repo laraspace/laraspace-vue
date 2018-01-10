@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use Laraspace\User;
 

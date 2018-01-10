@@ -1,5 +1,4 @@
 <?php
-
 namespace Laraspace\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,7 +11,6 @@ class AuthController extends Controller
     {
         // grab credentials from the request
         $credentials = $request->only('email', 'password');
-
         try {
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
@@ -29,19 +27,16 @@ class AuthController extends Controller
 
     public function check()
     {
-
         try {
             JWTAuth::parseToken()->authenticate();
         } catch (JWTException $e) {
             return response(['authenticated' => false]);
         }
-
         return response(['authenticated' => true]);
     }
 
     public function logout()
     {
-
         try {
             $token = JWTAuth::getToken();
 
@@ -52,7 +47,6 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json($e->getMessage(), 401);
         }
-
         return response()->json(['message' => 'Log out success'], 200);
     }
 }

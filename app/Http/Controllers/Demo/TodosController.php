@@ -1,9 +1,7 @@
 <?php
-
 namespace Laraspace\Http\Controllers\Demo;
 
 use Illuminate\Http\Request;
-
 use Illuminate\View\View;
 use Laraspace\Http\Requests;
 use Laraspace\Http\Controllers\Controller;
@@ -33,13 +31,11 @@ class TodosController extends Controller
         $todo->title = $request->title;
         $todo->completed = $request->completed;
         $todo->save();
-
         return response()->json([
             'message' => 'Todo Added Successfully',
             'todo' => $todo
         ],200);
     }
-
     /**
      * Toggle the Todo
      *
@@ -52,12 +48,10 @@ class TodosController extends Controller
         $todo = Todo::findOrFail($id);
         $todo->completed = $request->completed;
         $todo->save();
-
         return response()->json([
             'message' => 'Todo Marked as Complete',
         ],200);
     }
-
     /**
      * Delete Todo
      *
@@ -67,9 +61,7 @@ class TodosController extends Controller
     public function destroy($id)
     {
         $todo = Todo::findOrFail($id);
-
         $todo->delete();
-
         return response()->json([
             'message' => 'Todo Deleted Successfully',
 

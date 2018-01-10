@@ -1,5 +1,4 @@
 <?php
-
 namespace Laraspace\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;

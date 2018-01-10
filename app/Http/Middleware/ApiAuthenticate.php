@@ -1,5 +1,4 @@
 <?php
-
 namespace Laraspace\Http\Middleware;
 
 use Laraspace\Exceptions\JWTInvalidException;
@@ -26,7 +25,6 @@ class ApiAuthenticate
         } else {
             return response()->json(['error' => 'user_not_found'], 404);
         }
-
         return $next($request);
     }
 }

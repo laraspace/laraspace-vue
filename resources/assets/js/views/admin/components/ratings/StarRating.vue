@@ -161,7 +161,7 @@ export default {
 
   methods: {
     handleDefaults () {
-      $.fn.raty.defaults.starOn = 'icon-fa ic0n-fa-fw icon-fa-star color-orange'
+      $.fn.raty.defaults.starOn = 'icon-fa icon-fa-fw icon-fa-star color-orange'
       $.fn.raty.defaults.starOff = 'icon-fa icon-fa-fw icon-fa-star-o'
       $.fn.raty.defaults.starHalf = 'icon-fa icon-fa-fw icon-fa-star-half-o color-orange'
       $.fn.raty.defaults.cancelOff = 'icon-fa icon-fa-fw icon-fa-minus-square-o'
