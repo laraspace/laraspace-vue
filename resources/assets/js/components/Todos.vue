@@ -7,7 +7,7 @@
       class="form-control todo-field"
       v-model="newTodo.title"
       placeholder="New Todo"
-      @:keyup.enter="addTodo">
+      @keyup.enter="addTodo">
     <div class="todo-block scroll-pane">
       <ul
         class="todo-list"
@@ -67,9 +67,9 @@ export default {
   methods: {
     addTodo () {
       let vm = this
-      url = '/api/admin/todos'
+      let url = '/api/admin/todos'
 
-      if (vm.newTodo.title == '') {
+      if (vm.newTodo.title === '') {
         return
       }
 

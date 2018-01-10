@@ -3,7 +3,7 @@ import VeeValidate from 'vee-validate'
 import Axios from 'axios'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
-
+import mCustomScrollbar from 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar'
 // datatable
 import 'datatables.net-responsive-bs4'
 
@@ -69,6 +69,8 @@ window.timepicker = require('timepicker')
 window.Raphael = require('raphael/raphael')
 window.steps = require('jquery-steps/build/jquery.steps')
 window.EasyPieChart = require('easy-pie-chart/dist/easypiechart')
+
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -84,3 +86,4 @@ window.EasyPieChart = require('easy-pie-chart/dist/easypiechart')
 Vue.use(VueRouter)
 Vue.use(VeeValidate)
 Vue.use(VuePrism)
+Vue.use(mCustomScrollbar)

@@ -55,7 +55,7 @@
             <li class=""><a href="../forms/editors.html">Editors</a></li>
           </ul>
         </li>
-        <li class="  has-child ">
+        <li class="has-child ">
           <a href="#"><i class="icon-fa icon-fa-file"/> Pages</a>
           <ul class="sub-menu collapse">
             <li class=""><a href="../../login.html">Login</a></li>
@@ -63,7 +63,7 @@
             <li class=""><a href="../404.html">404 Page</a></li>
           </ul>
         </li>
-        <li class="  has-child ">
+        <li class="has-child ">
           <a href="#"><i class="icon-fa icon-fa-user"/> Users</a>
           <ul class="sub-menu collapse">
             <li class=""><a href="../users.html">All Users</a></li>
