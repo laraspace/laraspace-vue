@@ -43,23 +43,23 @@ class SettingsController extends Controller
     public function postMail(Request $request)
     {
         if ($request->mailer == 'mailgun') {
-            $sets = ['mail_mailgun_host', 'mail_mailgun_domain', 'mail_mailgun_secret', 'mail_from_name','mail_from_email'];
+            $sets = ['mail_mailgun_host', 'mail_mailgun_domain', 'mail_mailgun_secret', 'mail_from_name', 'mail_from_email'];
             foreach ($sets as $key) {
                 Setting::setSetting($key, $request->input($key));
             }
         } else if ($request->mailer == 'sendgrid') {
-            $sets = ['mail_sendgrid_host', 'mail_sendgrid_username', 'mail_sendgrid_password', 'mail_from_name','mail_from_email'];
+            $sets = ['mail_sendgrid_host', 'mail_sendgrid_username', 'mail_sendgrid_password', 'mail_from_name', 'mail_from_email'];
             foreach ($sets as $key) {
                 Setting::setSetting($key, $request->input($key));
             }
         } else if ($request->mailer == 'sparkpost') {
-            $sets = ['mail_sparkpost_secret','mail_from_name','mail_from_email'];
+            $sets = ['mail_sparkpost_secret', 'mail_from_name', 'mail_from_email'];
             foreach ($sets as $key) {
                 Setting::setSetting($key, $request->input($key));
             }
         } else {
             // smtp
-            $sets = ['mail_smtp_host','mail_smtp_username','mail_smtp_password','mail_smtp_port','mail_smtp_encryption','mail_from_name','mail_from_email'];
+            $sets = ['mail_smtp_host', 'mail_smtp_username', 'mail_smtp_password', 'mail_smtp_port', 'mail_smtp_encryption', 'mail_from_name', 'mail_from_email'];
             foreach ($sets as $key) {
                 Setting::setSetting($key, $request->input($key));
             }

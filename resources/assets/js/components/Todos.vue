@@ -121,7 +121,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .todo-container {
   background-color: #ffde00;
   padding: 50px;

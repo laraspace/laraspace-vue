@@ -12,27 +12,27 @@ window.Chart = require('chart.js')
 export default {
   props: {
     labels: {
-      type: String,
+      type: Array,
       require: true,
-      default: ''
+      default: Array
     },
     values: {
-      type: String,
+      type: Array,
       require: true,
-      default: ''
+      default: Array
     },
     bgColors: {
-      type: String,
+      type: Array,
       require: true,
-      default: ''
+      default: Array
     },
     hoverBgColors: {
-      type: String,
+      type: Array,
       require: true,
-      default: ''
+      default: Array
     }
   },
-  // props: ["labels", "values", "bgColors", "hoverBgColors"],
+
 
   mounted () {
     let context = this.$refs.graph.getContext('2d')
@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .graph-container {
   height: 300px;
 }

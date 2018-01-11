@@ -21,7 +21,8 @@
               </h5>
               <line-chart
                 :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-                :values="[65, 59, 80, 81, 56, 55, 40]"/>
+                :values="[65, 59, 80, 81, 56, 55, 40]">
+              </line-chart>
             </div>
             <div class="mb-4">
               <h5 class="section-semi-title">
@@ -29,7 +30,8 @@
               </h5>
               <bar-Chart
                 :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-                :values="[65, 59, 80, 81, 56, 55, 40]"/>
+                :values="[65, 59, 80, 81, 56, 55, 40]">
+              </bar-Chart>
             </div>
             <div class="row">
               <div class="col-md-6 mb-4">
@@ -40,7 +42,8 @@
                   :labels="pieAndDoughtnut.labels"
                   :values="pieAndDoughtnut.data"
                   :bg-colors="pieAndDoughtnut.bgColors"
-                  :hover-bg-colors="pieAndDoughtnut.hoverBgColors"/>
+                  :hover-bg-colors="pieAndDoughtnut.hoverBgColors">
+                </pie-chart>
               </div>
               <div class="col-md-6 mb-4">
                 <h5 class="section-semi-title">
@@ -51,7 +54,8 @@
                   :values="pieAndDoughtnut.data"
                   :bg-colors="pieAndDoughtnut.bgColors"
                   :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
-                />
+                >
+                </doughnut-chart>
               </div>
             </div>
           </div>

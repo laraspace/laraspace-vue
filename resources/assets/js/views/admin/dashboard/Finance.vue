@@ -122,7 +122,8 @@
                 role="tabpanel">
                 <line-chart
                   :labels="['Oct 10', 'Oct 11', 'Oct 12', 'Oct 13', 'Oct 14', 'Oct 15', 'Oct 16']"
-                  :values="[200 , 1000 , 300, 551, 516, 225, 40]"/>
+                  :values="[200 , 1000 , 300, 551, 516, 225, 40]">
+                </line-chart>
               </div>
               <div
                 class="tab-pane"
@@ -130,7 +131,8 @@
                 role="tabpanel">
                 <line-chart
                   :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-                  :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"/>
+                  :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]">
+                </line-chart>
               </div>
               <div
                 class="tab-pane"
@@ -138,7 +140,8 @@
                 role="tabpanel">
                 <line-chart
                   :labels="['2011', '2012', '2013', '2014', '2015', '2016', '2017']"
-                  :values="[10000, 20000, 12444, 15000, 17000, 14000, 20000]"/>
+                  :values="[10000, 20000, 12444, 15000, 17000, 14000, 20000]">
+                </line-chart>
               </div>
             </div>
           </div>
@@ -183,7 +186,8 @@
               :labels="['Revenue', 'Expense', 'Profit']"
               :values="[300, 50, 250]"
               :bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"
-              :hover-bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"/>
+              :hover-bg-colors="['#5BBFDE','#f35a3d','#4fc47f']">
+            </pie-chart>
           </div>
         </div>
       </div>
@@ -201,7 +205,8 @@
           <div class="card-body">
             <bar-chart
               :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-              :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"/>
+              :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]">
+            </bar-chart>
           </div>
         </div>
       </div>

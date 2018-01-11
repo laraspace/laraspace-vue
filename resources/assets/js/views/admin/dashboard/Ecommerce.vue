@@ -101,7 +101,8 @@
           <div class="card-body">
             <line-graph
               :labels="['Jan','Feb','Mar','June']"
-              :values="[20,30,40,60]"/>
+              :values="[20,30,40,60]">
+            </line-graph>
           </div>
         </div>
       </div>
