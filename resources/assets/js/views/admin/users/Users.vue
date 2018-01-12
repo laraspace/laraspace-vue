@@ -82,7 +82,7 @@ export default {
   methods: {
     getUsers () {
       let vm = this
-      axios.get('/api/admin/users/get')
+      window.axios.get('/api/admin/users/get')
         .then(function (response) {
           vm.users = response.data
         })
@@ -90,27 +90,27 @@ export default {
           Plugin.initPlugins(['DataTables'])
         }).catch(function (error) {
           if (error) {
-            toastr['error']('There was an error', 'Error')
+            window.toastr['error']('There was an error', 'Error')
           }
         })
     },
     deleteUser (id) {
       let vm = this
-      notie.confirm({
+      window.notie.confirm({
         text: 'Are you sure?',
         cancelCallback: function () {
-          toastr['info']('Cancel')
+          window.toastr['info']('Cancel')
         },
         submitCallback: function () {
-          axios
+          window.axios
             .delete('/api/admin/users/' + id)
             .then(function (response) {
               vm.users = response.data
-              toastr['success']('User Deleted', 'Success')
+              window.toastr['success']('User Deleted', 'Success')
             })
             .catch(function (error) {
               if (error) {
-                toastr['error']('There was an error', 'Error')
+                window.toastr['error']('There was an error', 'Error')
               }
             })
         }

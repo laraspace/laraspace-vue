@@ -140,7 +140,7 @@ export default {
   },
   methods: {
     handleToastrNotifs () {
-      toastr.options = {
+      window.toastr.options = {
         closeButton: true,
         debug: false,
         positionClass: 'toast-top-right',
@@ -159,7 +159,7 @@ export default {
         var type = $(this).data('toastr')
         var message = $(this).data('message')
         var title = $(this).data('title')
-        toastr[type](message, title)
+        window.toastr[type](message, title)
       })
     },
 
@@ -172,42 +172,42 @@ export default {
         console.log(message)
         switch (type) {
           case 'success':
-            notie.alert({ type: 1, text: 'Success!' })
+            window.notie.alert({ type: 1, text: 'Success!' })
             break
           case 'warning':
-            notie.alert({ type: 2, text: 'Warning!' })
+            window.notie.alert({ type: 2, text: 'Warning!' })
             break
           case 'error':
-            notie.alert({ type: 3, text: 'Error!' })
+            window.notie.alert({ type: 3, text: 'Error!' })
             break
           case 'info':
-            notie.alert({ type: 4, text: 'Info!' })
+            window.notie.alert({ type: 4, text: 'Info!' })
             break
           case 'confirm':
-            notie.confirm({
+            window.notie.confirm({
               text:
                 "Are you sure you want to do that?<br><b>That's a bold move...</b>",
               cancelCallback: function () {
-                notie.alert({ type: 3, text: 'Aw, why not? :(', time: 2 })
+                window.notie.alert({ type: 3, text: 'Aw, why not? :(', time: 2 })
               },
               submitCallback: function () {
-                notie.alert({ type: 1, text: 'Good choice! :D', time: 2 })
+                window.notie.alert({ type: 1, text: 'Good choice! :D', time: 2 })
               }
             })
             break
           case 'input':
-            notie.input({
+            window.notie.input({
               text: 'Please enter your email:',
               submitText: 'Submit',
               cancelText: 'Cancel',
               cancelCallback: function (value) {
-                notie.alert({
+                window.notie.alert({
                   type: 3,
                   text: 'You cancelled with this value: ' + value
                 })
               },
               submitCallback: function (value) {
-                notie.alert({ type: 1, text: 'You entered: ' + value })
+                window.notie.alert({ type: 1, text: 'You entered: ' + value })
               },
               value: 'jane@doe.com',
               type: 'email',
@@ -215,53 +215,53 @@ export default {
             })
             break
           case 'select':
-            notie.select({
+            window.notie.select({
               text: 'Demo item #1, owner is Jane Smith',
               cancelText: 'Close',
               cancelCallback: function () {
-                notie.alert({ type: 5, text: 'Cancel!' })
+                window.notie.alert({ type: 5, text: 'Cancel!' })
               },
               choices: [
                 {
                   text: 'Share',
                   handler: function () {
-                    notie.alert({ type: 1, text: 'Share item!' })
+                    window.notie.alert({ type: 1, text: 'Share item!' })
                   }
                 },
                 {
                   text: 'Open',
                   handler: function () {
-                    notie.alert({ type: 1, text: 'Open item!' })
+                    window.notie.alert({ type: 1, text: 'Open item!' })
                   }
                 },
                 {
                   type: 2,
                   text: 'Edit',
                   handler: function () {
-                    notie.alert({ type: 2, text: 'Edit item!' })
+                    window.notie.alert({ type: 2, text: 'Edit item!' })
                   }
                 },
                 {
                   type: 3,
                   text: 'Delete',
                   handler: function () {
-                    notie.alert({ type: 3, text: 'Delete item!' })
+                    window.notie.alert({ type: 3, text: 'Delete item!' })
                   }
                 }
               ]
             })
             break
           case 'date':
-            notie.date({
+            window.notie.date({
               value: new Date(2015, 8, 27),
               cancelCallback: function (date) {
-                notie.alert({
+                window.notie.alert({
                   type: 3,
                   text: 'You cancelled: ' + date.toISOString()
                 })
               },
               submitCallback: function (date) {
-                notie.alert({
+                window.notie.alert({
                   type: 1,
                   text: 'You selected: ' + date.toISOString()
                 })
@@ -270,7 +270,7 @@ export default {
             break
 
           default:
-            notie.alert(1, 'Success!')
+            window.notie.alert(1, 'Success!')
         }
       })
     }

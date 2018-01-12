@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 import AuthService from './services/auth'
 
 /*
@@ -22,20 +21,20 @@ import LayoutLogin from './views/layouts/LayoutLogin.vue'
 import LayoutFront from './views/layouts/LayoutFront.vue'
 
 // Basic UI
-import Buttons from './views/admin/basic-ui/Buttons.vue'
-import Cards from './views/admin/basic-ui/Cards.vue'
-import Tabs from './views/admin/basic-ui/Tabs.vue'
-import Typography from './views/admin/basic-ui/Typography.vue'
-import Tables from './views/admin/basic-ui/Tables.vue'
-import Modals from './views/admin/basic-ui/Modals.vue'
-import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
+import Buttons from './views/admin/basic-ui/BaseButtons.vue'
+import Cards from './views/admin/basic-ui/BaseCards.vue'
+import Tabs from './views/admin/basic-ui/BaseTabs.vue'
+import Typography from './views/admin/basic-ui/BaseTypography.vue'
+import Tables from './views/admin/basic-ui/BaseTables.vue'
+import Modals from './views/admin/basic-ui/BaseModals.vue'
+import ProgressBar from './views/admin/basic-ui/BaseProgressBars.vue'
 
 // Components
 import Datatables from './views/admin/components/Datatables.vue'
 import Notifications from './views/admin/components/Notifications.vue'
-import ImageCropper from './views/admin/components/ImageCropper.vue'
+import ImageCropper from './views/admin/components/TheImageCropper.vue'
 import ImageZoom from './views/admin/components/ImageZoom.vue'
-import Calendar from './views/admin/components/Calendar.vue'
+import Calendar from './views/admin/components/TheCalendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
 // 1. Ratings
@@ -73,7 +72,7 @@ import Wizard3 from './views/admin/forms/Wizard3.vue'
 import Grid from './views/admin/gallery/Grid.vue'
 import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
 // Todos
-import Todos from './views/admin/Todos.vue'
+import Todos from './views/admin/TodoItem.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'

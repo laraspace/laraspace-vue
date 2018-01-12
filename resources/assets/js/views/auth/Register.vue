@@ -3,7 +3,7 @@
     action=""
     id="registerForm"
     method="post">
-    { {csrf_field()} }
+    {{ csrf_field() }}
     <div class="form-group">
       <input
         type="email"

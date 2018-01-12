@@ -1,12 +1,12 @@
 <template>
   <div class="main-content">
     <div class="page-header">
-        <h3 class="page-title">Cards</h3>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Basic UI</a></li>
-            <li class="breadcrumb-item active">Cards</li>
-        </ol>
+      <h3 class="page-title">Cards</h3>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Basic UI</a></li>
+        <li class="breadcrumb-item active">Cards</li>
+      </ol>
     </div>
     <div class="card">
       <div class="card-body">

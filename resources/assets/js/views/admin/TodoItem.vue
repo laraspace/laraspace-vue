@@ -11,17 +11,17 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <todos></todos>
+        <todo-item></todo-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Todos from '../../components/Todos.vue'
+import TodoItem from '../../components/TodoItem.vue'
 export default {
   components: {
-    Todos
+    TodoItem
   }
 }
 </script>

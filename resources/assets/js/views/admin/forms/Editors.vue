@@ -50,7 +50,7 @@
 
 <script type="text/babel">
 // summernote
-import summernote from 'summernote/dist/summernote-bs4'
+import SummerNote from 'summernote/dist/summernote-bs4'
 import 'summernote/dist/summernote-bs4.css'
 // simpleMDE
 import 'simplemde/src/css/simplemde.css'

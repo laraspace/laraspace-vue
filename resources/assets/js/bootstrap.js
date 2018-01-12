@@ -35,7 +35,7 @@ window.axios.defaults.headers.common = {
  * Interceptors
  */
 
-axios.interceptors.request.use(function (config) {
+window.axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   const AUTH_TOKEN = Ls.get('auth.token')
 
@@ -69,7 +69,6 @@ window.timepicker = require('timepicker')
 window.Raphael = require('raphael/raphael')
 window.steps = require('jquery-steps/build/jquery.steps')
 window.EasyPieChart = require('easy-pie-chart/dist/easypiechart')
-
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

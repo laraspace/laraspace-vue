@@ -49,7 +49,7 @@
                   class="btn btn-outline-theme">
                   Theme
                 </button>
-                <button 
+                <button
                   type="button"
                   class="btn btn-outline-primary">
                   Primary
@@ -637,10 +637,10 @@
 <script>
 export default {
   mounted () {
-    Ladda.bind('div:not(.progress-demo) .ladda-button', { timeout: 2000 })
+    window.Ladda.bind('div:not(.progress-demo) .ladda-button', { timeout: 2000 })
 
     // Bind progress buttons and simulate loading progress
-    Ladda.bind('.progress-demo button', {
+    window.Ladda.bind('.progress-demo button', {
       callback: function (instance) {
         var progress = 0
         var interval = setInterval(function () {

@@ -33,7 +33,6 @@ export default {
     }
   },
 
-
   mounted () {
     let context = this.$refs.graph.getContext('2d')
     let options = {

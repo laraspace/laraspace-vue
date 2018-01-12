@@ -170,7 +170,7 @@ export default {
 
         // simulate async call, fail for all logins with even length
 
-        return axios
+        return window.axios
           .post('/api/admin/vuelidate/email-exist', { email: value })
           .then(response => {
             return response.data

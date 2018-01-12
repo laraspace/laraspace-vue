@@ -17,6 +17,7 @@
     "ammap3": "github:amcharts/ammap3",
     "amstock3": "github:amcharts/amstock3",
     "axios": "^0.16.2",
+    "babel-eslint": "^8.2.1",
     "bootstrap": "^4.0.0-beta.3",
     "bootstrap-datepicker": "^1.7.1",
     "bootstrap-transition": "^3.1.1",

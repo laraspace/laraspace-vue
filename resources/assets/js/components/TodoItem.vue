@@ -60,7 +60,7 @@ export default {
   },
   mounted () {
     let vm = this
-    axios.get('/api/admin/todos').then(function (response) {
+    window.axios.get('/api/admin/todos').then(function (response) {
       vm.todos = response.data
     })
   },
@@ -73,7 +73,7 @@ export default {
         return
       }
 
-      axios.post(url, vm.newTodo).then(
+      window.axios.post(url, vm.newTodo).then(
         function (request) {
           vm.todos.push({
             id: request.data.todo.id,
@@ -97,7 +97,7 @@ export default {
     removeTodo (todo) {
       let url = '/api/admin/todos/' + todo.id
       let vm = this
-      axios.post(url, { _method: 'DELETE' }).then(
+      window.axios.post(url, { _method: 'DELETE' }).then(
         function (request) {
           var index = vm.todos.indexOf(todo)
           vm.todos.splice(index, 1)
@@ -108,9 +108,9 @@ export default {
     },
     toggleTodoComplete (todo) {
       let url = '/api/admin/todos/toggleTodo/' + todo.id
-      let vm = this
+      // let vm = this
 
-      axios.post(url, { completed: todo.completed }).then(function (request) {
+      window.axios.post(url, { completed: todo.completed }).then(function (request) {
         console.log(request)
       },
       function (error) {
