@@ -6,12 +6,10 @@
 
 // Plugins
 //----------------------------------
-//@import "../plugins/summernote/summernote";
-@import "../plugins/simplemde/simplemde";
-@import "../plugins/pace/pace";
-@import "../plugins/alertify/alertify";
+// @import "../plugins/simplemde/simplemde";
 
 //node_module
+// @import '../../../node_modules/summernote/dist/summernote-bs4.css';
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 @import "../../../node_modules/select2/src/scss/core";
 @import "../../../node_modules/bootstrap-beta/scss/bootstrap";
@@ -76,6 +74,7 @@
 @import 'partials/sidebar';
 @import 'partials/footer';
 
+
 // Components
 //----------------------------------
 
@@ -98,6 +97,8 @@
 @import "components/nestable";
 @import "components/ico-moon";
 @import "components/easy-pie-chart";
+@import "components/pace-loader";
+
 
 // Pages
 //----------------------------------

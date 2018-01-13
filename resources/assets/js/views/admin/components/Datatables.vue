@@ -7,7 +7,6 @@
                 <li class="breadcrumb-item"><a href="#">Components</a></li>
                 <li class="breadcrumb-item active">Datatables</li>
             </ol>
-
         </div>
         <div class="row">
             <div class="col-sm-12">

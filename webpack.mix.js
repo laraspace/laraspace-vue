@@ -8,30 +8,13 @@ let mix = require('laravel-mix');
 
 var pluginPath = 'resources/assets/plugins/';
 
-mix.combine([
-    // ** Required Plugins **
-
-    // ** Additional Plugins **
-    // pluginPath + 'jquery-validate/additional-methods.js',
-    // pluginPath + 'alertify/alertify.js',
-    // pluginPath + 'ace-editor/ace.js',
-    // pluginPath + 'ace-editor/twilight.js',
-
-], 'public/assets/js/core/plugins.js')
-
-    .js('resources/assets/js/app.js', 'public/assets/js/')
-
+mix.js('resources/assets/js/app.js', 'public/assets/js/')
     .sass('resources/assets/sass/laraspace.scss', 'public/assets/css/')
-
     .autoload({
         jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
     })
-
     .version();
 
-// mix.autoload({
-//     jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
-// });
 
 /*
  |--------------------------------------------------------------------------

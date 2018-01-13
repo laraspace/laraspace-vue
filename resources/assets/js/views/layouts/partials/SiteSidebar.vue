@@ -41,7 +41,7 @@
                         <router-link to="/admin/components/notifications" tag="li"><a>Notifications</a></router-link>
                         <li :class="{ active: isActive('/admin/components/rating') }">
                             <a href="#" aria-expanded="true">Rating <span class="icon-fa arrow icon-fa-fw"></span></a>
-                            <ul aria-expanded="true">
+                            <ul aria-expanded="true" class="submenu">
                                 <router-link to="/admin/components/rating/bar-rating" tag="li"><a>Bar Rating</a></router-link>
                                 <router-link to="/admin/components/rating/star-rating" tag="li"><a>Star Rating </a></router-link>
                             </ul>

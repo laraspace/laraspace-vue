@@ -5,7 +5,6 @@ import Ls from './services/ls';
 import VuePrism from 'vue-prism';
 
 //datatable
-import 'datatables.net-responsive-bs4';
 
 window._ = require('lodash');
 
@@ -53,8 +52,9 @@ axios.interceptors.request.use(function (config) {
  * Global plugins
  */
 
-window.Popper=require('popper.js');
+window.Popper = require('popper.js');
 require('bootstrap-beta');
+require('datatables.net-responsive-bs4');
 window.metisMenu = require('metismenu');
 window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker');
 window.select2 = require('select2');
@@ -69,7 +69,6 @@ window.timepicker = require('timepicker');
 window.Raphael = require('raphael/raphael');
 window.steps = require('jquery-steps/build/jquery.steps');
 window.EasyPieChart = require('easy-pie-chart/dist/easypiechart');
-
 
 
 /**
