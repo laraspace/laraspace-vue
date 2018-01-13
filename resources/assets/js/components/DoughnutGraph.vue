@@ -1,51 +1,67 @@
 <template>
-    <div class="graph-container">
-        <canvas id="graph" ref="graph"></canvas>
-    </div>
+  <div class="graph-container">
+    <canvas
+      id="graph"
+      ref="graph"/>
+  </div>
 </template>
 
 <script>
-    window.Chart = require('chart.js');
+window.Chart = require('chart.js')
 
-    export default {
-
-        props: [
-            'labels',
-            'values',
-            'bgColors',
-            'hoverBgColors'
-        ],
-
-        mounted: function () {
-
-            var context = this.$refs.graph.getContext('2d');
-
-            var options = {
-                responsive: true,
-                maintainAspectRatio: false,
-            };
-
-            var data = {
-                labels: this.labels,
-                datasets: [
-                    {
-                        data: this.values,
-                        backgroundColor: this.bgColors,
-                        hoverBackgroundColor: this.hoverBgColors
-                    }]
-            };
-
-            var myDoughnutChart = new Chart(context, {
-                type: 'doughnut',
-                data: data,
-                options: options
-            });
-        }
+export default {
+  props: {
+    labels: {
+      type: Array,
+      require: true,
+      default: Array
+    },
+    values: {
+      type: Array,
+      require: true,
+      default: Array
+    },
+    bgColors: {
+      type: Array,
+      require: true,
+      default: Array
+    },
+    hoverBgColors: {
+      type: Array,
+      require: true,
+      default: Array
     }
+  },
+
+  mounted () {
+    let context = this.$refs.graph.getContext('2d')
+    let options = {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+
+    let data = {
+      labels: this.labels,
+      datasets: [
+        {
+          data: this.values,
+          backgroundColor: this.bgColors,
+          hoverBackgroundColor: this.hoverBgColors
+        }
+      ]
+    }
+
+    let myDoughnutChart = new Chart(context, {
+      type: 'doughnut',
+      data: data,
+      options: options
+    })
+  }
+}
 </script>
 
-<style>
-    .graph-container {
-        height: 300px;
-    }
+<style scoped>
+.graph-container {
+  height: 300px;
+}
 </style>

@@ -1,30 +1,32 @@
 <template>
-    <div class="template-container">
-        <site-header></site-header>
-        <site-sidebar type="icon"></site-sidebar>
-        <router-view></router-view>
-        <site-footer></site-footer>
-    </div>
+  <div class="template-container">
+    <site-header></site-header>
+    <site-sidebar type="icon"></site-sidebar>
+    <router-view></router-view>
+    <site-footer></site-footer>
+  </div>
 </template>
 
 <script type="text/babel">
-    import SiteHeader from './partials/SiteHeader.vue'
-    import SiteFooter from './partials/SiteFooter.vue'
-    import SiteSidebar from './partials/SiteSidebar.vue'
+import SiteHeader from './partials/TheSiteHeader.vue'
+import SiteFooter from './partials/TheSiteFooter.vue'
+import SiteSidebar from './partials/TheSiteSidebar.vue'
 
-    import Layout from '../../helpers/layout'
+import Layout from '../../helpers/layout'
 
-    export default {
-        data() {
-            return {
-                'header' : 'header'
-            }
-        },
-        components : {
-            SiteHeader , SiteSidebar , SiteFooter
-        },
-        mounted() {
-            Layout.set('layout-icon-sidebar')
-        }
+export default {
+  components: {
+    SiteHeader,
+    SiteSidebar,
+    SiteFooter
+  },
+  data () {
+    return {
+      header: 'header'
     }
+  },
+  mounted () {
+    Layout.set('layout-icon-sidebar')
+  }
+}
 </script>

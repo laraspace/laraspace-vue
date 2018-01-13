@@ -1,5 +1,4 @@
 <?php
-
 namespace Laraspace\Http\Middleware;
 
 use Auth;
@@ -17,7 +16,6 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-
         if (Auth::guard($guard)->guest() || !Auth::user()->isAdmin()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
@@ -25,7 +23,6 @@ class AdminMiddleware
                 return redirect()->guest('/login');
             }
         }
-
         return $next($request);
     }
 }

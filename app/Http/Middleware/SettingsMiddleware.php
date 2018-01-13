@@ -1,5 +1,4 @@
 <?php
-
 namespace Laraspace\Http\Middleware;
 
 use Closure;
@@ -16,7 +15,6 @@ class SettingsMiddleware
     public function handle($request, Closure $next)
     {
         $mailer = get_setting('mailer');
-
         if ($mailer == 'mailgun') {
             config()->set([
                 'mail.host' => get_setting('mail_mailgun_host'),
@@ -54,8 +52,6 @@ class SettingsMiddleware
                 'mail.from.address' => get_setting('mail_from_email'),
             ]);
         }
-
-
         return $next($request);
     }
 }
