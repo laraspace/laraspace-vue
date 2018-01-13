@@ -71,8 +71,8 @@ import Wizard3 from './views/admin/forms/Wizard3.vue'
 // Gallery
 import Grid from './views/admin/gallery/Grid.vue'
 import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
-// Todos
-import Todos from './views/admin/TodoItem.vue'
+// Todo-Item
+import TodoItem from './views/admin/TodoItem.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'
@@ -375,8 +375,8 @@ const routes = [
 
       // Todos
       {
-        path: 'todos',
-        component: Todos
+        path: 'todo-item',
+        component: TodoItem
       },
 
       // Settings

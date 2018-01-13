@@ -220,9 +220,9 @@
               tag="li"><a>All Users </a></router-link>
           </ul>
         </li>
-        <li :class="{ active: isActive('/admin/todos') }">
+        <li :class="{ active: isActive('/admin/todo-item') }">
           <router-link
-            to="/admin/todos"
+            to="/admin/todo-item"
             tag="li"><a><i class="icon-fa icon-fa-check"/> Todos </a></router-link>
         </li>
         <li :class="{ active: isActive('/admin/settings') }">
