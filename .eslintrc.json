@@ -1,0 +1,18 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+     "extends": [
+        "standard",
+        "plugin:vue/recommended"
+    ],
+    "parserOptions": {
+        "parser": "babel-eslint"
+        
+    },
+    "rules": {
+        "vue/require-v-for-key": "off"
+    }
+}
+

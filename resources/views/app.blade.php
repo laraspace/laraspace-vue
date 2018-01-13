@@ -29,7 +29,7 @@
 </head>
 <body class="layout-default skin-default">
 <div id="app" class="template-container">
-    <div class="mobile-menu-overlay" v-on:click.prevent="onOverlayClick"></div>
+    <div class="mobile-menu-overlay" @click.prevent="onOverlayClick"></div>
     <transition name="fade" mode="out-in">
         <router-view></router-view>
     </transition>

@@ -37,6 +37,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
         ]);
 
     });
+    //setting
+    Route::group(['prefix' => 'settings'], function () {
+
+            Route::post('/social', [
+            'as' => 'admin.settings.social', 'uses' => 'Demo\SettingsController@postSocial'
+        ]);
+    });
     //Users Details
     Route::group(['prefix' => 'users'], function (){
 
