@@ -22,14 +22,12 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
 
-    // Todos
     Route::resource('todos', 'Demo\TodosController');
 
     Route::post('todos/toggleTodo/{id}', [
         'as' => 'admin.todos.toggle', 'uses' => 'Demo\TodosController@toggleTodo'
     ]);
 
-    // Vuelidate
     Route::group(['prefix' => 'vuelidate'], function (){
 
         Route::post('email-exist',[
@@ -37,14 +35,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
         ]);
 
     });
-    //setting
+
     Route::group(['prefix' => 'settings'], function () {
 
             Route::post('/social', [
             'as' => 'admin.settings.social', 'uses' => 'Demo\SettingsController@postSocial'
         ]);
     });
-    //Users Details
+
     Route::group(['prefix' => 'users'], function (){
 
         Route::get('/get',[

@@ -9,23 +9,39 @@
         <li :class="{ active : isActive('/admin/dashboard') }">
           <a
             href="#"
-            aria-expanded="true"><i class="icon-fa icon-fa-dashboard"/> Dashboard <span class="icon-fa arrow icon-fa-fw"/></a>
+            aria-expanded="true">
+            <i class="icon-fa icon-fa-dashboard"/>
+            Dashboard
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
           <ul aria-expanded="true">
             <router-link
               to="/admin/dashboard/basic"
-              tag="li"><a>Basic</a></router-link>
+              tag="li"
+            >
+              <a>Basic</a>
+            </router-link>
             <router-link
               to="/admin/dashboard/ecommerce"
-              tag="li"><a>Ecommerce</a></router-link>
+              tag="li">
+              <a>Ecommerce</a>
+            </router-link>
             <router-link
               to="/admin/dashboard/finance"
-              tag="li"><a>Finance</a></router-link>
+              tag="li"
+            >
+              <a>Finance</a>
+            </router-link>
           </ul>
         </li>
         <li :class="{ active : isActive('/admin/layouts') }">
           <a
             href="#"
-            aria-expanded="true"><i class="icon-fa icon-fa-th-large"/> Layouts <span class="icon-fa arrow icon-fa-fw"/></a>
+            aria-expanded="true">
+            <i class="icon-fa icon-fa-th-large"/>
+            Layouts
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
           <ul aria-expanded="true">
             <router-link
               to="/admin/layouts/sidebar"

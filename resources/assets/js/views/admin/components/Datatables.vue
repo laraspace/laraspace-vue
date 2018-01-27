@@ -1,14 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="main-content">
-        <div class="page-header">
-            <h3 class="page-title">Datatables</h3>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Components</a></li>
-                <li class="breadcrumb-item active">Datatables</li>
-            </ol>
-=======
   <div class="main-content">
     <div class="page-header">
       <h3 class="page-title">Datatables</h3>
@@ -510,7 +500,6 @@
               </tbody>
             </table>
           </div>
->>>>>>> a545f12a1bb8f6483952741e4e2a5d2f5582dda0
         </div>
         <div class="card">
           <div class="card-header">
