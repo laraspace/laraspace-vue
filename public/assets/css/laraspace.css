@@ -28106,6 +28106,286 @@ code,
   left: 0;
 }
 
+.mail-box .Override .wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.mail-box .Override .wrapper .fill {
+  position: relative;
+}
+
+.mail-box .Override .wrapper .fill .sidebar {
+  height: 100vh;
+  width: 160px;
+  padding: 15px;
+  padding-top: 20px;
+  float: left;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border-right: 1px solid #e4eaec;
+}
+
+.mail-box .Override .wrapper .fill .sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mail-box .Override .wrapper .fill .sidebar ul li i {
+  width: 30px;
+}
+
+.mail-box .Override .wrapper .fill .sidebar ul li a {
+  display: block;
+  /* font-size: 12px; */
+  padding: 15px 0px 12px 0px;
+  position: relative;
+  text-decoration: none;
+}
+
+.mail-box .Override .wrapper .fill .sidebar ul li a span {
+  float: right;
+  margin-top: 3px;
+}
+
+.mail-box .Override .wrapper .fill .sidebar .left-sidebar-btn {
+  display: block;
+  position: absolute;
+  background: #fff;
+  cursor: pointer;
+  z-index: 20;
+  top: 45%;
+  padding: 15px;
+  -webkit-box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.15);
+          box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.15);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  right: -37px;
+}
+
+.mail-box .Override .wrapper .fill .sidebar .left-sidebar-btn i {
+  font-size: 1.2rem;
+}
+
+.mail-box .Override .wrapper .fill .sidebar.pull-right-side {
+  left: 0;
+}
+
+.mail-box .Override .wrapper .fill .mail-content {
+  height: 100vh;
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .menu-penal {
+  margin: 20px 12px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .menu-penal .custom-control .custom-control-label::before,
+.mail-box .Override .wrapper .fill .mail-content .menu-penal .custom-control .custom-control-label::after {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .menu-penal .DropdownAction {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .menu-penal .filter-action {
+  float: right;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .menu-penal .filter-action .filter-menu .mail-search {
+  display: inline-block;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table th {
+  height: 50px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td .content {
+  cursor: pointer;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-50 {
+  width: 50px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-50 .custom-control .custom-control-label::before,
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-50 .custom-control .custom-control-label::after {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-30 {
+  width: 30px;
+  padding: 5px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-30 .star {
+  visibility: hidden;
+  font-size: 30px;
+  cursor: pointer;
+  color: #eb6709;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-30 .star:before {
+  content: "\2606";
+  position: absolute;
+  visibility: visible;
+  color: #e4eaec;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-30 .star:checked:before {
+  content: "\2605";
+  position: absolute;
+  color: #eb6709;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .table tr td.cell-130 {
+  width: 130px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail {
+  position: fixed;
+  background: ghostwhite;
+  top: 60px;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 700px;
+  right: -720px;
+  bottom: 0px;
+  -webkit-box-shadow: -10px 0 20px 0 rgba(66, 66, 66, 0.2);
+          box-shadow: -10px 0 20px 0 rgba(66, 66, 66, 0.2);
+  z-index: 1050;
+  -webkit-transition: right 0.5s;
+  transition: right 0.5s;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail.mailOpen {
+  right: 0px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header {
+  padding: 40px 30px;
+  padding-right: 120px;
+  background-color: #0bb2d4;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .mail-action {
+  position: absolute;
+  right: 10px;
+  top: 95px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .mail-action a {
+  margin-left: 12px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .mail-action .mail-menu ul {
+  color: white;
+  list-style: none;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .mail-action .mail-menu ul li {
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .sidepanel-close {
+  position: absolute;
+  left: 660px;
+  top: 15px;
+  background: none;
+  border: none;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body {
+  padding: 30px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading {
+  position: relative;
+  padding: 20px 0px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading .message-heading-main {
+  position: relative;
+  padding-top: 25px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading .message-heading-main a .avtar-img {
+  height: 50px;
+  border-radius: 50%;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading .message-heading-main .name {
+  position: relative;
+  left: 5px;
+  bottom: 10px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading .message-heading-main .email {
+  display: inline-block;
+  position: relative;
+  right: 64px;
+  top: 10px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading .message-heading-main .email span a {
+  color: burlywood;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-heading .message-heading-main .message-heading-right {
+  display: inline;
+  float: right;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-attachment {
+  margin-top: 40px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .message-attachment ul {
+  list-style: none;
+  padding: 0px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .all-mail {
+  border-top: 1px solid #e4eaec;
+  padding-bottom: 30px;
+}
+
+.mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-body .comment {
+  border-top: 1px solid #e4eaec;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mail-box .Override .wrapper .fill .create-mail {
+  position: fixed;
+  right: 30px;
+  bottom: 130px;
+  z-index: 100;
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    position: absolute;
+    z-index: 10;
+    background: white;
+    left: -160px;
+  }
+}
+
 .dashbox {
   background-color: #fff;
   border: 1px solid #ddd;
