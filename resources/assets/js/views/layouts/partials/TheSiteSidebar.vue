@@ -91,6 +91,9 @@
               to="/admin/components/calendar"
               tag="li"><a>Calendar</a></router-link>
             <router-link
+              to="/admin/components/mail-box"
+              tag="li"><a>MailBox</a></router-link>
+            <router-link
               to="/admin/components/datatables"
               tag="li"><a>Jquery Datatables</a></router-link>
             <router-link
@@ -236,9 +239,9 @@
               tag="li"><a>All Users </a></router-link>
           </ul>
         </li>
-        <li :class="{ active: isActive('/admin/todos') }">
+        <li :class="{ active: isActive('/admin/todo-item') }">
           <router-link
-            to="/admin/todos"
+            to="/admin/todo-item"
             tag="li"><a><i class="icon-fa icon-fa-check"/> Todos </a></router-link>
         </li>
         <li :class="{ active: isActive('/admin/settings') }">
