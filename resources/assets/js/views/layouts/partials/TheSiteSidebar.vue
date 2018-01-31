@@ -91,9 +91,6 @@
               to="/admin/components/calendar"
               tag="li"><a>Calendar</a></router-link>
             <router-link
-              to="/admin/components/mail-box"
-              tag="li"><a>MailBox</a></router-link>
-            <router-link
               to="/admin/components/datatables"
               tag="li"><a>Jquery Datatables</a></router-link>
             <router-link
@@ -111,6 +108,9 @@
             <router-link
               to="/admin/components/notifications"
               tag="li"><a>Notifications</a></router-link>
+            <router-link
+              to="/admin/components/vue-tables"
+              tag="li"><a>Vue Table</a></router-link>
             <router-link
               to="/admin/components/sweet-modals"
               tag="li"><a>Sweet Modals</a></router-link>

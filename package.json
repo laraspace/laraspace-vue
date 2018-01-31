@@ -73,6 +73,7 @@
     "vue-datatables": "^0.1.4",
     "vue-prism": "^1.0.5",
     "vue-router": "2.7.0",
+    "vue-table-component": "^1.8.1",
     "vuelidate": "^0.6.1",
     "zoom.js": "github:fat/zoom.js"
   }
