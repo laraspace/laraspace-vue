@@ -65,6 +65,7 @@
     "summernote": "^0.8.8",
     "sweet-modal-vue": "^2.0.0",
     "switchery": "0.0.2",
+    "text-mask-addons": "^3.7.1",
     "timepicker": "^1.11.12",
     "toastr": "^2.1.4",
     "transition": "^0.1.1",
@@ -73,6 +74,7 @@
     "vue-datatables": "^0.1.4",
     "vue-prism": "^1.0.5",
     "vue-router": "2.7.0",
+    "vue-text-mask": "^6.0.0",
     "vuelidate": "^0.6.1",
     "zoom.js": "github:fat/zoom.js"
   }
