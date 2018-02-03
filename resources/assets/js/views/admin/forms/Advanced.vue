@@ -519,8 +519,7 @@
             <multiselect
               v-model="selected"
               :options="MultiOptions"
-              :multiple="true"
-              :custom-label="customLabel"/>
+              :multiple="true"/>
           </div>
         </div>
       </div>
