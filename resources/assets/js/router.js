@@ -31,13 +31,13 @@ import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 
 // Components
 import Datatables from './views/admin/components/Datatables.vue'
-import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import ImageCropper from './views/admin/components/ImageCropper.vue'
 import ImageZoom from './views/admin/components/ImageZoom.vue'
 import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
+import VueTabs from './views/admin/components/VueTabs.vue'
 // 1. Ratings
 import BarRating from './views/admin/components/ratings/BarRating.vue'
 import StarRating from './views/admin/components/ratings/StarRating.vue'
@@ -223,10 +223,6 @@ const routes = [
         component: Calendar
       },
       {
-        path: 'components/mail-box',
-        component: MailBox
-      },
-      {
         path: 'components/datatables',
         component: Datatables
       },
@@ -253,6 +249,10 @@ const routes = [
       {
         path: 'components/sweet-modals',
         component: SweetModals
+      },
+      {
+        path: 'components/vue-tabs',
+        component: VueTabs
       },
       // Rating
       {
