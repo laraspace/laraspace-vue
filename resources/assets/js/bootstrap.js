@@ -54,7 +54,6 @@ window.axios.interceptors.request.use(function (config) {
 window.Popper = require('popper.js')
 require('bootstrap')
 window.validate = require('jquery-validation')
-window.metisMenu = require('metismenu')
 window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker')
 window.select2 = require('select2')
 window.Switchery = require('switchery/switchery')
