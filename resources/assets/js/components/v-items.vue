@@ -1,33 +1,25 @@
 <template>
-    <ul
-			class="side-nav">
-			<li :class="{ active : isActive('/admin/dashboard') }">
-				<a
-					href="#"
-					aria-expanded="true">
-					<i class="icon-fa icon-fa-dashboard"/>
-					{{ title }}
-					<span class="icon-fa arrow icon-fa-fw"/>
-				</a>
-				<ul aria-expanded="true">
-					<router-link
-						to="/admin/dashboard/basic"
-						tag="li">
-						<a>Basic</a>
-					</router-link>
-					<router-link
-						to="/admin/dashboard/ecommerce"
-						tag="li">
-						<a>Ecommerce</a>
-					</router-link>
-					<router-link
-						to="/admin/dashboard/finance"
-						tag="li">
-						<a>Finance</a>
-					</router-link>
-				</ul>
-			</li>
-		</ul>
+  <ul
+    class="side-nav">
+    <li :class="{ active : isActive('/admin/dashboard') }">
+      <a
+        href="#"
+        aria-expanded="true">
+        <i class=""/>
+        {{ title }}
+        <span class="icon-fa arrow icon-fa-fw"/>
+      </a>
+      <ul aria-expanded="true">
+        <router-link
+          v-for="(index,router) in routers"
+          :to="router.to"
+          :key="index"
+          tag="li">
+          <a>{{ router.title }}</a>
+        </router-link>
+      </ul>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -38,10 +30,10 @@ export default {
       require: true,
       default: String
     },
-    router: {
-      type: String,
+    routers: {
+      type: Array,
       require: true,
-      default: String
+      default: () => []
     },
     icon: {
       type: String,
@@ -55,11 +47,11 @@ export default {
         id: '',
         title: '',
         completed: false
-      },
+      }
     }
   },
   mounted () {
-   
+    console.log(this.routers)
   },
   methods: {
    isActive (url) {
