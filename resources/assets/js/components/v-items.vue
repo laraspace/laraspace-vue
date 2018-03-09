@@ -11,7 +11,7 @@
       </a>
       <ul aria-expanded="true">
         <router-link
-          v-for="(index,router) in routers"
+          v-for="(router,index) in routers"
           :to="router.to"
           :key="index"
           tag="li">
