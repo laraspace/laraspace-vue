@@ -4,19 +4,14 @@
     <div
       class="sidebar-body scroll-pane">
       <v-items
-        :routers="[
-          {
-            to:'/admin/dashboard/basic',
-            title:'Basic'
-          },
-          {
-            to:'/admin/dashboard/ecommerce',
-            title:'Ecommerce'
-          },
-          }
-            to:'/admin/dashboard/finance',
-            title:'Finance'
-          }]"
+        :routers="[{
+          title: '/admin/dashboard/basic',
+          to: 'Basic'},
+          '/admin/dashboard/ecommerce',
+          'Ecommerce',
+          '/admin/dashboard/finance',
+          'Finance'
+        ]"
         title="Dashbord"
         icon="icon-fa icon-fa-dashboard"/>
     </div>
