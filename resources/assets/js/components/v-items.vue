@@ -7,22 +7,25 @@
       <a
         href="#"
         aria-expanded="true">
-        <i class=""/>
+        <i :class="icon"/>
         {{ title }}
         <span class="icon-fa arrow icon-fa-fw"/>
       </a>
-      <ul
-        v-if="showChild"
-        aria-expanded="true"
-        :style="indent">
-        <router-link
-          v-for="(router,index) in routers"
-          :to="router.to"
-          :key="index"
-          tag="li">
-          <a>{{ router.title }}</a>
-        </router-link>
-      </ul>
+      <transition
+        name="fade"
+        mode="in-out">
+        <ul
+          v-if="showChild"
+          aria-expanded="true">
+          <router-link
+            v-for="(router,index) in routers"
+            :to="router.to"
+            :key="index"
+            tag="li">
+            <a>{{ router.title }}</a>
+          </router-link>
+        </ul>
+      </transition>
     </li>
   </ul>
 </template>
@@ -56,11 +59,6 @@ export default {
       showChild: false
     }
   },
-  computed: {
-      indent() {
-        return { transform: `translate(${this.depth * 50}px)` }
-      }
-  },
   mounted () {
     console.log(this.routers)
   },
@@ -76,5 +74,19 @@ export default {
 </script>
 
 <style scoped>
-
+  /* always present */
+.expand-transition {
+  transition: all .3s ease;
+  height: 30px;
+  padding: 10px;
+  background-color: #eee;
+  overflow: hidden;
+}
+/* .expand-enter defines the starting state for entering */
+/* .expand-leave defines the ending state for leaving */
+.expand-enter, .expand-leave {
+  height: 0;
+  padding: 0 10px;
+  opacity: 0;
+}
 </style>
