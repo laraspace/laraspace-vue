@@ -1,17 +1,30 @@
 <template>
-    <li
-      :class="{ active : isActive(activeUrl) }"
-      @click="isOpen">
-      <a
-        href="#"
-        aria-expanded="true">
+  <li
+    :class="{ active : isActive(activeUrl) }"
+    @click.stop="isOpen">
+    <a
+      v-if="routers.length != 0"
+      href="#"
+      aria-expanded="true">
+      <i :class="icon"/>
+      {{ title }}
+      <span class="icon-fa arrow icon-fa-fw"/>
+    </a>
+    <router-link
+      v-else
+      :to="activeUrl"
+      tag="li">
+      <a>
         <i :class="icon"/>
         {{ title }}
         <span class="icon-fa arrow icon-fa-fw"/>
       </a>
-      <transition name="slide-fade" mode="out-in">
+    </router-link>
+    <transition
+      name="slide"
+      mode="out-in">
       <ul
-        v-if="showChild"
+        v-if="showChild&&(routers.length != 0)"
         aria-expanded="true">
         <router-link
           v-for="(router,index) in routers"
@@ -22,8 +35,8 @@
         </router-link>
         <slot name="grand-child"/>
       </ul>
-      </transition>
-    </li>
+    </transition>
+  </li>
 </template>
 
 <script>
@@ -56,25 +69,25 @@ export default {
     }
   },
   mounted () {
-     if( this.isActive(this.activeUrl) == true) {
-        this.showChild = true;
-     }
+    if (this.isActive(this.activeUrl) == true) {
+      this.showChild = true
+    }
   },
   methods: {
     isActive (url) {
       return this.$route.path.indexOf(url) > -1
     },
     isOpen () {
-      let vm = this;
-      console.log(this.$parent);
+      let vm = this
+      console.log(this.$parent)
       if (this.showChild == false) {
-        this.$parent.$children.filter(function(value){
-          if (value.showChild == true){
-            value.showChild = false;
+        this.$parent.$children.filter(function (value) {
+          if (value.showChild == true) {
+            value.showChild = false
           }
-        });
+        })
       }
-      this.$nextTick(function(){
+      this.$nextTick(function () {
         vm.showChild = !vm.showChild
       })
     }
