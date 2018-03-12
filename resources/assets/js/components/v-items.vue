@@ -1,20 +1,18 @@
 <template>
-  <ul
-    class="side-nav">
     <li
       :class="{ active : isActive(activeUrl) }"
       @click="isOpen">
       <a
         href="#"
         aria-expanded="true">
-        <i class=""/>
+        <i :class="icon"/>
         {{ title }}
         <span class="icon-fa arrow icon-fa-fw"/>
       </a>
+      <transition name="slide-fade" mode="out-in">
       <ul
         v-if="showChild"
-        aria-expanded="true"
-        :style="indent">
+        aria-expanded="true">
         <router-link
           v-for="(router,index) in routers"
           :to="router.to"
@@ -22,9 +20,10 @@
           tag="li">
           <a>{{ router.title }}</a>
         </router-link>
+        <slot name="grand-child"/>
       </ul>
+      </transition>
     </li>
-  </ul>
 </template>
 
 <script>
@@ -56,20 +55,28 @@ export default {
       showChild: false
     }
   },
-  computed: {
-      indent() {
-        return { transform: `translate(${this.depth * 50}px)` }
-      }
-  },
   mounted () {
-    console.log(this.routers)
+     if( this.isActive(this.activeUrl) == true) {
+        this.showChild = true;
+     }
   },
   methods: {
     isActive (url) {
       return this.$route.path.indexOf(url) > -1
     },
     isOpen () {
-      this.showChild = !this.showChild
+      let vm = this;
+      console.log(this.$parent);
+      if (this.showChild == false) {
+        this.$parent.$children.filter(function(value){
+          if (value.showChild == true){
+            value.showChild = false;
+          }
+        });
+      }
+      this.$nextTick(function(){
+        vm.showChild = !vm.showChild
+      })
     }
   }
 }
