@@ -24,7 +24,10 @@
       name="slide"
       mode="out-in">
       <ul
-        v-if="showChild&&(routers.length != 0)"
+        v-show="showChild&&(routers.length != 0)"
+        ref="isCollapse"
+        :style="'height:'+height+'px'"
+        class="is-collapse"
         aria-expanded="true">
         <router-link
           v-for="(router,index) in routers"
@@ -65,13 +68,15 @@ export default {
   },
   data () {
     return {
-      showChild: false
+      showChild: false,
+      height: ''
     }
   },
   mounted () {
     if (this.isActive(this.activeUrl) == true) {
       this.showChild = true
     }
+    console.log(this.height = (this.$children.length * 45))
   },
   methods: {
     isActive (url) {
@@ -79,7 +84,6 @@ export default {
     },
     isOpen () {
       let vm = this
-      console.log(this.$parent)
       if (this.showChild == false) {
         this.$parent.$children.filter(function (value) {
           if (value.showChild == true) {
@@ -87,9 +91,7 @@ export default {
           }
         })
       }
-      this.$nextTick(function () {
-        vm.showChild = !vm.showChild
-      })
+      vm.showChild = !vm.showChild
     }
   }
 }
@@ -97,18 +99,13 @@ export default {
 
 <style scoped>
   /* always present */
-.expand-transition {
-  transition: all .3s ease;
-  height: 30px;
-  padding: 10px;
-  background-color: #eee;
+.side-nav ul.is-collapse {
+  transition: height .3s linear;
   overflow: hidden;
 }
 /* .expand-enter defines the starting state for entering */
 /* .expand-leave defines the ending state for leaving */
-.expand-enter, .expand-leave {
-  height: 0;
-  padding: 0 10px;
-  opacity: 0;
+.slide-enter-active, .slide-leave-active {
+  height: 0 !important;
 }
 </style>
