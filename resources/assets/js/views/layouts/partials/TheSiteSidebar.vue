@@ -4,7 +4,7 @@
     <div
       class="sidebar-body scroll-pane">
       <ul
-        class="side-nav">
+        class="side-nav vue-menu">
         <v-items
           :routers="[
             {

@@ -1,6 +1,6 @@
 <template>
   <li
-    :class="{ active : isActive(activeUrl) }"
+    :class="{ active : activeList }"
     @click.stop="isOpen">
     <a
       v-if="routers.length != 0"
@@ -68,22 +68,35 @@ export default {
   },
   data () {
     return {
-      showChild: false,
+      showChild: true,
       height: ''
     }
   },
+  computed: {
+    activeList () {
+      if (this.showChild == true) {
+        if (this.isActive(this.activeUrl)) {
+          return true
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    }
+  },
   mounted () {
+    console.log(this.height = this.$refs.isCollapse.clientHeight)
+    this.showChild = false
     if (this.isActive(this.activeUrl) == true) {
       this.showChild = true
     }
-    console.log(this.height = (this.$children.length * 45))
   },
   methods: {
     isActive (url) {
       return this.$route.path.indexOf(url) > -1
     },
     isOpen () {
-      let vm = this
       if (this.showChild == false) {
         this.$parent.$children.filter(function (value) {
           if (value.showChild == true) {
@@ -91,7 +104,7 @@ export default {
           }
         })
       }
-      vm.showChild = !vm.showChild
+      this.showChild = !this.showChild
     }
   }
 }
@@ -100,12 +113,26 @@ export default {
 <style scoped>
   /* always present */
 .side-nav ul.is-collapse {
-  transition: height .3s linear;
   overflow: hidden;
+  transition: height .3s ease;
 }
 /* .expand-enter defines the starting state for entering */
 /* .expand-leave defines the ending state for leaving */
 .slide-enter-active, .slide-leave-active {
+  position: relative;
   height: 0 !important;
+  overflow: hidden;
+  -webkit-transition-timing-function: ease;
+       -o-transition-timing-function: ease;
+          transition-timing-function: ease;
+  -webkit-transition-duration: .35s;
+       -o-transition-duration: .35s;
+          transition-duration: .35s;
+  -webkit-transition-property: height, visibility;
+  -o-transition-property: height, visibility;
+  transition-property: height, visibility;
 }
+/* .slide-fade-leave-active below version 2.1.8 */
+/* .slide-enter, .slide-leave-to {
+} */
 </style>
