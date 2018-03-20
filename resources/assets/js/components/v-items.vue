@@ -36,12 +36,11 @@
           tag="li">
           <a>{{ router.title }}</a>
         </router-link>
-        <slot name="grand-child"/>
+        <slot name="grandChild"/>
       </ul>
     </transition>
   </li>
 </template>
-
 <script>
 export default {
   props: {
@@ -69,7 +68,8 @@ export default {
   data () {
     return {
       showChild: true,
-      height: ''
+      originalHeight: '',
+      slotHeight: ''
     }
   },
   computed: {
@@ -83,12 +83,27 @@ export default {
       } else {
         return false
       }
+    },
+    height () {
+      let ht = 0
+      if (this.$slots.grandChild) {
+        for (let i = 0; this.$slots.grandChild.length > i; i++) {
+          console.log(this.$slots)
+          if (this.$slots.grandChild[i].showChild === false) {
+            ht += this.originalHeight - this.$slots.grandChild[i].originalHeight
+          }
+        }
+      } else {
+        ht = this.originalHeight
+      }
+      return ht
     }
   },
   mounted () {
-    console.log(this.height = this.$refs.isCollapse.clientHeight)
+    console.log(this.originalHeight = this.$refs.isCollapse.clientHeight)
+   
     this.showChild = false
-    if (this.isActive(this.activeUrl) == true) {
+    if (this.isActive(this.activeUrl) === true) {
       this.showChild = true
     }
   },
@@ -97,9 +112,9 @@ export default {
       return this.$route.path.indexOf(url) > -1
     },
     isOpen () {
-      if (this.showChild == false) {
+      if (this.showChild === false) {
         this.$parent.$children.filter(function (value) {
-          if (value.showChild == true) {
+          if (value.showChild === true) {
             value.showChild = false
           }
         })
@@ -109,7 +124,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
   /* always present */
 .side-nav ul.is-collapse {
@@ -119,18 +133,8 @@ export default {
 /* .expand-enter defines the starting state for entering */
 /* .expand-leave defines the ending state for leaving */
 .slide-enter-active, .slide-leave-active {
-  position: relative;
   height: 0 !important;
   overflow: hidden;
-  -webkit-transition-timing-function: ease;
-       -o-transition-timing-function: ease;
-          transition-timing-function: ease;
-  -webkit-transition-duration: .35s;
-       -o-transition-duration: .35s;
-          transition-duration: .35s;
-  -webkit-transition-property: height, visibility;
-  -o-transition-property: height, visibility;
-  transition-property: height, visibility;
 }
 /* .slide-fade-leave-active below version 2.1.8 */
 /* .slide-enter, .slide-leave-to {

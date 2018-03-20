@@ -118,7 +118,7 @@
           active-url="/admin/components"
           icon="icon-fa icon-fa-puzzle-piece">
           <v-items
-            slot="grand-child"
+            slot="grandChild"
             :routers="[
               {
                 to:'/admin/components/rating/bar-rating',
