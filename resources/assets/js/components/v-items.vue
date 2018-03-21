@@ -68,7 +68,7 @@ export default {
   data () {
     return {
       showChild: true,
-      height: '',
+      height: ''
     }
   },
   computed: {
@@ -76,8 +76,10 @@ export default {
       if (this.showChild === true) {
         if (this.isActive(this.activeUrl)) {
           return true
-        } else {
+        } else if (this.routers) {
           return true
+        } else {
+          return false
         }
       } else {
         return false
@@ -96,31 +98,26 @@ export default {
       return this.$route.path.indexOf(url) > -1
     },
     isOpen () {
-      if (this.showChild === false) {
-        this.$parent.$children.filter(function (value) {
-          if (value.showChild === true) {
-            value.showChild = false
-          }
-        })
-      }
+      let self = this
       this.showChild = !this.showChild
+      this.$parent.$children.filter(function (value) {
+        if (value !== self) {
+          value.showChild = false
+          console.log('self:' + self.showChild)
+          console.log('self:' + value.showChild)
+        }
+      })
     }
   }
 }
 </script>
 <style scoped>
-  /* always present */
-.side-nav ul.is-collapse {
+.is-collapse {
   overflow: hidden;
   transition: max-height .3s ease;
 }
-/* .expand-enter defines the starting state for entering */
-/* .expand-leave defines the ending state for leaving */
 .slide-enter-active, .slide-leave-active {
   max-height: 0 !important;
   overflow: hidden;
 }
-/* .slide-fade-leave-active below version 2.1.8 */
-/* .slide-enter, .slide-leave-to {
-} */
 </style>
