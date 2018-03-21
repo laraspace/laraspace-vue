@@ -499,7 +499,7 @@
               :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
               :keepCharPositions="true"
-              :showMask="true"/>
+              :show-Mask="true"/>
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Date</h5>
