@@ -17,7 +17,9 @@
       <a>
         <i :class="icon"/>
         {{ title }}
-        <span class="icon-fa arrow icon-fa-fw"/>
+        <span
+          v-if="(routers.length != 0)"
+          class="icon-fa arrow icon-fa-fw"/>
       </a>
     </router-link>
     <transition
@@ -76,10 +78,8 @@ export default {
       if (this.showChild === true) {
         if (this.isActive(this.activeUrl)) {
           return true
-        } else if (this.routers) {
-          return true
         } else {
-          return false
+          return true
         }
       } else {
         return false
@@ -104,7 +104,7 @@ export default {
         if (value !== self) {
           value.showChild = false
           console.log('self:' + self.showChild)
-          console.log('self:' + value.showChild)
+          console.log('self1:' + value.showChild)
         }
       })
     }
