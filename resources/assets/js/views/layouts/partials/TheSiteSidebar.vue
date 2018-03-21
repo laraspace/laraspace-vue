@@ -91,6 +91,9 @@
               to="/admin/components/calendar"
               tag="li"><a>Calendar</a></router-link>
             <router-link
+              to="/admin/components/mail-box"
+              tag="li"><a>MailBox</a></router-link>
+            <router-link
               to="/admin/components/datatables"
               tag="li"><a>Jquery Datatables</a></router-link>
             <router-link
