@@ -109,6 +109,9 @@
               to="/admin/components/notifications"
               tag="li"><a>Notifications</a></router-link>
             <router-link
+              to="/admin/components/vue-tabs"
+              tag="li"><a>Vue Tabs</a></router-link>
+            <router-link
               to="/admin/components/vue-carousel"
               tag="li"><a>Vue Carousel</a></router-link>
             <router-link
