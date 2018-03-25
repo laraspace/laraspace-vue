@@ -37,6 +37,7 @@ import ImageZoom from './views/admin/components/ImageZoom.vue'
 import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
+import VueTable from './views/admin/components/VueTables.vue'
 import VueTabs from './views/admin/components/VueTabs.vue'
 import VueCarousel from './views/admin/components/VueCarousel.vue'
 // 1. Ratings
@@ -249,6 +250,11 @@ const routes = [
         component: SweetModals
       },
 <<<<<<< HEAD
+      {
+        path: 'components//vue-tables',
+        component: VueTable
+=======
+<<<<<<< HEAD
 =======
       {
 <<<<<<< HEAD
@@ -257,6 +263,7 @@ const routes = [
 =======
         path: 'components/vue-carousel',
         component: VueCarousel
+>>>>>>> dev
 >>>>>>> dev
       },
       // Rating
