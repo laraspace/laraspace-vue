@@ -29,7 +29,7 @@
     "bootstrap": "^4.0.0",
     "bootstrap-datepicker": "^1.7.1",
     "bootstrap-transition": "^3.1.1",
-    
+
     "chart.js": "^2.7.1",
     "codemirror": "^5.32.0",
     "easy-pie-chart": "^2.1.7",
@@ -56,6 +56,8 @@
     "vue-multiselect": "^2.0.8",
     "vue-prism": "^1.0.5",
     "vue-router": "2.7.0",
-    "vuelidate": "^0.6.1"
+    "vue-tabs-component": "^1.4.0",
+    "vuelidate": "^0.6.1",
+    "zoom.js": "github:fat/zoom.js"
   }
 }
