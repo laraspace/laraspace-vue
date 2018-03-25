@@ -29,6 +29,8 @@ import Tables from './views/admin/basic-ui/Tables.vue'
 import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 
 // Components
+import Datatables from './views/admin/components/Datatables.vue'
+import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import ImageCropper from './views/admin/components/ImageCropper.vue'
 import ImageZoom from './views/admin/components/ImageZoom.vue'
@@ -206,7 +208,38 @@ const routes = [
       },
 
       // Components
+<<<<<<< HEAD
+      {
+        path: 'components/calendar',
+        component: Calendar
+      },
+      {
+        path: 'components/mail-box',
+        component: MailBox
+      },
+      {
+        path: 'components/datatables',
+        component: Datatables
+      },
+      {
+        path: 'components/image-cropper',
+        component: ImageCropper
+      },
+      {
+        path: 'components/image-zoom',
+        component: ImageZoom
+      },
+      {
+        path: 'components/nestable-list',
+        component: NestableList
+      },
+      {
+        path: 'components/nestable-tree',
+        component: NestableTree
+      },
+=======
 
+>>>>>>> dev
       {
         path: 'components/notifications',
         component: Notifications
