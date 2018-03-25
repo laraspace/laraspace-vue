@@ -536,7 +536,7 @@ import MaskedInput from 'vue-text-mask'
 import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy HH:MM')
 export default {
-  name: 'name', 
+  name: 'name',
   components: {
     'masked-input': MaskedInput
   },
