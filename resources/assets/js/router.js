@@ -38,6 +38,7 @@ import Calendar from './views/admin/components/Calendar.vue'
 import NestableTree from './views/admin/components/NestableTree.vue'
 import NestableList from './views/admin/components/NestableList.vue'
 import VueTabs from './views/admin/components/VueTabs.vue'
+import VueCarousel from './views/admin/components/VueCarousel.vue'
 // 1. Ratings
 import BarRating from './views/admin/components/ratings/BarRating.vue'
 import StarRating from './views/admin/components/ratings/StarRating.vue'
@@ -251,8 +252,13 @@ const routes = [
         component: SweetModals
       },
       {
+<<<<<<< HEAD
         path: 'components/vue-tabs',
         component: VueTabs
+=======
+        path: 'components/vue-carousel',
+        component: VueCarousel
+>>>>>>> dev
       },
       // Rating
       {
