@@ -88,6 +88,9 @@
               to="/admin/components/notifications"
               tag="li"><a>Notifications</a></router-link>
             <router-link
+              to="/admin/components/vue-carousel"
+              tag="li"><a>Vue Carousel</a></router-link>
+            <router-link
               to="/admin/components/sweet-modals"
               tag="li"><a>Sweet Modals</a></router-link>
           </ul>
