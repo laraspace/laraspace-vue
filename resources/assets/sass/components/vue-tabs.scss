@@ -1,0 +1,352 @@
+.vue-tabs-demo {
+  .card-body {
+    .default {
+      .tabs-component{
+          .tabs-component-tabs{
+              padding-left: 0px;
+            }
+      }
+      .suffix{
+          background-color: #c03;
+          color: #fff;
+          margin-left: .35em;
+        }
+        .prefix {
+          background-color: #d1e8eb;
+          color: #0c5174;
+          margin-right: .35em;
+        }
+        .prefix , .suffix {
+          align-items: center;
+          border-radius: 1.25rem;
+          display: flex;
+          font-size: .75rem;
+          flex-shrink: 0;
+          height: 1.25rem;
+          justify-content: center;
+          line-height: 1.25rem;
+          min-width: 1.25rem;
+          padding: 0 .1em;
+        }
+        .tabs-component {
+          margin: 2em 0;
+        }
+        .page-subtitle {
+          font-size: 1.25rem;
+          margin-bottom: 1em;
+          padding-top: .25em;
+        }
+      }
+      
+      .basic, .simple, .vertical, .basic-vertical, .tabs-component, .basic-primary {
+        .tabs-component {
+          margin:0;
+          
+        }
+      }
+    }
+  }  
+// @media (max-width: 700px) {
+  .suffix {
+    position: absolute;
+    right: -.725em;
+    top: -.725em;
+  }
+  
+  .basic {
+    .tabs-component {
+      .tabs-component-tabs {
+        padding: 0px;
+        .tabs-component-tab {
+          border: none;
+          background-color:none;
+          border-radius: none;
+          margin-right: .1rem !important;
+          transform: none;
+          transition: none;
+        }
+        .tabs-component-tab{
+          margin: 0px;
+          a{
+            padding: 0.75em 2rem !important;
+            color: #333333;
+          }
+          a:hover{
+            color: #333333;
+            text-decoration: none;
+          }
+          
+         &.is-active{
+            a {
+              color:#ffde00;
+            }
+           border: 1px solid #333;
+           background: #333;
+           color:#ffde00;
+         }
+        }
+        .tabs-component-tab:hover {
+          border: 1px solid #333;
+        }
+      }
+      .tabs-component-panels{
+        border-top: 1px solid #333333 !important;
+        border: none;
+        position:relative;
+        border-radius: 0;
+        padding: 1em 0em !important;
+        box-shadow: none;
+        
+      }
+    }
+  }
+  .basic-primary{
+    .tabs-component {
+      .tabs-component-tabs {
+        padding: 0px;
+        .tabs-component-tab {
+          border: none;
+          background-color:none;
+          border-radius: none;
+          margin-right: .1rem !important;
+          transform: none;
+          transition: none;
+        }
+        .tabs-component-tab{
+          margin: 0px;
+          a{
+            padding: 0.75em 2rem !important;
+            color: #333333;
+          }
+          a:hover{
+            text-decoration: none;
+          }
+          
+         &.is-active{
+            a {
+              color:#fff;
+            }
+           border: 1px solid #007dcc;
+           background: #007dcc;
+           color:#fff;
+         }
+        }
+        .tabs-component-tab:hover {
+          border: 1px solid #007dcc;
+        }
+      }
+      .tabs-component-panels{
+        border-top: 1px solid #007dcc !important;
+        border: none;
+        position:relative;
+        border-radius: 0;
+        padding: 1em 0em !important;
+        box-shadow: none;
+        
+      }
+    }
+  }
+  .basic-vertical {
+    .tabs-component {
+       display: flex !important;
+      .tabs-component-tabs {
+          display: inline-block !important;
+          border-right: 1px solid #333333 !important;
+          border-radius: 0;
+          padding: 0px;
+          
+        .tabs-component-tab {
+          border: none;
+          background-color:none;
+          border-radius: 4px 0 0 4px;
+          margin-bottom: .2rem !important;
+          transform: none;
+          transition: none;
+        
+        }
+        .tabs-component-tab{
+          margin: 0px;
+          a{
+            padding: 0.75em 2rem !important;
+            color: #333333;
+          }
+          a:hover{
+            color: #333333;
+            text-decoration: none;
+          }
+          
+         &.is-active{
+            a {
+              color:#ffde00;
+            }
+           border: 1px solid transparent;
+           background: #333333;
+          //  color:#ffde00;
+         }
+        }
+        .tabs-component-tab:hover {
+          border: 1px solid #333333;
+          border-right: 0;
+        }
+      }
+      .tabs-component-panels{
+        border: none;
+        position: relative;
+        left: 2em;
+        border-radius: 0;
+        padding: 0em 0em !important;
+        box-shadow: none;
+        
+      }
+    }
+  }
+  .basic-vertical-primary{
+    .tabs-component {
+       margin-top:0px !important;
+       display: flex !important;
+      .tabs-component-tabs {
+          display: inline-block !important;
+          border-right: 1px solid #007dcc !important;
+          border-radius: 0;
+          padding: 0px;
+          
+        .tabs-component-tab {
+          border: none;
+          background-color:none;
+          border-radius: 4px 0 0 4px;
+          margin-bottom: .2rem !important;
+          transform: none;
+          transition: none;
+        
+        }
+        .tabs-component-tab{
+          margin: 0px;
+          a{
+            padding: 0.75em 2rem !important;
+            color: #333333;
+          }
+          a:hover{
+            color: #333333;
+            text-decoration: none;
+          }
+          
+         &.is-active{
+            a {
+              color:#fff;
+            }
+           border: 1px solid transparent;
+           background: #007dcc;
+           color:#fff;
+         }
+        }
+        .tabs-component-tab:hover {
+          border: 1px solid #007dcc;
+          border-right: 0;
+          
+        }
+      }
+      .tabs-component-panels{
+        border: none;
+        position: relative;
+        left: 2em;
+        border-radius: 0;
+        padding: 0em 0em !important;
+        box-shadow: none;
+        
+      }
+    }
+
+  }
+  .simple {
+     .tabs-component {
+      .tabs-component-tabs {
+          padding: 0px;
+        .tabs-component-tab {
+          border: none;
+          background-color:none;
+          border-radius: none;
+          
+          transform: none;
+          transition: none;
+        }
+        .tabs-component-tab{
+          margin: 0px;
+          a{
+            padding: 0.75em 2rem !important;
+            color: #333333;
+          }
+          a:hover {
+            color: #333333;
+            outline: none;
+            border-bottom: 3px solid #fff299;
+          }
+          
+         &.is-active{
+            a:hover{
+               border-bottom: none;
+            }
+           border-bottom: 3px solid #ffde00;
+           color:#333;
+         }
+        }
+      }
+      .tabs-component-panels {
+        border-top: 1px solid #ddd !important;
+        border: none;
+        position: relative;
+        border-radius: 0;
+        padding: 1em 0em !important;
+        
+      }
+    }
+  }
+  .vertical{
+     .tabs-component {
+       display: flex !important;
+      .tabs-component-tabs {
+          padding: 0px;
+          display: inline-block!important;
+          border-bottom: none;
+          border-right: 1px solid #ddd;
+          border-radius: 0;
+        .tabs-component-tab {
+          border: none;
+          background-color:none;
+          border-radius: none;
+          transform: none;
+          transition: none;
+        
+        }
+        .tabs-component-tab{
+          margin: 0px;
+          a{
+            padding: 0.75em 2rem !important;
+            color: #333333;
+            border-right: 3px solid transparent;
+            background: transparent;
+          }
+          a:hover {
+          background-color: transparent;
+          border-right: 3px solid #fff299;
+          border-radius: 0;
+          }
+          
+         &.is-active{
+             a:hover{
+               border-right: none;
+            }
+           border-right: 3px solid #ffde00;
+           color:#333;
+         }
+        }
+      }
+      .tabs-component-panels {
+        border: none;
+        position: relative;
+        left: 2em !important;
+        border-radius: 0;
+        padding: 0em 0em !important;
+      }
+    }
+  }
+// }
