@@ -23,8 +23,11 @@
       </a>
     </router-link>
     <transition
+      :duration="{ leave: 8000 }"
       name="slide"
-      mode="out-in">
+      mode="out-in"
+      @after-enter="afterEnter"
+      @after-leave="afterLeave">
       <ul
         v-show="showChild&&(routers.length != 0)"
         ref="isCollapse"
@@ -70,7 +73,8 @@ export default {
   data () {
     return {
       showChild: true,
-      height: ''
+      height: '',
+      originaHeight: ''
     }
   },
   computed: {
@@ -87,7 +91,7 @@ export default {
     }
   },
   mounted () {
-    this.height = this.$refs.isCollapse.clientHeight
+    this.height = this.originaHeight = this.$refs.isCollapse.clientHeight
     this.showChild = false
     if (this.isActive(this.activeUrl) === true) {
       this.showChild = true
@@ -103,10 +107,16 @@ export default {
       this.$parent.$children.filter(function (value) {
         if (value !== self) {
           value.showChild = false
-          console.log('self:' + self.showChild)
-          console.log('self1:' + value.showChild)
+          // console.log('self:' + self)
+          // console.log('self1:' + value)
         }
       })
+    },
+    afterEnter () {
+      this.height = this.originaHeight
+    },
+    afterLeave () {
+      this.height = 0
     }
   }
 }
@@ -114,10 +124,12 @@ export default {
 <style scoped>
 .is-collapse {
   overflow: hidden;
-  transition: max-height .3s ease;
+  transition: max-height .3s ease-in-out;
 }
 .slide-enter-active, .slide-leave-active {
-  max-height: 0 !important;
   overflow: hidden;
+}
+.slide-leave-active {
+  max-height: 0px !important;
 }
 </style>
