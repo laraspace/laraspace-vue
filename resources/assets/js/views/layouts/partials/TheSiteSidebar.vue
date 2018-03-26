@@ -85,43 +85,23 @@
             aria-expanded="true"><i class="icon-fa icon-fa-puzzle-piece"/> Components <span class="icon-fa arrow icon-fa-fw"/></a>
           <ul aria-expanded="true">
             <router-link
-<<<<<<< HEAD
-              to="/admin/components/calendar"
-              tag="li"><a>Calendar</a></router-link>
-            <router-link
               to="/admin/components/mail-box"
               tag="li"><a>MailBox</a></router-link>
             <router-link
-              to="/admin/components/datatables"
-              tag="li"><a>Jquery Datatables</a></router-link>
-            <router-link
-              to="/admin/components/image-cropper"
-              tag="li"><a>ImageCropper</a></router-link>
-            <router-link
-              to="/admin/components/image-zoom"
-              tag="li"><a>ImageZoom</a></router-link>
-            <router-link
-              to="/admin/components/nestable-list"
-              tag="li"><a>Nestable List</a></router-link>
-            <router-link
-              to="/admin/components/nestable-tree"
-              tag="li"><a>Nestable Tree</a></router-link>
-            <router-link
-=======
->>>>>>> dev
               to="/admin/components/notifications"
               tag="li"><a>Notifications</a></router-link>
             <router-link
-<<<<<<< HEAD
+              to="/admin/components/vue-dropzone"
+              tag="li"><a>File-Uploader</a></router-link>
+            <router-link
               to="/admin/components/vue-tables"
               tag="li"><a>Vue Table</a></router-link>
-=======
+            <router-link
               to="/admin/components/vue-tabs"
               tag="li"><a>Vue Tabs</a></router-link>
             <router-link
               to="/admin/components/vue-carousel"
               tag="li"><a>Vue Carousel</a></router-link>
->>>>>>> dev
             <router-link
               to="/admin/components/sweet-modals"
               tag="li"><a>Sweet Modals</a></router-link>

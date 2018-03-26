@@ -11,13 +11,8 @@
 //node_module
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
-@import "../../../node_modules/select2/src/scss/core";
-@import "../../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.css";
-@import "../../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css";
 @import "../../../node_modules/notie/src/notie";
 @import "../../../node_modules/toastr/toastr";
-@import "../../../node_modules/metismenu/dist/metisMenu.css";
-@import "../../../node_modules/multiselect/css/multi-select.css";
 
 @import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
 @import '../../../node_modules/morris.js/morris.css';
@@ -73,20 +68,12 @@
 @import 'components/transitions';
 @import 'components/charts';
 
-@import "components/image-cropper";
-@import "components/calendar";
-@import "components/gallery";
-@import "components/form-wizards";
 @import "components/editors";
 @import "components/ico-moon";
 @import "components/easy-pie-chart";
 @import "components/pace-loader";
-<<<<<<< HEAD
 @import "components/mailbox";
-
-=======
 @import "components/vue-tabs";
->>>>>>> dev
 
 
 // Pages

@@ -24,12 +24,10 @@
     "amcharts3": "github:amcharts/amcharts3",
     "ammap3": "github:amcharts/ammap3",
     "amstock3": "github:amcharts/amstock3",
-
     "axios": "^0.16.2",
     "bootstrap": "^4.0.0",
     "bootstrap-datepicker": "^1.7.1",
     "bootstrap-transition": "^3.1.1",
-
     "chart.js": "^2.7.1",
     "codemirror": "^5.32.0",
     "easy-pie-chart": "^2.1.7",
@@ -48,29 +46,18 @@
     "simplemde": "^1.11.2",
     "summernote": "^0.8.8",
     "sweet-modal-vue": "^2.0.0",
-<<<<<<< HEAD
-    "switchery": "0.0.2",
-    "text-mask-addons": "^3.7.1",
-    "timepicker": "^1.11.12",
-=======
->>>>>>> dev
     "toastr": "^2.1.4",
     "vee-validate": "^2.0.0-beta.18",
     "vue": "^2.5.10",
-<<<<<<< HEAD
-    "vue-color": "^2.4.5",
-=======
     "vue-carousel": "^0.6.9",
->>>>>>> dev
+    "vue-color": "^2.4.5",
     "vue-datatables": "^0.1.4",
     "vue-multiselect": "^2.0.8",
     "vue-prism": "^1.0.5",
     "vue-router": "2.7.0",
-<<<<<<< HEAD
-    "vue-text-mask": "^6.0.0",
-=======
     "vue-table-component": "^1.8.1",
->>>>>>> dev
+    "vue-text-mask": "^6.0.0",
+    "vue2-dropzone": "^3.0.6",
     "vuelidate": "^0.6.1",
     "zoom.js": "github:fat/zoom.js"
   }
