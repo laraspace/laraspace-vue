@@ -3,8 +3,6 @@ import VeeValidate from 'vee-validate'
 import Axios from 'axios'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
-// datatable
-import 'datatables.net-responsive-bs4'
 
 window._ = require('lodash')
 

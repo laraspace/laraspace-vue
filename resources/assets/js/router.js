@@ -29,20 +29,12 @@ import Tables from './views/admin/basic-ui/Tables.vue'
 import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 
 // Components
-import Datatables from './views/admin/components/Datatables.vue'
 import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
-import ImageCropper from './views/admin/components/ImageCropper.vue'
-import ImageZoom from './views/admin/components/ImageZoom.vue'
-import Calendar from './views/admin/components/Calendar.vue'
-import NestableTree from './views/admin/components/NestableTree.vue'
-import NestableList from './views/admin/components/NestableList.vue'
 import VueTable from './views/admin/components/VueTables.vue'
 import VueTabs from './views/admin/components/VueTabs.vue'
+import VueDropzone from './views/admin/components/VueDropzone.vue'
 import VueCarousel from './views/admin/components/VueCarousel.vue'
-// 1. Ratings
-import BarRating from './views/admin/components/ratings/BarRating.vue'
-import StarRating from './views/admin/components/ratings/StarRating.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
 
 // Charts
@@ -52,7 +44,7 @@ import Gauge from './views/admin/charts/Gauge.vue'
 import Morris from './views/admin/charts/Morris.vue'
 import Sparkline from './views/admin/charts/Sparkline.vue'
 // Icons
-import Evil from './views/admin/icons/Evil.vue'
+// import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
 import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
@@ -209,77 +201,38 @@ const routes = [
       },
 
       // Components
-<<<<<<< HEAD
       {
-        path: 'components/calendar',
-        component: Calendar
+        path: 'components/notifications',
+        component: Notifications
       },
       {
         path: 'components/mail-box',
         component: MailBox
       },
       {
-        path: 'components/datatables',
-        component: Datatables
-      },
-      {
-        path: 'components/image-cropper',
-        component: ImageCropper
-      },
-      {
-        path: 'components/image-zoom',
-        component: ImageZoom
-      },
-      {
-        path: 'components/nestable-list',
-        component: NestableList
-      },
-      {
-        path: 'components/nestable-tree',
-        component: NestableTree
-      },
-=======
-
->>>>>>> dev
-      {
-        path: 'components/notifications',
-        component: Notifications
+        path: 'components/vue-dropzone',
+        component: VueDropzone
       },
       {
         path: 'components/sweet-modals',
         component: SweetModals
       },
-<<<<<<< HEAD
       {
         path: 'components//vue-tables',
         component: VueTable
-=======
-<<<<<<< HEAD
-=======
+      },
       {
-<<<<<<< HEAD
         path: 'components/vue-tabs',
         component: VueTabs
-=======
+      },
+      {
         path: 'components/vue-carousel',
         component: VueCarousel
->>>>>>> dev
->>>>>>> dev
-      },
-      // Rating
-      {
-        path: 'components/rating/bar-rating',
-        component: BarRating
-      },
-      {
-        path: 'components/rating/star-rating',
-        component: StarRating
       },
       {
         path: 'components/sweet-modals',
         component: SweetModals
       },
->>>>>>> dev
 
       // chart
       {
@@ -304,30 +257,30 @@ const routes = [
       },
 
       //  Icons
-       {
-           path: 'icons/evil',
-           component: Evil
-       },
+      // {
+      //   path: 'icons/evil',
+      //   component: Evil
+      // },
       {
         path: 'icons/fontawesome',
         component: Fontawesome
       },
-       {
-           path: 'icons/fpsline',
-           component: Fpsline
-       },
+      {
+        path: 'icons/fpsline',
+        component: Fpsline
+      },
       {
         path: 'icons/icomoon',
         component: IcoMoon
       },
-       {
-           path: 'icons/line',
-           component: Line
-       },
-       {
-           path: 'icons/meteo',
-           component: Meteo
-       },
+      {
+        path: 'icons/line',
+        component: Line
+      },
+      {
+        path: 'icons/meteo',
+        component: Meteo
+      },
 
       // Forms
       {
