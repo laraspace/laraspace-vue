@@ -3,10 +3,9 @@ import VeeValidate from 'vee-validate'
 import Axios from 'axios'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
-// datatable
-import 'datatables.net-responsive-bs4'
 
 window._ = require('lodash')
+
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -51,22 +50,8 @@ window.axios.interceptors.request.use(function (config) {
 /**
  * Global plugins
  */
-window.Popper = require('popper.js')
-require('bootstrap')
-window.validate = require('jquery-validation')
-window.clockpicker = require('clockpicker/dist/bootstrap-clockpicker')
-window.select2 = require('select2')
-window.Switchery = require('switchery/switchery')
-window.Ladda = require('ladda/js/ladda')
-window.multiSelect = require('multiselect')
-window.datepicker = require('bootstrap-datepicker/dist/js/bootstrap-datepicker')
 window.notie = require('notie')
 window.toastr = require('toastr')
-window.DataTable = require('datatables.net-bs4')
-window.timepicker = require('timepicker')
-window.Raphael = require('raphael/raphael')
-window.steps = require('jquery-steps/build/jquery.steps')
-window.EasyPieChart = require('easy-pie-chart/dist/easypiechart')
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

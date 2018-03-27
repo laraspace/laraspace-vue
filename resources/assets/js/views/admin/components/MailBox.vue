@@ -159,7 +159,15 @@
                     <input
                       class="star"
                       type="checkbox"
-                      title="bookmark page">
+                      title="important">
+                  </td>
+                  <td class="cell-50">
+                    <a>
+                      <img
+                        src="/assets/img/avatars/avatar.png"
+                        alt="avtar"
+                        class="avtar-img">
+                    </a>
                   </td>
                   <td @click="openMail" >
                     <div class="content">
@@ -171,7 +179,7 @@
                       </div>
                     </div>
                   </td>
-                  <td class="cell-30">
+                  <td class="cell-30 attachment">
                     <i class="icon-fa icon-fa-paperclip"/>
                   </td>
                   <td class="cell-130">
@@ -180,7 +188,66 @@
                 </tr>
               </tbody>
             </table>
-            <!-- Scrollable Div -->
+            <div class="mail-footer">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li
+                    @click="tabMinus"
+                    class="page-item">
+                    <a
+                      class="page-link"
+                      href="#"
+                      aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li
+                    @click="tab = 1"
+                    :class="['page-item', {'active' : tab === 1}]">
+                    <a
+                      class="page-link"
+                      href="#">1</a></li>
+                  <li
+                    @click="tab = 2"
+                    :class="['page-item', {'active' : tab === 2}]"><a
+                      class="page-link"
+                      href="#">2</a></li>
+                  <li
+                    @click="tab = 3"
+                    :class="['page-item', {'active' : tab === 3}]"><a
+                      class="page-link"
+                      href="#">3</a></li>
+                  <li
+                    @click="tab = 4"
+                    :class="['page-item', {'active' : tab === 4}]"><a
+                      class="page-link"
+                      href="#">4</a></li>
+                  <li
+                    @click="tab = 5"
+                    :class="['page-item', {'active' : tab === 5}]"><a
+                      class="page-link"
+                      href="#">5</a></li>
+                  <li
+                    @click="tab = 6"
+                    :class="['page-item', {'active' : tab === 6}]"><a
+                      class="page-link"
+                      href="#">6</a></li>
+                  <li
+                    @click="tabPlus"
+                    class="page-item">
+                    <a
+                      class="page-link"
+                      href="#"
+                      aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <!-- Scrollable Div(mail-open) -->
             <div :class="['mail',{'mailOpen':isOpen}]">
               <div class="sidepanel-header">
                 <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
@@ -387,7 +454,6 @@
                           <div class="col-sm-10"><input
                             type="email"
                             id="inputEmailTo"
-                            placeholder="To:"
                             class="form-control"></div>
                         </div>
                         <div class="form-group row">
@@ -397,14 +463,14 @@
                           <div class="col-sm-10"><input
                             type="text"
                             id="inputSubject"
-                            placeholder="Subject:"
                             class="form-control"></div>
                         </div>
                       </form>
                       <br><br>
-                      <div class="ls-summernote">
-                        Write Somthing..
-                      </div>
+                      <textarea
+                        class="ls-summernote"
+                        rows="10"
+                        style="min-height:150px;" />
                     </div>
                     <div class="modal-footer">
                       <button
@@ -431,6 +497,7 @@ export default {
   data () {
     return {
       isOpen: false,
+      tab: 1,
       pullRightSide: false,
       rightAngle: true,
       leftAngle: false,
@@ -444,8 +511,6 @@ export default {
         { 'id': '6', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
         { 'id': '7', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
         { 'id': '8', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
-        { 'id': '9', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
-        { 'id': '10', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' }
       ]
     }
   },
@@ -472,8 +537,6 @@ export default {
       responsive: true,
       select: true
     })
-    // $('.ls-summernote').summernote()
-    // $('.ls-multi-select').multiSelect()
     Plugin.initPlugins(['MultiSelect', 'Select2', 'Editors'])
   },
   methods: {
@@ -487,234 +550,21 @@ export default {
       this.pullRightSide = !this.pullRightSide
       this.rightAngle = !this.rightAngle
       this.leftAngle = !this.leftAngle
+    },
+    tabPlus () {
+      if (this.tab >= 6) {
+        this.tab = 6
+      } else {
+        this.tab = this.tab + 1
+      }
+    },
+    tabMinus () {
+      if (this.tab <= 1) {
+        this.tab = 1
+      } else {
+        this.tab = this.tab - 1
+      }
     }
   }
 }
 </script>
-<style>
-/* .Override .sidebar, .Override .mail-content
-{
-    height: 100vh;
-    position: relative;
-}
-.page-heading {
-    padding-bottom: 30px;
-    padding-top: 30px;
-}
-.folder-menu{
-  position: absolute;
-      top: 25px;
-    left: -48px;
-}
-.menu-penal{
-  margin:20px 12px;
-}
-.DropdownAction{
-  display: inline-block;
-  margin-left: 15px;
-}
-.DropdownAction button i{
-    padding-top: 5px;
-    padding-left: 3px;
-}
-.mail-search{
-  display: inline-block ;
-}
-.filter-action{
-  float: right;
-}
-.Override.container:before
-{
-    content: '';
-    display: block;
-    float: left;
-    height: 100%;
-}
-
-.Override .fill
-{
-    color: #efefef;
-    position: relative;
-}
-    .Override .fill:after
-    {
-        content: '';
-        display: block;
-        clear: left;
-    }
-
-.Override .wrapper
-{
-    width: 100%;
-    height: 100%;
-}
-
-.Override .mail-header
-{
-    background-color: #e4eaec;
-}
-.Override .mail-header .navbar .navbar-brand
-{
-  float: left;
-}
-
-.Override .sidebar
-{
-    padding-top:20px;
-    float: left;
-    position: static;
-    border-right: 1px solid #e4eaec;
-}
-.sidebar li i{
-  width: 30px;
-}
-
-.sidebar li a
-{
-    display: block;
-    padding: 15px 0px 12px 0px;
-    position: relative;
-    text-decoration: none;
-}
-.sidebar ul{
-    list-style: none;
-    padding: 0;
-}
-.Override .mail-content
-{
-    position: static;
-    overflow: auto;
-    color:black;
-}
-.sidebar ul li a span{
-    float: right;
-    margin-top: 3px;
-}
-.create-mail{
-    position: fixed;
-    right: 30px;
-    bottom: 130px;
-    z-index: 100;
-}
-.navbar-toolbar ul{
-  margin:0px;
-}
-.navbar-toolbar ul li{
-  display: inline-block;
-  list-style: none;
-  text-align: center;
-  margin: 0;
-  padding-left:25px ;
-  position: relative;
-}
-.navbar-toolbar ul li span{
-    position: absolute;
-    right: -10px;
-    top: -5px;
-}
-
-.table tr td{
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-.table th{
-  height: 50px;
-}
-.table .cell-50{
-  width: 50px;
-}
-.table .cell-30{
-  width: 30px;
-}
-.table .cell-130{
-  width: 130px;
-}
-// Custom checkbox 
-.custom-control-label::before {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-.custom-control-label::after {
-    width: 1.5rem;
-    height: 1.5rem;
-}
- // mail-content 
- .mail{
-   position: absolute;
-   background: ghostwhite;
-   height: 100%;
-   width: 700px;
-   right: -720px;
-   bottom: 0px;
-   box-shadow: -10px 0 20px 0 rgba(66,66,66,.2);
-   z-index: 1050;
-   transition: right 0.5s;
- }
-.mailOpen{
-   right: 0px;
-}
-.sidepanel-header{
-    padding: 40px 30px;
-    padding-right: 120px;
-    background-color: #0bb2d4;
-}
-.sidepanel-close{
-    position: absolute;
-    left: 665px;
-    top: 15px;
-    background: none;
-    border: none;
-}
-.sidepanel-body{
-      padding: 0 30px;
-}
-.message-heading{
-    position: relative;
-    padding: 20px 0px;
-}
-.mail-action a{
-  margin-left:12px;
-}
-.mail-action{
-    position: absolute;
-    right: 10px;
-    top: 95px;
-}
-.mail-menu ul li{
-padding-left: 15px;
-padding-bottom: 10px;
-}
-.mail-menu ul{
-color:white;
-list-style: none;
-
-}
-.chat{
-    position: absolute;
-    right: -270px;;
-    height: 100%;
-    width: 250px;
-    background: white;
-    z-index: 1050;
-    transition: right 0.5s;
-    box-shadow: -5px 0 20px 0 rgba(66,66,66,.2);
-}
-.chatOpen{
-  right: 0;
-}
-.checkbox-star::before{
-  content: "\F005";
-  color: #007dcc;
-   width: 0;
-  height: 0;
-  font: normal normal normal 26px/1 FontAwesome;
-}
-.checkbox-star::after{
-    content: "\F006";
-    font: normal normal normal 26px/1 FontAwesome;
-    width: 0;
-    height: 0;
-    // color: #eeeeee; 
-    color:gray;
-} */
-</style>

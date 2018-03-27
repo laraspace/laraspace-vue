@@ -480,10 +480,74 @@
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-header">
+        <h6>Text Mask <a
+          class="source-link"
+          href="https://text-mask.github.io/text-mask/"
+          target="_blank">source</a></h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Phone number</h5>
+            <masked-input
+              type="text"
+              name="phone"
+              class="form-control"
+              v-model="phone"
+              :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
+              :guide="true"
+              :keepCharPositions="true"
+              :show-Mask="true"/>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Date</h5>
+            <masked-input
+              type="text"
+              name="date"
+              class="form-control"
+              v-model="date"
+              :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
+              :guide="true"
+              :keepCharPositions="true"
+              :showMask="true"/>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Auto Correct Date</h5>
+            <masked-input
+              type="text"
+              name="dateAuto"
+              class="form-control"
+              v-model="dateAuto"
+              :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
+              :guide="true"
+              :pipe="auto"
+              :keepCharPositions="true"
+              :showMask="true"/>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script type="text/babel">
+import MaskedInput from 'vue-text-mask'
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
+const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy HH:MM')
 export default {
+  name: 'name',
+  components: {
+    'masked-input': MaskedInput
+  },
+  data () {
+    return {
+      phone: '',
+      date: '',
+      dateAuto: '',
+      auto: autoCorrectedDatePipe
+    }
+  },
   mounted () {
     Plugin.initPlugins(['Select2', 'TimePickers', 'DatePicker', 'MultiSelect', 'BootstrapSelect', 'SwitchToggles'])
   }

@@ -59,7 +59,7 @@
                 }
             }
           .mail-content {
-            height: 100vh;
+            height: 100%;
             position: relative;
             flex: 1; 
               .menu-penal{
@@ -69,12 +69,16 @@
                         &::before, &::after{
                           width: 1.5rem;
                           height: 1.5rem;
+                          top: 8px;
                           }
                         }
                       }
                   .DropdownAction{
                     display: inline-block;
                     margin-left: 15px;
+                    position: relative;
+                    top: 8px;
+                    right: 8px;
                   }
                   .filter-action{
                     float: right;
@@ -98,7 +102,14 @@
                        }
                   &.cell-50 {
                     width: 50px;
+                    a{
+                      .avtar-img{
+                        height: 50px;
+                        border-radius: 50%;
+                      }
+                    }
                     .custom-control {
+                          top: 8px;
                       .custom-control-label {
                         &::before, &::after{
                           width: 1.5rem;
@@ -110,11 +121,14 @@
                     &.cell-30 {
                           width: 30px;
                           padding: 5px;
+                          
                         .star {
                             visibility:hidden;
                             font-size:30px;
                             cursor:pointer;
                             color:#eb6709; 
+                            position: relative;
+                            top: 8px
                         }
                         .star:before {
                         content: "\2606";
@@ -127,9 +141,15 @@
                         position: absolute;
                         color: #eb6709;
                       }
+                      &.attachment{
+                        position: relative;
+                        top: 30px;
+                      }
                     }
                     &.cell-130 {
                         width: 130px;
+                        position: relative;
+                        top: 20px;
                     }
 
                   }
@@ -237,6 +257,11 @@
                   }
                 }
               }
+              .mail-footer{
+                ul{
+                    margin: 25px;
+                }
+              }
             }
               .create-mail {
                   position: fixed;
@@ -250,9 +275,25 @@
       }
       @media(max-width: $medium-breakpoint ){
       .sidebar{
-        position: absolute;
+        position: fixed;
+        top: 60px;
+        z-index: 10;
+        background: white;
+        left: 82px;
+      }
+       .mail-box .Override .wrapper .fill .sidebar.pull-right-side {
+       left: 245px;
+      }
+    } 
+    @media(max-width:$small-breakpoint){
+       .sidebar{
+        position: fixed;
+        top: 60px;
         z-index: 10;
         background: white;
         left: -160px;
       }
-    } 
+      .mail-box .Override .wrapper .fill .sidebar.pull-right-side {
+       left: 0px;
+      }
+    }

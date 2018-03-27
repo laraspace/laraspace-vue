@@ -11,15 +11,9 @@
 //node_module
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
-@import "../../../node_modules/select2/src/scss/core";
-@import "../../../node_modules/timepicker/jquery.timepicker.css";
-@import "../../../node_modules/switchery/switchery.css";
-@import "../../../node_modules/ladda/css/ladda";
-@import "../../../node_modules/clockpicker/src/clockpicker.css";
-@import "../../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.css";
-@import "../../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css";
 @import "../../../node_modules/notie/src/notie";
 @import "../../../node_modules/toastr/toastr";
+<<<<<<< HEAD
 @import "../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
 @import "../../../node_modules/multiselect/css/multi-select.css";
 @import "../../../node_modules/zoom.js/css/zoom.css";
@@ -36,11 +30,19 @@
 @import "../../../node_modules/jquery-bar-rating/dist/themes/fontawesome-stars.css";
 @import "../../../node_modules/jquery-bar-rating/dist/themes/fontawesome-stars-o.css";
 @import "../../../node_modules/raty-js/lib/jquery.raty.css";
+=======
+
+>>>>>>> dev
 @import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
 @import '../../../node_modules/morris.js/morris.css';
-@import '../../../node_modules/jquery-steps/demo/css/jquery.steps.css';
 @import '../../../node_modules/prismjs/themes/prism.css';
 @import '../../../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+
+// Icons
+//----------------------------------
+@import "../plugins/icons/icons.scss";
+
+
 
 
 // Skins
@@ -77,26 +79,20 @@
 // Components
 //----------------------------------
 
-@import 'components/forms';
 @import 'components/buttons';
 @import 'components/cards';
 @import 'components/tabs';
 @import 'components/tables';
-@import "components/modals";
 @import 'components/hamburgers';
 @import 'components/transitions';
 @import 'components/charts';
-@import "components/image-cropper";
-@import "components/calendar";
-@import "components/gallery";
-@import "components/form-wizards";
+
 @import "components/editors";
-@import "components/breadcrumbs";
-@import "components/ratings";
-@import "components/nestable";
 @import "components/ico-moon";
 @import "components/easy-pie-chart";
 @import "components/pace-loader";
+@import "components/mailbox";
+@import "components/vue-tabs";
 
 
 // Pages
