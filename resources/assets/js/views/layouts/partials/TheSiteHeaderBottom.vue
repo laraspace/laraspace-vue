@@ -51,10 +51,6 @@ export default {
       sidebar: 'sidebar'
     }
   },
-  mounted () {
-    $('#menu').metisMenu()
-  },
-
   methods: {
     isActive (url) {
       return this.$route.path.indexOf(url) > -1

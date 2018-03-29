@@ -176,15 +176,34 @@
               tag="li"><a>Vuelidate</a></router-link>
           </ul>
         </li>
-        <!--<li :class="{ active: isActive('/admin/pages') }">-->
-        <!--<a href="#" aria-expanded="true"><i class="fa fa-th-large"/> Pages <span class="fa arrow fa-fw"/></a>-->
-        <!--<ul aria-expanded="true">-->
-        <!--<router-link :to="'/admin/pages/login'" tag="li"><a>Login</a></router-link>-->
-        <!--<router-link :to="'/admin/pages/register'" tag="li"><a>Register</a></router-link>-->
-        <!--<router-link :to="'/admin/pages/404'" tag="li"><a>404 Page</a></router-link>-->
-        <!--</ul>-->
-        <!--</li>-->
-     
+        <li :class="{ active: isActive('/admin/pages') }">
+          <a
+            href="#"
+            aria-expanded="true"><i class="fa fa-th-large"/> Pages <span class="fa arrow fa-fw"/></a>
+          <ul aria-expanded="true">
+            <router-link
+              :to="'/admin/pages/login-1'"
+              tag="li"><a>Login</a></router-link>
+            <router-link
+              :to="'/admin/pages/login-2'"
+              tag="li"><a>Login 2</a></router-link>
+            <router-link
+              :to="'/admin/pages/login-3'"
+              tag="li"><a>Login 3</a></router-link>
+            <router-link
+              :to="'/admin/pages/register-1'"
+              tag="li"><a>Register</a></router-link>
+            <router-link
+              :to="'/admin/pages/register-2'"
+              tag="li"><a>Register 2</a></router-link>
+            <router-link
+              :to="'/admin/pages/register-3'"
+              tag="li"><a>Register 3</a></router-link>
+            <router-link
+              :to="'/admin/pages/404'"
+              tag="li"><a>404 Page</a></router-link>
+          </ul>
+        </li>
         <li :class="{ active: isActive('/admin/users') }">
           <a
             href="#"

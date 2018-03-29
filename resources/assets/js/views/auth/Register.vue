@@ -3,7 +3,7 @@
     action=""
     id="registerForm"
     method="post">
-    {{ csrf_field() }}
+    <!-- {{ csrf_field() }} -->
     <div class="form-group">
       <input
         type="email"
@@ -29,3 +29,13 @@
     <button class="btn btn-login btn-full">Register</button>
   </form>
 </template>
+<script type="text/babel">
+import Auth from '../../services/auth'
+
+export default {
+  data () {
+    return {
+    }
+  }
+}
+</script>

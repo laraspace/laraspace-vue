@@ -18,6 +18,8 @@ import LayoutBasic from './views/layouts/LayoutBasic.vue'
 import LayoutHorizontal from './views/layouts/LayoutHorizontal.vue'
 import LayoutIconSidebar from './views/layouts/LayoutIconSidebar.vue'
 import LayoutLogin from './views/layouts/LayoutLogin.vue'
+import LayoutLogin2 from './views/layouts/LayoutLogin2.vue'
+import LayoutLogin3 from './views/layouts/LayoutLogin3.vue'
 import LayoutFront from './views/layouts/LayoutFront.vue'
 
 // Basic UI
@@ -57,6 +59,9 @@ import Layouts from './views/admin/forms/FormLayouts.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
+
+// Pages
+// import LoginPage from './views/admin/pages/LoginPage.vue'
 
 // Todo-Item
 import TodoItem from './views/admin/TodoItem.vue'
@@ -157,7 +162,6 @@ const routes = [
     component: LayoutBasic, // Change the desired Layout here
     meta: { requiresAuth: true },
     children: [
-
       // Dashboard
       {
         path: 'dashboard/basic',
@@ -313,6 +317,8 @@ const routes = [
       //   component: MasonryGrid
       // },
 
+      // Pages
+
       // Users
       {
         path: 'users/profile',
@@ -359,7 +365,55 @@ const routes = [
       }
     ]
   },
-
+  // Demo Pages
+  {
+    path: '/admin/pages',
+    component: LayoutLogin,
+    children: [
+      {
+        path: 'login-1',
+        component: Login,
+        name: 'login 1'
+      },
+      {
+        path: 'register-1',
+        component: Register,
+        name: 'register-1'
+      }
+    ]
+  },
+  {
+    path: '/admin/pages',
+    component: LayoutLogin2,
+    children: [
+      {
+        path: 'login-2',
+        component: Login,
+        name: 'login 2'
+      },
+      {
+        path: 'register-2',
+        component: Register,
+        name: 'register 2'
+      }
+    ]
+  },
+  {
+    path: '/admin/pages',
+    component: LayoutLogin3,
+    children: [
+      {
+        path: 'login-3',
+        component: Login,
+        name: 'login 3'
+      },
+      {
+        path: 'register-3',
+        component: Register,
+        name: 'register 3'
+      }
+    ]
+  },
   //  DEFAULT ROUTE
   { path: '*', component: NotFoundPage }
 ]

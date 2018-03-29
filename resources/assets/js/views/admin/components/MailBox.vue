@@ -58,19 +58,19 @@
                 class="custom-control custom-checkbox"
                 style="display:inline-block">
                 <input
-                  type="checkbox"
+                  id="customCheckAll"
                   v-model="selectAll"
-                  class="custom-control-input"
-                  id="customCheckAll">
+                  type="checkbox"
+                  class="custom-control-input">
                 <label
                   class="custom-control-label"
                   for="customCheckAll"/>
               </div>
               <div class="DropdownAction">
                 <button
+                  id="dropdownFolderMenu"
                   class="btn btn-light"
                   type="button"
-                  id="dropdownFolderMenu"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false">
@@ -87,9 +87,9 @@
                     href="#">Dropdown link</a>
                 </div>
                 <button
+                  id="dropdownTagMenu"
                   type="button"
                   class="btn btn-light"
-                  id="dropdownTagMenu"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false">
@@ -109,9 +109,9 @@
               <div class="filter-action">
                 <div class="filter-menu" >
                   <button
+                    id="dropdownCheckMenu"
                     type="button"
                     class="btn btn-light"
-                    id="dropdownCheckMenu"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false">
@@ -129,8 +129,8 @@
                   </div>
                   <div class="mail-search">
                     <input
-                      type="email"
                       id="inputEmailTo"
+                      type="email"
                       placeholder="Search"
                       class="form-control">
                   </div>
@@ -145,14 +145,14 @@
                   <td class="cell-50">
                     <div class="custom-control custom-checkbox">
                       <input
-                        type="checkbox"
+                        :id="index"
                         v-model="selected"
                         :value="mail"
-                        class="custom-control-input"
-                        :id="index">
+                        type="checkbox"
+                        class="custom-control-input">
                       <label
-                        class="custom-control-label"
-                        :for="index"/>
+                        :for="index"
+                        class="custom-control-label"/>
                     </div>
                   </td>
                   <td class="cell-30">
@@ -192,8 +192,8 @@
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   <li
-                    @click="tabMinus"
-                    class="page-item">
+                    class="page-item"
+                    @click="tabMinus">
                     <a
                       class="page-link"
                       href="#"
@@ -203,39 +203,40 @@
                     </a>
                   </li>
                   <li
-                    @click="tab = 1"
-                    :class="['page-item', {'active' : tab === 1}]">
+                    :class="['page-item', {'active' : tab === 1}]"
+                    @click="tab = 1">
                     <a
                       class="page-link"
                       href="#">1</a></li>
                   <li
-                    @click="tab = 2"
-                    :class="['page-item', {'active' : tab === 2}]"><a
+                    :class="['page-item', {'active' : tab === 2}]"
+                    @click="tab = 2"><a
                       class="page-link"
                       href="#">2</a></li>
                   <li
-                    @click="tab = 3"
-                    :class="['page-item', {'active' : tab === 3}]"><a
+                    :class="['page-item', {'active' : tab === 3}]"
+                    @click="tab = 3"><a
                       class="page-link"
                       href="#">3</a></li>
                   <li
-                    @click="tab = 4"
-                    :class="['page-item', {'active' : tab === 4}]"><a
+                    :class="['page-item', {'active' : tab === 4}]"
+                    @click="tab = 4"><a
                       class="page-link"
                       href="#">4</a></li>
                   <li
-                    @click="tab = 5"
-                    :class="['page-item', {'active' : tab === 5}]"><a
+                    :class="['page-item', {'active' : tab === 5}]"
+                    @click="tab = 5"><a
                       class="page-link"
                       href="#">5</a></li>
                   <li
-                    @click="tab = 6"
-                    :class="['page-item', {'active' : tab === 6}]"><a
+                    :class="['page-item', {'active' : tab === 6}]"
+                    @click="tab = 6">
+                    <a
                       class="page-link"
                       href="#">6</a></li>
                   <li
-                    @click="tabPlus"
-                    class="page-item">
+                    class="page-item"
+                    @click="tabPlus">
                     <a
                       class="page-link"
                       href="#"
@@ -270,8 +271,8 @@
                   <a href="#"><i class="icon-fa icon-fa-chevron-right"/></a>
                 </div>
                 <button
-                  @click="closeMail"
-                  class="sidepanel-close">
+                  class="sidepanel-close"
+                  @click="closeMail">
                   <i class="icon-fa icon-fa-close"/>
                 </button>
               </div>
@@ -405,8 +406,8 @@
                 </div>
                 <div class="commnet">
                   <textarea
-                    name="comment"
                     id="replay"
+                    name="comment"
                     cols="75"
                     rows="4"/>
                   <button class="btn btn-primary">
@@ -435,8 +436,8 @@
                   <form>
                     <div class="modal-header">
                       <h5
-                        class="modal-title"
-                        id="exampleModalLabel">Create Mail</h5>
+                        id="exampleModalLabel"
+                        class="modal-title">Create Mail</h5>
                       <button
                         type="button"
                         class="close"
@@ -452,8 +453,8 @@
                             for="inputEmailTo"
                             class="col-sm-2 col-form-label">Email To</label>
                           <div class="col-sm-10"><input
-                            type="email"
                             id="inputEmailTo"
+                            type="email"
                             class="form-control"></div>
                         </div>
                         <div class="form-group row">
@@ -461,8 +462,8 @@
                             for="inputSubject"
                             class="col-sm-2 col-form-label">Subject</label>
                           <div class="col-sm-10"><input
-                            type="text"
                             id="inputSubject"
+                            type="text"
                             class="form-control"></div>
                         </div>
                       </form>
@@ -510,7 +511,7 @@ export default {
         { 'id': '5', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
         { 'id': '6', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
         { 'id': '7', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
-        { 'id': '8', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' },
+        { 'id': '8', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', 'abstract': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.' }
       ]
     }
   },
@@ -530,14 +531,6 @@ export default {
         this.selected = selected
       }
     }
-  },
-
-  mounted () {
-    jquery('#responsive-datatable').DataTable({
-      responsive: true,
-      select: true
-    })
-    Plugin.initPlugins(['MultiSelect', 'Select2', 'Editors'])
   },
   methods: {
     openMail () {

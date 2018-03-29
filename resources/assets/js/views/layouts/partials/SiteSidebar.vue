@@ -120,24 +120,22 @@
 </template>
 
 <script type="text/babel">
-
-    export default {
-        data() {
-            return {
-                'sidebar' : 'sidebar'
-            }
-        },
-        mounted(){
-            Plugin.initPlugins(['MetisMenu'])
-        },
-        methods : {
-            initPlugins(){
-                $(".scroll-pane").mCustomScrollbar({theme:"minimal-dark"});
-            },
-            isActive(url){
-                return (this.$route.path.indexOf(url) > -1)
-            }
-        }
-
+export default {
+  data() {
+    return {
+      sidebar: "sidebar"
+    };
+  },
+  mounted () {
+    Plugin.initPlugins(["MetisMenu"])
+  },
+  methods: {
+    initPlugins() {
+      $(".scroll-pane").mCustomScrollbar({ theme: "minimal-dark" })
+    },
+    isActive (url) {
+      return this.$route.path.indexOf(url) > -1
     }
+  }
+};
 </script>

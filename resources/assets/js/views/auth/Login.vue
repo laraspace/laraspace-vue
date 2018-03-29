@@ -4,7 +4,7 @@
     method="post"
     @submit.prevent="validateBeforeSubmit">
     <div
-    :class="{'form-group' : true , 'has-danger': errors.has('email') }">
+      :class="{'form-group' : true , 'has-danger': errors.has('email') }">
       <input
         type="email"
         class="form-control form-control-danger"
