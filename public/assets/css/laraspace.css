@@ -471,8 +471,7 @@ pre[class*="language-"] {
 	color: #07a;
 }
 
-.token.function,
-.token.class-name {
+.token.function {
 	color: #DD4A68;
 }
 

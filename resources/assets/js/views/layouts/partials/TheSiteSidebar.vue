@@ -184,7 +184,19 @@
         <!--<router-link :to="'/admin/pages/404'" tag="li"><a>404 Page</a></router-link>-->
         <!--</ul>-->
         <!--</li>-->
-     
+        <li :class="{ active: isActive('/admin/gallery') }">
+          <a
+            href="#"
+            aria-expanded="true"><i class="icon-fa icon-fa-image"/> Gallery <span class="icon-fa arrow icon-fa-fw"/></a>
+          <ul aria-expanded="true">
+            <router-link
+              to="/admin/gallery/grid"
+              tag="li"><a>Grid</a></router-link>
+            <router-link
+              to="/admin/gallery/masonry-grid"
+              tag="li"><a>Masonry Grid </a></router-link>
+          </ul>
+        </li>
         <li :class="{ active: isActive('/admin/users') }">
           <a
             href="#"
