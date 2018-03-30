@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"><defs><filter id="a"><feGaussianBlur in="SourceGraphic" stdDeviation="1"/></filter></defs><circle cx="17.5" cy="18.5" opacity=".3" r="15.5" filter="url(#a)"/><circle cx="17.5" cy="17.5" fill="#fff" r="15.5"/><path stroke="#A9A9A9" d="M12 16.5h11m-11 3h11"/></svg>

@@ -26735,7 +26735,7 @@ code,
 }
 
 .mail-box .Override .wrapper .fill .sidebar .left-sidebar-btn {
-  display: hidden;
+  display: block;
   position: absolute;
   background: #fff;
   cursor: pointer;
@@ -26746,7 +26746,7 @@ code,
           box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.15);
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
-  right: -1545px;
+  right: -37px;
 }
 
 .mail-box .Override .wrapper .fill .sidebar .left-sidebar-btn i {
@@ -26998,12 +26998,8 @@ code,
     left: 82px;
   }
 
-  .mail-box .Override .wrapper .fill .sidebar .pull-right-side {
+  .mail-box .Override .wrapper .fill .sidebar.pull-right-side {
     left: 245px;
-  }
-
-  .mail-box .Override .wrapper .fill .sidebar .left-sidebar-btn {
-    display: block !important;
   }
 }
 

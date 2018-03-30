@@ -87,6 +87,7 @@
             <label>Password</label>
             <input
               :class="{'is-invalid': errors.has('password') }"
+              v-validate="'required|min:6'"
               data-vv-rules="password"
               class="form-control"
               name="password"
