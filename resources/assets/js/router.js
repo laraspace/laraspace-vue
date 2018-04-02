@@ -32,7 +32,7 @@ import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import VueTable from './views/admin/components/VueTables.vue'
-import VueTabs from './views/admin/components/VueTabs.vue'
+// import VueTabs from './views/admin/components/VueTabs.vue'
 import VueDropzone from './views/admin/components/VueDropzone.vue'
 import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
@@ -221,10 +221,10 @@ const routes = [
         path: 'components//vue-tables',
         component: VueTable
       },
-      {
-        path: 'components/vue-tabs',
-        component: VueTabs
-      },
+      // {
+      //   path: 'components/vue-tabs',
+      //   component: VueTabs
+      // },
       {
         path: 'components/vue-carousel',
         component: VueCarousel
