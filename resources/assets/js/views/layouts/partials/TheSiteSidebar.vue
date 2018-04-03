@@ -435,11 +435,11 @@ export default {
 </script>
 <style>
 .vue-menu {
-      list-style: none;
+    list-style: none;
     margin: 0;
     padding: 0;
 }
-.side-nav .collapse-group {
+.side-nav .collapse-group .collapse-group-items {
     background-color: #3b3b3b;
     padding: 0;
     margin-top: 0;
@@ -447,7 +447,7 @@ export default {
 .vue-menu .collapse-group .collapse-group-item{
     display: block;
 }
-.vue-menu .collapse-group .collapse-group-items a {
+.vue-menu .collapse-group a {
     color: #fff;
     display: block;
     font-size: 14px;
@@ -455,23 +455,25 @@ export default {
     position: relative;
     text-decoration: none;
 }
-.vue-menu .collapse-group .collapse-group-items.active > a,
+.vue-menu .collapse-group.active .collapse-group-title > a,
 .vue-menu .collapse-group .collapse-group-item > a.active  {
     color: #ffde00;
 }
-.vue-menu .collapse-group .collapse-group-items i {
+.vue-menu .collapse-group i {
     width: 30px;
 }
 .vue-menu .icon-fa.arrow:before {
     content: "\f104";
 }
 
-.vue-menu .active > a > .icon-fa.arrow:before {
+.vue-menu .active .collapse-group-title > a > .icon-fa.arrow:before {
     content: "\f107";
 }
-.vue-menu .collapse-group .collapse-group-items > a > .icon-fa.arrow{
+.vue-menu .collapse-group .collapse-group-title > a > .icon-fa.arrow{
     position: absolute;
     right: 21px;
 }
-
+.vue-menu .collapse-group a:hover {
+    background-color: #4d4c4c;
+}
 </style>

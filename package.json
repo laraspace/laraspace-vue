@@ -9,16 +9,16 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
-    "laravel-mix": "1.4.2",
+    "cross-env": "^5.1",
+    "css-loader": "^0.28.8",
     "eslint": "^4.14.0",
-    "eslint-plugin-vue": "^4.0.1",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "cross-env": "^5.1",
-    "css-loader": "^0.28.8"
+    "eslint-plugin-vue": "^4.0.1",
+    "laravel-mix": "1.4.2"
   },
   "dependencies": {
     "amcharts3": "github:amcharts/amcharts3",

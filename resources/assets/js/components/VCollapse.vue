@@ -1,13 +1,19 @@
 <template>
-  <div class="collapse-group">
+  <div :class="['collapse-group', {active: isActive} ]">
+    <div 
+      class="collapse-group-title"
+      @click="showCollapse">
+      <slot name="title"></slot>
+    </div>
     <transition
-      :duration="{ leave: 8000 }"
+      :duration="{ leave: 80 }"
       name="slide"
       mode="out-in"
       @after-enter="afterEnter"
       @after-leave="afterLeave">
-      <div :class="['collapse-group-items' , {active: isActive()} ]">
-        <slot name="title"></slot>
+      <div 
+        class="collapse-group-items"
+        v-show="isCollapse">
         <slot></slot>
       </div>
     </transition>
@@ -17,16 +23,6 @@
 
 export default {
   props: {
-    // title: {
-    //   type: String,
-    //   require: true,
-    //   default: String
-    // },
-    // icon: {
-    //   type: String,
-    //   require: true,
-    //   default: String
-    // },
     activeUrl: {
       type: String,
       require: true,
@@ -38,18 +34,29 @@ export default {
     return {
       showChild: true,
       height: '',
-      originaHeight: ''
+      originaHeight: '',
+      isCollapse: false
     }
   },
   computed: {
-
+    isActive () {
+        return this.$route.path.indexOf(this.activeUrl) > -1
+    },
   },
   mounted () {
+    if (this.isActive == true) {
+        this.isCollapse =  true; 
+      } else {
+        this.isCollapse =  false;
+      }
   },
   methods: {
-   isActive () {
-      return this.$route.path.indexOf(this.activeUrl) > -1
-   },
+   
+    showCollapse () {
+      if(this.isCollapse == true) {
+      }
+      this.isCollapse = !this.isCollapse 
+    },
     afterEnter () {
     },
     afterLeave () {
