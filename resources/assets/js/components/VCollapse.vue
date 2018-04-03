@@ -1,9 +1,16 @@
 <template>
   <div class="collapse-group">
-    <div :class="['collapse-group-item' , {active: isActive} ]">
-      <slot name="title"></slot>
-      <slot></slot>
-    </div>
+    <transition
+      :duration="{ leave: 8000 }"
+      name="slide"
+      mode="out-in"
+      @after-enter="afterEnter"
+      @after-leave="afterLeave">
+      <div :class="['collapse-group-items' , {active: isActive()} ]">
+        <slot name="title"></slot>
+        <slot></slot>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -38,12 +45,15 @@ export default {
 
   },
   mounted () {
-   
   },
   methods: {
-   isActive (url) {
-      return this.$route.path.indexOf(url) > -1
-   }
+   isActive () {
+      return this.$route.path.indexOf(this.activeUrl) > -1
+   },
+    afterEnter () {
+    },
+    afterLeave () {
+    }
   }
 }
 </script>

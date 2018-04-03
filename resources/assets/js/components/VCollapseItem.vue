@@ -1,9 +1,7 @@
 <template>
   <div class="collapse-group-item">
-    <div :class="{ active: isActive }">
-      <slot name="item-title"></slot>
-      <slot></slot>
-    </div>
+    <slot name="item-title"></slot>
+    <slot></slot>
   </div>
 </template>
 <script>
@@ -34,9 +32,7 @@ export default {
    
   },
   methods: {
-   isActive (url) {
-      return this.$route.path.indexOf(url) > -1
-   }
+   
   }
 }
 </script>
