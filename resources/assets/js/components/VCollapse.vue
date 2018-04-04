@@ -8,7 +8,6 @@
     <transition
       :duration="{ enter:0 }"
       name="slide"
-      mode="out-in"
       @after-enter="afterEnter"
       @after-leave="afterLeave">
       <div 
@@ -34,17 +33,15 @@ export default {
   },
   data () {
     return {
-      showChild: true,
       height: '',
-      originaHeight: '',
+      originalHeight: '',
       isCollapse: true,
     }
   },
-  computed: {
-    
-  },
   mounted () {
-    this.height = this.originaHeight = this.$refs.collapseItems.clientHeight
+     isCollapse: true,
+    this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
+    console.log(this)
     if (this.isActive() == true) {
       this.isCollapse =  true
     } else {
@@ -69,7 +66,7 @@ export default {
       this.isCollapse = !this.isCollapse 
     },
     afterEnter () {
-      this.height = this.originaHeight
+      this.height = this.originalHeight
     },
     afterLeave () {
       this.height = 0

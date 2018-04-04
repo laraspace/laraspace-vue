@@ -56,7 +56,7 @@
 					</v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
-              <router-link to="/admin/layouts/icons-sidebare">
+              <router-link to="/admin/layouts/icons-sidebar">
                 Icon Sidebar
               </router-link>
             </template>
@@ -381,6 +381,28 @@
               </router-link>
             </template>
 					</v-collapse-item>
+            <v-collapse active-url="/admin/users">
+          <template slot="title">
+            <a href="#">
+               <i class="icon-fa icon-fa-user"/>Users
+               <span class="icon-fa arrow icon-fa-fw"/>
+            </a>
+          </template>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/users/profile">
+                Profile
+              </router-link>
+            </template>
+					</v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/users">
+                All Users
+              </router-link>
+            </template>
+					</v-collapse-item>
+				</v-collapse>
 				</v-collapse>
         <v-collapse active-url="/admin/users">
           <template slot="title">
@@ -406,18 +428,16 @@
 				</v-collapse>
         <v-collapse active-url="/admin/todo-item">
           <template slot="title">
-            <a href="/admin/todo-item">
-               <i class="icon-fa icon-fa-check"/>Todos
-               <span class="icon-fa arrow icon-fa-fw"/>
-            </a>
+            <router-link to="/admin/todo-item">
+              Todos
+            </router-link>
           </template>
 				</v-collapse>
         <v-collapse active-url="/admin/settings">
           <template slot="title">
-            <a href="/admin/settings">
-               <i class="icon-fa icon-fa-cogs"/>Settings
-               <span class="icon-fa arrow icon-fa-fw"/>
-            </a>
+            <router-link to="/admin/settings">
+              Settings
+            </router-link>
           </template>
 				</v-collapse>
       </div>
@@ -447,47 +467,3 @@ export default {
   }
 }
 </script>
-<style>
-.vue-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.side-nav .collapse-group .collapse-group-items {
-    background-color: #3b3b3b;
-    padding: 0;
-    margin-top: 0;
-}
-.vue-menu .collapse-group .collapse-group-item{
-    display: block;
-}
-.vue-menu .collapse-group a {
-    color: #fff;
-    display: block;
-    font-size: 14px;
-    padding: 12px 12px 12px 30px;
-    position: relative;
-    text-decoration: none;
-}
-.vue-menu .collapse-group.active .collapse-group-title > a,
-.vue-menu .collapse-group .collapse-group-item > a.active  {
-    color: #ffde00;
-}
-.vue-menu .collapse-group i {
-    width: 30px;
-}
-.vue-menu .icon-fa.arrow:before {
-    content: "\f104";
-}
-
-.vue-menu .active .collapse-group-title > a > .icon-fa.arrow:before {
-    content: "\f107";
-}
-.vue-menu .collapse-group .collapse-group-title > a > .icon-fa.arrow{
-    position: absolute;
-    right: 21px;
-}
-.vue-menu .collapse-group a:hover {
-    background-color: #4d4c4c;
-}
-</style>

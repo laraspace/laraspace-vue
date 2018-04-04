@@ -3,24 +3,24 @@
 
     .side-nav {
 
-        li {
+        .collapse-group-title, .collapse-group-item {
             text-align: center;
-        }
+        
+            a {
+                padding: 15px;
+            }
 
-        li a {
-            padding: 15px;
-        }
-
-        li i {
-            display: block;
-            width: 100%;
-            margin-bottom: 0.5em;
-            font-size: 30px;
+            i {
+                display: block;
+                width: 100%;
+                margin-bottom: 0.5em;
+                font-size: 30px;
+            }
         }
 
     }
 
-    .metismenu .arrow {
+    .vue-menu .arrow {
         position: absolute;
         right: 21px;
         top: 50%;
