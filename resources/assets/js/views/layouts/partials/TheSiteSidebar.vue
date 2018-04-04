@@ -389,10 +389,24 @@
                <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/users/profile">
+                Profile
+              </router-link>
+            </template>
+					</v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/users">
+                All Users
+              </router-link>
+            </template>
+					</v-collapse-item>
 				</v-collapse>
         <v-collapse active-url="/admin/todo-item">
           <template slot="title">
-            <a href="#">
+            <a href="/admin/todo-item">
                <i class="icon-fa icon-fa-check"/>Todos
                <span class="icon-fa arrow icon-fa-fw"/>
             </a>
@@ -400,7 +414,7 @@
 				</v-collapse>
         <v-collapse active-url="/admin/settings">
           <template slot="title">
-            <a href="#">
+            <a href="/admin/settings">
                <i class="icon-fa icon-fa-cogs"/>Settings
                <span class="icon-fa arrow icon-fa-fw"/>
             </a>
