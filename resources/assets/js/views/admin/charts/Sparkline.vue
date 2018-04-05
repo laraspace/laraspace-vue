@@ -63,7 +63,7 @@
                   <tristate-chart/>
                 </div>
                 <div class="sparkline-chart-type">
-                  <h5 class="section-semi-title">Composite Inline Bar Chart Color:</h5>
+                  <h5 class="section-semi-title">Composite Inline Bar Chart:</h5>
                   <tristate-color-chart/>
                 </div>
 

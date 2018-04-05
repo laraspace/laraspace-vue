@@ -39,14 +39,15 @@ export default {
   },
   methods: {
     handleTristateColorChart () {
-      jquery('.spl-tristate-color').sparkline('html', {
-        type: 'tristate',
-        colorMap: { '-2': '#fa7', '2': '#44f' },
-        barWidth: this.barWidth,
-        barSpacing: 3,
-        height: '100'
-      })
-    },
+       let self =this
+        $('.spl-tristate-color').sparkline('html', {
+            type: 'tristate',
+            colorMap: {'-2': '#fa7', '2': '#44f'},
+            barWidth: barWidth,
+            barSpacing: 3,
+            height: '100'
+        })
+    }
   }
-}
+  }
 </script>

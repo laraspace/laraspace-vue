@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     handleTristateColorChart () {
+     
       jquery('.spl-tristate-color').sparkline('html', {
         type: 'tristate',
         colorMap: { '-2': '#fa7', '2': '#44f' },
