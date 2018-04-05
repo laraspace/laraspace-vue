@@ -22634,11 +22634,11 @@ code,
   width: 30px;
 }
 
-.side-nav .collapse-group.active .collapse-group-title > a {
+.side-nav .collapse-group.active > .collapse-group-title > a {
   color: #ffde00;
 }
 
-.side-nav .collapse-group.active .collapse-group-title > a > .icon-fa.arrow:before {
+.side-nav .collapse-group.active > .collapse-group-title > a > .icon-fa.arrow:before {
   content: "\F107";
 }
 

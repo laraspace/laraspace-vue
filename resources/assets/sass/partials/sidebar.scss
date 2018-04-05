@@ -51,7 +51,7 @@
             
         }
         &.active {
-            .collapse-group-title {
+            & > .collapse-group-title {
                 & > a {
                     color: $ls-color-primary;
                    

@@ -39,9 +39,9 @@ export default {
     }
   },
   mounted () {
-     isCollapse: true,
-    this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
-    console.log(this)
+    this.$nextTick(function(){
+        this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
+    })
     if (this.isActive() == true) {
       this.isCollapse =  true
     } else {

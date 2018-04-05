@@ -33,7 +33,7 @@
             </template>
 					</v-collapse-item>
 				</v-collapse>
-         <v-collapse active-url="/admin/layouts">
+        <v-collapse active-url="/admin/layouts">
           <template slot="title">
             <a href="#">
                <i class="icon-fa icon-fa-th-large"/>Layouts
@@ -196,6 +196,28 @@
               </router-link>
             </template>
 					</v-collapse-item>
+          <v-collapse active-url="/admin/layouts">
+            <template slot="title">
+              <a href="#">
+                <i class="icon-fa icon-fa-th-large"/>Layouts
+                <span class="icon-fa arrow icon-fa-fw"/>
+              </a>
+            </template>
+            <v-collapse-item>
+              <template slot="item-title">
+                <router-link to="/admin/layouts/sidebar">
+                  Sidebar
+                </router-link>
+              </template>
+            </v-collapse-item>
+            <v-collapse-item>
+              <template slot="item-title">
+                <router-link to="/admin/layouts/horizontal">
+                  Horizontal
+                </router-link>
+              </template>
+            </v-collapse-item>
+          </v-collapse>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/components/sweet-modals">
@@ -381,29 +403,7 @@
               </router-link>
             </template>
 					</v-collapse-item>
-            <v-collapse active-url="/admin/users">
-          <template slot="title">
-            <a href="#">
-               <i class="icon-fa icon-fa-user"/>Users
-               <span class="icon-fa arrow icon-fa-fw"/>
-            </a>
-          </template>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/users/profile">
-                Profile
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/users">
-                All Users
-              </router-link>
-            </template>
-					</v-collapse-item>
-				</v-collapse>
-				</v-collapse>
+        </v-collapse>
         <v-collapse active-url="/admin/users">
           <template slot="title">
             <a href="#">
@@ -429,14 +429,14 @@
         <v-collapse active-url="/admin/todo-item">
           <template slot="title">
             <router-link to="/admin/todo-item">
-              Todos
+               <i class="icon-fa icon-fa-check"/>Todos
             </router-link>
           </template>
 				</v-collapse>
         <v-collapse active-url="/admin/settings">
           <template slot="title">
             <router-link to="/admin/settings">
-              Settings
+              <i class="icon-fa icon-fa-cogs"/>Settings
             </router-link>
           </template>
 				</v-collapse>
@@ -460,10 +460,5 @@ export default {
       sidebar: 'sidebar'
     }
   },
-  methods: {
-    isActive (url) {
-      return this.$route.path.indexOf(url) > -1
-    }
-  }
 }
 </script>
