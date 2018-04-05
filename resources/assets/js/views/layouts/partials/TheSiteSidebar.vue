@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-left">
     <div class="sidebar-body scroll-pane">
-      <div class="side-nav vue-menu">
+      <div class="side-nav vue-menu" v-scroll>
         <v-collapse active-url="/admin/dashboard">
           <template slot="title">
             <a href="#">
@@ -194,28 +194,6 @@
               </router-link>
             </template>
 					</v-collapse-item>
-          <v-collapse active-url="/admin/layouts">
-            <template slot="title">
-              <a href="#">
-                <i class="icon-fa icon-fa-th-large"/>Layouts
-                <span class="icon-fa arrow icon-fa-fw"/>
-              </a>
-            </template>
-            <v-collapse-item>
-              <template slot="item-title">
-                <router-link to="/admin/layouts/sidebar">
-                  Sidebar
-                </router-link>
-              </template>
-            </v-collapse-item>
-            <v-collapse-item>
-              <template slot="item-title">
-                <router-link to="/admin/layouts/horizontal">
-                  Horizontal
-                </router-link>
-              </template>
-            </v-collapse-item>
-          </v-collapse>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/components/sweet-modals">
@@ -460,3 +438,4 @@ export default {
   },
 }
 </script>
+
