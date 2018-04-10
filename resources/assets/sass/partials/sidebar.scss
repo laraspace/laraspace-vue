@@ -74,19 +74,18 @@
             width: 0;
         }
     }
+    &.vue-menu {
 
+        .arrow {
+            float: right;
+            line-height: 1.42857;
+
+            &.icon-fa:before {
+                content: "\f104";
+            }
+        }
+        .active > a > .icon-fa.arrow:before {
+            content: "\f107";
+        }
+    }
 }
-
-
-// metis overrides
-
-.metismenu .icon-fa.arrow:before {
-    content: "\f104";
-}
-
-.metismenu .active > a > .icon-fa.arrow:before {
-    content: "\f107";
-}
-
-
-
