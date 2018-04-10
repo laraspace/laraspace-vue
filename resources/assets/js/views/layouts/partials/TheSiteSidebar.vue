@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="sidebar-left">
-    <div
-      class="sidebar-body scroll-pane">
+  <div class="sidebar-left">
+    <div class="sidebar-body scroll-pane">
       <ul
         class="side-nav vue-menu">
         <v-items
