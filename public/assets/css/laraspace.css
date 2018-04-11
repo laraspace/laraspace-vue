@@ -23448,11 +23448,16 @@ code,
   width: 0;
 }
 
-.metismenu .icon-fa.arrow:before {
+.side-nav.vue-menu .arrow {
+  float: right;
+  line-height: 1.42857;
+}
+
+.side-nav.vue-menu .arrow.icon-fa:before {
   content: "\F104";
 }
 
-.metismenu .active > a > .icon-fa.arrow:before {
+.side-nav.vue-menu .active > a > .icon-fa.arrow:before {
   content: "\F107";
 }
 

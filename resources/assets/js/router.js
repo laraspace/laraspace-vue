@@ -60,8 +60,9 @@ import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
-// Pages
-// import LoginPage from './views/admin/pages/LoginPage.vue'
+// Gallery
+import Grid from './views/admin/gallery/Grid.vue'
+import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
 
 // Todo-Item
 import TodoItem from './views/admin/TodoItem.vue'
@@ -307,15 +308,15 @@ const routes = [
         path: 'forms/vuelidate',
         component: Vuelidate
       },
-      // // Gallery
-      // {
-      //   path: 'gallery/grid',
-      //   component: Grid
-      // },
-      // {
-      //   path: 'gallery/masonry-grid',
-      //   component: MasonryGrid
-      // },
+      // Gallery
+      {
+        path: 'gallery/grid',
+        component: Grid
+      },
+      {
+        path: 'gallery/masonry-grid',
+        component: MasonryGrid
+      },
 
       // Pages
 
