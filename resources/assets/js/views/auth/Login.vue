@@ -2,9 +2,9 @@
   <form
     id="loginForm"
     method="post"
-    @submit.prevent="validateBeforeSubmit">
-    <div
-    :class="{'form-group' : true , 'has-danger': errors.has('email') }">
+    @submit.prevent="validateBeforeSubmit"
+  >
+    <div :class="{'form-group' : true , 'has-danger': errors.has('email') }">
       <input
         type="email"
         class="form-control form-control-danger"
@@ -12,7 +12,8 @@
         name="email"
         v-model="loginData.email"
         v-validate
-        data-vv-rules="required|email">
+        data-vv-rules="required|email"
+      >
     </div>
     <div :class="{'form-group' : true , 'has-danger': errors.has('password') }">
       <input
@@ -22,7 +23,8 @@
         name="password"
         v-model="loginData.password"
         v-validate
-        data-vv-rules="required">
+        data-vv-rules="required"
+      >
     </div>
     <div class="other-actions row">
       <div class="col-sm-6">
@@ -31,8 +33,9 @@
             <input
               type="checkbox"
               name="remember"
-              v-model="loginData.remember">
-            <span class="c-indicator"/>
+              v-model="loginData.remember"
+            >
+            <span class="c-indicator" />
             Remember Me
           </label>
         </div>
@@ -40,7 +43,10 @@
       <div class="col-sm-6 text-sm-right">
         <a
           href="#"
-          class="forgot-link">Forgot Password?</a>
+          class="forgot-link"
+        >
+          Forgot Password?
+        </a>
       </div>
     </div>
     <button class="btn btn-theme btn-full">Login</button>

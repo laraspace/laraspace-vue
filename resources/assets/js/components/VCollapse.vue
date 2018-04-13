@@ -1,21 +1,21 @@
 <template>
   <div :class="['collapse-group', {active: isCollapse} ]">
-    <div 
+    <div
       class="collapse-group-title"
       @click="showCollapse">
-      <slot name="title"></slot>
+      <slot name="title" />
     </div>
     <transition
-      :duration="{ enter:0 }"
+      :duration="{ enter: 0 }"
       name="slide"
       @after-enter="afterEnter"
       @after-leave="afterLeave">
-      <div 
+      <div
         class="collapse-group-items"
         v-show="isCollapse"
         ref="collapseItems"
-        :style="'max-height:'+height+'px'">
-        <slot></slot>
+        :style="'max-height:' + height + 'px'">
+        <slot/>
       </div>
     </transition>
   </div>
@@ -27,23 +27,23 @@ export default {
     activeUrl: {
       type: String,
       require: true,
-      default: String
-    },
-    
+      default: ''
+    }
   },
   data () {
     return {
       height: '',
       originalHeight: '',
-      isCollapse: true,
+      isCollapse: true
     }
   },
   mounted () {
-    this.$nextTick(function(){
-        this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
+    this.$nextTick(() => {
+      this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
     })
-    if (this.isActive() == true) {
-      this.isCollapse =  true
+
+    if (this.isActive() === true) {
+      this.isCollapse = true
     } else {
       this.isCollapse = false
     }
@@ -54,16 +54,16 @@ export default {
     },
     showCollapse () {
       let self = this
-      if(this.isCollapse == false) {
-        this.$parent.$children.filter(function(value) {
-          if(value != self) {
-            if(value.isCollapse == true) {
+      if (this.isCollapse == false) {
+        this.$parent.$children.filter((value) => {
+          if (value !== self) {
+            if (value.isCollapse === true) {
               value.isCollapse = false
             }
           }
         })
       }
-      this.isCollapse = !this.isCollapse 
+      this.isCollapse = !this.isCollapse
     },
     afterEnter () {
       this.height = this.originalHeight
@@ -74,6 +74,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .collapse-group-items {
   overflow: hidden;
