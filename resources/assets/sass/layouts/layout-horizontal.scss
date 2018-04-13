@@ -20,12 +20,12 @@
     padding: 0 15px;
     margin: 0;
 
-    li {
+    .dropdown-group {
         display: inline-block;
         position: relative;
         margin-right: -5px;
 
-        .dropdown-menu a {
+        .dropdown-group-items a {
             font-size: 15px;
             padding: 10px 20px;
         }
@@ -34,13 +34,16 @@
             width: 25px;
         }
 
-        .dropdown-item.active {
+        .dropdown-group-item , .dropdown-group-title {
+            
+            a.active {
             color: $ls-color-primary;
             background-color: transparent;
 
-            &:hover, &:focus, &:active {
-                background-color: $sidemenu-item-bg-color--hover;
-            }
+                &:hover, &:focus, &:active {
+                    background-color: $sidemenu-item-bg-color--hover;
+                }
+            } 
         }
 
         &.active > a {
