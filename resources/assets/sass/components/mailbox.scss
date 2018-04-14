@@ -38,21 +38,7 @@
             
             }
             .left-sidebar-btn {
-                    display:block;
-                    position: absolute;
-                    background: $white;
-                    cursor: pointer;
-                    z-index: 20;
-                    top: 45%;
-                    padding: 15px;
-                    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.15);
-                    border-bottom-right-radius: 10px;
-                    border-top-right-radius: 10px;
-                    right:-37px;
-                    
-                    i {
-                        font-size:1.2rem;
-                    }
+                    display:none;
             }
             &.pull-right-side {
                 left:0;
@@ -66,6 +52,8 @@
                     margin: 20px 12px;
                   .custom-control {
                       .custom-control-label {
+                        position: absolute;
+                        
                         &::before, &::after{
                           width: 1.5rem;
                           height: 1.5rem;
@@ -75,10 +63,9 @@
                       }
                   .DropdownAction{
                     display: inline-block;
-                    margin-left: 15px;
+                    margin-left: 60px;
                     position: relative;
-                    top: 8px;
-                    right: 8px;
+                    right: 30px;
                   }
                   .filter-action{
                     float: right;
@@ -99,6 +86,15 @@
                     padding-bottom: 15px;
                     .content{
                           cursor: pointer;
+                          display: -webkit-box;
+                          max-width: 1400px;
+                          height: 50px;
+                          margin: 5px 0px auto;
+                          line-height: 1.2;
+                          -webkit-line-clamp: 3;
+                          -webkit-box-orient: vertical;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
                        }
                   &.cell-50 {
                     width: 50px;
@@ -109,18 +105,23 @@
                       }
                     }
                     .custom-control {
-                          top: 8px;
+                        bottom: 5px;
+                        text-align: center;
                       .custom-control-label {
-                        &::before, &::after{
-                          width: 1.5rem;
-                          height: 1.5rem;
+                        
+                          &::before, &::after{
+                            width: 1.5rem;
+                            height: 1.5rem;
                           }
                         }
                       }
                     }
                     &.cell-30 {
-                          width: 30px;
-                          padding: 5px;
+                              width: 60px;
+                              padding: 5px;
+                              text-align: center;
+                              left: 6px;
+                              top: 2px;
                           
                         .star {
                             visibility:hidden;
@@ -162,7 +163,8 @@
                 height: auto;
                 overflow-y: auto;
                 overflow-x: hidden;
-                width: 700px;
+                max-width: 700px;
+                width: 100%;
                 right: -720px;
                 bottom: 0px;
                 box-shadow: -10px 0 20px 0 rgba(66,66,66,.2);
@@ -273,6 +275,9 @@
           }
         }
       }
+      @media(max-width: $large-breakpoint ){
+ 
+      }
       @media(max-width: $medium-breakpoint ){
       .sidebar{
         position: fixed;
@@ -281,11 +286,32 @@
         background: white;
         left: 82px;
       }
+      .left-sidebar-btn {
+          display:block !important;
+          position: absolute;
+          background: $white;
+          cursor: pointer;
+          z-index: 20;
+          top: 45%;
+          padding: 15px;
+          box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.15);
+          border-bottom-right-radius: 10px;
+          border-top-right-radius: 10px;
+          right:-37px;
+          
+          i {
+              font-size:1.2rem;
+          }
+        }
        .mail-box .Override .wrapper .fill .sidebar.pull-right-side {
        left: 245px;
       }
+      .mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .sidepanel-close {
+        left:665px;
+      }
     } 
     @media(max-width:$small-breakpoint){
+
        .sidebar{
         position: fixed;
         top: 60px;
@@ -295,5 +321,8 @@
       }
       .mail-box .Override .wrapper .fill .sidebar.pull-right-side {
        left: 0px;
+      }
+      .mail-box .Override .wrapper .fill .mail-content .mail .sidepanel-header .sidepanel-close {
+        left:325px;
       }
     }
