@@ -43,13 +43,14 @@
               class="invalid-feedback">{{ errors.first('password_confirmation') }}
             </div>
             </div>
-           
+
         <button class="btn btn-login btn-full">Register</button>
   </form>
 </template>
 <script type="text/babel">
 import Auth from '../../services/auth'
 import 'vee-validate/dist/vee-validate'
+
 export default {
   data () {
     return {

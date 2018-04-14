@@ -1,19 +1,18 @@
 <template>
   <form
     id="loginForm"
-    @submit.prevent="validateBeforeSubmit">
-    <div
-      :class="{'form-group' : true }">
+    @submit.prevent="validateBeforeSubmit"
+  >
+    <div :class="{'form-group' : true }">
       <input
         v-validate="'required|email'"
         :class="{'is-invalid': errors.has('email') }"
-        data-vv-rules="required"
         type="email"
         class="form-control"
         v-model="loginData.email"
         placeholder="Enter email"
         name="email">
-         <div
+          <div
             v-show="errors.has('email')"
             class="invalid-feedback">{{ errors.first('email') }}
           </div>
@@ -27,7 +26,7 @@
         name="password"
         v-validate="'required|min:6'"
         v-model="loginData.password"
-        data-vv-rules="requred|password">
+      >
         <div
           v-show="errors.has('password')"
           class="invalid-feedback">{{ errors.first('password') }}
@@ -40,8 +39,9 @@
             <input
               type="checkbox"
               name="remember"
-              v-model="loginData.remember">
-            <span class="c-indicator"/>
+              v-model="loginData.remember"
+            >
+            <span class="c-indicator" />
             Remember Me
           </label>
         </div>
@@ -49,7 +49,10 @@
       <div class="col-sm-6 text-sm-right">
         <a
           href="#"
-          class="forgot-link">Forgot Password?</a>
+          class="forgot-link"
+        >
+          Forgot Password?
+        </a>
       </div>
     </div>
     <button class="btn btn-theme btn-full">Login</button>
@@ -58,8 +61,6 @@
 
 <script type="text/babel">
 import Auth from '../../services/auth'
-import 'vee-validate/dist/vee-validate'
-
 
 export default {
   data () {

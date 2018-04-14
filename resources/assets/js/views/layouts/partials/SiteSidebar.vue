@@ -98,7 +98,6 @@
                     <ul aria-expanded="true">
                         <router-link to="/admin/gallery/grid" tag="li"><a>Grid</a></router-link>
                         <router-link to="/admin/gallery/masonry-grid" tag="li"><a>Masonry Grid </a></router-link>
-
                     </ul>
                 </li>
                 <li :class="{ active: isActive('/admin/users') }">
