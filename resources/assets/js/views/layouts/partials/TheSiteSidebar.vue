@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-left">
     <div class="sidebar-body scroll-pane">
-      <div class="side-nav vue-menu" v-scroll>
+      <div class="side-nav vue-menu">
         <v-collapse active-url="/admin/dashboard">
           <template slot="title">
             <a href="#">

@@ -1,30 +1,36 @@
 <template>
   <form
     id="loginForm"
-    method="post"
     @submit.prevent="validateBeforeSubmit"
   >
-    <div :class="{'form-group' : true , 'has-danger': errors.has('email') }">
+    <div :class="{'form-group' : true }">
       <input
+        v-validate="'required|email'"
+        :class="{'is-invalid': errors.has('email') }"
         type="email"
-        class="form-control form-control-danger"
-        placeholder="Enter email"
-        name="email"
+        class="form-control"
         v-model="loginData.email"
-        v-validate
-        data-vv-rules="required|email"
-      >
+        placeholder="Enter email"
+        name="email">
+          <div
+            v-show="errors.has('email')"
+            class="invalid-feedback">{{ errors.first('email') }}
+          </div>
     </div>
-    <div :class="{'form-group' : true , 'has-danger': errors.has('password') }">
+    <div :class="{'form-group' : true , 'is-invalid': errors.has('password') }">
       <input
         type="password"
-        class="form-control form-control-danger"
+        :class="{'is-invalid': errors.has('password') }"
+        class="form-control"
         placeholder="Enter Password"
         name="password"
+        v-validate="'required|min:6'"
         v-model="loginData.password"
-        v-validate
-        data-vv-rules="required"
       >
+        <div
+          v-show="errors.has('password')"
+          class="invalid-feedback">{{ errors.first('password') }}
+        </div>
     </div>
     <div class="other-actions row">
       <div class="col-sm-6">

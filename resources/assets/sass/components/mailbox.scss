@@ -2,7 +2,7 @@
   .Override
     {
       .wrapper {
-           width: 100%;
+          width: 100%;
             height: 100%;
           .fill {
             // color: #efefef;
@@ -53,11 +53,11 @@
                     i {
                         font-size:1.2rem;
                     }
-                }
-                &.pull-right-side {
-                    left:0;
-                }
             }
+            &.pull-right-side {
+                left:0;
+            }
+          }
           .mail-content {
             height: 100%;
             position: relative;
