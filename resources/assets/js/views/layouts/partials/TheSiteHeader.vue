@@ -4,13 +4,13 @@
       href="#"
       class="brand-main">
       <img
-        src="/assets/img/logo-desk.png"
         id="logo-desk"
+        src="/assets/img/logo-desk.png"
         alt="Laraspace Logo"
         class="d-none d-md-inline">
       <img
-        src="/assets/img/logo-mobile.png"
         id="logo-mobile"
+        src="/assets/img/logo-mobile.png"
         alt="Laraspace Logo"
         class="d-md-none">
     </a>

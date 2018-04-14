@@ -11,8 +11,8 @@
     <div class="row">
       <div class="col-sm-12">
         <vue-dropzone
-          ref="myVueDropzone"
           id="dropzone"
+          ref="myVueDropzone"
           :options="dropzoneOptions" />
       </div>
     </div>

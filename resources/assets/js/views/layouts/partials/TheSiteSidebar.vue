@@ -1,122 +1,128 @@
 <template>
   <div class="sidebar-left">
     <div class="sidebar-body scroll-pane">
-      <div class="side-nav vue-menu" v-scroll>
+      <div class="side-nav vue-menu">
         <v-collapse active-url="/admin/dashboard">
-          <template slot="title">
-            <a href="#">
-              <i class="icon-fa icon-fa-dashboard"/>Dashboard
-              <span class="icon-fa arrow icon-fa-fw"/>
-            </a>
-          </template>
+          <a
+            slot="title"
+            href="#">
+            <i class="icon-fa icon-fa-dashboard"/>Dashboard
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
 
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/dashboard/basic">
+              <router-link
+                slot="item-title"
+                to="/admin/dashboard/basic">
                 Basic
               </router-link>
-            </template>
           </v-collapse-item>
 
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/dashboard/ecommerce">
+              <router-link
+                slot="item-title"
+                to="/admin/dashboard/ecommerce">
                 Ecommerce
               </router-link>
-            </template>
           </v-collapse-item>
 
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/dashboard/finance">
-                Finance
-              </router-link>
-            </template>
+            <router-link
+              slot="item-title"
+              to="/admin/dashboard/finance">
+              Finance
+            </router-link>
           </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/layouts">
-          <template slot="title">
-            <a href="#">
-              <i class="icon-fa icon-fa-th-large"/>Layouts
-              <span class="icon-fa arrow icon-fa-fw"/>
-            </a>
-          </template>
+          <a
+            slot="title"
+            href="#">
+            <i class="icon-fa icon-fa-th-large"/>Layouts
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/layouts/sidebar">
-                Sidebar
-              </router-link>
-            </template>
+            <router-link
+              slot="item-title"
+              to="/admin/layouts/sidebar">
+              Sidebar
+            </router-link>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/layouts/horizontal">
-                Horizontal
-              </router-link>
-            </template>
+            <router-link
+              slot="item-title"
+              to="/admin/layouts/horizontal">
+              Horizontal
+            </router-link>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/layouts/icons-sidebar">
-                Icon Sidebar
-              </router-link>
-            </template>
+            <router-link
+              slot="item-title"
+              to="/admin/layouts/icons-sidebar">
+              Icon Sidebar
+            </router-link>
           </v-collapse-item>
         </v-collapse>
-
         <v-collapse active-url="/admin/basic-ui">
-          <template slot="title">
-            <a href="#">
+          <template >
+            <a
+              slot="title"
+              href="#">
               <i class="icon-fa icon-fa-star"/>Basic UI
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/buttons">
+            <template >
+              <router-link
+                slot="item-title"
+                to="/admin/basic-ui/buttons">
                 Buttons
               </router-link>
             </template>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/cards">
+            <template >
+              <router-link
+                slot="item-title"
+                to="/admin/basic-ui/cards">
                 Cards
               </router-link>
             </template>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/tabs">
+            <template >
+              <router-link
+                slot="item-title"
+                to="/admin/basic-ui/tabs">
                 Tabs &amp; Accordians
               </router-link>
             </template>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/typography">
+            <template >
+              <router-link
+                slot="item-title"
+                to="/admin/basic-ui/typography">
                 Typography
               </router-link>
             </template>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/tables">
+            <template >
+              <router-link
+                slot="item-title"
+                to="/admin/basic-ui/tables">
                 Tables
               </router-link>
             </template>
           </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/modals">
-                Modals
-              </router-link>
-            </template>
-          </v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/basic-ui/progress-bars">
+            <template >
+              <router-link
+                slot="item-title"
+                to="/admin/basic-ui/progress-bars">
                 Progress Bar
               </router-link>
             </template>
@@ -130,242 +136,214 @@
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
-					<v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/calendar">
-                Calendar
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/datatables">
-                Jquery Datatables
-              </router-link>
-            </template>
-					</v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/components/mail-box">
                 MailBox
               </router-link>
             </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/calendar">
-                Calendar
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/datatables">
-                Jquery Datatables
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/image-cropper">
-                ImageCropper
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/image-zoom">
-                ImageZoom
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/nestable-list">
-                Nestable List
-              </router-link>
-            </template>
-					</v-collapse-item>
-          <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/components/nestable-tree">
-                Nestable Tree
-              </router-link>
-            </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/components/notifications">
                 Notifications
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/components/sweet-modals">
                 Sweet Modals
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
-              <router-link to="/admin/components/image-zoom">
-                ImageZoom
+              <router-link to="/admin/components/vue-dropzone">
+                VueDropzone
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
-              <router-link to="/admin/components/mail-box">
-                MailBox
+              <router-link to="/admin/components/vue-tables">
+                VueTable
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/components/vue-carousel">
+                VueCarousel
+              </router-link>
+            </template>
+          </v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/components/vee">
+                Vee Validate
+              </router-link>
+            </template>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/chart">
           <template slot="title">
             <a href="#">
-               <i class="icon-fa icon-fa-bar-chart"/>Charts
-               <span class="icon-fa arrow icon-fa-fw"/>
+              <i class="icon-fa icon-fa-bar-chart"/>Charts
+              <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
-					<v-collapse-item>
+          <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/charts/amchart">
                 AM Charts
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/charts/chartjs">
                 Chart JS
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/charts/gauge">
                 Gauges
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/charts/morris">
                 Morris
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/charts/sparkline">
                 Sparkline
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/icons">
           <template slot="title">
             <a href="#">
-               <i class="icon-fa icon-fa-eye"/>Icons
-               <span class="icon-fa arrow icon-fa-fw"/>
+              <i class="icon-fa icon-fa-eye"/>Icons
+              <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
-					<v-collapse-item>
+          <v-collapse-item>
             <template slot="item-title">
-              <router-link to="/admin/icons/icomoon">
-               IcoMoon
+              <router-link to="/admin/icons/fpsline">
+                Fpsline
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/icons/fontawesome">
-                Font Awesome
+                FontAwesome
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/icons/icomoon">
+                IcoMoon
+              </router-link>
+            </template>
+          </v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/icons/line">
+                Line
+              </router-link>
+            </template>
+          </v-collapse-item>
+          <v-collapse-item>
+            <template slot="item-title">
+              <router-link to="/admin/icons/meteo">
+                Meteo
+              </router-link>
+            </template>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/forms">
           <template slot="title">
             <a href="#">
-               <i class="icon-fa icon-fa-rocket"/>Form
-               <span class="icon-fa arrow icon-fa-fw"/>
+              <i class="icon-fa icon-fa-rocket"/>Form
+              <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
-					<v-collapse-item>
+          <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/general">
                 General Elements
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/advanced">
                 Advanced Elements
               </router-link>
             </template>
-					</v-collapse-item><v-collapse-item>
+          </v-collapse-item><v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/layouts">
                 Form Layouts
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/validation">
                 Form Validation
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/wizards">
                 Form Wizard
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/wizards-2">
                 Form Wizard 2
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/wizards-3">
                 Form Wizard 3
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/editors">
                 Editors
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
-            <template slot="item-title">
-              <router-link to="/admin/forms/vee">
-                Vee Validate
-              </router-link>
-            </template>
-					</v-collapse-item>
-           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/forms/vuelidate">
                 Vuelidate
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/gallery">
@@ -375,20 +353,20 @@
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
           </template>
-					<v-collapse-item>
+          <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/gallery/grid">
                 Grid
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/gallery/masonry-grid">
                 Masonry Grid
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/users">
@@ -404,14 +382,14 @@
                 Profile
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
           <v-collapse-item>
             <template slot="item-title">
               <router-link to="/admin/users">
                 All Users
               </router-link>
             </template>
-					</v-collapse-item>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/todo-item">
@@ -435,19 +413,18 @@
 </template>
 
 <script type="text/babel">
-import VCollapse from "../../../components/VCollapse";
-import VCollapseItem from "../../../components/VCollapseItem";
+import VCollapse from '../../../components/VCollapse'
+import VCollapseItem from '../../../components/VCollapseItem'
 
 export default {
   components: {
     VCollapse,
     VCollapseItem
   },
-  data() {
+  data () {
     return {
-      sidebar: "sidebar"
-    };
+      sidebar: 'sidebar'
+    }
   }
-};
+}
 </script>
-

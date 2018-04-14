@@ -6,7 +6,7 @@
           src="/assets/img/logo-large.png"
           alt="Laraspace Logo"></a>
       </div>
-      <router-view></router-view>
+      <router-view/>
       <div class="page-copyright">
         <p>Powered by <a
           href="http://bytefury.com"

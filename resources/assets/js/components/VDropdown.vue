@@ -1,5 +1,5 @@
 <template>
-  <div :class="['dropdown-group', {active: isDropdown} ]">
+  <div :class="['dropdown-group', {active: toggle} ]">
     <div 
       class="dropdown-group-title"
       @click="showDropdown">
@@ -10,7 +10,7 @@
       mode="in-out">
       <div
         class="dropdown-group-items"
-        v-show="isDropdown"
+        v-show="toggle"
         ref="dropdownItems"
         :style="'max-height:'+height+'px'">
         <slot></slot>
@@ -32,17 +32,18 @@ export default {
     return {
       height: '',
       originalHeight: '',
-      isDropdown: true,
+      toggle: true,
     }
   },
   mounted () {
     this.$nextTick(function(){
         this.height = this.originalHeight = this.$refs.dropdownItems.clientHeight
     })
+    console.log(this);
     if (this.isActive() == true) {
-      this.isDropdown =  true
+      this.toggle =  true
     } else {
-      this.isDropdown = false
+      this.toggle = false
     }
   },
   methods: {
@@ -51,16 +52,16 @@ export default {
     },
     showDropdown () {
       let self = this
-      if(this.isDropdown == false) {
+      if(this.toggle == false) {
         this.$parent.$children.filter(function(value) {
           if(value != self) {
-            if(value.isDropdown == true) {
-              value.isDropdown = false
+            if(value.toggle == true) {
+              value.toggle = false
             }
           }
         })
       }
-      this.isDropdown = !this.isDropdown 
+      this.toggle = !this.toggle 
     },
     afterEnter () {
       this.height = this.originalHeight

@@ -4,8 +4,8 @@
       <v-dropdown active-url="/admin/dashboard">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-dashboard"/>Dashboard
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-dashboard"/>Dashboard
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -29,12 +29,12 @@
             </router-link>
           </template>
         </v-dropdown-item>
-			</v-dropdown>
+      </v-dropdown>
       <v-dropdown active-url="/admin/layouts">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-th-large"/>Layouts
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-th-large"/>Layouts
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -62,8 +62,8 @@
       <v-dropdown active-url="/admin/basic-ui">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-star"/>Basic UI
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-star"/>Basic UI
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -119,8 +119,8 @@
       <v-dropdown active-url="/admin/components">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-puzzle-piece"/>Components
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-puzzle-piece"/>Components
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -240,8 +240,8 @@
       <v-dropdown active-url="/admin/chart">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-bar-chart"/>Charts
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-bar-chart"/>Charts
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -283,8 +283,8 @@
       <v-dropdown active-url="/admin/icons">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-eye"/>Icons
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-eye"/>Icons
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -305,8 +305,8 @@
       <v-dropdown active-url="/admin/forms">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-rocket"/>Form
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-rocket"/>Form
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -371,7 +371,7 @@
             </router-link>
           </template>
         </v-dropdown-item>
-          <v-dropdown-item>
+        <v-dropdown-item>
           <template slot="item-title">
             <router-link to="/admin/forms/vuelidate">
               Vuelidate
@@ -382,8 +382,8 @@
       <v-dropdown active-url="/admin/gallery">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-image"/>Gallery
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-image"/>Gallery
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -404,8 +404,8 @@
       <v-dropdown active-url="/admin/users">
         <template slot="title">
           <a href="#">
-              <i class="icon-fa icon-fa-user"/>Users
-              <span class="icon-fa arrow icon-fa-fw"/>
+            <i class="icon-fa icon-fa-user"/>Users
+            <span class="icon-fa arrow icon-fa-fw"/>
           </a>
         </template>
         <v-dropdown-item>
@@ -426,7 +426,7 @@
       <v-dropdown active-url="/admin/todo-item">
         <template slot="title">
           <router-link to="/admin/todo-item">
-              <i class="icon-fa icon-fa-check"/>Todos
+            <i class="icon-fa icon-fa-check"/>Todos
           </router-link>
         </template>
       </v-dropdown>
@@ -456,11 +456,11 @@ export default {
     }
   },
   mounted () {
-    
+
   },
 
   methods: {
-    
+
   }
 }
 </script>

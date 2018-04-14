@@ -1,9 +1,9 @@
 <template>
   <div class="template-container">
-    <site-header></site-header>
-    <site-header-bottom></site-header-bottom>
-    <router-view></router-view>
-    <site-footer></site-footer>
+    <site-header/>
+    <site-header-bottom/>
+    <router-view/>
+    <site-footer/>
   </div>
 </template>
 

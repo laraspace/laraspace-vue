@@ -1,7 +1,7 @@
 <template>
   <form
-    action=""
     id="registerForm"
+    action=""
     method="post"
   >
     {{ csrf_field() }}
@@ -15,11 +15,11 @@
     </div>
     <div class="form-group">
       <input
+        id="password"
         type="password"
         class="form-control form-control-danger"
         placeholder="Enter Password"
         name="password"
-        id="password"
       >
     </div>
     <div class="form-group">

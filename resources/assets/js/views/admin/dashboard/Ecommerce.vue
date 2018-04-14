@@ -1,7 +1,7 @@
 <template>
   <div
-    class="main-content"
-    id="dashboardPage">
+    id="dashboardPage"
+    class="main-content">
     <div class="row">
       <div class="col-md-12 col-lg-6 col-xl-3">
         <a
@@ -101,8 +101,7 @@
           <div class="card-body">
             <line-graph
               :labels="['Jan','Feb','Mar','June']"
-              :values="[20,30,40,60]">
-            </line-graph>
+              :values="[20,30,40,60]"/>
           </div>
         </div>
       </div>

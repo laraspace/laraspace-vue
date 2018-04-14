@@ -8,37 +8,49 @@
         <li class="breadcrumb-item active">vue-carousel</li>
       </ol>
     </div>
-      <div class="card">
-          <div class="card-body">
-            <carousel>
-              <slide>
-                <img src="/images/vendor/vue-carousel/slide1.jpg" style="height: 100%;">
-              </slide>
-              <slide>
-                <img src="/images/vendor/vue-carousel/slide2.jpg" style="height: 100%;">
-              </slide>
-              <slide>
-                <img src="/images/vendor/vue-carousel/slide3.jpg" style="height: 100%;">
-              </slide>
-              <slide>
-                <img src="/images/vendor/vue-carousel/slide4.jpg" style="height: 100%;">
-              </slide>
-              <slide>
-                <img src="/images/vendor/vue-carousel/slide5.jpg" style="height: 100%;">
-              </slide>
-              <slide>
-                <img src="/images/vendor/vue-carousel/slide6.jpg" style="height: 100%;">
-              </slide>
-            </carousel>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-body">
+        <carousel>
+          <slide>
+            <img
+              src="/images/vendor/vue-carousel/slide1.jpg"
+              style="height: 100%;">
+          </slide>
+          <slide>
+            <img
+              src="/images/vendor/vue-carousel/slide2.jpg"
+              style="height: 100%;">
+          </slide>
+          <slide>
+            <img
+              src="/images/vendor/vue-carousel/slide3.jpg"
+              style="height: 100%;">
+          </slide>
+          <slide>
+            <img
+              src="/images/vendor/vue-carousel/slide4.jpg"
+              style="height: 100%;">
+          </slide>
+          <slide>
+            <img
+              src="/images/vendor/vue-carousel/slide5.jpg"
+              style="height: 100%;">
+          </slide>
+          <slide>
+            <img
+              src="/images/vendor/vue-carousel/slide6.jpg"
+              style="height: 100%;">
+          </slide>
+        </carousel>
       </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { Carousel, Slide } from 'vue-carousel'
 export default {
- components: {
+  components: {
     Carousel,
     Slide
   }

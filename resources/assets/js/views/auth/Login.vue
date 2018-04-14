@@ -6,23 +6,23 @@
   >
     <div :class="{'form-group' : true , 'has-danger': errors.has('email') }">
       <input
+        v-validate
+        v-model="loginData.email"
         type="email"
         class="form-control form-control-danger"
         placeholder="Enter email"
         name="email"
-        v-model="loginData.email"
-        v-validate
         data-vv-rules="required|email"
       >
     </div>
     <div :class="{'form-group' : true , 'has-danger': errors.has('password') }">
       <input
+        v-validate
+        v-model="loginData.password"
         type="password"
         class="form-control form-control-danger"
         placeholder="Enter Password"
         name="password"
-        v-model="loginData.password"
-        v-validate
         data-vv-rules="required"
       >
     </div>
@@ -31,9 +31,9 @@
         <div class="checkbox">
           <label class="c-input c-checkbox">
             <input
+              v-model="loginData.remember"
               type="checkbox"
               name="remember"
-              v-model="loginData.remember"
             >
             <span class="c-indicator" />
             Remember Me

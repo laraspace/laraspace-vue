@@ -492,39 +492,39 @@
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Phone number</h5>
             <masked-input
-              type="text"
-              name="phone"
-              class="form-control"
               v-model="phone"
               :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
               :keepCharPositions="true"
-              :show-Mask="true"/>
+              :show-Mask="true"
+              type="text"
+              name="phone"
+              class="form-control"/>
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Date</h5>
             <masked-input
-              type="text"
-              name="date"
-              class="form-control"
               v-model="date"
               :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
               :keepCharPositions="true"
-              :showMask="true"/>
+              :showMask="true"
+              type="text"
+              name="date"
+              class="form-control"/>
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Auto Correct Date</h5>
             <masked-input
-              type="text"
-              name="dateAuto"
-              class="form-control"
               v-model="dateAuto"
               :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
               :pipe="auto"
               :keepCharPositions="true"
-              :showMask="true"/>
+              :showMask="true"
+              type="text"
+              name="dateAuto"
+              class="form-control"/>
           </div>
         </div>
       </div>
