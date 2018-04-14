@@ -1,5 +1,6 @@
 <template>
-  <div class="login-wrapper">
+  <div class="login-page login-1">
+    <div class="login-wrapper">
     <div class="login-box">
       <div class="logo-main">
         <a href="/admin"><img
@@ -14,6 +15,7 @@
         <p>Laraspace © 2016</p>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

@@ -454,13 +454,6 @@ export default {
     return {
       sidebar: 'sidebar'
     }
-  },
-  mounted () {
-
-  },
-
-  methods: {
-
   }
 }
 </script>

@@ -1,10 +1,9 @@
 <template>
   <form
     id="loginForm"
-    method="post"
     @submit.prevent="validateBeforeSubmit"
   >
-    <div :class="{'form-group' : true , 'has-danger': errors.has('email') }">
+    <div :class="{'form-group' : true }">
       <input
         v-validate
         v-model="loginData.email"
@@ -15,16 +14,21 @@
         data-vv-rules="required|email"
       >
     </div>
-    <div :class="{'form-group' : true , 'has-danger': errors.has('password') }">
+    <div :class="{'form-group' : true , 'is-invalid': errors.has('password') }">
       <input
         v-validate
         v-model="loginData.password"
+        :class="{'is-invalid': errors.has('password') }"
         type="password"
-        class="form-control form-control-danger"
+        class="form-control"
         placeholder="Enter Password"
         name="password"
         data-vv-rules="required"
       >
+      <div
+        v-show="errors.has('password')"
+        class="invalid-feedback">{{ errors.first('password') }}
+      </div>
     </div>
     <div class="other-actions row">
       <div class="col-sm-6">

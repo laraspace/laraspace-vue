@@ -18,6 +18,8 @@ import LayoutBasic from './views/layouts/LayoutBasic.vue'
 import LayoutHorizontal from './views/layouts/LayoutHorizontal.vue'
 import LayoutIconSidebar from './views/layouts/LayoutIconSidebar.vue'
 import LayoutLogin from './views/layouts/LayoutLogin.vue'
+import LayoutLogin2 from './views/layouts/LayoutLogin2.vue'
+import LayoutLogin3 from './views/layouts/LayoutLogin3.vue'
 import LayoutFront from './views/layouts/LayoutFront.vue'
 
 // Basic UI
@@ -38,11 +40,8 @@ import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
 
 // Charts
-import Amchart from './views/admin/charts/Amchart.vue'
 import Chartjs from './views/admin/charts/Chartjs.vue'
-import Gauge from './views/admin/charts/Gauge.vue'
-import Morris from './views/admin/charts/Morris.vue'
-import Sparkline from './views/admin/charts/Sparkline.vue'
+
 // Icons
 // import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
@@ -161,7 +160,6 @@ const routes = [
     component: LayoutBasic, // Change the desired Layout here
     meta: { requiresAuth: true },
     children: [
-
       // Dashboard
       {
         path: 'dashboard/basic',
@@ -239,25 +237,10 @@ const routes = [
       },
 
       // chart
-      {
-        path: 'charts/amchart',
-        component: Amchart
-      },
+
       {
         path: 'charts/chartjs',
         component: Chartjs
-      },
-      {
-        path: 'charts/gauge',
-        component: Gauge
-      },
-      {
-        path: 'charts/morris',
-        component: Morris
-      },
-      {
-        path: 'charts/sparkline',
-        component: Sparkline
       },
 
       //  Icons
@@ -314,6 +297,8 @@ const routes = [
         component: MasonryGrid
       },
 
+      // Pages
+
       // Users
       {
         path: 'users/profile',
@@ -360,7 +345,55 @@ const routes = [
       }
     ]
   },
-
+  // Demo Pages
+  {
+    path: '/admin/pages',
+    component: LayoutLogin,
+    children: [
+      {
+        path: 'login-1',
+        component: Login,
+        name: 'login 1'
+      },
+      {
+        path: 'register-1',
+        component: Register,
+        name: 'register-1'
+      }
+    ]
+  },
+  {
+    path: '/admin/pages',
+    component: LayoutLogin2,
+    children: [
+      {
+        path: 'login-2',
+        component: Login,
+        name: 'login 2'
+      },
+      {
+        path: 'register-2',
+        component: Register,
+        name: 'register 2'
+      }
+    ]
+  },
+  {
+    path: '/admin/pages',
+    component: LayoutLogin3,
+    children: [
+      {
+        path: 'login-3',
+        component: Login,
+        name: 'login 3'
+      },
+      {
+        path: 'register-3',
+        component: Register,
+        name: 'register 3'
+      }
+    ]
+  },
   //  DEFAULT ROUTE
   { path: '*', component: NotFoundPage }
 ]

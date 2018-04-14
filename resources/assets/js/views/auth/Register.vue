@@ -33,3 +33,28 @@
     <button class="btn btn-login btn-full">Register</button>
   </form>
 </template>
+<script type="text/babel">
+import Auth from '../../services/auth'
+import 'vee-validate/dist/vee-validate'
+
+export default {
+  data () {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+    }
+  },
+  methods: {
+    validateBeforeSubmit (e) {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          // eslint-disable-next-line
+          alert('Form Submitted!')
+        }
+      })
+    }
+  }
+}
+</script>
