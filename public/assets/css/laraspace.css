@@ -18394,7 +18394,7 @@ button.toast-close-button {
 @font-face {
   font-family: 'fontello';
   src: url(/fonts/fontello.eot?f16aa96c6a63dba6cc7bf750fb157d18);
-  src: url(/fonts/fontello.eot?f16aa96c6a63dba6cc7bf750fb157d18) format("embedded-opentype"), url(/fonts/fontello.woff?198b1acf984a2840854aa373a8a27a67) format("woff"), url(/fonts/fontello.ttf?993985cb285418d7f1a9f12a1ad9d9f6) format("truetype"), url(/fonts/fontello.svg?5e4fc23253f13ad54d27c197e8f412e4) format("svg");
+  src: url(/fonts/fontello.eot?f16aa96c6a63dba6cc7bf750fb157d18) format("embedded-opentype"), url(/fonts/fontello.woff?198b1acf984a2840854aa373a8a27a67) format("woff"), url(/fonts/fontello.ttf?993985cb285418d7f1a9f12a1ad9d9f6) format("truetype"), url(/fonts/fontello.svg?9644b2750bf7a54143f85dcf6ce520a2) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -18990,7 +18990,7 @@ button.toast-close-button {
 @font-face {
   font-family: 'fpslineicons';
   src: url(/fonts/fpslineicons.eot?4b7e88656288c529d4568aaffcffe66f);
-  src: url(/fonts/fpslineicons.eot?4b7e88656288c529d4568aaffcffe66f) format("embedded-opentype"), url(/fonts/fpslineicons.woff?d4ffd8d867c1e8f54235a763738de7f2) format("woff"), url(/fonts/fpslineicons.ttf?a98d6230aa00aef0abfb57fcc7a93015) format("truetype"), url(/fonts/fpslineicons.svg?f590d10c44ee4eae2a3c48ebf33120b9) format("svg");
+  src: url(/fonts/fpslineicons.eot?4b7e88656288c529d4568aaffcffe66f) format("embedded-opentype"), url(/fonts/fpslineicons.woff?d4ffd8d867c1e8f54235a763738de7f2) format("woff"), url(/fonts/fpslineicons.ttf?a98d6230aa00aef0abfb57fcc7a93015) format("truetype"), url(/fonts/fpslineicons.svg?dff89e8a2616b00092fc47917d50d64a) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -23080,22 +23080,25 @@ code,
   width: 200px;
 }
 
-.layout-icon-sidebar .sidebar-left .side-nav li {
+.layout-icon-sidebar .sidebar-left .side-nav .collapse-group-title,
+.layout-icon-sidebar .sidebar-left .side-nav .collapse-group-item {
   text-align: center;
 }
 
-.layout-icon-sidebar .sidebar-left .side-nav li a {
+.layout-icon-sidebar .sidebar-left .side-nav .collapse-group-title a,
+.layout-icon-sidebar .sidebar-left .side-nav .collapse-group-item a {
   padding: 15px;
 }
 
-.layout-icon-sidebar .sidebar-left .side-nav li i {
+.layout-icon-sidebar .sidebar-left .side-nav .collapse-group-title i,
+.layout-icon-sidebar .sidebar-left .side-nav .collapse-group-item i {
   display: block;
   width: 100%;
   margin-bottom: 0.5em;
   font-size: 30px;
 }
 
-.layout-icon-sidebar .sidebar-left .metismenu .arrow {
+.layout-icon-sidebar .sidebar-left .vue-menu .arrow {
   position: absolute;
   right: 21px;
   top: 50%;
@@ -23125,57 +23128,61 @@ code,
   margin: 0;
 }
 
-.header-nav li {
+.header-nav .dropdown-group {
   display: inline-block;
   position: relative;
   margin-right: -5px;
 }
 
-.header-nav li .dropdown-menu a {
+.header-nav .dropdown-group .dropdown-group-items a {
   font-size: 15px;
   padding: 10px 20px;
 }
 
-.header-nav li i {
+.header-nav .dropdown-group i {
   width: 25px;
 }
 
-.header-nav li .dropdown-item.active {
+.header-nav .dropdown-group .dropdown-group-item a.active,
+.header-nav .dropdown-group .dropdown-group-title a.active {
   color: #ffde00;
   background-color: transparent;
 }
 
-.header-nav li .dropdown-item.active:hover,
-.header-nav li .dropdown-item.active:focus,
-.header-nav li .dropdown-item.active:active {
+.header-nav .dropdown-group .dropdown-group-item a.active:hover,
+.header-nav .dropdown-group .dropdown-group-item a.active:focus,
+.header-nav .dropdown-group .dropdown-group-item a.active:active,
+.header-nav .dropdown-group .dropdown-group-title a.active:hover,
+.header-nav .dropdown-group .dropdown-group-title a.active:focus,
+.header-nav .dropdown-group .dropdown-group-title a.active:active {
   background-color: #4d4c4c;
 }
 
-.header-nav li.active > a {
+.header-nav .dropdown-group.active > a {
   color: #ffde00;
 }
 
-.header-nav li.active > a:hover {
+.header-nav .dropdown-group.active > a:hover {
   color: #ffde00;
 }
 
-.header-nav li a {
+.header-nav .dropdown-group a {
   display: inline-block;
   padding: 12px 20px;
   color: #fff;
   font-size: 14px;
 }
 
-.header-nav li.has-child > a {
+.header-nav .dropdown-group.has-child > a {
   padding: 12px 40px 12px 20px;
 }
 
-.header-nav li a:hover {
+.header-nav .dropdown-group a:hover {
   background-color: #4d4c4c;
   color: #fff;
 }
 
-.header-nav li.has-child > a::before {
+.header-nav .dropdown-group.has-child > a::before {
   border-color: #bababa transparent transparent;
   border-style: solid;
   border-width: 5px 4px 0;
@@ -23378,11 +23385,13 @@ code,
   padding: 0;
 }
 
-.side-nav li {
+.side-nav .collapse-group .collapse-group-item,
+.side-nav .collapse-group .collapse-group-title {
   display: block;
 }
 
-.side-nav li a {
+.side-nav .collapse-group .collapse-group-item a,
+.side-nav .collapse-group .collapse-group-title a {
   color: #fff;
   display: block;
   font-size: 14px;
@@ -23391,44 +23400,40 @@ code,
   text-decoration: none;
 }
 
-.side-nav li.active > a {
-  color: #ffde00;
-}
-
-.side-nav li.has-child > a::before {
-  border-color: #bababa transparent transparent;
-  border-style: solid;
-  border-width: 5px 4px 0;
-  content: '';
-  display: block;
-  height: 0;
-  margin-top: -2px;
-  position: absolute;
-  right: 21px;
-  top: 50%;
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-  -webkit-transition: all .2s ease-in-out;
-  transition: all .2s ease-in-out;
-  width: 0;
-}
-
-.side-nav li.has-child.open > a::before {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-}
-
-.side-nav li a:hover {
+.side-nav .collapse-group .collapse-group-item a:hover,
+.side-nav .collapse-group .collapse-group-title a:hover {
   background-color: #4d4c4c;
 }
 
-.side-nav li i {
+.side-nav .collapse-group .collapse-group-item i,
+.side-nav .collapse-group .collapse-group-title i {
   width: 30px;
 }
 
-.side-nav ul {
+.side-nav .collapse-group.active > .collapse-group-title > a {
+  color: #ffde00;
+}
+
+.side-nav .collapse-group.active > .collapse-group-title > a > .icon-fa.arrow:before {
+  content: "\F107";
+}
+
+.side-nav .collapse-group .collapse-group-title > a > .icon-fa.arrow {
+  position: absolute;
+  right: 21px;
+}
+
+.side-nav .collapse-group .collapse-group-title > a > .icon-fa.arrow:before {
+  content: "\F104";
+}
+
+.side-nav .collapse-group .collapse-group-items {
   background-color: #3b3b3b;
   padding: 0;
+}
+
+.side-nav .collapse-group .collapse-group-items a.active {
+  color: #ffde00;
 }
 
 .side-nav ul.submenu {
@@ -23446,19 +23451,6 @@ code,
   -webkit-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
   width: 0;
-}
-
-.side-nav.vue-menu .arrow {
-  float: right;
-  line-height: 1.42857;
-}
-
-.side-nav.vue-menu .arrow.icon-fa:before {
-  content: "\F104";
-}
-
-.side-nav.vue-menu .active > a > .icon-fa.arrow:before {
-  content: "\F107";
 }
 
 .btn {

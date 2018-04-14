@@ -65,9 +65,13 @@ import DonutChart from '../../../components/MorrisCharts/DonutChart.vue'
 import AreaChart from '../../../components/MorrisCharts/AreaChart.vue'
 import LineChart from '../../../components/MorrisCharts/LineChart.vue'
 import BarChart from '../../../components/MorrisCharts/BarChart.vue'
+
 export default {
-  components:{
-    DonutChart , AreaChart , LineChart ,BarChart
+  components: {
+    DonutChart,
+    AreaChart,
+    LineChart,
+    BarChart
   }
 }
 </script>

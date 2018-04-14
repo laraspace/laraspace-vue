@@ -40,11 +40,8 @@ import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
 
 // Charts
-import Amchart from './views/admin/charts/Amchart.vue'
 import Chartjs from './views/admin/charts/Chartjs.vue'
-import Gauge from './views/admin/charts/Gauge.vue'
-import Morris from './views/admin/charts/Morris.vue'
-import Sparkline from './views/admin/charts/Sparkline.vue'
+
 // Icons
 // import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
@@ -240,25 +237,10 @@ const routes = [
       },
 
       // chart
-      {
-        path: 'charts/amchart',
-        component: Amchart
-      },
+
       {
         path: 'charts/chartjs',
         component: Chartjs
-      },
-      {
-        path: 'charts/gauge',
-        component: Gauge
-      },
-      {
-        path: 'charts/morris',
-        component: Morris
-      },
-      {
-        path: 'charts/sparkline',
-        component: Sparkline
       },
 
       //  Icons
