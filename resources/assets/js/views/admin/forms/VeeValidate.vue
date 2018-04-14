@@ -21,27 +21,30 @@
           <label>Name </label>
           <input
             v-validate
-            :class="{'is-invalid': errors.has('name') }"
+            v-model="name"
+            :class="['form-control', {'is-invalid': errors.has('name') }]"
             data-vv-rules="required"
-            class="form-control"
             name="name"
             type="text">
           <div
             v-show="errors.has('name')"
-            class="invalid-feedback">{{ errors.first('name') }}</div>
+            class="invalid-feedback">
+            {{ errors.first('name') }}
+          </div>
         </div>
         <div :class="{'form-group' : true }">
           <label>Email Address</label>
           <input
             v-validate
-            :class="{'is-invalid': errors.has('email1') }"
+            v-model="email"
+            :class="['form-control', {'is-invalid': errors.has('email') }]"
             data-vv-rules="required|email"
-            class="form-control"
-            name="email1"
-            type="email">
+            name="email"
+            type="text">
           <div
-            v-show="errors.has('email1')"
-            class="invalid-feedback">{{ errors.first('email1') }}
+            v-show="errors.has('email')"
+            class="invalid-feedback">
+            {{ errors.first('email') }}
           </div>
         </div>
       </div>
@@ -60,42 +63,39 @@
             <label>Name </label>
             <input
               v-validate.initial="name"
-              :class="{'is-invalid': errors.has('name') }"
+              v-model="name"
+              :class="['form-control', {'is-invalid': errors.has('name') }]"
               data-vv-rules="required"
-              class="form-control"
               name="name"
               type="text">
             <div
               v-show="errors.has('name')"
-              class="invalid-feedback">{{ errors.first('name') }}</div>
+              class="invalid-feedback">
+              {{ errors.first('name') }}
+            </div>
           </div>
           <div :class="{'form-group' : true }">
             <label>Email Address</label>
             <input
-              v-validate
-              :class="{'is-invalid': errors.has('email') }"
+              v-validate.initial="email"
+              v-model="email"
+              :class="['form-control', {'is-invalid': errors.has('email') }]"
               data-vv-rules="required|email"
-              class="form-control"
               name="email"
               type="text">
             <div
               v-show="errors.has('email')"
-              class="invalid-feedback">{{ errors.first('email') }}
+              class="invalid-feedback">
+              {{ errors.first('email') }}
             </div>
           </div>
           <div :class="{'form-group' : true }">
             <label>Password</label>
             <input
-              :class="{'is-invalid': errors.has('password') }"
-              v-validate="'required|min:6'"
-              data-vv-rules="password"
+              id="password"
+              type="password"
               class="form-control"
-              name="password"
-              type="password">
-            <div
-              v-show="errors.has('password')"
-              class="invalid-feedback">{{ errors.first('password') }}
-            </div>
+              name="password">
           </div>
           <label>Confirm Password</label>
           <input
@@ -114,8 +114,7 @@
             <div class="checkbox checkbox-full">
               <label>
                 <input
-                  v-validate="'required'"
-                  :class="{'is-invalid': errors.has('password_confirmation') }"
+                  v-validate.initial="terms"
                   type="checkbox"
                   name="terms"
                   data-vv-rules="required">

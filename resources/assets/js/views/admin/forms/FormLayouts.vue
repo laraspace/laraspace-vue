@@ -20,26 +20,26 @@
                 <div class="form-group col-md-6">
                   <label for="inputFirstName">First Name</label>
                   <input
+                    id="inputFirstName"
                     type="text"
                     class="form-control"
-                    id="inputFirstName"
                     placeholder="First Name">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputLastName">Password</label>
                   <input
+                    id="inputLastName"
                     type="password"
                     class="form-control"
-                    id="inputLastName"
                     placeholder="Last Name">
                 </div>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail">Email address</label>
                 <input
+                  id="exampleInputEmail"
                   type="email"
                   class="form-control"
-                  id="exampleInputEmail"
                   aria-describedby="emailHelp"
                   placeholder="Enter email">
                 <small
@@ -51,9 +51,9 @@
               <div class="form-group">
                 <label for="inputUserName">Username</label>
                 <input
+                  id="inputUserName"
                   type="text"
                   class="form-control"
-                  id="inputUserName"
                   placeholder="Username">
               </div>
               <div class="form-group">
@@ -61,22 +61,22 @@
                 <div>
                   <div class="form-check form-check-inline">
                     <input
+                      id="checkMale"
                       class="form-check-input"
                       type="radio"
                       name="gender"
-                      value="male"
-                      id="checkMale" >
+                      value="male">
                     <label
                       class="form-check-label"
                       for="checkMale">Male</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
+                      id="checkFemale"
                       class="form-check-input"
                       type="radio"
                       name="gender"
-                      value="female"
-                      id="checkFemale" >
+                      value="female">
                     <label
                       class="form-check-label"
                       for="checkFemale">Female</label>
@@ -86,9 +86,9 @@
               <div class="form-group">
                 <label for="exampleInputPassword">Password</label>
                 <input
+                  id="exampleInputPassword1"
                   type="password"
                   class="form-control"
-                  id="exampleInputPassword1="
                   placeholder="Password">
               </div>
               <button class="btn btn-primary">Submit</button>
@@ -109,9 +109,9 @@
                   class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
                   <input
+                    id="firstName"
                     type="text"
                     class="form-control"
-                    id="firstName"
                     placeholder="First Name">
                 </div>
               </div>
@@ -121,9 +121,9 @@
                   class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
                   <input
+                    id="lastName"
                     type="text"
                     class="form-control"
-                    id="lastName"
                     placeholder="Last Name">
                 </div>
               </div>
@@ -133,9 +133,9 @@
                   class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                   <input
+                    id="email"
                     type="email"
                     class="form-control"
-                    id="email"
                     placeholder="Email">
                 </div>
               </div>
@@ -145,9 +145,9 @@
                   class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
                   <input
+                    id="password"
                     type="password"
                     class="form-control"
-                    id="password"
                     placeholder="Password">
                 </div>
               </div>
@@ -170,10 +170,10 @@
                   for="staticEmail2"
                   class="sr-only">Email</label>
                 <input
+                  id="staticEmail2"
                   type="text"
                   readonly
                   class="form-control-plaintext"
-                  id="staticEmail2"
                   value="email@example.com">
               </div>
               <div class="form-group mx-sm-3">
@@ -181,13 +181,13 @@
                   for="inputPassword2"
                   class="sr-only">Password</label>
                 <input
+                  id="inputPassword2"
                   type="password"
                   class="form-control"
-                  id="inputPassword2"
                   placeholder="Password">
               </div>
               <button
-              class="btn btn-primary">Confirm identity</button>
+                class="btn btn-primary">Confirm identity</button>
             </form>
           </div>
         </div>

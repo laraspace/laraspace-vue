@@ -1,9 +1,9 @@
 <template>
   <div class="template-container">
-    <site-header></site-header>
-    <site-sidebar type="icon"></site-sidebar>
-    <router-view></router-view>
-    <site-footer></site-footer>
+    <site-header/>
+    <site-sidebar type="icon"/>
+    <router-view/>
+    <site-footer/>
   </div>
 </template>
 
@@ -30,4 +30,3 @@ export default {
   }
 }
 </script>
-

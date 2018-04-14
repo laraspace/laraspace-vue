@@ -52,30 +52,30 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div
-                  class="tab-pane active"
                   id="home"
+                  class="tab-pane active"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nesciunt praesentium totam
                   vitae? Consequatur delectus eos esse natus odio. Expedita?
                 </div>
                 <div
-                  class="tab-pane"
                   id="profile"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus nulla quia quod sed
                   voluptatem. Aliquam atqu
                   e error illum nihil quae.
                 </div>
                 <div
-                  class="tab-pane"
                   id="messages"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium
                   aliquam delectus doloribus eius maxime nisi quia rerum soluta.
                 </div>
                 <div
-                  class="tab-pane"
                   id="settings"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam amet ea,
                   excepturi fuga fugiat magnam non ratione sunt tenetur.
@@ -121,29 +121,29 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div
-                  class="tab-pane active"
                   id="home2"
+                  class="tab-pane active"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nesciunt praesentium totam
                   vitae? Consequatur delectus eos esse natus odio. Expedita?
                 </div>
                 <div
-                  class="tab-pane"
                   id="profile2"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus nulla quia quod sed
                   voluptatem. Aliquam atque error illum nihil quae.
                 </div>
                 <div
-                  class="tab-pane"
                   id="messages2"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium
                   aliquam delectus doloribus eius maxime nisi quia rerum soluta.
                 </div>
                 <div
-                  class="tab-pane"
                   id="settings2"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam amet ea,
                   excepturi fuga fugiat magnam non ratione sunt tenetur.
@@ -160,7 +160,7 @@
                 class="nav nav-tabs"
                 role="tablist">
                 <li
-                class="nav-item">
+                  class="nav-item">
                   <a
                     class="nav-link active"
                     data-toggle="tab"
@@ -192,29 +192,29 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div
-                  class="tab-pane active"
                   id="home1"
+                  class="tab-pane active"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nesciunt praesentium totam
                   vitae? Consequatur delectus eos esse natus odio. Expedita?
                 </div>
                 <div
-                  class="tab-pane"
                   id="profile1"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus nulla quia quod sed
                   voluptatem. Aliquam atque error illum nihil quae.
                 </div>
                 <div
-                  class="tab-pane"
                   id="messages1"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium
                   aliquam delectus doloribus eius maxime nisi quia rerum soluta.
                 </div>
                 <div
-                  class="tab-pane"
                   id="settings1"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam amet ea,
                   excepturi fuga fugiat magnam non ratione sunt tenetur.
@@ -260,29 +260,29 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div
-                  class="tab-pane active"
                   id="home3"
+                  class="tab-pane active"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nesciunt praesentium totam
                   vitae? Consequatur delectus eos esse natus odio. Expedita?
                 </div>
                 <div
-                  class="tab-pane"
                   id="profile3"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus nulla quia quod sed
                   voluptatem. Aliquam atque error illum nihil quae.
                 </div>
                 <div
-                  class="tab-pane"
                   id="messages3"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium
                   aliquam delectus doloribus eius maxime nisi quia rerum soluta.
                 </div>
                 <div
-                  class="tab-pane"
                   id="settings3"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam amet ea,
                   excepturi fuga fugiat magnam non ratione sunt tenetur.
@@ -337,29 +337,29 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div
-                  class="tab-pane active"
                   id="home4"
+                  class="tab-pane active"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nesciunt praesentium totam
                   vitae? Consequatur delectus eos esse natus odio. Expedita?
                 </div>
                 <div
-                  class="tab-pane"
                   id="profile4"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus nulla quia quod sed
                   voluptatem. Aliquam atque error illum nihil quae.
                 </div>
                 <div
-                  class="tab-pane"
                   id="messages4"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium
                   aliquam delectus doloribus eius maxime nisi quia rerum soluta.
                 </div>
                 <div
-                  class="tab-pane"
                   id="settings4"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam amet ea,
                   excepturi fuga fugiat magnam non ratione sunt tenetur.
@@ -406,29 +406,29 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div
-                  class="tab-pane active"
                   id="home5"
+                  class="tab-pane active"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nesciunt praesentium totam
                   vitae? Consequatur delectus eos esse natus odio. Expedita?
                 </div>
                 <div
-                  class="tab-pane"
                   id="profile5"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus nulla quia quod sed
                   voluptatem. Aliquam atque error illum nihil quae.
                 </div>
                 <div
-                  class="tab-pane"
                   id="messages5"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium
                   aliquam delectus doloribus eius maxime nisi quia rerum soluta.
                 </div>
                 <div
-                  class="tab-pane"
                   id="settings5"
+                  class="tab-pane"
                   role="tabpanel">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam amet ea,
                   excepturi fuga fugiat magnam non ratione sunt tenetur.
@@ -446,15 +446,16 @@
       <div class="col-lg-6 mt-2">
         <h5 class="section-semi-title">Accordian Default</h5>
         <div
-          class="panel-group"
           id="accordion"
+          class="panel-group"
           role="tablist"
           aria-multiselectable="true">
           <div class="panel panel-default">
             <div
+              id="headingOne"
               class="panel-heading"
               role="tab"
-              id="headingOne">
+            >
               <a
                 class="panel-title"
                 data-toggle="collapse"
@@ -481,9 +482,10 @@
           </div>
           <div class="panel panel-default">
             <div
+              id="headingTwo"
               class="panel-heading"
               role="tab"
-              id="headingTwo">
+            >
               <a
                 class="collapsed panel-title"
                 data-toggle="collapse"
@@ -510,9 +512,10 @@
           </div>
           <div class="panel panel-default">
             <div
+              id="headingThree"
               class="panel-heading"
               role="tab"
-              id="headingThree">
+            >
               <a
                 class="collapsed panel-title"
                 data-toggle="collapse"

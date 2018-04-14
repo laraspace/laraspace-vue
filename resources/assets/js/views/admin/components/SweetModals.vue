@@ -19,8 +19,8 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.modal.open()">
                   Regular Alert
                 </button>
                 <sweet-modal ref="modal">This is an alert.</sweet-modal>
@@ -28,8 +28,8 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.success_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.success_modal.open()">
                   Success Alert
                 </button>
                 <sweet-modal
@@ -41,8 +41,8 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.warning_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.warning_modal.open()">
                   Warning Alert
                 </button>
                 <sweet-modal
@@ -54,8 +54,8 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.error_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.error_modal.open()">
                   Alert with Error and Button
                 </button>
                 <sweet-modal
@@ -64,16 +64,18 @@
                   title="Oh noes…">
                   This is an error…
                   <button
+                    slot="button"
                     type="button"
-                    class="btn btn-primary"
-                    slot="button">That's fine!</button>
+                    class="btn btn-primary">
+                    That's fine!
+                  </button>
                 </sweet-modal>
               </div>
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.blocking_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.blocking_modal.open()">
                   Dark with Blocking Error
                 </button>
                 <sweet-modal
@@ -85,8 +87,8 @@
                   modal-theme="dark">
                   This is an error…
                   <button
-                    type="button"
                     slot="button"
+                    type="button"
                     class="btn btn-danger"
                     @click="$refs.blocking_modal.close('darkWithBlockingError')">
                     Press this Button
@@ -96,13 +98,13 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.dark_html_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.dark_html_modal.open()">
                   Dark with HTML Content
                 </button>
                 <sweet-modal
-                  modal-theme="dark"
                   ref="dark_html_modal"
+                  modal-theme="dark"
                   overlay-theme="dark">
                   This is <b>HTML</b>-<i>Content</i>.
                   <br><br>
@@ -117,13 +119,13 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.additional_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.additional_modal.open()">
                   Additional Window Controls
                 </button>
                 <sweet-modal
-                  title="Alert"
-                  ref="additional_modal">
+                  ref="additional_modal"
+                  title="Alert">
                   This is an alert.
                   <template slot="box-action">
                     <a href="#">Action 1</a> &nbsp;
@@ -134,8 +136,8 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.wide_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.wide_modal.open()">
                   Ultra Wide
                 </button>
                 <sweet-modal
@@ -161,20 +163,23 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.tabbed_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal.open()">
                   Tabbed Modal
                 </button>
                 <sweet-modal ref="tabbed_modal">
                   <sweet-modal-tab
-                    title="Tab 1"
-                    id="tab1">Contents of Tab 1</sweet-modal-tab>
+                    id="tab1"
+                    title="Tab 1">
+                    Contents of Tab 1
+                  </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 2"
-                    id="tab2">Contents of Tab 2</sweet-modal-tab>
+                    id="tab2"
+                    title="Tab 2">
+                    Contents of Tab 2</sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 3"
                     id="tab3"
+                    title="Tab 3"
                     disabled>Tab 3 is disabled
                   </sweet-modal-tab>
                 </sweet-modal>
@@ -182,25 +187,26 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.tabbed_modal_icon.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal_icon.open()">
                   Tabbed Modal with Icons
                 </button>
                 <sweet-modal ref="tabbed_modal_icon">
                   <sweet-modal-tab
-                    title="Tab 1"
                     id="tab1"
-                    :icon="icons_anchor">Contents of Tab 1
+                    :icon="icons_anchor"
+                    title="Tab 1">Contents of Tab 1
                   </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 2"
                     id="tab2"
-                    :icon="icons_sun">Contents of Tab 2
+                    :icon="icons_sun"
+                    title="Tab 2">
+                    Contents of Tab 2
                   </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 3"
                     id="tab3"
                     :icon="icons_leaf"
+                    title="Tab 3"
                     disabled>
                     Tab 3 is disabled
                   </sweet-modal-tab>
@@ -210,27 +216,28 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.tabbed_modal_title.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal_title.open()">
                   Tabbed Modal with Title
                 </button>
                 <sweet-modal
-                  title="This is a Tabbed Modal"
-                  ref="tabbed_modal_title">
+                  ref="tabbed_modal_title"
+                  title="This is a Tabbed Modal">
                   <sweet-modal-tab
-                    title="Tab 1"
                     id="tab1"
-                    :icon="icons_anchor">Contents of Tab 1
+                    :icon="icons_anchor"
+                    title="Tab 1">Contents of Tab 1
                   </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 2"
                     id="tab2"
-                    :icon="icons_sun">Contents of Tab 2
+                    :icon="icons_sun"
+                    title="Tab 2">
+                    Contents of Tab 2
                   </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 3"
                     id="tab3"
                     :icon="icons_leaf"
+                    title="Tab 3"
                     disabled>
                     Tab 3 is disabled
                   </sweet-modal-tab>
@@ -240,53 +247,54 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.tabbed_modal_icon_button.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal_icon_button.open()">
                   Tabbed Modal with Icons and Buttons
                 </button>
                 <sweet-modal ref="tabbed_modal_icon_button">
                   <sweet-modal-tab
-                    title="Tab 1"
                     id="tab1"
-                    :icon="icons_anchor">Contents of Tab 1
+                    :icon="icons_anchor"
+                    title="Tab 1">
+                    Contents of Tab 1
                   </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 2"
                     id="tab2"
-                    :icon="icons_sun">Contents of Tab 2
+                    :icon="icons_sun"
+                    title="Tab 2">Contents of Tab 2
                   </sweet-modal-tab>
                   <sweet-modal-tab
-                    title="Tab 3"
                     id="tab3"
                     :icon="icons_leaf"
+                    title="Tab 3"
                     disabled>
                     Tab 3 is disabled
                   </sweet-modal-tab>
                   <!-- icons is an object containing SVG strings -->
                   <button
-                    type="button"
                     slot="button"
+                    type="button"
                     class="btn btn-primary">Action1</button>
                   <button
-                    type="button"
                     slot="button"
+                    type="button"
                     class="btn btn-primary">Action2</button>
                 </sweet-modal>
               </div>
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.nested.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.nested.open()">
                   Nested
                 </button>
                 <sweet-modal ref="nested">
                   This is the parent modal.
                   <button
-                    type="button"
                     slot="button"
-                    @click="$refs.nestedChild.open()"
-                    class="btn btn-primary">
+                    type="button"
+                    class="btn btn-primary"
+                    @click="$refs.nestedChild.open()">
                     Open Child Modal
                   </button>
                 </sweet-modal>
@@ -297,8 +305,8 @@
               <div class="modal-demo">
                 <button
                   type="button"
-                  @click="$refs.long_modal.open()"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                  @click="$refs.long_modal.open()">
                   Very Long Modal
                 </button>
                 <sweet-modal ref="long_modal">

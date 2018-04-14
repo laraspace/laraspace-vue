@@ -220,7 +220,7 @@ const routes = [
         component: SweetModals
       },
       {
-        path: 'components//vue-tables',
+        path: 'components/vue-tables',
         component: VueTable
       },
       // {
@@ -232,8 +232,8 @@ const routes = [
         component: VueCarousel
       },
       {
-        path: 'components/sweet-modals',
-        component: SweetModals
+        path: 'components/vee',
+        component: VeeValidate
       },
 
       // chart
@@ -283,13 +283,10 @@ const routes = [
         component: Editors
       },
       {
-        path: 'forms/vee',
-        component: VeeValidate
-      },
-      {
         path: 'forms/vuelidate',
         component: Vuelidate
       },
+
       // Gallery
       {
         path: 'gallery/grid',

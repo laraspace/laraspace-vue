@@ -31,8 +31,8 @@
                 </p>
               </tab>
               <tab
-                name="Disabled tab"
-                :is-disabled="true">
+                :is-disabled="true"
+                name="Disabled tab">
                 <h5 class="page-subtitle">Disabled tab</h5>
                 This content will be unavailable while :is-disabled prop set to true
                 <p>
@@ -73,16 +73,16 @@
             <h5 class="section-semi-title">Basic</h5>
             <tabs>
               <tab
-                name="Home"
-                id="basic-home">
+                id="basic-home"
+                name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
               <tab
-                name="Profile"
-                id="basic-profile">
+                id="basic-profile"
+                name="Profile">
                 This is the content of the second tab
                 <p>
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -97,8 +97,8 @@
                 </p>
               </tab>
               <tab
-                name="Setting"
-                id="basic-setting">
+                id="basic-setting"
+                name="Setting">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -110,16 +110,16 @@
             <h5 class="section-semi-title">basic primary color</h5>
             <tabs>
               <tab
-                name="Home"
-                id="basic-primary-home">
+                id="basic-primary-home"
+                name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
               <tab
-                name="Profile"
-                id="basic-primary-profile">
+                id="basic-primary-profile"
+                name="Profile">
                 This is the content of the second tab
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               </tab>
@@ -132,8 +132,8 @@
                 </p>
               </tab>
               <tab
-                name="Setting"
-                id="basic-primary-setting">
+                id="basic-primary-setting"
+                name="Setting">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -147,16 +147,16 @@
             <h5 class="section-semi-title">VERTICAL</h5>
             <tabs>
               <tab
-                name="Home"
-                id="basic-vertical-home">
+                id="basic-vertical-home"
+                name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
               <tab
-                name="Profile"
-                id="basic-vertical-profile">
+                id="basic-vertical-profile"
+                name="Profile">
                 This is the content of the second tab
                 <p>
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.

@@ -5,8 +5,8 @@
         href="#"
         class="brand-main">
         <img
-          src="/assets/img/logo-desk.png"
           id="logo-desk"
+          src="/assets/img/logo-desk.png"
           alt="Laraspace Logo"
           class="hidden-sm-down">
       </a>

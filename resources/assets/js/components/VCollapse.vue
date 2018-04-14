@@ -2,19 +2,22 @@
   <div :class="['collapse-group', {active: isCollapse} ]">
     <div
       class="collapse-group-title"
-      @click="showCollapse">
-      <slot name="title" />
+      @click="showCollapse"
+    >
+      <slot name="title"/>
     </div>
     <transition
       :duration="{ enter: 0 }"
       name="slide"
       @after-enter="afterEnter"
-      @after-leave="afterLeave">
+      @after-leave="afterLeave"
+    >
       <div
-        class="collapse-group-items"
         v-show="isCollapse"
         ref="collapseItems"
-        :style="'max-height:' + height + 'px'">
+        :style="'max-height:' + height + 'px'"
+        class="collapse-group-items"
+      >
         <slot/>
       </div>
     </transition>
@@ -54,8 +57,8 @@ export default {
     },
     showCollapse () {
       let self = this
-      if (this.isCollapse == false) {
-        this.$parent.$children.filter((value) => {
+      if (this.isCollapse === false) {
+        this.$parent.$children.filter((value) =>  {
           if (value !== self) {
             if (value.isCollapse === true) {
               value.isCollapse = false

@@ -5,41 +5,39 @@
   >
     <div :class="{'form-group' : true }">
       <input
-        v-validate="'required|email'"
-        :class="{'is-invalid': errors.has('email') }"
-        type="email"
-        class="form-control"
+        v-validate
         v-model="loginData.email"
+        type="email"
+        class="form-control form-control-danger"
         placeholder="Enter email"
-        name="email">
-          <div
-            v-show="errors.has('email')"
-            class="invalid-feedback">{{ errors.first('email') }}
-          </div>
+        name="email"
+        data-vv-rules="required|email"
+      >
     </div>
     <div :class="{'form-group' : true , 'is-invalid': errors.has('password') }">
       <input
-        type="password"
+        v-validate
+        v-model="loginData.password"
         :class="{'is-invalid': errors.has('password') }"
+        type="password"
         class="form-control"
         placeholder="Enter Password"
         name="password"
-        v-validate="'required|min:6'"
-        v-model="loginData.password"
+        data-vv-rules="required"
       >
-        <div
-          v-show="errors.has('password')"
-          class="invalid-feedback">{{ errors.first('password') }}
-        </div>
+      <div
+        v-show="errors.has('password')"
+        class="invalid-feedback">{{ errors.first('password') }}
+      </div>
     </div>
     <div class="other-actions row">
       <div class="col-sm-6">
         <div class="checkbox">
           <label class="c-input c-checkbox">
             <input
+              v-model="loginData.remember"
               type="checkbox"
               name="remember"
-              v-model="loginData.remember"
             >
             <span class="c-indicator" />
             Remember Me

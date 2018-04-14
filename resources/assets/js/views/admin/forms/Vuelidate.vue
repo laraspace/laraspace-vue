@@ -24,31 +24,37 @@
         <div class="form-group">
           <label>Name</label>
           <input
-            class="form-control"
             :class="{ 'is-invalid': $v.name.$error }"
             v-model.trim="name"
+            class="form-control"
             @input="$v.name.$touch()">
           <div v-if="$v.name.$error">
             <span
-              class="help-block help-block-error"
-              v-if="!$v.name.required">Field is required</span>
+              v-if="!$v.name.required"
+              class="help-block help-block-error">
+              Field is required
+            </span>
             <span
-              class="help-block help-block-error"
-              v-if="!$v.name.minLength">Name must have at least { {$v.name.$params.minLength.min} } letters.</span>
+              v-if="!$v.name.minLength"
+              class="help-block help-block-error">
+              Name must have at least { {$v.name.$params.minLength.min} } letters.
+            </span>
           </div>
         </div>
         <pre class="pre-format">name: {{ $v.name }}</pre>
         <div class="form-group">
           <label>Age</label>
           <input
-            class="form-control"
             :class="{ 'is-invalid': $v.age.$error }"
             v-model.trim="age"
+            class="form-control"
             @blur="$v.age.$touch()">
           <div v-if="$v.age.$error">
             <span
-              class="help-block help-block-error"
-              v-if="!$v.age.between">Must be between { {$v.age.$params.between.min} } and { {$v.age.$params.between.max} }</span>
+              v-if="!$v.age.between"
+              class="help-block help-block-error">
+              Must be between { {$v.age.$params.between.min} } and { {$v.age.$params.between.max} }
+            </span>
           </div>
         </div>
         <pre class="pre-format">age: {{ $v.age }}</pre>
@@ -67,31 +73,36 @@
         <div class="form-group">
           <label>Password</label>
           <input
-            class="form-control"
             :class="{ 'is-invalid': $v.password.$error }"
             v-model.trim="password"
+            class="form-control"
             @input="$v.password.$touch()">
           <div v-if="$v.password.$error">
             <span
-              class="help-block help-block-error"
-              v-if="!$v.password.required">Password is required.</span>
+              v-if="!$v.password.required"
+              class="help-block help-block-error">
+              Password is required.
+            </span>
             <span
-              class="help-block help-block-error"
-              v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min
-            }} letters.</span>
+              v-if="!$v.password.minLength"
+              class="help-block help-block-error">
+              Password must have at least {{ $v.password.$params.minLength.min }} letters.
+            </span>
           </div>
         </div>
         <div class="form-group">
           <label>Repeat password</label>
           <input
-            class="form-control"
             :class="{ 'is-invalid': $v.repeatPassword.$error }"
             v-model.trim="repeatPassword"
+            class="form-control"
             @input="$v.repeatPassword.$touch()">
           <div v-if="$v.repeatPassword.$error">
             <span
-              class="help-block help-block-error"
-              v-if="!$v.repeatPassword.sameAsPassword">Passwords must be identical.</span>
+              v-if="!$v.repeatPassword.sameAsPassword"
+              class="help-block help-block-error">
+              Passwords must be identical.
+            </span>
           </div>
         </div>
         <pre class="pre-format">password: {{ $v.password }}repeatPassword: {{ $v.repeatPassword }}</pre>
@@ -110,17 +121,21 @@
         <div class="form-group">
           <label>Email</label>
           <input
-            class="form-control"
             :class="{ 'is-invalid': $v.email.$error, 'form-group--loading': $v.email.$pending }"
             v-model.trim.lazy="email"
+            class="form-control"
             @change="$v.email.$touch()">
           <div v-if="$v.email.$error">
             <span
-              class="help-block help-block-error"
-              v-if="!$v.email.required">Email is required.</span>
+              v-if="!$v.email.required"
+              class="help-block help-block-error">
+              Email is required.
+            </span>
             <span
-              class="help-block help-block-error"
-              v-if="!$v.email.isUnique">This email is already registered.</span>
+              v-if="!$v.email.isUnique"
+              class="help-block help-block-error">
+              This email is already registered.
+            </span>
           </div>
         </div>
         <p>
@@ -134,7 +149,6 @@
 <script type="text/babel">
 import { validationMixin } from 'vuelidate'
 import { required, sameAs, minLength, between } from 'vuelidate/lib/validators'
-const touchMap = new WeakMap()
 export default {
   mixins: [validationMixin],
   data () {

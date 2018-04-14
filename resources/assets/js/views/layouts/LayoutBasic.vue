@@ -1,13 +1,13 @@
 <template>
   <div class="template-container">
-    <site-header></site-header>
-    <site-sidebar type="basic"></site-sidebar>
+    <site-header/>
+    <site-sidebar type="basic"/>
     <transition
       name="fade"
       mode="out-in">
-      <router-view></router-view>
+      <router-view/>
     </transition>
-    <site-footer></site-footer>
+    <site-footer/>
   </div>
 </template>
 <script type="text/babel">

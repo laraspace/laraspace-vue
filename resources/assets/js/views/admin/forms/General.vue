@@ -23,9 +23,9 @@
                   class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                   <input
+                    id="inputEmail1"
                     type="email"
                     class="form-control"
-                    id="inputEmail1"
                     placeholder="Email">
                 </div>
               </div>
@@ -35,9 +35,9 @@
                   class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
                   <input
+                    id="inputPassword1"
                     type="password"
                     class="form-control"
-                    id="inputPassword1"
                     placeholder="Password">
                 </div>
               </div>
@@ -47,16 +47,16 @@
               <div class="form-group">
                 <label for="exampleFormControlInput1">Email address</label>
                 <input
+                  id="exampleFormControlInput1"
                   type="email"
                   class="form-control"
-                  id="exampleFormControlInput1"
                   placeholder="name@example.com">
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Example select</label>
                 <select
-                  class="form-control"
-                  id="exampleFormControlSelect1">
+                  id="exampleFormControlSelect1"
+                  class="form-control">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -67,9 +67,9 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect2">Example multiple select</label>
                 <select
+                  id="exampleFormControlSelect2"
                   multiple
-                  class="form-control"
-                  id="exampleFormControlSelect2">
+                  class="form-control">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -80,16 +80,16 @@
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Example textarea</label>
                 <textarea
-                  class="form-control"
                   id="exampleFormControlTextarea1"
+                  class="form-control"
                   rows="3"/>
               </div>
               <div class="form-group">
                 <label for="exampleFormControlFile1">Example file input</label>
                 <input
+                  id="exampleFormControlFile1"
                   type="file"
-                  class="form-control-file"
-                  id="exampleFormControlFile1">
+                  class="form-control-file">
                 <small class="text-muted">This is some placeholder block-level help text for the above
                 input. It's a bit lighter and easily wraps to a new line.
                 </small>
@@ -105,9 +105,9 @@
               <div class="form-group">
                 <label for="firstName">First name</label>
                 <input
+                  id="firstName"
                   type="text"
                   class="form-control is-valid"
-                  id="firstName"
                   placeholder="First name"
                   value="Mark"
                   required>
@@ -115,9 +115,9 @@
               <div class="form-group">
                 <label for="lastName">Last name</label>
                 <input
+                  id="lastName"
                   type="text"
                   class="form-control is-valid"
-                  id="lastName"
                   required>
                 <div class="invalid-feedback">
                   Please provide a last name.
@@ -130,39 +130,42 @@
             <form class="was-validated">
               <div class="custom-control custom-checkbox mb-3">
                 <input
+                  id="customControlValidation1"
                   type="checkbox"
                   class="custom-control-input"
-                  id="customControlValidation1"
                   required>
                 <label
                   class="custom-control-label"
-                  for="customControlValidation1">Check this custom
-                checkbox</label>
+                  for="customControlValidation1">
+                  Check this customcheckbox
+                </label>
                 <div class="invalid-feedback">Example invalid feedback text</div>
               </div>
               <div class="custom-control custom-radio">
                 <input
+                  id="customControlValidation2"
                   type="radio"
                   class="custom-control-input"
-                  id="customControlValidation2"
                   name="radio-stacked"
                   required>
                 <label
                   class="custom-control-label"
-                  for="customControlValidation2">Toggle this custom
-                radio</label>
+                  for="customControlValidation2">
+                  Toggle this customradio
+                </label>
               </div>
               <div class="custom-control custom-radio mb-3">
                 <input
+                  id="customControlValidation3"
                   type="radio"
                   class="custom-control-input"
-                  id="customControlValidation3"
                   name="radio-stacked"
                   required>
                 <label
                   class="custom-control-label"
-                  for="customControlValidation3">Or toggle this other
-                custom radio</label>
+                  for="customControlValidation3">
+                  Or toggle this other custom radio
+                </label>
                 <div class="invalid-feedback">More example invalid feedback text</div>
               </div>
               <div class="form-group">
@@ -178,9 +181,9 @@
               </div>
               <div class="custom-file">
                 <input
+                  id="validatedCustomFile"
                   type="file"
                   class="custom-file-input"
-                  id="validatedCustomFile"
                   required>
                 <label
                   class="custom-file-label"
@@ -228,9 +231,9 @@
                       class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                       <input
+                        id="inputEmail2"
                         type="email"
                         class="form-control"
-                        id="inputEmail2"
                         placeholder="Email">
                     </div>
                   </div>
@@ -240,9 +243,9 @@
                       class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
                       <input
+                        id="inputPassword2"
                         type="password"
                         class="form-control"
-                        id="inputPassword2"
                         placeholder="Password">
                     </div>
                   </div>
@@ -253,9 +256,9 @@
                 <form>
                   <div class="form-check form-check-inline">
                     <input
+                      id="inlineCheckbox1"
                       class="form-check-input"
                       type="checkbox"
-                      id="inlineCheckbox1"
                       value="option1">
                     <label
                       class="form-check-label"
@@ -263,9 +266,9 @@
                   </div>
                   <div class="form-check form-check-inline">
                     <input
+                      id="inlineCheckbox2"
                       class="form-check-input"
                       type="checkbox"
-                      id="inlineCheckbox2"
                       value="option2">
                     <label
                       class="form-check-label"
@@ -273,9 +276,9 @@
                   </div>
                   <div class="form-check form-check-inline">
                     <input
+                      id="inlineCheckbox3"
                       class="form-check-input"
                       type="checkbox"
-                      id="inlineCheckbox3"
                       value="option3"
                       disabled>
                     <label
@@ -293,10 +296,10 @@
                 <form>
                   <div class="form-check">
                     <input
+                      id="exampleRadios1"
                       class="form-check-input"
                       type="radio"
                       name="exampleRadios"
-                      id="exampleRadios1"
                       value="option1"
                       checked>
                     <label
@@ -307,10 +310,10 @@
                   </div>
                   <div class="form-check">
                     <input
+                      id="exampleRadios2"
                       class="form-check-input"
                       type="radio"
                       name="exampleRadios"
-                      id="exampleRadios2"
                       value="option2">
                     <label
                       class="form-check-label"
@@ -320,10 +323,10 @@
                   </div>
                   <div class="form-check disabled">
                     <input
+                      id="exampleRadios3"
                       class="form-check-input"
                       type="radio"
                       name="exampleRadios"
-                      id="exampleRadios3"
                       value="option3"
                       disabled>
                     <label
@@ -339,10 +342,10 @@
                 <form>
                   <div class="form-check form-check-inline">
                     <input
+                      id="inlineRadio1"
                       class="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      id="inlineRadio1"
                       value="option1">
                     <label
                       class="form-check-label"
@@ -350,10 +353,10 @@
                   </div>
                   <div class="form-check form-check-inline">
                     <input
+                      id="inlineRadio2"
                       class="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      id="inlineRadio2"
                       value="option2">
                     <label
                       class="form-check-label"
@@ -361,10 +364,10 @@
                   </div>
                   <div class="form-check form-check-inline">
                     <input
+                      id="inlineRadio3"
                       class="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      id="inlineRadio3"
                       value="option3"
                       disabled>
                     <label

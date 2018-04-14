@@ -36,9 +36,9 @@
         label="Birthday"
         data-type="date:DD/MM/YYYY"/>
       <table-column
-        label=""
         :sortable="false"
-        :filterable="false">
+        :filterable="false"
+        label="">
         <template slot-scope="row">
           <a :href="`#${row.firstName}`">Edit</a>
         </template>
