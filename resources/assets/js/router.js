@@ -25,7 +25,7 @@ import LayoutFront from './views/layouts/LayoutFront.vue'
 // Basic UI
 import Buttons from './views/admin/basic-ui/Buttons.vue'
 import Cards from './views/admin/basic-ui/Cards.vue'
-import Tabs from './views/admin/basic-ui/Tabs.vue'
+import VueTabs from './views/admin/basic-ui/VueTabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
 import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
@@ -34,7 +34,6 @@ import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import VueTable from './views/admin/components/VueTables.vue'
-// import VueTabs from './views/admin/components/VueTabs.vue'
 import VueDropzone from './views/admin/components/VueDropzone.vue'
 import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
@@ -185,8 +184,8 @@ const routes = [
         component: Cards
       },
       {
-        path: 'basic-ui/tabs',
-        component: Tabs
+        path: 'basic-ui/vue-tabs',
+        component: VueTabs
       },
       {
         path: 'basic-ui/typography',
@@ -223,10 +222,6 @@ const routes = [
         path: 'components/vue-tables',
         component: VueTable
       },
-      // {
-      //   path: 'components/vue-tabs',
-      //   component: VueTabs
-      // },
       {
         path: 'components/vue-carousel',
         component: VueCarousel
