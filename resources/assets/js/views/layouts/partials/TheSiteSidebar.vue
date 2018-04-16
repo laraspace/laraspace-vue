@@ -85,7 +85,7 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/basic-ui/tabs">
+              to="/admin/basic-ui/vue-tabs">
               Tabs &amp; Accordians
             </router-link>
           </v-collapse-item>
@@ -140,6 +140,7 @@
               Sweet Modals
             </router-link>
           </v-collapse-item>
+        
           <v-collapse-item>
             <router-link
               slot="item-title"
