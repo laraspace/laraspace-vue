@@ -7,7 +7,7 @@
 </template>
 
 <script>
-window.Chart = require('chart.js')
+import Chart from 'chart.js'
 
 export default {
   props: {
@@ -52,11 +52,15 @@ export default {
       ]
     }
 
-    let myPieChart = new Chart(context, {
+    this.pieChart = new Chart(context, {
       type: 'pie',
       data: data,
       options: options
     })
+  },
+
+  beforeDestroy () {
+    this.pieChart.destroy()
   }
 }
 </script>

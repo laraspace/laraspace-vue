@@ -2,12 +2,13 @@
   <div class="graph-container">
     <canvas
       id="graph"
-      ref="graph" />
+      ref="graph"
+    />
   </div>
 </template>
 
 <script>
-window.Chart = require('chart.js')
+import Chart from 'chart.js'
 
 export default {
   props: {
@@ -32,6 +33,7 @@ export default {
         display: false
       }
     }
+
     let data = {
       labels: this.labels,
       datasets: [
@@ -46,11 +48,16 @@ export default {
         }
       ]
     }
-    let myBarChart = new Chart(context, {
+
+    this.myBarChart = new Chart(context, {
       type: 'bar',
       data: data,
       options: options
     })
+  },
+
+  beforeDestroy () {
+    this.myBarChart.destroy()
   }
 }
 </script>

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-window.Chart = require('chart.js')
+import Chart from 'chart.js'
 
 export default {
   props: {
@@ -22,6 +22,7 @@ export default {
       default: Array
     }
   },
+
   mounted () {
     let context = this.$refs.graph.getContext('2d')
     let options = {
@@ -58,11 +59,15 @@ export default {
       ]
     }
 
-    let myLineChart = new Chart(context, {
+    this.myLineChart = new Chart(context, {
       type: 'line',
       data: data,
       options: options
     })
+  },
+
+  beforeDestroy () {
+    this.myLineChart.destroy()
   }
 }
 </script>

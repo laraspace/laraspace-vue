@@ -7,7 +7,7 @@
 </template>
 
 <script>
-window.Chart = require('chart.js')
+import Chart from 'chart.js'
 
 export default {
   props: {
@@ -51,11 +51,15 @@ export default {
       ]
     }
 
-    let myDoughnutChart = new Chart(context, {
+    this.myDoughnutChart = new Chart(context, {
       type: 'doughnut',
       data: data,
       options: options
     })
+  },
+
+  beforeDestroy () {
+    this.myDoughnutChart.destroy()
   }
 }
 </script>

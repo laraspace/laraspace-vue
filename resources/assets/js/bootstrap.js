@@ -1,11 +1,9 @@
 import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate'
-import Axios from 'axios'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 
 window._ = require('lodash')
-
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -65,6 +63,7 @@ window.toastr = require('toastr')
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // })
+
 Vue.use(VueRouter)
 Vue.use(VeeValidate)
 Vue.use(VuePrism)

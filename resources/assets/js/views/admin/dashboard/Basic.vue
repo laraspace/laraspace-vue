@@ -165,9 +165,12 @@
 import LineGraph from '../../../components/LineChart.vue'
 import BarGraph from '../../../components/BarChart.vue'
 import PieGraph from '../../../components/PieChart.vue'
+
 export default {
   components: {
-    LineGraph, BarGraph, PieGraph
+    LineGraph,
+    BarGraph,
+    PieGraph
   },
   data () {
     return {

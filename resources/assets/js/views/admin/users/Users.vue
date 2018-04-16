@@ -87,7 +87,7 @@ export default {
           vm.users = response.data
         })
         .then(() => {
-          Plugin.initPlugins(['DataTables'])
+          // Plugin.initPlugins(['DataTables'])
         }).catch(function (error) {
           if (error) {
             window.toastr['error']('There was an error', 'Error')

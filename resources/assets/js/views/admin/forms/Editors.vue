@@ -58,7 +58,7 @@ window.SimpleMDE = require('simplemde/src/js/simplemde')
 
 export default {
   mounted () {
-    Plugin.initPlugins(['Editors'])
+    // Plugin.initPlugins(['Editors'])
   }
 }
 </script>

@@ -549,7 +549,7 @@ export default {
     }
   },
   mounted () {
-    Plugin.initPlugins(['Select2', 'TimePickers', 'DatePicker', 'MultiSelect', 'BootstrapSelect', 'SwitchToggles'])
+    // Plugin.initPlugins(['Select2', 'TimePickers', 'DatePicker', 'MultiSelect', 'BootstrapSelect', 'SwitchToggles'])
   }
 }
 </script>
