@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Laraspace - Laravel Admin</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500,400,300,700' rel='stylesheet' type='text/css'>
     <script src="/assets/js/core/pace.js"></script>
     <link href="{{mix("/assets/css/laraspace.css")}}" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
