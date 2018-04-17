@@ -351,12 +351,12 @@ const routes = [
     component: LayoutLogin,
     children: [
       {
-        path: 'login-1',
+        path: 'login',
         component: Login,
         name: 'login 1'
       },
       {
-        path: 'register-1',
+        path: 'register',
         component: Register,
         name: 'register-1'
       }
