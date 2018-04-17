@@ -2,6 +2,7 @@ import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
+import VTooltip from 'v-tooltip'
 
 window._ = require('lodash')
 
@@ -13,6 +14,9 @@ window._ = require('lodash')
 
 window.Vue = require('vue')
 
+// Vue.directive('tooltip', VTooltip)
+// Vue.directive('close-popover', VClosePopover)
+// Vue.component('v-popover', VPopover)
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -67,3 +71,4 @@ window.toastr = require('toastr')
 Vue.use(VueRouter)
 Vue.use(VeeValidate)
 Vue.use(VuePrism)
+Vue.use(VTooltip)

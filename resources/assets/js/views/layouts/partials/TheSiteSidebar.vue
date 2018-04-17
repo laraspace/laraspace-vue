@@ -158,6 +158,13 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
+              to="/admin/components/tooltips">
+              Vue Tooltips
+            </router-link>
+          </v-collapse-item>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
               to="/admin/components/vue-carousel">
               VueCarousel
             </router-link>
