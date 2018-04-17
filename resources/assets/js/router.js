@@ -52,6 +52,7 @@ import Meteo from './views/admin/icons/Meteo.vue'
 
 // Forms
 import General from './views/admin/forms/General.vue'
+import Advanced from './views/admin/forms/Advanced.vue'
 import Layouts from './views/admin/forms/FormLayouts.vue'
 import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
@@ -273,6 +274,10 @@ const routes = [
       {
         path: 'forms/general',
         component: General
+      },
+      {
+        path: 'forms/advanced',
+        component: Advanced
       },
       {
         path: 'forms/layouts',
