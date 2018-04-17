@@ -1,40 +1,43 @@
 <template>
   <div>
     <div class="row gauges-row">
-        <div class="col">
+      <div class="col">
         <div class="gauge gauge-lg">
-            <canvas
+          <canvas
+            id="donut"
             class="donut-gauge"
             height="250"
             width="500"
-            id="donut"/>
-            <div class="gauge-label middle-label"/>
+          />
+          <div class="gauge-label middle-label"/>
         </div>
-        </div>
-        <div class="col">
+      </div>
+      <div class="col">
         <div class="gauge gauge-md">
-            <canvas
+          <canvas
             class="donut-gauge"
             height="180"
-            width="360"/>
-            <div class="gauge-label middle-label"/>
+            width="360"
+          />
+          <div class="gauge-label middle-label"/>
         </div>
-        </div>
-        <div class="col">
+      </div>
+      <div class="col">
         <div class="gauge gauge-sm">
-            <canvas
+          <canvas
             class="donut-gauge"
             height="120"
-            width="240"/>
-            <div class="gauge-label middle-label"/>
+            width="240"
+          />
+          <div class="gauge-label middle-label"/>
         </div>
-        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Gauge, Donut } from 'gaugeJS'
+import { Donut } from 'gaugeJS'
 
 export default {
   mounted  () {
@@ -64,21 +67,18 @@ export default {
         generateGradient: true,
         highDpiSupport: true // High resolution support
       }
-      jquery('.donut-gauge').each(function () {
+      let elements = document.getElementsByClassName('donut-gauge')
+      for (let el of elements) {
         if (OptsDonuts !== false) {
-          // $('.gauge-lg .donut-gauge').attr({'width': '500', 'height': '250'})
-          // $('.gauge-lg .donut-gauge').attr({'width': '500', 'height': '250'})
-          // $('.gauge-md .donut-gauge').attr({'width': '360', 'height': '180'})
-          // $('.gauge-sm .donut-gauge').attr({'width': '240', 'height': '120'})
-          var donut = new Donut(this).setOptions(OptsDonuts)
+          var donut = new Donut(el).setOptions(OptsDonuts)
           donut.maxValue = 3000 // set max gauge value
           donut.setMinValue(0) // set min value
           donut.animationSpeed = 32 // set animation speed (32 is default value)
           donut.set(1250) // set actual value
-          donut.setTextField(this.nextElementSibling)
+          donut.setTextField(el.nextElementSibling)
         }
-      })
-    },
+      }
+    }
   }
 }
 </script>
