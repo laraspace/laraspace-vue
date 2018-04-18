@@ -36,6 +36,7 @@ class TodosController extends Controller
             'todo' => $todo
         ],200);
     }
+
     /**
      * Toggle the Todo
      *
@@ -52,6 +53,7 @@ class TodosController extends Controller
             'message' => 'Todo Marked as Complete',
         ],200);
     }
+
     /**
      * Delete Todo
      *

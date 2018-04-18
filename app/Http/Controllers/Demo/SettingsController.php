@@ -20,6 +20,7 @@ class SettingsController extends Controller
     {
         return view('admin.settings.index');
     }
+
     /**
      *
      * @param Requests\SettingsRequest|Requests\SocialSettingsRequest $request
