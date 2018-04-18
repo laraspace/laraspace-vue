@@ -184,10 +184,6 @@ const routes = [
         component: Cards
       },
       {
-        path: 'basic-ui/vue-tabs',
-        component: VueTabs
-      },
-      {
         path: 'basic-ui/typography',
         component: Typography
       },
@@ -202,6 +198,10 @@ const routes = [
       },
 
       // Components
+      {
+        path: 'components/vue-tabs',
+        component: VueTabs
+      },
       {
         path: 'components/notifications',
         component: Notifications
