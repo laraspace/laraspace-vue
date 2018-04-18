@@ -4,6 +4,12 @@ import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
 
+/**
+ * Global css plugins
+ */
+import 'vue-tabs-component/docs/resources/tabs-component.css'
+
+
 window._ = require('lodash')
 
 /**
@@ -54,6 +60,7 @@ window.axios.interceptors.request.use(function (config) {
  */
 window.notie = require('notie')
 window.toastr = require('toastr')
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

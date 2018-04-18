@@ -417,75 +417,60 @@
               </div>
             </div>
             <!-- Create-mail Modal  -->
+            <!-- <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="$refs.modal.open()">
+                  Regular Alert
+                </button> -->
             <button
               class="create-mail btn btn-info rounded-circle"
-              data-toggle="modal"
-              data-target=".ls-example-modal-lg">
+              @click="$refs.modal.open()"
+            >
               <i class="icon-fa icon-fa-pencil"/>
             </button>
-            <div
-              class="modal fade ls-example-modal-lg"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="myLargeModalLabel"
-              aria-hidden="true">
-              <div
-                class="modal-dialog modal-lg"
-                role="document">
-                <div class="modal-content">
-                  <form>
-                    <div class="modal-header">
-                      <h5
-                        id="exampleModalLabel"
-                        class="modal-title">Create Mail</h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+            <sweet-modal ref="modal">
+              <form>
+                    <div class="form-group row">
+                      <label
+                        for="inputEmailTo"
+                        class="col-sm-2 col-form-label">Email To</label>
+                      <div class="col-sm-10"><input
+                        id="inputEmailTo"
+                        type="email"
+                        class="form-control"></div>
                     </div>
-                    <div class="modal-body">
-                      <form>
-                        <div class="form-group row">
-                          <label
-                            for="inputEmailTo"
-                            class="col-sm-2 col-form-label">Email To</label>
-                          <div class="col-sm-10"><input
-                            id="inputEmailTo"
-                            type="email"
-                            class="form-control"></div>
-                        </div>
-                        <div class="form-group row">
-                          <label
-                            for="inputSubject"
-                            class="col-sm-2 col-form-label">Subject</label>
-                          <div class="col-sm-10"><input
-                            id="inputSubject"
-                            type="text"
-                            class="form-control"></div>
-                        </div>
-                      </form>
-                      <br><br>
+                    <div class="form-group row">
+                      <label
+                        for="inputSubject"
+                        class="col-sm-2 col-form-label">Subject</label>
+                      <div class="col-sm-10"><input
+                        id="inputSubject"
+                        type="text"
+                        class="form-control"></div>
+                    </div>
+                  <br><br>
+                  <div class="form-group row">
+                    <label
+                        for="inputSubject"
+                        class="col-sm-2 col-form-label">Message</label>
+                    <div class="col-sm-10">
                       <textarea
-                        class="ls-summernote"
-                        rows="10"
-                        style="min-height:150px;" />
+                      class="form-control"  
+                        />
                     </div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal">Cancle</button>
-                      <button
-                        type="sumbit"
-                        class="btn btn-primary">Send</button>
-                    </div>
-                  </form>
+                  </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal">Cancle</button>
+                  <button
+                    type="sumbit"
+                    class="btn btn-primary">Send</button>
                 </div>
-              </div>
-            </div>
+              </form>
+            </sweet-modal>
           </div>
         </div>
       </div>
@@ -493,8 +478,12 @@
   </div>
 </template>
 <script>
+import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 
 export default {
+  components: {
+    SweetModal
+    },
   data () {
     return {
       isOpen: false,

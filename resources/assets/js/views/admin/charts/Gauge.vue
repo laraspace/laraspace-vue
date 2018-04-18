@@ -48,14 +48,13 @@
 </template>
 
 <script>
-import BasicGauge from '../../../components/Gauges/BasicGauge.vue'
-import ColorGauge from '../../../components/Gauges/ColorGauge.vue'
-import DonutGauge from '../../../components/Gauges/DonutGauge.vue'
-
+import BasicGauge from '../../../components/gauges/BasicGauge.vue'
+import ColorGauge from '../../../components/gauges/ColorGauge.vue'
+import DonutGauge from '../../../components/gauges/DonutGauge.vue'
 
 export default {
- components:{
-   BasicGauge , ColorGauge , DonutGauge
- }
+  components: {
+    BasicGauge, ColorGauge, DonutGauge
+  }
 }
 </script>

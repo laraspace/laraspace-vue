@@ -19,11 +19,13 @@
 
 // Icons
 //----------------------------------
+
 @import "../plugins/icons/icons.scss";
 
 
 // Skins
 //----------------------------------
+
 @import 'skins/skin-tyrell';
 @import 'skins/skin-arryn';
 @import 'skins/skin-targaryen';
@@ -63,7 +65,6 @@
 @import 'components/hamburgers';
 @import 'components/transitions';
 @import 'components/charts';
-
 @import "components/editors";
 @import "components/ico-moon";
 @import "components/easy-pie-chart";
@@ -75,6 +76,7 @@
 
 // Pages
 //----------------------------------
+
 @import 'pages/dashboard';
 @import 'pages/login';
 @import "pages/login-1";
