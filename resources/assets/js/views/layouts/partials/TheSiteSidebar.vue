@@ -324,6 +324,56 @@
             </router-link>
           </v-collapse-item>
         </v-collapse>
+        <v-collapse active-url="/admin/pages">
+          <a
+            slot="title"
+            href="#">
+            <i class="icon-fa icon-fa-image"/>Pages
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/login">
+              Login
+            </router-link>
+          </v-collapse-item>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/login-2">
+              Login 2
+            </router-link>
+          </v-collapse-item>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/login-3">
+              Login 3
+            </router-link>
+          </v-collapse-item>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/register">
+              Register
+            </router-link>
+          </v-collapse-item>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/register-2">
+              Register 2
+            </router-link>
+          </v-collapse-item>
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/register-3">
+              Register 3
+            </router-link>
+          </v-collapse-item>
+        </v-collapse>
 
         <v-collapse active-url="/admin/users">
           <a
