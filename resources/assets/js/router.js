@@ -25,7 +25,7 @@ import LayoutFront from './views/layouts/LayoutFront.vue'
 // Basic UI
 import Buttons from './views/admin/basic-ui/Buttons.vue'
 import Cards from './views/admin/basic-ui/Cards.vue'
-import Tabs from './views/admin/basic-ui/Tabs.vue'
+import VueTabs from './views/admin/basic-ui/VueTabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
 import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
@@ -34,16 +34,15 @@ import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import VueTable from './views/admin/components/VueTables.vue'
-// import VueTabs from './views/admin/components/VueTabs.vue'
 import VueDropzone from './views/admin/components/VueDropzone.vue'
 import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
 
 // Charts
 import Chartjs from './views/admin/charts/Chartjs.vue'
+import Gauges from './views/admin/charts/Gauge.vue'
 
 // Icons
-// import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
 import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
@@ -186,10 +185,6 @@ const routes = [
         component: Cards
       },
       {
-        path: 'basic-ui/tabs',
-        component: Tabs
-      },
-      {
         path: 'basic-ui/typography',
         component: Typography
       },
@@ -204,6 +199,10 @@ const routes = [
       },
 
       // Components
+      {
+        path: 'components/vue-tabs',
+        component: VueTabs
+      },
       {
         path: 'components/notifications',
         component: Notifications
@@ -224,10 +223,6 @@ const routes = [
         path: 'components/vue-tables',
         component: VueTable
       },
-      // {
-      //   path: 'components/vue-tabs',
-      //   component: VueTabs
-      // },
       {
         path: 'components/vue-carousel',
         component: VueCarousel
@@ -243,12 +238,12 @@ const routes = [
         path: 'charts/chartjs',
         component: Chartjs
       },
+      {
+        path: 'charts/gauges',
+        component: Gauges
+      },
 
       //  Icons
-      // {
-      //   path: 'icons/evil',
-      //   component: Evil
-      // },
       {
         path: 'icons/fontawesome',
         component: Fontawesome
@@ -350,18 +345,19 @@ const routes = [
       }
     ]
   },
+
   // Demo Pages
   {
     path: '/admin/pages',
     component: LayoutLogin,
     children: [
       {
-        path: 'login-1',
+        path: 'login',
         component: Login,
         name: 'login 1'
       },
       {
-        path: 'register-1',
+        path: 'register',
         component: Register,
         name: 'register-1'
       }
@@ -393,12 +389,13 @@ const routes = [
         name: 'login 3'
       },
       {
-        path: 'register-3',
+        path: 'register-3', 
         component: Register,
         name: 'register 3'
       }
     ]
   },
+
   //  DEFAULT ROUTE
   { path: '*', component: NotFoundPage }
 ]

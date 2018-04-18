@@ -67,8 +67,8 @@
               v-model="phone"
               :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
-              :keepCharPositions="true"
-              :show-Mask="true"
+              :keep-char-positions="true"
+              :show-mask="true"
               type="text"
               name="phone"
               class="form-control"/>
@@ -79,8 +79,8 @@
               v-model="date"
               :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
-              :keepCharPositions="true"
-              :showMask="true"
+              :keep-char-positions="true"
+              :show-mask="true"
               type="text"
               name="date"
               class="form-control"/>
@@ -92,8 +92,8 @@
               :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
               :guide="true"
               :pipe="auto"
-              :keepCharPositions="true"
-              :showMask="true"
+              :keep-char-positions="true"
+              :show-mask="true"
               type="text"
               name="dateAuto"
               class="form-control"/>
@@ -170,7 +170,6 @@ let defaultProps = {
 }
 
 export default {
-  name: 'name',
   components: {
     'masked-input': MaskedInput,
     'multiselect': Multiselect,
@@ -195,7 +194,7 @@ export default {
       GroupValue: '',
       SingleOptions: ['Select option', 'options', 'selected', 'mulitple', 'label', 'searchable', 'clearOnSelect', 'hideSelected', 'maxHeight', 'allowEmpty', 'showLabels', 'onChange', 'touched'],
       MultiOptions: ['list', 'of', 'options'],
-       GroupOptions: [
+      GroupOptions: [
         {
           language: 'Javascript',
           libs: [
@@ -220,9 +219,6 @@ export default {
       ],
       value: []
     }
-  },
-  mounted () {
-    // Plugin.initPlugins(['Select2', 'TimePickers', 'DatePicker', 'MultiSelect', 'BootstrapSelect', 'SwitchToggles'])
   }
 }
 </script>

@@ -3,12 +3,14 @@
     <div class="sidebar-body scroll-pane">
       <div class="side-nav vue-menu">
         <v-collapse active-url="/admin/dashboard">
+
           <a
             slot="title"
             href="#">
             <i class="icon-fa icon-fa-dashboard"/>Dashboard
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -16,6 +18,7 @@
               Basic
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -23,6 +26,7 @@
               Ecommerce
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -39,6 +43,7 @@
             <i class="icon-fa icon-fa-th-large"/>Layouts
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -46,6 +51,7 @@
               Sidebar
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -53,6 +59,7 @@
               Horizontal
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -61,6 +68,7 @@
             </router-link>
           </v-collapse-item>
         </v-collapse>
+
         <v-collapse active-url="/admin/basic-ui">
           <a
             slot="title"
@@ -68,6 +76,7 @@
             <i class="icon-fa icon-fa-star"/>Basic UI
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -75,6 +84,7 @@
               Buttons
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -82,13 +92,7 @@
               Cards
             </router-link>
           </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/basic-ui/tabs">
-              Tabs &amp; Accordians
-            </router-link>
-          </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -96,6 +100,7 @@
               Typography
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -103,6 +108,7 @@
               Tables
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -119,6 +125,31 @@
             <i class="icon-fa icon-fa-puzzle-piece"/>Components
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/components/vue-tables">
+              Vue Tables
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/components/vue-tabs">
+              Vue Tabs
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/components/vue-carousel">
+              Vue Carousel
+            </router-link>
+          </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -126,6 +157,7 @@
               MailBox
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -133,6 +165,7 @@
               Notifications
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -140,6 +173,7 @@
               Sweet Modals
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -147,20 +181,7 @@
               VueDropzone
             </router-link>
           </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/components/vue-tables">
-              VueTable
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/components/vue-carousel">
-              VueCarousel
-            </router-link>
-          </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -177,13 +198,7 @@
             <i class="icon-fa icon-fa-bar-chart"/>Charts
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/charts/amchart">
-              AM Charts
-            </router-link>
-          </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -191,25 +206,12 @@
               Chart JS
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/charts/gauge">
+              to="/admin/charts/gauges">
               Gauges
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/charts/morris">
-              Morris
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/charts/sparkline">
-              Sparkline
             </router-link>
           </v-collapse-item>
         </v-collapse>
@@ -221,6 +223,7 @@
             <i class="icon-fa icon-fa-eye"/>Icons
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -228,6 +231,7 @@
               Fpsline
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -235,6 +239,7 @@
               FontAwesome
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -242,6 +247,7 @@
               IcoMoon
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -249,6 +255,7 @@
               Line
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -265,6 +272,7 @@
             <i class="icon-fa icon-fa-rocket"/>Form
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -272,19 +280,23 @@
               General Elements
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
               to="/admin/forms/advanced">
               Advanced Elements
             </router-link>
-          </v-collapse-item><v-collapse-item>
+          </v-collapse-item>
+
+          <v-collapse-item>
             <router-link
               slot="item-title"
               to="/admin/forms/layouts">
               Form Layouts
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -292,6 +304,7 @@
               Form Validation
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -299,6 +312,7 @@
               Form Wizard
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -306,6 +320,7 @@
               Form Wizard 2
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -313,6 +328,7 @@
               Form Wizard 3
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -320,6 +336,7 @@
               Editors
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -336,6 +353,7 @@
             <i class="icon-fa icon-fa-image"/>Gallery
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -343,11 +361,69 @@
               Grid
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
               to="/admin/gallery/masonry-grid">
               Masonry Grid
+            </router-link>
+          </v-collapse-item>
+        </v-collapse>
+
+        <v-collapse active-url="/admin/pages">
+          <a
+            slot="title"
+            href="#">
+            <i class="icon-fa icon-fa-image"/>Pages
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/login">
+              Login
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/login-2">
+              Login 2
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/login-3">
+              Login 3
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/register">
+              Register
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/register-2">
+              Register 2
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/pages/register-3">
+              Register 3
             </router-link>
           </v-collapse-item>
         </v-collapse>
@@ -359,6 +435,7 @@
             <i class="icon-fa icon-fa-user"/>Users
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -366,6 +443,7 @@
               Profile
             </router-link>
           </v-collapse-item>
+
           <v-collapse-item>
             <router-link
               slot="item-title"
@@ -374,6 +452,7 @@
             </router-link>
           </v-collapse-item>
         </v-collapse>
+
         <v-collapse active-url="/admin/todo-item">
           <router-link
             slot="title"
@@ -395,8 +474,8 @@
 </template>
 
 <script type="text/babel">
-import VCollapse from '../../../components/VCollapse'
-import VCollapseItem from '../../../components/VCollapseItem'
+import VCollapse from '../../../components/collapse/VCollapse'
+import VCollapseItem from '../../../components/collapse/VCollapseItem'
 
 export default {
   components: {

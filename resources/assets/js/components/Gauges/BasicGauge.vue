@@ -1,42 +1,34 @@
 <template>
-<div>
-  <div class="row gauges-row">
-    <div class="col">
-      <div class="gauge gauge-lg">
+  <div>
+    <div class="row gauges-row">
+      <div class="col">
+        <div class="gauge gauge-lg">
           <canvas class="basic-gauge"/>
           <div class="gauge-label"/>
-      </div>
+        </div>
       </div>
       <div class="col ">
-      <div class="gauge gauge-md">
+        <div class="gauge gauge-md">
           <canvas class="basic-gauge"/>
           <div class="gauge-label"/>
-      </div>
+        </div>
       </div>
       <div class="col">
-      <div class="gauge gauge-sm">
+        <div class="gauge gauge-sm">
           <canvas class="basic-gauge"/>
           <div class="gauge-label"/>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 <script>
-import { Gauge, Donut } from 'gaugeJS'
+import { Gauge } from 'gaugeJS'
 
 export default {
   mounted  () {
-    let vm = this
-    let GaugesChart = (function () {
-      return {
-        init: function () {
-          vm.handleGauges()
-        }
-      }
-    })()
     this.$nextTick(() => {
-      GaugesChart.init()
+      this.handleGauges()
     })
   },
   methods: {
@@ -53,18 +45,18 @@ export default {
         colorStop: '#ffde00', // just experiment with them
         strokeColor: '#E0E0E0' // to see which ones work best for you
       }
-
-      jquery('.basic-gauge').each(function () {
+      let elements = document.getElementsByClassName('basic-gauge')
+      for (let el of elements) {
         if (OptsBasic !== false) {
-          var gauge = new Gauge(this).setOptions(OptsBasic)
+          var gauge = new Gauge(el).setOptions(OptsBasic)
           gauge.maxValue = 3000 // set max gauge value
           gauge.setMinValue(0) // set min value
           gauge.animationSpeed = 32 // set animation speed (32 is default value)
           gauge.set(1250) // set actual value
-          gauge.setTextField(this.nextElementSibling)
+          gauge.setTextField(el.nextElementSibling)
         }
-      })
-    },
+      }
+    }
   }
 }
 </script>

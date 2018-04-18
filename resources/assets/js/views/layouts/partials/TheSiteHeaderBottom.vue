@@ -442,8 +442,8 @@
 </template>
 
 <script type="text/babel">
-import VDropdown from '../../../components/VDropdown'
-import VDropdownItem from '../../../components/VDropdownItem'
+import VDropdown from '../../../components/dropdown/VDropdown'
+import VDropdownItem from '../../../components/dropdown/VDropdownItem'
 
 export default {
   components: {
