@@ -174,13 +174,6 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/charts/amchart">
-              AM Charts
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
               to="/admin/charts/chartjs">
               Chart JS
             </router-link>
@@ -188,22 +181,8 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/charts/gauge">
+              to="/admin/charts/gauges">
               Gauges
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/charts/morris">
-              Morris
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/charts/sparkline">
-              Sparkline
             </router-link>
           </v-collapse-item>
         </v-collapse>
@@ -389,8 +368,8 @@
 </template>
 
 <script type="text/babel">
-import VCollapse from '../../../components/VCollapse'
-import VCollapseItem from '../../../components/VCollapseItem'
+import VCollapse from '../../../components/collapse/VCollapse'
+import VCollapseItem from '../../../components/collapse/VCollapseItem'
 
 export default {
   components: {

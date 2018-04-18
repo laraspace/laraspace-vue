@@ -40,9 +40,9 @@ import SweetModals from './views/admin/components/SweetModals.vue'
 
 // Charts
 import Chartjs from './views/admin/charts/Chartjs.vue'
+import Gauges from './views/admin/charts/Gauge.vue'
 
 // Icons
-// import Evil from './views/admin/icons/Evil.vue'
 import Fontawesome from './views/admin/icons/Fontawesome.vue'
 import Fpsline from './views/admin/icons/FpsLine.vue'
 import IcoMoon from './views/admin/icons/IcoMoon.vue'
@@ -237,12 +237,12 @@ const routes = [
         path: 'charts/chartjs',
         component: Chartjs
       },
+      {
+        path: 'charts/gauges',
+        component: Gauges
+      },
 
       //  Icons
-      // {
-      //   path: 'icons/evil',
-      //   component: Evil
-      // },
       {
         path: 'icons/fontawesome',
         component: Fontawesome
@@ -340,6 +340,7 @@ const routes = [
       }
     ]
   },
+
   // Demo Pages
   {
     path: '/admin/pages',
