@@ -383,12 +383,13 @@ const routes = [
         name: 'login 3'
       },
       {
-        path: 'register-3',
+        path: 'register-3', 
         component: Register,
         name: 'register 3'
       }
     ]
   },
+
   //  DEFAULT ROUTE
   { path: '*', component: NotFoundPage }
 ]
