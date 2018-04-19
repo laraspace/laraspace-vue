@@ -153,14 +153,6 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/components/mail-box">
-              MailBox
-            </router-link>
-          </v-collapse-item>
-
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
               to="/admin/components/notifications">
               Notifications
             </router-link>
@@ -452,13 +444,29 @@
             </router-link>
           </v-collapse-item>
         </v-collapse>
-
-        <v-collapse active-url="/admin/todo-item">
-          <router-link
+        <v-collapse active-url="/admin/apps">
+          <a
             slot="title"
-            to="/admin/todo-item">
+            href="#">
+            <i class="icon-fa icon-fa-adn"/>Apps
+            <span class="icon-fa arrow icon-fa-fw"/>
+          </a>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/apps/mail-box">
+             <i class="icon-fa icon-fa-envelope-o"/> MailBox
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+          <router-link
+            slot="item-title"
+            to="/admin/apps/todo-item">
             <i class="icon-fa icon-fa-check"/>Todos
           </router-link>
+          </v-collapse-item>
         </v-collapse>
 
         <v-collapse active-url="/admin/settings">

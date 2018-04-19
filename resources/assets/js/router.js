@@ -31,7 +31,6 @@ import Tables from './views/admin/basic-ui/Tables.vue'
 import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 
 // Components
-import MailBox from './views/admin/components/MailBox.vue'
 import Notifications from './views/admin/components/Notifications.vue'
 import VueTable from './views/admin/components/VueTables.vue'
 import VueDropzone from './views/admin/components/VueDropzone.vue'
@@ -61,8 +60,9 @@ import Vuelidate from './views/admin/forms/Vuelidate.vue'
 import Grid from './views/admin/gallery/Grid.vue'
 import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
 
-// Todo-Item
-import TodoItem from './views/admin/TodoItem.vue'
+// Apps
+import TodoItem from './views/admin/apps/TodoItem.vue'
+import MailBox from './views/admin/apps/MailBox.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'
@@ -208,10 +208,6 @@ const routes = [
         component: Notifications
       },
       {
-        path: 'components/mail-box',
-        component: MailBox
-      },
-      {
         path: 'components/vue-dropzone',
         component: VueDropzone
       },
@@ -309,9 +305,13 @@ const routes = [
         component: Users
       },
 
-      // Todos
+      // Apps
       {
-        path: 'todo-item',
+        path: 'apps/mail-box',
+        component: MailBox
+      },
+      {
+        path: 'apps/todo-item',
         component: TodoItem
       },
 
