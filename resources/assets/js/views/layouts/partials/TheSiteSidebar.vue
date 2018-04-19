@@ -130,7 +130,7 @@
             <router-link
               slot="item-title"
               to="/admin/components/vue-tables">
-              Vue Tables
+              Vue DataTables
             </router-link>
           </v-collapse-item>
 
