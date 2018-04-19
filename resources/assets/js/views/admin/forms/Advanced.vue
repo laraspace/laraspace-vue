@@ -109,8 +109,9 @@
           target="_blank">source</a></h6>
       </div>
       <div
+        :style="{ 'background': colors.hex }"
         class="card-body"
-        :style="{ 'background': colors.hex }">
+      >
         <div class="row">
           <div class="col-xl-4 mb-4">
             <p>Photoshop Picker</p>
@@ -146,6 +147,7 @@ import 'vue-multiselect/dist/vue-multiselect.min.css'
 import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 import { Photoshop, Material, Compact, Swatches, Slider, Chrome, Sketch } from 'vue-color'
 const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy HH:MM')
+
 let defaultProps = {
   hex: '#194d33',
   hsl: {
@@ -180,7 +182,7 @@ export default {
     'sketch-picker': Sketch,
     'chrome-picker': Chrome,
     'photoshop-picker': Photoshop
-    
+
   },
   data () {
     return {
@@ -190,7 +192,6 @@ export default {
       dateAuto: '',
       auto: autoCorrectedDatePipe,
       selected: null,
-      value: '',
       GroupValue: '',
       SingleOptions: ['Select option', 'options', 'selected', 'mulitple', 'label', 'searchable', 'clearOnSelect', 'hideSelected', 'maxHeight', 'allowEmpty', 'showLabels', 'onChange', 'touched'],
       MultiOptions: ['list', 'of', 'options'],
