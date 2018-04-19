@@ -9,6 +9,11 @@ import VTooltip from 'v-tooltip'
  */
 import 'vue-tabs-component/docs/resources/tabs-component.css'
 
+/**
+ * Global plugins
+ */
+global.notie = require('notie')
+global.toastr = require('toastr')
 
 window._ = require('lodash')
 
@@ -31,8 +36,6 @@ window.Vue = require('vue')
 
 window.axios = require('axios')
 
-global.$ = global.jQuery = require('jquery')
-
 window.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'
 }
@@ -54,13 +57,6 @@ window.axios.interceptors.request.use(function (config) {
   // Do something with request error
   return Promise.reject(error)
 })
-
-/**
- * Global plugins
- */
-window.notie = require('notie')
-window.toastr = require('toastr')
-
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

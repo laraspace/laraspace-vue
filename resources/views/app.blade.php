@@ -28,7 +28,7 @@
     <meta name="theme-color" content="#333333">
 </head>
 <body class="layout-default skin-default">
-<div id="app" class="template-container">
+<div id="app" class="site-wrapper">
     <div class="mobile-menu-overlay" @click.prevent="onOverlayClick"></div>
     <transition name="fade" mode="out-in">
         <router-view></router-view>

@@ -82,7 +82,7 @@
   </header>
 </template>
 <script type="text/babel">
-import Layout from '../../../helpers/layout'
+// import Layout from '../../../helpers/layout'
 import Auth from '../../../services/auth'
 
 export default {
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     onNavToggle () {
-      Layout.toggleSidebar()
+      // Layout.toggleSidebar()
     },
     logout () {
       Auth.logout().then(() => {
