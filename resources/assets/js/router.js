@@ -36,6 +36,7 @@ import VueTable from './views/admin/components/VueTables.vue'
 import VueDropzone from './views/admin/components/VueDropzone.vue'
 import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
+import VueTooltips from './views/admin/components/VueTooltips.vue'
 
 // Charts
 import Chartjs from './views/admin/charts/Chartjs.vue'
@@ -226,6 +227,10 @@ const routes = [
       {
         path: 'components/vee',
         component: VeeValidate
+      },
+      {
+        path: 'components/tooltips',
+        component: VueTooltips
       },
 
       // chart
