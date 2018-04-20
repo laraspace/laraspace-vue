@@ -3,7 +3,6 @@
     <div class="sidebar-body scroll-pane">
       <div class="side-nav vue-menu">
         <v-collapse active-url="/admin/dashboard">
-
           <a
             slot="title"
             href="#">
@@ -173,7 +172,7 @@
             </router-link>
           </v-collapse-item>
           <v-collapse-item>
-          <router-link
+            <router-link
               slot="item-title"
               to="/admin/components/sweet-modals">
               Sweet Modals
@@ -470,16 +469,16 @@
             <router-link
               slot="item-title"
               to="/admin/apps/mail-box">
-             <i class="icon-fa icon-fa-envelope-o"/> MailBox
+              <i class="icon-fa icon-fa-envelope-o"/> MailBox
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item>
-          <router-link
-            slot="item-title"
-            to="/admin/apps/todo-item">
-            <i class="icon-fa icon-fa-check"/>Todos
-          </router-link>
+            <router-link
+              slot="item-title"
+              to="/admin/apps/todo-item">
+              <i class="icon-fa icon-fa-check"/>Todos
+            </router-link>
           </v-collapse-item>
         </v-collapse>
 

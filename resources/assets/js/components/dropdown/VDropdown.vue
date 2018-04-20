@@ -1,19 +1,22 @@
 <template>
   <div :class="['dropdown-group', {active: toggle} ]">
-    <div 
+    <div
       class="dropdown-group-title"
       @click="showDropdown">
-      <slot name="title"></slot>
+      <slot name="title"/>
     </div>
     <transition
-      name="fade"
-      mode="in-out">
+      :duration="{ enter: 0 }"
+      name="slide"
+      @after-enter="afterEnter"
+      @after-leave="afterLeave"
+    >
       <div
-        class="dropdown-group-items"
         v-show="toggle"
         ref="dropdownItems"
-        :style="'max-height:'+height+'px'">
-        <slot></slot>
+        class="dropdown-group-items"
+      >
+        <slot/>
       </div>
     </transition>
   </div>
@@ -26,22 +29,19 @@ export default {
       type: String,
       require: true,
       default: String
-    },
+    }
   },
   data () {
     return {
       height: '',
       originalHeight: '',
-      toggle: true,
+      toggle: true
     }
   },
   mounted () {
-    this.$nextTick(function(){
-        this.height = this.originalHeight = this.$refs.dropdownItems.clientHeight
-    })
-    console.log(this);
-    if (this.isActive() == true) {
-      this.toggle =  true
+    console.log(this)
+    if (this.isActive() === true) {
+      this.toggle = true
     } else {
       this.toggle = false
     }
@@ -52,16 +52,16 @@ export default {
     },
     showDropdown () {
       let self = this
-      if(this.toggle == false) {
-        this.$parent.$children.filter(function(value) {
-          if(value != self) {
-            if(value.toggle == true) {
+      if (this.toggle === false) {
+        this.$parent.$children.filter(function (value) {
+          if (value !== self) {
+            if (value.toggle === true) {
               value.toggle = false
             }
           }
         })
       }
-      this.toggle = !this.toggle 
+      this.toggle = !this.toggle
     },
     afterEnter () {
       this.height = this.originalHeight
@@ -73,8 +73,28 @@ export default {
 }
 </script>
 <style scoped>
+.dropdown-group.active .dropdown-group-items{
+  display: block;
+}
 .dropdown-group-items {
   overflow: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: .5rem 0;
+  margin: .125rem 0 0;
+  font-size: 1rem;
+  color: #ffff;
+  text-align: left;
+  list-style: none;
+  background-color: #333;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
   transition: max-height .3s ease-in-out;
 }
 .slide-enter-active, .slide-leave-active {

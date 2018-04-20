@@ -58,7 +58,7 @@ export default {
     showCollapse () {
       let self = this
       if (this.isCollapse === false) {
-        this.$parent.$children.filter((value) =>  {
+        this.$parent.$children.filter((value) => {
           if (value !== self) {
             if (value.isCollapse === true) {
               value.isCollapse = false

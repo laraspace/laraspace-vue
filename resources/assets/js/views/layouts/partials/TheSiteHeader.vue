@@ -24,22 +24,24 @@
     </a>
     <ul class="action-list">
       <li>
-        <a
-          href="#"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"><i class="icon-fa icon-fa-plus"/></a>
         <div class="dropdown-menu dropdown-menu-right">
-          <a
-            class="dropdown-item"
-            href="#"><i class="icon-fa icon-fa-edit"/> New Post</a>
-          <a
-            class="dropdown-item"
-            href="#"><i class="icon-fa icon-fa-tag"/> New Category</a>
-          <div class="dropdown-divider"/>
-          <a
-            class="dropdown-item"
-            href="#"><i class="icon-fa icon-fa-star"/> Separated link</a>
+          <v-dropdown>
+            <a
+              href="#"
+              aria-expanded="false"><i class="icon-fa icon-fa-plus"/></a>
+            <v-dropdown-item>
+              <a
+                href="#"><i class="icon-fa icon-fa-edit"/> New Post</a>
+            </v-dropdown-item>
+            <v-dropdown-item>
+              <a
+                href="#"><i class="icon-fa icon-fa-tag"/> New Category</a>
+            </v-dropdown-item>
+            <v-dropdown-item>
+              <a
+                href="#"><i class="icon-fa icon-fa-star"/> Separated link</a>
+            </v-dropdown-item>
+          </v-dropdown>
         </div>
       </li>
       <li>
@@ -82,10 +84,16 @@
   </header>
 </template>
 <script type="text/babel">
-import Layout from '../../../helpers/layout'
+// import Layout from '../../../helpers/layout'
 import Auth from '../../../services/auth'
+import VDropdown from '../../../components/dropdown/VDropdown'
+import VDropdownItem from '../../../components/dropdown/VDropdownItem'
 
 export default {
+  components: {
+    VDropdown,
+    VDropdownItem
+  },
   data () {
     return {
       header: 'header'
@@ -93,7 +101,7 @@ export default {
   },
   methods: {
     onNavToggle () {
-      Layout.toggleSidebar()
+      // Layout.toggleSidebar()
     },
     logout () {
       Auth.logout().then(() => {
