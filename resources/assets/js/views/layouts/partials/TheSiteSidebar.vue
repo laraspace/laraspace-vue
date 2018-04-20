@@ -363,16 +363,16 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/gallery/grid">
-              Grid
+              to="/admin/gallery/image-gallery">
+              Image Gallery
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/gallery/masonry-grid">
-              Masonry Grid
+              to="/admin/gallery/video-gallery">
+              Video Gallery
             </router-link>
           </v-collapse-item>
         </v-collapse>

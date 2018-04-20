@@ -15,6 +15,7 @@
       </div>
       <div class="card-body">
         <gallery
+          
           :images="images"
           :index="imgIndex"
           @close="imgIndex = null"/>
@@ -33,30 +34,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h6>Vimeo Video Gallery</h6>
-      </div>
-      <!-- <div class="card-body">
-        <gallery
-          :images="videos"
-          :index="vidIndex"
-          :options="{youTubeVideoIdProperty: 'youtube', youTubePlayerVars: undefined, youTubeClickToPlay: true}"
-          @close="vidIndex = null"/>
-        <div
-          class="my-gallery youtube-video-gallery">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 ">
-              <div
-                v-for="(video, aindex) in videos"
-                :style="{ backgroundImage: 'url(' + video.poster + ')', width: '300px', height: '200px' }"
-                class="my-gallery youtube-video-gallery"
-                @click="vidIndex = aindex"/>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
