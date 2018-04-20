@@ -11,7 +11,7 @@
 import SiteHeader from './partials/TheSiteHeader.vue'
 import SiteFooter from './partials/TheSiteFooter.vue'
 import SiteHeaderBottom from './partials/TheSiteHeaderBottom.vue'
-// import Layout from '../../helpers/layout'
+import Layout from '../../helpers/layout'
 export default {
   components: {
     SiteHeader,
@@ -23,20 +23,8 @@ export default {
       header: 'header'
     }
   },
-  beforeRouteUpdate (to, from, next) {
-    this.$parent.$el.parentElement.classList.remove('layout-horizontal')
-  },
-  watch: {
-    '$route' (to, from) {
-      console.log(from);
-      this.$parent.$el.parentElement.classList.remove('layout-horizontal')
-    }
-  },
   mounted () {
-    // Layout.set('layout-horizontal')
-    this.$nextTick(function () {
-      this.$parent.$el.parentElement.classList.add('layout-horizontal')
-    })
+    Layout.set('layout-horizontal')
   }
 }
 </script>

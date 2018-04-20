@@ -10,7 +10,7 @@
                 alt="Laraspace Logo">
             </a>
           </div>
-          <router-view></router-view>
+          <router-view/>
           <div class="page-copyright">
             <p>Powered by <a
               href="http://bytefury.com"
@@ -29,26 +29,23 @@
 </template>
 
 <script type="text/babel">
+import Layout from '../../helpers/layout'
 export default {
   data () {
     return {
       login: ''
     }
   },
-  watch: {
-    $route: 'onRouteChange'
+  mounted () {
+    this.setLayoutClasses()
+  },
+  destroyed () {
+    Layout.setLogin('login-3')
+  },
+  methods: {
+    setLayoutClasses () {
+      Layout.setLogin('login-3')
+    }
   }
-  // mounted () {
-  //   this.setLayoutClasses()
-  // },
-  // methods: {
-  //   setLayoutClasses () {
-  //     // let body = this.$parent
-  //     console.log(this)
-  //   }
-  // },
-  // onRouteChange () {
-  //   // $('body').removeClass('login-page')
-  // }
 }
 </script>

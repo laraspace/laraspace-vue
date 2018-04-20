@@ -1,19 +1,32 @@
 export default {
 
-  toggleSidebar(){
-    var icon = $('.hamburger').first();
-    $('body').toggleClass('sidebar-open');
-      icon.toggleClass('is-active');
-  },   toggleUpDown($e){
-    $($e.target).toggleClass('icon-fa-angle-down');
-    },
-
-  reset(){
-    let el = (document.body.classList.toString().match(/(^|\s)layout-\S+/g)).join(' ')
-    document.body.classList.remove(el);
+  toggleSidebar () {
+    var icon = document.getElementsByClassName('hamburger')[0]
+    document.body.classList.toggle('sidebar-open')
+    icon.classList.toggle('is-active')
   },
-  set(layoutName){
+
+  reset () {
+    let cls = (document.body.classList.toString().match(/layout-\S+/g) || []).join('')
+    if (cls) {
+      document.body.classList.remove(cls)
+    }
+  },
+
+  set (layoutName) {
     this.reset()
     document.body.classList.add(layoutName)
+  },
+
+  resetLogin (layoutName) {
+    document.body.classList.remove('login-page')
+    document.body.classList.remove(layoutName)
+  },
+
+  setLogin (layoutName) {
+    let body = document.body
+    body.className = 'skin-default'
+    body.classList.add('login-page')
+    body.classList.add(layoutName)
   }
 }
