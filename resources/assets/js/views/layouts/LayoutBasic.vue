@@ -14,7 +14,7 @@
 import SiteHeader from './partials/TheSiteHeader.vue'
 import SiteFooter from './partials/TheSiteFooter.vue'
 import SiteSidebar from './partials/TheSiteSidebar.vue'
-// import Layout from '../../helpers/layout'
+import Layout from '../../helpers/layout'
 
 export default {
   components: {
@@ -25,8 +25,14 @@ export default {
       'header': 'header'
     }
   },
+  watch: {
+    '$route' (to, from) {
+      console.log(from)
+      this.$parent.$el.parentElement.classList.remove('layout-default')
+    }
+  },
   mounted () {
-    // Layout.set('layout-default')
+    Layout.set('layout-default')
   }
 }
 </script>

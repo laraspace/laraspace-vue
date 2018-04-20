@@ -28,6 +28,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+      console.log(from);
       this.$parent.$el.parentElement.classList.remove('layout-horizontal')
     }
   },
