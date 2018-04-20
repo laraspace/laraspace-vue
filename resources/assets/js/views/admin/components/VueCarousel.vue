@@ -13,33 +13,33 @@
         <carousel>
           <slide>
             <img
-              src="/images/vendor/vue-carousel/slide1.jpg"
-              style="height: 100%;">
+              src="/assets/img/demo/gallery/13.jpg"
+              >
           </slide>
           <slide>
             <img
-              src="/images/vendor/vue-carousel/slide2.jpg"
-              style="height: 100%;">
+              src="/assets/img/demo/gallery/16.jpg"
+              >
           </slide>
           <slide>
             <img
-              src="/images/vendor/vue-carousel/slide3.jpg"
-              style="height: 100%;">
+              src="/assets/img/demo/gallery/15.jpg"
+              >
           </slide>
           <slide>
             <img
-              src="/images/vendor/vue-carousel/slide4.jpg"
-              style="height: 100%;">
+              src="/assets/img/demo/gallery/16.jpg"
+              >
           </slide>
           <slide>
             <img
-              src="/images/vendor/vue-carousel/slide5.jpg"
-              style="height: 100%;">
+              src="/assets/img/demo/gallery/13.jpg"
+              >
           </slide>
           <slide>
             <img
-              src="/images/vendor/vue-carousel/slide6.jpg"
-              style="height: 100%;">
+              src="/assets/img/demo/gallery/15.jpg"
+            >
           </slide>
         </carousel>
       </div>
@@ -56,7 +56,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
