@@ -82,7 +82,6 @@
   </header>
 </template>
 <script type="text/babel">
-// import Layout from '../../../helpers/layout'
 import Auth from '../../../services/auth'
 
 export default {
