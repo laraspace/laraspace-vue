@@ -19,30 +19,26 @@
               <div class="col-sm-12">
                 <button
                   class="btn btn-success"
-                  data-toastr="success"
-                  data-message="Hello World"
-                  data-title="Success!">
+                  @click="toastrNotifs('success')"
+                >
                   Success
                 </button>
                 <button
                   class="btn btn-info"
-                  data-toastr="info"
-                  data-message="Hello World"
-                  data-title="Note!">
+                  @click="toastrNotifs('info')"
+                >
                   Info
                 </button>
                 <button
                   class="btn btn-danger"
-                  data-toastr="error"
-                  data-message="Hello World"
-                  data-title="Error!">
+                  @click="toastrNotifs('error')"
+                >
                   Error
                 </button>
                 <button
                   class="btn btn-warning"
-                  data-toastr="warning"
-                  data-message="Hello World"
-                  data-title="Warning!">
+                  @click="toastrNotifs('warning')"
+                >
                   Warning
                 </button>
               </div>
@@ -62,41 +58,44 @@
               <div class="col-sm-12">
                 <button
                   class="btn btn-success"
-                  data-notie="success"
-                  data-message="Hello World">
+                  @click="notieNotifs('success')"
+                >
                   Success
                 </button>
                 <button
                   class="btn btn-info"
-                  data-notie="info"
-                  data-message="Hello World">
+                  @click="notieNotifs('info')"
+                >
                   Info
                 </button>
                 <button
                   class="btn btn-danger"
-                  data-notie="error"
-                  data-message="Hello World">
+                  @click="notieNotifs('error')"
+                >
                   Error
                 </button>
                 <button
                   class="btn btn-warning"
-                  data-notie="warning"
-                  data-message="Hello World">
+                  @click="notieNotifs('warning')"
+                >
                   Warning
                 </button>
                 <button
                   class="btn btn-primary"
-                  data-notie="confirm">
+                  @click="notieNotifs('confirm')"
+                >
                   Confirm
                 </button>
                 <button
                   class="btn btn-outline-primary"
-                  data-notie="input">
+                  @click="notieNotifs('input')"
+                >
                   Input
                 </button>
                 <button
                   class="btn btn-primary btn-rounded"
-                  data-notie="select">
+                  @click="notieNotifs('select')"
+                >
                   Select
                 </button>
               </div>
@@ -135,144 +134,144 @@
 <script type='text/babel'>
 export default {
   mounted () {
-    this.handleToastrNotifs()
-    this.handleNotieNotifs()
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      positionClass: 'toast-top-right',
+      onclick: null,
+      showDuration: '1000',
+      hideDuration: '1000',
+      timeOut: '5000',
+      extendedTimeOut: '1000',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut'
+    }
   },
   methods: {
-    handleToastrNotifs () {
-      window.toastr.options = {
-        closeButton: true,
-        debug: false,
-        positionClass: 'toast-top-right',
-        onclick: null,
-        showDuration: '1000',
-        hideDuration: '1000',
-        timeOut: '5000',
-        extendedTimeOut: '1000',
-        showEasing: 'swing',
-        hideEasing: 'linear',
-        showMethod: 'fadeIn',
-        hideMethod: 'fadeOut'
+    toastrNotifs (type) {
+      switch (type) {
+        case 'success':
+          toastr[type]('Hello World', 'Note!')
+          break
+        case 'warning':
+          toastr[type]('Hello World', 'Note!')
+          break
+        case 'error':
+          toastr[type]('Hello World', 'Note!')
+          break
+        case 'info':
+          toastr[type]('Hello World', 'Note!')
+          break
+        default:
+          break
       }
-
-      $('[data-toastr]').on('click', function () {
-        var type = $(this).data('toastr')
-        var message = $(this).data('message')
-        var title = $(this).data('title')
-        window.toastr[type](message, title)
-      })
     },
-
-    handleNotieNotifs () {
-      $('[data-notie]').on('click', function () {
-        var type = $(this).data('notie')
-        var message = $(this).data('message')
-        var title = $(this).data('title')
-
-        console.log(message)
-        switch (type) {
-          case 'success':
-            window.notie.alert({ type: 1, text: 'Success!' })
-            break
-          case 'warning':
-            window.notie.alert({ type: 2, text: 'Warning!' })
-            break
-          case 'error':
-            window.notie.alert({ type: 3, text: 'Error!' })
-            break
-          case 'info':
-            window.notie.alert({ type: 4, text: 'Info!' })
-            break
-          case 'confirm':
-            window.notie.confirm({
-              text:
-                "Are you sure you want to do that?<br><b>That's a bold move...</b>",
-              cancelCallback: function () {
-                window.notie.alert({ type: 3, text: 'Aw, why not? :(', time: 2 })
-              },
-              submitCallback: function () {
-                window.notie.alert({ type: 1, text: 'Good choice! :D', time: 2 })
-              }
-            })
-            break
-          case 'input':
-            window.notie.input({
-              text: 'Please enter your email:',
-              submitText: 'Submit',
-              cancelText: 'Cancel',
-              cancelCallback: function (value) {
-                window.notie.alert({
-                  type: 3,
-                  text: 'You cancelled with this value: ' + value
-                })
-              },
-              submitCallback: function (value) {
-                window.notie.alert({ type: 1, text: 'You entered: ' + value })
-              },
-              value: 'jane@doe.com',
-              type: 'email',
-              placeholder: 'name@example.com'
-            })
-            break
-          case 'select':
-            window.notie.select({
-              text: 'Demo item #1, owner is Jane Smith',
-              cancelText: 'Close',
-              cancelCallback: function () {
-                window.notie.alert({ type: 5, text: 'Cancel!' })
-              },
-              choices: [
-                {
-                  text: 'Share',
-                  handler: function () {
-                    window.notie.alert({ type: 1, text: 'Share item!' })
-                  }
-                },
-                {
-                  text: 'Open',
-                  handler: function () {
-                    window.notie.alert({ type: 1, text: 'Open item!' })
-                  }
-                },
-                {
-                  type: 2,
-                  text: 'Edit',
-                  handler: function () {
-                    window.notie.alert({ type: 2, text: 'Edit item!' })
-                  }
-                },
-                {
-                  type: 3,
-                  text: 'Delete',
-                  handler: function () {
-                    window.notie.alert({ type: 3, text: 'Delete item!' })
-                  }
+    notieNotifs (type) {
+      console.log(type)
+      switch (type) {
+        case 'success':
+          notie.alert({ type: 1, text: 'Success!' })
+          break
+        case 'warning':
+          notie.alert({ type: 2, text: 'Warning!' })
+          break
+        case 'error':
+          notie.alert({ type: 3, text: 'Error!' })
+          break
+        case 'info':
+          notie.alert({ type: 4, text: 'Info!' })
+          break
+        case 'confirm':
+          notie.confirm({
+            text:
+              "Are you sure you want to do that?<br><b>That's a bold move...</b>",
+            cancelCallback: function () {
+              notie.alert({ type: 3, text: 'Aw, why not? :(', time: 2 })
+            },
+            submitCallback: function () {
+              notie.alert({ type: 1, text: 'Good choice! :D', time: 2 })
+            }
+          })
+          break
+        case 'input':
+          notie.input({
+            text: 'Please enter your email:',
+            submitText: 'Submit',
+            cancelText: 'Cancel',
+            cancelCallback: function (value) {
+              notie.alert({
+                type: 3,
+                text: 'You cancelled with this value: ' + value
+              })
+            },
+            submitCallback: function (value) {
+              notie.alert({ type: 1, text: 'You entered: ' + value })
+            },
+            value: 'jane@doe.com',
+            type: 'email',
+            placeholder: 'name@example.com'
+          })
+          break
+        case 'select':
+          notie.select({
+            text: 'Demo item #1, owner is Bytefury',
+            cancelText: 'Close',
+            cancelCallback: function () {
+              notie.alert({ type: 5, text: 'Cancel!' })
+            },
+            choices: [
+              {
+                text: 'Share',
+                handler: function () {
+                  notie.alert({ type: 1, text: 'Share item!' })
                 }
-              ]
-            })
-            break
-          case 'date':
-            window.notie.date({
-              value: new Date(2015, 8, 27),
-              cancelCallback: function (date) {
-                window.notie.alert({
-                  type: 3,
-                  text: 'You cancelled: ' + date.toISOString()
-                })
               },
-              submitCallback: function (date) {
-                window.notie.alert({
-                  type: 1,
-                  text: 'You selected: ' + date.toISOString()
-                })
+              {
+                text: 'Open',
+                handler: function () {
+                  notie.alert({ type: 1, text: 'Open item!' })
+                }
+              },
+              {
+                type: 2,
+                text: 'Edit',
+                handler: function () {
+                  notie.alert({ type: 2, text: 'Edit item!' })
+                }
+              },
+              {
+                type: 3,
+                text: 'Delete',
+                handler: function () {
+                  notie.alert({ type: 3, text: 'Delete item!' })
+                }
               }
-            })
-            break
+            ]
+          })
+          break
+        case 'date':
+          notie.date({
+            value: new Date(2015, 8, 27),
+            cancelCallback: function (date) {
+              notie.alert({
+                type: 3,
+                text: 'You cancelled: ' + date.toISOString()
+              })
+            },
+            submitCallback: function (date) {
+              notie.alert({
+                type: 1,
+                text: 'You selected: ' + date.toISOString()
+              })
+            }
+          })
+          break
 
-          default:
-            window.notie.alert(1, 'Success!')
-        }
-      })
+        default:
+          notie.alert(1, 'Success!')
+      }
     }
   }
 }
