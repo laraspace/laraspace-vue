@@ -2,20 +2,16 @@
 <template>
   <div class="main-content">
     <div class="page-header">
-      <h3 class="page-title">Gallery Grid</h3>
+      <h3 class="page-title">Image Gallery</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Gallery</a></li>
-        <li class="breadcrumb-item active">Gallery Grid</li>
+        <li class="breadcrumb-item active">Image Gallery</li>
       </ol>
     </div>
     <div class="card">
-      <div class="card-header">
-        <h6>Image Gallery</h6>
-      </div>
       <div class="card-body">
         <gallery
-          
           :images="images"
           :index="imgIndex"
           @close="imgIndex = null"/>
@@ -47,29 +43,6 @@ export default {
   },
   data: function () {
     return {
-      // videos: [
-      //   {
-      //     title: 'A YouYube video',
-      //     href: 'https://www.youtube.com/watch?v=hNdlUHBJDKs',
-      //     type: 'text/html',
-      //     youtube: 'hNdlUHBJDKs',
-      //     poster: 'https://img.youtube.com/vi/hNdlUHBJDKs/maxresdefault.jpg'
-      //   },
-      //   {
-      //     title: 'A YouYube video 2',
-      //     href: 'https://www.youtube.com/watch?v=s5iUsaPPtnk',
-      //     type: 'text/html',
-      //     youtube: 's5iUsaPPtnk',
-      //     poster: 'https://img.youtube.com/vi/s5iUsaPPtnk/maxresdefault.jpg'
-      //   },
-      //   {
-      //     title: 'Image',
-      //     href: 'https://dummyimage.com/1600/ffffff/000000',
-      //     type: 'image/jpeg',
-      //     poster: 'https://dummyimage.com/350/ffffff/000000'
-      //   }
-      // ],
-      // vidIndex: null,
       images: [
         '/assets/img/demo/gallery/1.jpg',
         '/assets/img/demo/gallery/2.jpg',
