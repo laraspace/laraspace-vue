@@ -18,12 +18,12 @@ export default {
     this.setLayoutClasses()
   },
   destroyed () {
-    $('body').removeClass('page-error-404')
+    document.body.classList.remove('page-error-404')
   },
   methods: {
     setLayoutClasses () {
-      let body = $('body')
-      body.addClass('page-error-404')
+      let body = document.body
+      body.classList.add('page-error-404')
     }
   }
 }

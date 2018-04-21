@@ -14,7 +14,6 @@
 import SiteHeader from './partials/TheSiteHeader.vue'
 import SiteFooter from './partials/TheSiteFooter.vue'
 import SiteSidebar from './partials/TheSiteSidebar.vue'
-// import Layout from '../../helpers/layout'
 
 export default {
   components: {
@@ -24,9 +23,6 @@ export default {
     return {
       'header': 'header'
     }
-  },
-  mounted () {
-    // Layout.set('layout-default')
   }
 }
 </script>

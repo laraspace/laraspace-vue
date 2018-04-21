@@ -129,6 +129,38 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
+              to="/admin/components/notifications">
+              Notifications
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/components/sweet-modals">
+              Sweet Modals
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/components/vue-carousel">
+              Vue Carousel
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/components/vue-dropzone">
+              Vue Dropzone
+            </router-link>
+          </v-collapse-item>
+
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
               to="/admin/components/vue-tables">
               Vue DataTables
             </router-link>
@@ -145,46 +177,8 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/components/vue-carousel">
-              Vue Carousel
-            </router-link>
-          </v-collapse-item>
-
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/components/notifications">
-              Notifications
-            </router-link>
-          </v-collapse-item>
-
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
               to="/admin/components/tooltips">
               Vue Tooltips
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/components/vue-carousel">
-              VueCarousel
-            </router-link>
-          </v-collapse-item>
-          <v-collapse-item>
-          <router-link
-              slot="item-title"
-              to="/admin/components/sweet-modals">
-              Sweet Modals
-            </router-link>
-          </v-collapse-item>
-
-          <v-collapse-item>
-            <router-link
-              slot="item-title"
-              to="/admin/components/vue-dropzone">
-              VueDropzone
             </router-link>
           </v-collapse-item>
 
@@ -470,16 +464,16 @@
             <router-link
               slot="item-title"
               to="/admin/apps/mail-box">
-             <i class="icon-fa icon-fa-envelope-o"/> MailBox
+              <i class="icon-fa icon-fa-envelope-o"/> MailBox
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item>
-          <router-link
-            slot="item-title"
-            to="/admin/apps/todo-item">
-            <i class="icon-fa icon-fa-check"/>Todos
-          </router-link>
+            <router-link
+              slot="item-title"
+              to="/admin/apps/todo-item">
+              <i class="icon-fa icon-fa-check"/>Todos
+            </router-link>
           </v-collapse-item>
         </v-collapse>
 
