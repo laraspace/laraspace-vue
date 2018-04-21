@@ -58,8 +58,8 @@ import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
 // Gallery
-import Grid from './views/admin/gallery/Grid.vue'
-import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
+import ImageGallery from './views/admin/gallery/ImageGallery.vue'
+import VideoGallery from './views/admin/gallery/VideoGallery.vue'
 
 // Apps
 import TodoItem from './views/admin/apps/TodoItem.vue'
@@ -290,12 +290,12 @@ const routes = [
 
       // Gallery
       {
-        path: 'gallery/grid',
-        component: Grid
+        path: 'gallery/image-gallery',
+        component: ImageGallery
       },
       {
-        path: 'gallery/masonry-grid',
-        component: MasonryGrid
+        path: 'gallery/video-gallery',
+        component: VideoGallery
       },
 
       // Pages
