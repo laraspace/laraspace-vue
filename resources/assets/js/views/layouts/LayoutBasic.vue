@@ -23,6 +23,9 @@ export default {
     return {
       'header': 'header'
     }
+  },
+  mounted () {
+    this.$layout.set('layout-default')
   }
 }
 </script>

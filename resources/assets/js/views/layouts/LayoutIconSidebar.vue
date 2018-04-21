@@ -18,10 +18,8 @@ export default {
     SiteSidebar,
     SiteFooter
   },
-  data () {
-    return {
-      header: 'header'
-    }
+  mounted () {
+    this.$layout.set('layout-icon-sidebar')
   }
 }
 </script>

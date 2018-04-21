@@ -17,10 +17,8 @@ export default {
     SiteHeaderBottom,
     SiteFooter
   },
-  data () {
-    return {
-      header: 'header'
-    }
+  mounted () {
+    this.$layout.set('layout-horizontal')
   }
 }
 </script>

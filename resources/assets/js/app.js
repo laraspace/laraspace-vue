@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import router from './router.js'
+import layout from './helpers/layout'
 
 require('./bootstrap')
 
@@ -13,6 +14,9 @@ require('./bootstrap')
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 window.Plugin = Plugin
+
+Vue.prototype.$layout = layout
+
 const app = new Vue({
   router
 }).$mount('#app')
