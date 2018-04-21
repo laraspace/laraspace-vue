@@ -80,7 +80,7 @@ export default {
     handleValidation () {
       // for more info visit the official plugin documentation:
       // http://docs.jquery.com/Plugins/Validation
-      var form = $('#validateForm')
+      var form = document.getElementById('validateForm')
 
       form.validate({
         errorElement: 'span', // default input error message container
@@ -110,14 +110,14 @@ export default {
 
         highlight: function (element) {
           // hightlight error inputs
-          $(element)
+          document.element
             .closest('.form-group .form-control')
             .addClass('is-invalid') // set danger class to the control group
         },
 
         unhighlight: function (element) {
           // revert the change done by hightlight
-          $(element)
+          document.element
             .closest('.form-group .form-control')
             .removeClass('is-invalid') // set danger class to the control group
             .closest('.form-group .form-control')
