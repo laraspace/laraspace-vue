@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-left">
     <div class="sidebar-body scroll-pane">
-      <div class="side-nav vue-menu">
+      <div class="side-nav">
         <v-collapse active-url="/admin/dashboard">
 
           <a
@@ -357,16 +357,16 @@
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/gallery/image-gallery">
-              Image Gallery
+              to="/admin/gallery/grid">
+              Grid
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item>
             <router-link
               slot="item-title"
-              to="/admin/gallery/video-gallery">
-              Video Gallery
+              to="/admin/gallery/masonry-grid">
+              Masonry Grid
             </router-link>
           </v-collapse-item>
         </v-collapse>
