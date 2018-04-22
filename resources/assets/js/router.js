@@ -63,7 +63,7 @@ import VideoGallery from './views/admin/gallery/VideoGallery.vue'
 
 // Apps
 import TodoItem from './views/admin/apps/TodoItem.vue'
-import MailBox from './views/admin/apps/MailBox.vue'
+import MailBox from './views/admin/apps/mailbox/MailBox.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'
@@ -394,7 +394,7 @@ const routes = [
         name: 'login 3'
       },
       {
-        path: 'register-3', 
+        path: 'register-3',
         component: Register,
         name: 'register 3'
       }

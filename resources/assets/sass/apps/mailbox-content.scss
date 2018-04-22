@@ -1,0 +1,98 @@
+.mailbox .mailbox-content {
+    height: 100%;
+    position: relative;
+    flex: 5;
+
+    .mailbox-content-header {
+        margin: 20px 12px;
+        display: flex;
+        justify-content: space-between;
+
+        .mailbox-filters {
+            float: right;
+
+            .mail-search {
+                display: inline-block;
+            }
+        }
+    }
+
+    .table {
+        th {
+            height: 50px;
+        }
+
+        tr {
+            td {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                vertical-align: middle;
+
+                .content {
+                    cursor: pointer;
+                    display: -webkit-box;
+                    max-width: 1400px;
+                    line-height: 1.2;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                &.cell-50 {
+                    width: 50px;
+
+                    a {
+                        .avtar-img {
+                            height: 30px;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .custom-control {
+                        bottom: 5px;
+                        text-align: center;
+
+                        .custom-control-label {
+                            &::before,
+                            &::after {
+                                width: 1.5rem;
+                                height: 1.5rem;
+                            }
+                        }
+                    }
+                }
+
+                &.cell-30 {
+                    width: 60px;
+                    padding: 5px;
+                    text-align: center;
+
+                    .star {
+                        visibility: hidden;
+                        font-size: 30px;
+                        cursor: pointer;
+                        color: #eb6709;
+                    }
+
+                    .star:before {
+                        content: "\2606";
+                        visibility: visible;
+                        color: #e4eaec;
+                    }
+
+                    .star:checked:before {
+                        content: "\2605";
+                        color: #eb6709;
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    .mail-content-footer ul {
+        margin: 25px;
+    }
+}

@@ -70,7 +70,6 @@
 @import "components/ico-moon";
 @import "components/easy-pie-chart";
 @import "components/pace-loader";
-@import "components/mailbox";
 @import "components/vue-tabs";
 @import "components/tooltips";
 @import "components/gallery";
@@ -87,6 +86,13 @@
 @import 'pages/user-profile';
 @import 'pages/404';
 @import 'pages/settings';
+
+
+// Apps
+//----------------------------------
+
+@import "apps/mailbox";
+
 
 
 @import "demo";
