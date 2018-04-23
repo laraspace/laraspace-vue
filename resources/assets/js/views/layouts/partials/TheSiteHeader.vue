@@ -27,18 +27,23 @@
         <div class="dropdown-menu dropdown-menu-right">
           <v-dropdown>
             <a
-              href="#"
-              aria-expanded="false"><i class="icon-fa icon-fa-plus"/></a>
+              slot="title"
+              href="#">
+              <i class="icon-fa icon-fa-plus"/>fgfdsgfd
+            </a>
             <v-dropdown-item>
               <a
+                slot="item-title"
                 href="#"><i class="icon-fa icon-fa-edit"/> New Post</a>
             </v-dropdown-item>
             <v-dropdown-item>
               <a
+                slot="item-title"
                 href="#"><i class="icon-fa icon-fa-tag"/> New Category</a>
             </v-dropdown-item>
             <v-dropdown-item>
               <a
+                slot="item-title"
                 href="#"><i class="icon-fa icon-fa-star"/> Separated link</a>
             </v-dropdown-item>
           </v-dropdown>

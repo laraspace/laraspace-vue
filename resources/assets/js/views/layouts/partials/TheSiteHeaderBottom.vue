@@ -9,7 +9,7 @@
         </a>
 
         <v-dropdown-item>
-          <router-link
+         <router-link
             slot="item-title"
             to="/admin/dashboard/basic">
             Basic
