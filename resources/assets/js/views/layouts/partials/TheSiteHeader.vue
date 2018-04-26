@@ -89,7 +89,6 @@
   </header>
 </template>
 <script type="text/babel">
-// import Layout from '../../../helpers/layout'
 import Auth from '../../../services/auth'
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
@@ -106,7 +105,7 @@ export default {
   },
   methods: {
     onNavToggle () {
-      // Layout.toggleSidebar()
+      this.$layout.toggleSidebar()
     },
     logout () {
       Auth.logout().then(() => {

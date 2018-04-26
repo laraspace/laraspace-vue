@@ -11,20 +11,14 @@
 import SiteHeader from './partials/TheSiteHeader.vue'
 import SiteFooter from './partials/TheSiteFooter.vue'
 import SiteHeaderBottom from './partials/TheSiteHeaderBottom.vue'
-// import Layout from '../../helpers/layout'
 export default {
   components: {
     SiteHeader,
     SiteHeaderBottom,
     SiteFooter
   },
-  data () {
-    return {
-      header: 'header'
-    }
-  },
   mounted () {
-    // Layout.set('layout-horizontal')
+    this.$layout.set('layout-horizontal')
   }
 }
 </script>

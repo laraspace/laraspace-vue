@@ -1,5 +1,5 @@
 <template>
-  <div :class="['collapse-group', {active: isCollapse} ]">
+  <div :class="['collapse-group', {active: isCollapseOpen} ]">
     <div
       class="collapse-group-title"
       @click="showCollapse"
@@ -13,7 +13,7 @@
       @after-leave="afterLeave"
     >
       <div
-        v-show="isCollapse"
+        v-show="isCollapseOpen"
         ref="collapseItems"
         :style="'max-height:' + height + 'px'"
         class="collapse-group-items"
@@ -37,7 +37,7 @@ export default {
     return {
       height: '',
       originalHeight: '',
-      isCollapse: true
+      isCollapseOpen: true
     }
   },
   mounted () {
@@ -46,9 +46,9 @@ export default {
     })
 
     if (this.isActive() === true) {
-      this.isCollapse = true
+      this.isCollapseOpen = true
     } else {
-      this.isCollapse = false
+      this.isCollapseOpen = false
     }
   },
   methods: {
@@ -57,16 +57,16 @@ export default {
     },
     showCollapse () {
       let self = this
-      if (this.isCollapse === false) {
-        this.$parent.$children.filter((value) => {
+      if (this.isCollapseOpen === false) {
+        this.$parent.$children.filter((value) =>  {
           if (value !== self) {
-            if (value.isCollapse === true) {
-              value.isCollapse = false
+            if (value.isCollapseOpen === true) {
+              value.isCollapseOpen = false
             }
           }
         })
       }
-      this.isCollapse = !this.isCollapse
+      this.isCollapseOpen = !this.isCollapseOpen
     },
     afterEnter () {
       this.height = this.originalHeight
