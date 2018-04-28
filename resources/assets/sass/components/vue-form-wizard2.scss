@@ -1,0 +1,58 @@
+  .ls-wizard {
+    .vue-form-wizard {
+      .wizard-navigation {
+        
+        .wizard-progress-with-circle {
+          background-color:#eee;
+        }
+        .wizard-nav {
+          .wizard-icon-circle {
+            border-color: #eee  !important;
+            .wizard-icon{
+                    color: #333;
+              }
+              &.checked{
+                border-color: rgb(255, 222, 0) !important;
+                background-color: rgb(255, 222, 0) !important;
+              }
+          }
+          .wizard-icon-container {
+              background-color: #fff  !important;
+              border-radius: 70%;
+          }
+          .stepTitle {
+            color: #333333 !important;
+          } 
+        }
+      }
+      .wizard-card-footer {
+        .wizard-footer-left {
+          span {
+            .wizard-btn{
+              position: absolute;
+              background-color:#007dcc!important;
+              border-color: #007dcc !important;
+              color: white;
+              right: 200px;
+              visibility: visible;
+            }
+          }
+        }
+        .wizard-footer-right{
+          span{
+              .wizard-btn{
+            background-color: #007dcc !important;
+            border-color: #007dcc !important;
+            color: white;
+            position: relative;
+            }
+          }
+        }
+      }
+    }
+    &.with-icon{
+      .wizard-icon{
+        color:#333333 !important;
+      }
+    }
+  }
