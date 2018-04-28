@@ -50,12 +50,12 @@
 
 <script type="text/babel">
 // summernote
-import SummerNote from 'summernote/dist/summernote-bs4'
-import 'summernote/dist/summernote-bs4.css'
-// simpleMDE
-import 'simplemde/src/css/simplemde.css'
-window.SimpleMDE = require('simplemde/src/js/simplemde')
-
+// import SummerNote from 'summernote/dist/summernote-bs4'
+// import 'summernote/dist/summernote-bs4.css'
+// // simpleMDE
+// import 'simplemde/src/css/simplemde.css'
+// window.SimpleMDE = require('simplemde/src/js/simplemde')
+import Plugin from '../../../helpers/plugin'
 export default {
   mounted () {
     Plugin.initPlugins(['Editors'])

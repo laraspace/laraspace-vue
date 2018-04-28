@@ -17,9 +17,9 @@ export default {
   // },
 
   Editors () {
-    $('.ls-summernote').summernote()
+    document.getElementsByClassName('ls-summernote')[0].summernote()
 
-    var editor = $('.ls-simplemde')[0]
+    var editor = document.getElementsByClassName('ls-simplemde')[0]
 
     if (editor) {
       var simplemde = new SimpleMDE({ element: editor })
@@ -36,5 +36,5 @@ export default {
   isFunction (functionToCheck) {
     var getType = {}
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]'
-  }
+  },
 }

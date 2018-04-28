@@ -5,77 +5,57 @@
 
     .collapse-group {
 
-        .collapse-group-item, .collapse-group-title {
-            display: block;
-
-            a {
-                color: $sidebar-font-color;
-                display: block;
-                font-size: 14px;
-                padding: 12px 12px 12px 30px;
-                position: relative;
-                text-decoration: none;
-
-                &:hover {
-                    background-color: $sidemenu-item-bg-color--hover;
-                }
-            }
-
-            // &.has-child > a::before {
-            //     border-color: $sidemenu-arrow-color transparent transparent;
-            //     border-style: solid;
-            //     border-width: 5px 4px 0;
-            //     content: '';
-            //     display: block;
-            //     height: 0;
-            //     margin-top: -2px;
-            //     position: absolute;
-            //     right: 21px;
-            //     top: 50%;
-            //     transform: rotate(-90deg);
-            //     transition: all .2s ease-in-out;
-            //     width: 0;
-            // }
-
-            // &.has-child.open > a::before {
-            //     transform: rotate(0deg);
-            // }
-
-            //&.has-child.open .sub-menu{
-            //  display: block;
-            //}
-
-            i {
-                width: 30px;
-            }
+        .collapse-group-item {
             
-        }
-        &.active {
-            & > .collapse-group-title {
-                & > a {
-                    color: $ls-color-primary;
-                   
-                    & > .icon-fa.arrow:before {
-                        content: "\f107";
+            .collapse-item-title {
+                display: block;
+
+                a {
+                    color: $sidebar-font-color;
+                    display: block;
+                    font-size: 14px;
+                    padding: 12px 12px 12px 30px;
+                    position: relative;
+                    text-decoration: none;
+
+                    &:hover {
+                        background-color: $sidemenu-item-bg-color--hover;
                     }
                 }
-             }
-         } 
-        .collapse-group-title > a > .icon-fa.arrow{
-            position: absolute;
-            right: 21px;
+                & > a > .icon-fa.arrow{
+                    float: right;
+                    line-height: 1.42857;
 
-            &:before {
-                content: "\f104";
+                    &:before {
+                        content: "\f104";
+                    }
+                }
+
+                i {
+                    width: 30px;
+                }
             }
-        }
 
-        .collapse-group-items {
-            background-color: $sidemenu-submenu-bg;
-            padding: 0;
+            &.active {
 
-            a.active{
-                color: $ls-color-primary;
+                & > .collapse-item-title {
+                    
+                    & > a {
+                        color: $ls-color-primary;
+
+                        & > .icon-fa.arrow:before {
+                            content: "\f107";
+                        }
+                    }
+                }
+            }
+            .collapse-group-items {
+                background-color: $sidemenu-submenu-bg;
+                padding: 0;
+
+                a.active{
+                    color: $ls-color-primary;
+                }
             }
         }
     }

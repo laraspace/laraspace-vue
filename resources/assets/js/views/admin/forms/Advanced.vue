@@ -10,474 +10,13 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Select 2 <a
+        <h6>Multi Select <a
           class="source-link"
-          href="https://select2.github.io/"
+          href="https://vue-multiselect.js.org/"
           target="_blank">source</a></h6>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4 col-md-6 mb-4">
-            <h5 class="section-semi-title">
-              Single Select
-            </h5>
-            <p class="mb-4">Just apply <code>.ls-select2</code> class to a select element.</p>
-            <select class="form-control ls-select2">
-              <option value="AK">Alaska</option>
-              <option value="HI">Hawaii</option>
-              <option value="CA">California</option>
-              <option value="NV">Nevada</option>
-              <option value="OR">Oregon</option>
-              <option value="WA">Washington</option>
-            </select>
-          </div>
-          <div class="col-xl-4 col-md-6 mb-4">
-            <h5 class="section-semi-title">
-              with Groups
-            </h5>
-            <p class="mb-4">Just use <code>optgroups</code> with label attribute inside select element.</p>
-            <select class="form-control ls-select2">
-              <optgroup label="Alaskan/Hawaiian Time Zone">
-                <option value="AK">Alaska</option>
-                <option value="HI">Hawaii</option>
-              </optgroup>
-              <optgroup label="Pacific Time Zone">
-                <option value="CA">California</option>
-                <option value="NV">Nevada</option>
-                <option value="OR">Oregon</option>
-                <option value="WA">Washington</option>
-              </optgroup>
-              <optgroup label="Mountain Time Zone">
-                <option value="AZ">Arizona</option>
-                <option value="CO">Colorado</option>
-                <option value="ID">Idaho</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NM">New Mexico</option>
-                <option value="ND">North Dakota</option>
-                <option value="UT">Utah</option>
-                <option value="WY">Wyoming</option>
-              </optgroup>
-              <optgroup label="Central Time Zone">
-                <option value="AL">Alabama</option>
-                <option value="AR">Arkansas</option>
-                <option value="IL">Illinois</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="OK">Oklahoma</option>
-                <option value="SD">South Dakota</option>
-                <option value="TX">Texas</option>
-                <option value="TN">Tennessee</option>
-                <option value="WI">Wisconsin</option>
-              </optgroup>
-              <optgroup label="Eastern Time Zone">
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="IN">Indiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="OH">Ohio</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WV">West Virginia</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="col-xl-4 col-md-6 mb-4">
-            <h5 class="section-semi-title">
-              Multiple Select
-            </h5>
-            <p class="mb-4">Just use <code>multiple</code> attribute inside select element.</p>
-            <select
-              class="form-control ls-select2"
-              multiple="multiple">
-              <option value="AK">Alaska</option>
-              <option value="HI">Hawaii</option>
-              <option value="CA">California</option>
-              <option value="NV">Nevada</option>
-              <option value="OR">Oregon</option>
-              <option value="WA">Washington</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h6>Multiple Select <a
-          class="source-link"
-          href="http://loudev.com/"
-          target="_blank">source</a></h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">
-              Default
-            </h5>
-            <p class="mb-4">Just apply <code>.ls-multi-select</code> class to a select element to make it a
-            multi-select
-            </p>
-            <select
-              class="form-control ls-multi-select"
-              multiple="multiple">
-              <option value="AK">Alaska</option>
-              <option value="HI">Hawaii</option>
-              <option value="CA">California</option>
-              <option value="NV">Nevada</option>
-              <option value="OR">Oregon</option>
-              <option value="WA">Washington</option>
-            </select>
-          </div>
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">
-              Pre-Selected Options
-            </h5>
-            <p class="mb-4">Just use <code>selected</code> attribute on the options which you want to keep
-            as
-            selected
-            </p>
-            <select
-              class="form-control ls-multi-select"
-              multiple="multiple">
-              <option
-                value="AK"
-                selected>Alaska</option>
-              <option value="HI">Hawaii</option>
-              <option value="CA">California</option>
-              <option value="NV">Nevada</option>
-              <option
-                value="OR"
-                selected>Oregon</option>
-              <option
-                value="WA"
-                selected>Washington</option>
-            </select>
-          </div>
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">
-              with Groups
-            </h5>
-            <p class="mb-4">Just use <code>optgroups</code> with label attribute inside select element</p>
-            <select
-              class="form-control ls-multi-select"
-              multiple="multiple">
-              <optgroup label="Alaskan/Hawaiian Time Zone">
-                <option value="AK">Alaska</option>
-                <option value="HI">Hawaii</option>
-              </optgroup>
-              <optgroup label="Pacific Time Zone">
-                <option value="CA">California</option>
-                <option value="NV">Nevada</option>
-                <option value="OR">Oregon</option>
-                <option value="WA">Washington</option>
-              </optgroup>
-              <optgroup label="Mountain Time Zone">
-                <option value="AZ">Arizona</option>
-                <option value="CO">Colorado</option>
-                <option value="ID">Idaho</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NM">New Mexico</option>
-                <option value="ND">North Dakota</option>
-                <option value="UT">Utah</option>
-                <option value="WY">Wyoming</option>
-              </optgroup>
-              <optgroup label="Central Time Zone">
-                <option value="AL">Alabama</option>
-                <option value="AR">Arkansas</option>
-                <option value="IL">Illinois</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="OK">Oklahoma</option>
-                <option value="SD">South Dakota</option>
-                <option value="TX">Texas</option>
-                <option value="TN">Tennessee</option>
-                <option value="WI">Wisconsin</option>
-              </optgroup>
-              <optgroup label="Eastern Time Zone">
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="IN">Indiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="OH">Ohio</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WV">West Virginia</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h6>Switch Toggles <a
-          class="source-link"
-          href="http://abpetkov.github.io/switchery/"
-          target="_blank">source</a></h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-4 mb-4">
-            <h5 class="section-semi-title">
-              Basic Switch
-            </h5>
-            <p class="mb-4">Just apply <code>.ls-switch</code> class to a checkbox to make it a switch</p>
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked>
-          </div>
-          <div class="col-lg-4 mb-4">
-            <h5 class="section-semi-title">
-              Sizes
-            </h5>
-            <p class="mb-4">use <code>data-size</code> attribute to change the size of the switch</p>
-            <input
-              type="checkbox"
-              class="ls-switch"
-              data-size="small"
-              checked>
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked>
-            <input
-              type="checkbox"
-              class="ls-switch"
-              data-size="large"
-              checked>
-          </div>
-          <div class="col-lg-4 mb-4">
-            <h5 class="section-semi-title">
-              Colors
-            </h5>
-            <p class="mb-4">use <code>data-color="#007dcc"</code> to change the color of the switch</p>
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked
-              data-color="#007dcc">
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked
-              data-color="#4fc47f">
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked
-              data-color="#f35a3d">
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked
-              data-color="#f0ad4e">
-            <input
-              type="checkbox"
-              class="ls-switch"
-              checked
-              data-color="#5BBFDE">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h6>Clock Time Picker
-          <a
-            class="source-link"
-            href="http://weareoutman.github.io/clockpicker/"
-            target="_blank">source</a>
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4  col-md-6 mb-4">
-            <h5 class="section-semi-title">Default</h5>
-            <p class="mb-4">Just apply <code>.ls-clockpicker</code> class to an input to make it a
-            clockpicker
-            </p>
-            <div
-              class="input-group ls-clockpicker"
-              data-autoclose="false">
-              <input
-                type="text"
-                class="form-control"
-                value="09:30">
-              <div class="input-group-append">
-                <span class="input-group-text"><i class="icon-fa icon-fa-clock-o"/></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-md-6 mb-4">
-            <h5 class="section-semi-title">Autoclose and align top left</h5>
-            <p class="mb-4">use <code>data-autoclose="true"</code> attribute to auto-close clockpicker after
-            the date is selected and <code>data-placement="left"</code>,<code>data-align="top"</code>
-              for
-              placement of the clockpicker
-            </p>
-            <div
-              class="input-group ls-clockpicker"
-              data-placement="left"
-              data-align="top"
-              data-autoclose="true">
-              <input
-                type="text"
-                class="form-control"
-                value="09:30">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="icon-fa icon-fa-clock-o"/>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h6>Date Picker <a
-          class="source-link"
-          href="https://github.com/eternicode/bootstrap-datepicker"
-          target="_blank">source</a></h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4 col-lg-6 mb-4">
-            <h5 class="section-semi-title">Default</h5>
-            <p class="mb-4">Just apply <code>.ls-datepicker</code> class to a input.</p>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="icon-fa icon-fa-calendar"/>
-                </span>
-              </div>
-              <input
-                type="text"
-                class="form-control ls-datepicker"
-                value="09:30">
-            </div>
-          </div>
-          <div class="col-xl-4 col-lg-6 mb-4">
-            <h5 class="section-semi-title">Date Range</h5>
-            <p class="mb-4">Just apply <code>.ls-datepicker</code> classes to both inputs.</p>
-            <div class="input-group input-daterange">
-              <input
-                type="text"
-                class="form-control ls-datepicker">
-              <div class="input-group-prepend input-group-append">
-                <span class="input-group-text">to</span>
-              </div>
-              <input
-                type="text"
-                class="form-control ls-datepicker">
-            </div>
-          </div>
-          <div class="col-xl-4 col-lg-6 mb-4">
-            <h5 class="section-semi-title">
-              Inline
-            </h5>
-            <p class="mb-4">Just apply <code>.ls-datepicker</code> classes to a div element.</p>
-            <div
-              data-date="12/03/2012"
-              class="ls-datepicker"/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h6>Time Picker <a
-          class="source-link"
-          href="http://jonthornton.github.io/jquery-timepicker/"
-          target="_blank">source</a></h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Default</h5>
-            <p class="mb-4">Just apply <code>.ls-timepicker</code> class to an input.</p>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control ls-timepicker"
-                value="09:30">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="icon-fa icon-fa-clock-o"/>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Show Duration</h5>
-            <p class="mb-4">Use <code>data-duration="true"</code> attribute to show the time duration.</p>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control ls-timepicker"
-                value="09:30"
-                data-duration="true">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="icon-fa icon-fa-clock-o"/>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Time Format</h5>
-            <p class="mb-4">Use <code>data-format="H:i:s"</code> attribute to change the time format.</p>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control ls-timepicker"
-                value="09:30"
-                data-format="H:i:s">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="icon-fa icon-fa-clock-o"/>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <multi-select-demo />
       </div>
     </div>
     <div class="card">
@@ -488,68 +27,49 @@
           target="_blank">source</a></h6>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Phone number</h5>
-            <masked-input
-              v-model="phone"
-              :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
-              :guide="true"
-              :keepCharPositions="true"
-              :show-Mask="true"
-              type="text"
-              name="phone"
-              class="form-control"/>
-          </div>
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Date</h5>
-            <masked-input
-              v-model="date"
-              :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
-              :guide="true"
-              :keepCharPositions="true"
-              :showMask="true"
-              type="text"
-              name="date"
-              class="form-control"/>
-          </div>
-          <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Auto Correct Date</h5>
-            <masked-input
-              v-model="dateAuto"
-              :mask="[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
-              :guide="true"
-              :pipe="auto"
-              :keepCharPositions="true"
-              :showMask="true"
-              type="text"
-              name="dateAuto"
-              class="form-control"/>
-          </div>
-        </div>
+        <text-mask-demo/>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h6>Vue Color Picker <a
+          class="source-link"
+          href="http://xiaokaike.github.io/vue-color/"
+          target="_blank">source</a></h6>
+      </div>
+      <div class="card-body">
+        <color-pickers-demo :colorpicker="colorpickerdemo"/>
+
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='photoshope'">photoshope</button>
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='chrome'">chrome</button>
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='slider'">slider</button>
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='sketch'">sketch</button>
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='material'">material</button>
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='compact'">compact</button>
+          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='swatches'">swatches</button>
+        
       </div>
     </div>
   </div>
 </template>
 <script type="text/babel">
-import MaskedInput from 'vue-text-mask'
-import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
-const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy HH:MM')
+import ColorPickersDemo from '../../../components/advanced-elements/ColorPickers.vue'
+import MultiSelectDemo from '../../../components/advanced-elements/MultiSelect.vue'
+import TextMaskDemo from '../../../components/advanced-elements/TextMask.vue'
+
 export default {
-  name: 'name',
   components: {
-    'masked-input': MaskedInput
+   'color-pickers-demo' : ColorPickersDemo,
+   'multi-select-demo' : MultiSelectDemo,
+   'text-mask-demo' : TextMaskDemo,
   },
-  data () {
-    return {
-      phone: '',
-      date: '',
-      dateAuto: '',
-      auto: autoCorrectedDatePipe
+  data(){
+    return{
+      colorpickerdemo:'',
+      advcolors: '',
     }
-  },
-  mounted () {
-    Plugin.initPlugins(['Select2', 'TimePickers', 'DatePicker', 'MultiSelect', 'BootstrapSelect', 'SwitchToggles'])
+
   }
 }
 </script>
+

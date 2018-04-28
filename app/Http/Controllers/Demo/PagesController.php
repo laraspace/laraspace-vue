@@ -15,9 +15,11 @@ class PagesController extends Controller
             return 'true';
         }
     }
+
     public function allUsers() {
-       return $users = User::all();
+       return $users = User::paginate(5);
     }
+
     public function destroy($id)
     {
         $user = User::findOrFail($id);

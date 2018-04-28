@@ -4,10 +4,10 @@
       <div class="login-box">
         <div class="logo-main">
           <a href="/admin"><img
-            src="/assets/img/logo-large.png"
+            src="/assets/img/logo-login.png"
             alt="Laraspace Logo"></a>
         </div>
-        <router-view></router-view>
+        <router-view/>
         <div class="page-copyright">
           <p>Powered by <a
             href="http://bytefury.com"
@@ -20,22 +20,18 @@
 </template>
 
 <script type="text/babel">
+import Layout from '../../helpers/layout'
 export default {
-  watch: {
-    $route: 'onRouteChange'
+  mounted () {
+    this.setLayoutClasses()
+  },
+  destroyed () {
+    Layout.resetLogin('login-2')
+  },
+  methods: {
+    setLayoutClasses () {
+      Layout.setLogin('login-2')
+    }
   }
-  // mounted () {
-  //   this.setLayoutClasses()
-  // },
-  // methods: {
-  //   setLayoutClasses () {
-  //     let body = $('body')
-  //     body.removeClass()
-  //     body.addClass('login-page login-2')
-  //   }
-  // },
-  // onRouteChange () {
-  //   $('body').removeClass('login-page')
-  // }
 }
 </script>

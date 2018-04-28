@@ -4,20 +4,19 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import router from './router.js'
-import Layout from './helpers/layout'
-import Plugin from './helpers/plugin'
+import layout from './helpers/layout'
+
 require('./bootstrap')
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 window.Plugin = Plugin
+
+Vue.prototype.$layout = layout
+
 const app = new Vue({
-  router,
-  methods: {
-    onOverlayClick () {
-      Layout.toggleSidebar()
-    }
-  }
+  router
 }).$mount('#app')

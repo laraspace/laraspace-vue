@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Laraspace - Laravel Admin</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500,400,300,700' rel='stylesheet' type='text/css'>
     <script src="/assets/js/core/pace.js"></script>
     <link href="{{mix("/assets/css/laraspace.css")}}" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -28,7 +28,7 @@
     <meta name="theme-color" content="#333333">
 </head>
 <body class="layout-default skin-default">
-<div id="app" class="template-container">
+<div id="app" class="site-wrapper">
     <div class="mobile-menu-overlay" @click.prevent="onOverlayClick"></div>
     <transition name="fade" mode="out-in">
         <router-view></router-view>

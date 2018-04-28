@@ -1,11 +1,21 @@
 import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate'
-import Axios from 'axios'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
+import VTooltip from 'v-tooltip'
+
+/**
+ * Global css plugins
+ */
+import 'vue-tabs-component/docs/resources/tabs-component.css'
+
+/**
+ * Global plugins
+ */
+global.notie = require('notie')
+global.toastr = require('toastr')
 
 window._ = require('lodash')
-
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -15,6 +25,9 @@ window._ = require('lodash')
 
 window.Vue = require('vue')
 
+// Vue.directive('tooltip', VTooltip)
+// Vue.directive('close-popover', VClosePopover)
+// Vue.component('v-popover', VPopover)
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -22,8 +35,6 @@ window.Vue = require('vue')
  */
 
 window.axios = require('axios')
-
-global.$ = global.jQuery = require('jquery')
 
 window.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'
@@ -48,12 +59,6 @@ window.axios.interceptors.request.use(function (config) {
 })
 
 /**
- * Global plugins
- */
-window.notie = require('notie')
-window.toastr = require('toastr')
-
-/**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
@@ -65,6 +70,8 @@ window.toastr = require('toastr')
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // })
+
 Vue.use(VueRouter)
 Vue.use(VeeValidate)
 Vue.use(VuePrism)
+Vue.use(VTooltip)

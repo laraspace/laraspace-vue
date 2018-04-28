@@ -21,17 +21,17 @@
               </h5>
               <line-chart
                 :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-                :values="[65, 59, 80, 81, 56, 55, 40]">
-              </line-chart>
+                :values="[65, 59, 80, 81, 56, 55, 40]"
+              />
             </div>
             <div class="mb-4">
               <h5 class="section-semi-title">
                 Bar Chart
               </h5>
-              <bar-Chart
+              <bar-chart
                 :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-                :values="[65, 59, 80, 81, 56, 55, 40]">
-              </bar-Chart>
+                :values="[65, 59, 80, 81, 56, 55, 40]"
+              />
             </div>
             <div class="row">
               <div class="col-md-6 mb-4">
@@ -42,8 +42,8 @@
                   :labels="pieAndDoughtnut.labels"
                   :values="pieAndDoughtnut.data"
                   :bg-colors="pieAndDoughtnut.bgColors"
-                  :hover-bg-colors="pieAndDoughtnut.hoverBgColors">
-                </pie-chart>
+                  :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
+                />
               </div>
               <div class="col-md-6 mb-4">
                 <h5 class="section-semi-title">
@@ -54,8 +54,7 @@
                   :values="pieAndDoughtnut.data"
                   :bg-colors="pieAndDoughtnut.bgColors"
                   :hover-bg-colors="pieAndDoughtnut.hoverBgColors"
-                >
-                </doughnut-chart>
+                />
               </div>
             </div>
           </div>
@@ -66,14 +65,17 @@
 </template>
 
 <script type="text/babel">
-import LineChart from '../../../components/LineChart.vue'
-import BarChart from '../../../components/BarChart.vue'
-import PieChart from '../../../components/PieChart.vue'
-import DoughnutChart from '../../../components/DoughnutGraph.vue'
+import LineChart from '../../../components/chartjs/LineChart.vue'
+import BarChart from '../../../components/chartjs/BarChart.vue'
+import PieChart from '../../../components/chartjs/PieChart.vue'
+import DoughnutChart from '../../../components/chartjs/DoughnutGraph.vue'
 
 export default {
   components: {
-    LineChart, BarChart, PieChart, DoughnutChart
+    LineChart,
+    BarChart,
+    PieChart,
+    DoughnutChart
   },
   data () {
     return {

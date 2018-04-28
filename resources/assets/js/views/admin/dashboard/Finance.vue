@@ -211,9 +211,9 @@
 
 <script type="text/babel">
 import 'easy-pie-chart/dist/easypiechart'
-import LineChart from '../../../components/LineChart.vue'
-import BarChart from '../../../components/BarChart.vue'
-import PieChart from '../../../components/PieChart.vue'
+import LineChart from '../../../components/chartjs/LineChart.vue'
+import BarChart from '../../../components/chartjs/BarChart.vue'
+import PieChart from '../../../components/chartjs/PieChart.vue'
 export default {
   components: {
     LineChart,
@@ -226,7 +226,7 @@ export default {
     }
   },
   mounted () {
-    Plugin.initPlugins(['EasyPieChart'])
+    // Plugin.initPlugins(['EasyPieChart'])
   }
 }
 </script>

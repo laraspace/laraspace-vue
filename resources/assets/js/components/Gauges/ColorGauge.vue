@@ -1,43 +1,35 @@
 <template>
- <div>
-  <div class="row gauges-row">
-    <div class="col">
-    <div class="gauge gauge-lg">
-        <canvas class="color-gauge"/>
-        <div class="gauge-label"/>
+  <div>
+    <div class="row gauges-row">
+      <div class="col">
+        <div class="gauge gauge-lg">
+          <canvas class="color-gauge"/>
+          <div class="gauge-label"/>
+        </div>
+      </div>
+      <div class="col">
+        <div class="gauge gauge-md">
+          <canvas class="color-gauge"/>
+          <div class="gauge-label"/>
+        </div>
+      </div>
+      <div class="col">
+        <div class="gauge gauge-sm">
+          <canvas class="color-gauge"/>
+          <div class="gauge-label"/>
+        </div>
+      </div>
     </div>
-    </div>
-    <div class="col">
-    <div class="gauge gauge-md">
-        <canvas class="color-gauge"/>
-        <div class="gauge-label"/>
-    </div>
-    </div>
-    <div class="col">
-    <div class="gauge gauge-sm">
-        <canvas class="color-gauge"/>
-        <div class="gauge-label"/>
-    </div>
-    </div>
-</div>
- </div>
+  </div>
 </template>
 
 <script>
-import { Gauge, Donut } from 'gaugeJS'
+import { Gauge } from 'gaugeJS'
 
 export default {
   mounted  () {
-    let vm = this
-    let GaugesChart = (function () {
-      return {
-        init: function () {
-          vm.handleColorGauges()
-        }
-      }
-    })()
     this.$nextTick(() => {
-      GaugesChart.init()
+      this.handleColorGauges()
     })
   },
   methods: {
@@ -67,16 +59,17 @@ export default {
         ]
       }
 
-      jquery('.color-gauge').each(function () {
+      let elements = document.getElementsByClassName('color-gauge')
+      for (let el of elements) {
         if (OptsColorGauge !== false) {
-          var colorgauge = new Gauge(this).setOptions(OptsColorGauge)
+          var colorgauge = new Gauge(el).setOptions(OptsColorGauge)
           colorgauge.maxValue = 3000 // set max gauge value
           colorgauge.setMinValue(0) // set min value
           colorgauge.animationSpeed = 32 // set animation speed (32 is default value)
           colorgauge.set(1250) // set actual value
-          colorgauge.setTextField(this.nextElementSibling)
+          colorgauge.setTextField(el.nextElementSibling)
         }
-      })
+      }
     }
   }
 }
