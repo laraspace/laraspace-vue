@@ -13,7 +13,7 @@
         <h6>Basic Form Wizard</h6>
       </div>
       <div class="card-body">
-        <div class="content ls-wizard">
+        <div class="content ls-wizard wizard-2">
           <form-wizard
             stepSize="sm"
             title=""
@@ -175,7 +175,7 @@
         <h6>Form Wizard with icon</h6>
       </div>
       <div class="card-body">
-        <div class="content ls-wizard with-icon">
+        <div class="wizard-2 with-icon ls-wizard ">
           <form-wizard
             title=""
             subtitle=""
@@ -338,7 +338,7 @@
         <h6>Form Wizard validation</h6>
       </div>
       <div class="card-body">
-        <div class="content ls-wizard with-icon validation">
+        <div class="ls-wizard wizard-2 with-icon">
           <form-wizard
             stepSize="sm"
              title=""

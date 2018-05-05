@@ -2,7 +2,7 @@
 @import "vue-form-wizard2";
 @import "vue-form-wizard3";
 
-// Common Styles For ls-wizard
+// Common Styles For wizard
 
 .ls-wizard {
 
@@ -16,9 +16,16 @@
     transition: unset;
   }
 
+  .wizard-nav {
+    .wizard-icon-container {
+      background-color:rgb(255, 222, 0) !important;
+    }
+  }
+
   .wizard-card-footer {
 
     .wizard-footer-left {
+      
       .wizard-btn{
         position: absolute;
         background-color:#007dcc!important;
@@ -30,6 +37,7 @@
     }
     
     .wizard-footer-right {
+      
       .wizard-btn {
         background-color: #007dcc !important;
         border-color: #007dcc !important;

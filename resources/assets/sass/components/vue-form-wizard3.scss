@@ -1,11 +1,15 @@
 $class: "disable" !default;
   .wizard-3 {
+
     .vue-form-wizard {
+    
       .wizard-navigation {
+    
         .wizard-progress-with-circle {
             display: none !important;
         }
         .wizard-nav {
+    
           .stepTitle{
               &.active{
                 color: #333333 !important;
@@ -15,7 +19,7 @@ $class: "disable" !default;
                 bottom: 5px;
             }
 
-          .wizard-icon-circle{
+          .wizard-icon-circle {
             border-color: rgb(255, 222, 0) !important;
             height: 3px;
             width: 375px;
@@ -27,15 +31,16 @@ $class: "disable" !default;
               background-color: #fff299 !important;
             }
 
-            .wizard-icon-container{
+            .wizard-icon-container {
               background-color: #ffde00 !important;
             }
           }
+    
           .wizard-icon-container {
             background-color: #fff  !important;
           }
-          }
         }
+      }
     }
   }
 

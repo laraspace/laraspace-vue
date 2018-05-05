@@ -17,6 +17,8 @@
           <form-wizard
             @on-complete="onComplete"
             shape="tab"
+            title=""
+            subtitle=""
             stepSize="sm">
             <tab-content
               title="Step 1"
