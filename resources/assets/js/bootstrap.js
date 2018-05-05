@@ -4,7 +4,6 @@ import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
 
-
 /**
  * Global css plugins
  */
