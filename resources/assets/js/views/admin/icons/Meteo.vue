@@ -1,11 +1,11 @@
 <template>
   <div class="main-content">
     <div class="page-header">
-      <h3 class="page-title">Meteocons Icons</h3>
+      <h3 class="page-title">Meteo Icons</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Icons</a></li>
-        <li class="breadcrumb-item"><a href="#">Meteocons Icons</a></li>
+        <li class="breadcrumb-item"><a href="#">Meteo Icons</a></li>
       </ol>
     </div>
     <div class="row">

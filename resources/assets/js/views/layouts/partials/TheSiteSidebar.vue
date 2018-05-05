@@ -464,7 +464,7 @@
             <router-link
               slot="item-title"
               to="/admin/apps/mail-box">
-              MailBox
+              Mailbox
             </router-link>
           </v-collapse-item>
 

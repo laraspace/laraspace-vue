@@ -1,5 +1,5 @@
 <template>
-  <div :class="['mailbox-modal', { 'is-visible': isVisible }]">
+  <div :class="['mailbox-modal', { 'is-visible': isVisible }]" v-click-outside="closeModal">
     <div class="sidepanel-header">
       <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
       <div class="mail-action">
@@ -156,12 +156,12 @@
       </div>
       <div class="commnet">
         <textarea
-          id="replay"
+          id="reply"
           name="comment"
           cols="75"
           rows="4"/>
         <button class="btn btn-primary">
-          Replay
+          Reply
         </button>
       </div>
     </div>
@@ -179,8 +179,10 @@ export default {
   },
   methods: {
     closeModal () {
-      this.$emit('close')
-    }
+      if (this.isVisible) {
+        this.$emit('close')
+      }
+    },
   }
 }
 </script>

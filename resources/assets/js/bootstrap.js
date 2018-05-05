@@ -4,6 +4,7 @@ import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
 
+
 /**
  * Global css plugins
  */
@@ -14,7 +15,6 @@ import 'vue-tabs-component/docs/resources/tabs-component.css'
  */
 global.notie = require('notie')
 global.toastr = require('toastr')
-
 window._ = require('lodash')
 
 /**
@@ -70,6 +70,8 @@ window.axios.interceptors.request.use(function (config) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // })
+
+require('./helpers/directives')
 
 Vue.use(VueRouter)
 Vue.use(VeeValidate)
