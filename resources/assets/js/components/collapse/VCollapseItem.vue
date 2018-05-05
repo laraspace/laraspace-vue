@@ -14,6 +14,7 @@
     >
       <div
         v-show="isCollapseOpen"
+        v-if="hasChild"
         ref="collapseItems"
         :style="'max-height:' + height + 'px'"
         class="collapse-group-items"
@@ -31,35 +32,51 @@ export default {
       type: String,
       require: true,
       default: ''
+    },
+    isActive: {
+      type: Boolean,
+      require: true,
+      default: false
     }
   },
   data () {
     return {
       height: '',
       originalHeight: '',
-      isCollapseOpen: true
+      isCollapseOpen: true,
+      hasChild: true,
+      accordion: false
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
+    window.EventBus.$on('accordion', (value) => {
+      this.accordion = value
+      console.log(value)
     })
-    if (this.$slots) {
-      console.log(this.$slots['itemTitle'])
-    }
-    if (this.activeUrl) {
-      if (this.isActive() === true) {
-        this.isCollapseOpen = true
-      } else {
-        this.isCollapseOpen = false
-      }
+
+    if (this.accordion === true) {
+      this.hasAccordion()
     } else {
       this.isCollapseOpen = false
     }
+    this.$nextTick(() => {
+      this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
+      if (this.$refs.collapseItems.children.length === 0) {
+        this.hasChild = false
+      }
+    })
   },
   methods: {
-    isActive () {
+    hasActiveUrl () {
       return this.$route.path.indexOf(this.activeUrl) > -1
+    },
+    hasAccordion () {
+      if (this.activeUrl) {
+        console.log(this.activeUrl)
+        this.isCollapseOpen = this.hasActiveUrl()
+      } else {
+        this.isCollapseOpen = false
+      }
     },
     showCollapse () {
       let self = this

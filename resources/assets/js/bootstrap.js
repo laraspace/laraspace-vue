@@ -41,6 +41,12 @@ window.axios.defaults.headers.common = {
 }
 
 /**
+ * Event Bus
+ */
+
+window.EventBus = new window.Vue()
+
+/**
  * Interceptors
  */
 
