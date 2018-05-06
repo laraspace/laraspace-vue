@@ -5,72 +5,16 @@
     </a>
     <div class="skin-tools-content">
       <h5 class="mt-2">Select Skin</h5>
-      <div class="row mt-md-4">
-        <div class="col-sm-6 skin-item">
+      <div class="skins">
+        <div v-for="skin in skins" :key="skin.slug" class="skin-item">
           <a
-            href="#"
-            title="Skin - Default"
-            class="skin-radio active"
-            @click="selectSkin('default')"
-          >
-            <img src="/assets/img/skins/skin-default.png" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-sm-6 skin-item">
-          <a
+            :class="{'active': skin.slug === selectedSkin}"
+            :title="skin.title"
             href="#"
             class="skin-radio"
-            data-logo="white"
-            title="Skin - Tyrell"
-            @click="selectSkin('tyrell')"
+            @click.prevent="selectSkin(skin.slug)"
           >
-            <img src="/assets/img/skins/skin-tyrell.png" class="img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="row mt-md-4">
-        <div class="col-sm-6 skin-item">
-          <a
-            href="#"
-            class="skin-radio"
-            data-logo="white"
-            title="Skin - Arryn"
-            @click="selectSkin('arryn')"
-          >
-            <img src="/assets/img/skins/skin-arryn.png" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-sm-6 skin-item">
-          <a
-            href="#"
-            class="skin-radio"
-            data-logo="white"
-            title="Skin - Lannister"
-            @click="selectSkin('lannister')"
-          >
-            <img src="/assets/img/skins/skin-lannister.png" class="img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="row mt-md-4">
-        <div class="col-sm-6 skin-item">
-          <a
-            href="#"
-            class="skin-radio"
-            title="Skin - Stark"
-            @click="selectSkin('stark')"
-          >
-            <img src="/assets/img/skins/skin-stark.png" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-sm-6 skin-item">
-          <a
-            href="#"
-            class="skin-radio"
-            title="Skin - Targaryen"
-            @click="selectSkin('targaryen')"
-          >
-            <img src="/assets/img/skins/skin-targaryen.png" class="img-fluid">
+            <img :src="skin.img" class="img-fluid">
           </a>
         </div>
       </div>
@@ -82,11 +26,21 @@
 export default {
   data () {
     return {
-      isOpen: false
+      isOpen: false,
+      selectedSkin: 'default',
+      skins: [
+        {title: 'Skin - Default', 'slug': 'default', 'img': '/assets/img/skins/skin-default.png'},
+        {title: 'Skin - Tyrell', 'slug': 'tyrell', 'img': '/assets/img/skins/skin-tyrell.png'},
+        {title: 'Skin - Arryn', 'slug': 'arryn', 'img': '/assets/img/skins/skin-arryn.png'},
+        {title: 'Skin - Lannister', 'slug': 'lannister', 'img': '/assets/img/skins/skin-lannister.png'},
+        {title: 'Skin - Stark', 'slug': 'stark', 'img': '/assets/img/skins/skin-stark.png'},
+        {title: 'Skin - Targaryen', 'slug': 'targaryen', 'img': '/assets/img/skins/skin-targaryen.png'}
+      ]
     }
   },
   methods: {
     selectSkin (skin) {
+      this.selectedSkin = skin
       this.$utils.setSkin(skin)
     }
   }
