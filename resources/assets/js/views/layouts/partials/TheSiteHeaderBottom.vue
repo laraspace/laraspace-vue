@@ -9,7 +9,7 @@
         </a>
 
         <v-dropdown-item>
-         <router-link
+          <router-link
             slot="item-title"
             to="/admin/dashboard/basic">
             Basic
@@ -159,6 +159,7 @@
             Vue Tooltips
           </router-link>
         </v-dropdown-item>
+
         <v-dropdown-item>
           <router-link
             slot="item-title"
@@ -166,6 +167,7 @@
             VueCarousel
           </router-link>
         </v-dropdown-item>
+
         <v-dropdown-item>
           <router-link
             slot="item-title"
