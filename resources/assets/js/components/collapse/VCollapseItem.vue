@@ -87,7 +87,6 @@ export default {
     },
     showCollapse () {
       let self = this
-      console.log(this.accordion)
       if (this.accordion) {
         if (this.isCollapseOpen === false) {
           this.$parent.$children.filter((value) => {

@@ -33,6 +33,7 @@
     <transition name="fade" mode="out-in">
         <router-view></router-view>
     </transition>
+    <theme-switcher />
 </div>
 <script type="text/javascript" src="{{mix("/assets/js/app.js")}}"></script>
 </body>

@@ -18,7 +18,7 @@ export default {
     SiteFooter
   },
   mounted () {
-    this.$layout.set('layout-horizontal')
+    this.$utils.set('horizontal')
   }
 }
 </script>

@@ -1,36 +1,87 @@
 .mailbox .mailbox-sidebar {
-  max-width: 230px;
-  min-width: 200px;
-  padding: 15px;
-  padding-top: 20px;
-  transition: 0.5s;
-  border-right: 1px solid #e4eaec;
-  flex: 1;
+    padding-top: 20px;
+    transition: 0.5s;
+    border-right: 1px solid #e4eaec;
+    position: absolute;
+    height: 100%;
+    width: 200px;
+    transform: translateX(-200px);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+    padding: 10px;
 
-  .sidebar-menu {
-      list-style: none;
-      padding: 0;
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
 
-      li {
-          i {
-              width: 30px;
-          }
+        li {
+            padding: 0 15px;
+            border-left: 5px solid transparent;
 
-          a {
-              display: block;
-              padding: 15px 0px 12px 0px;
-              position: relative;
-              text-decoration: none;
+            &.active {
+                border-left: 5px solid #ffde00;
+                background-color: #ffde0026;
+            }
 
-              span {
-                  float: right;
-                  margin-top: 3px;
-              }
-          }
-      }
-  }
+            i {
+                width: 30px;
+            }
 
-  &.is-open {
-      left: 0;
-  }
+            a {
+                display: block;
+                padding: 15px 0px 12px 0px;
+                position: relative;
+                text-decoration: none;
+
+                span {
+                    float: right;
+                    margin-top: 3px;
+                }
+            }
+        }
+    }
+
+    .left-sidebar-btn {
+        position: absolute;
+        padding: 2px 2px;
+        height: 60px;
+        width: 20px;
+        color: #333;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-50%);
+        cursor: pointer;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-color:#f8f8f8;
+        right: -20px;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+            background-color: #e5e5e5
+        }
+    }
+
+    &:hover {
+        .left-sidebar-btn {
+            opacity: 1 !important;
+        }
+    }
+
+    &.is-open {
+        transform: translateX(0);
+
+        .left-sidebar-btn {
+            left: 0;
+            right: auto;
+            opacity: 0;
+        }
+    }
+}
+
+.is-open + .mailbox-content {
+    padding-left: 200px;
 }

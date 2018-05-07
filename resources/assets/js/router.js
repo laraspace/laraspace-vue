@@ -63,7 +63,7 @@ import VideoGallery from './views/admin/gallery/VideoGallery.vue'
 
 // Apps
 import TodoItem from './views/admin/apps/TodoItem.vue'
-import MailBox from './views/admin/apps/mailbox/MailBox.vue'
+import Mailbox from './views/admin/apps/mailbox/Mailbox.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'
@@ -313,7 +313,7 @@ const routes = [
       // Apps
       {
         path: 'apps/mail-box',
-        component: MailBox
+        component: Mailbox
       },
       {
         path: 'apps/todo-item',

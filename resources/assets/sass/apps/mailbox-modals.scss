@@ -1,119 +1,125 @@
 .mailbox-modal {
-  position: fixed;
-  background: ghostwhite;
-  top: 60px;
-  height: auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-width: 700px;
-  width: 100%;
-  right: -720px;
-  bottom: 0px;
-  box-shadow: -10px 0 20px 0 rgba(66, 66, 66, 0.2);
-  z-index: 1050;
-  transition: right 0.5s;
+    position: fixed;
+    background: white;
+    top: 60px;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 600px;
+    width: 100%;
+    right: -620px;
+    bottom: 0px;
+    box-shadow: -10px 0 20px 0 rgba(66, 66, 66, 0.2);
+    z-index: 1050;
+    transition: right 0.5s;
 
-  &.is-visible {
-      right: 0px;
-  }
+    &.is-visible {
+        right: 0px;
+    }
 
-  .sidepanel-header {
-      position: relative;
-      padding: 40px 30px;
-      padding-right: 120px;
-      background-color: #0bb2d4;
+    .sidepanel-header {
+        position: relative;
+        padding: 40px 30px;
+        padding-right: 120px;
+        background-color: $ls-color-secondary;
+        color: white;
 
-      .mail-action {
-          position: absolute;
-          right: 10px;
-          top: 95px;
+        h3 {
+            margin: 0;
+            color: white;
+        }
 
-          a {
-              margin-left: 12px;
-          }
+        .mail-action {
+            position: absolute;
+            right: 10px;
+            top: 95px;
 
-          .mail-menu {
-              ul {
-                  li {
-                      padding-left: 15px;
-                      padding-bottom: 10px;
-                  }
+            a {
+                margin-left: 12px;
+            }
 
-                  color: white;
-                  list-style: none;
-              }
-          }
-      }
+            .mail-menu {
+                ul {
+                    li {
+                        padding-left: 15px;
+                        padding-bottom: 10px;
+                    }
 
-      .sidepanel-close {
-          position: absolute;
-          right: 25px;
-          top: 15px;
-          background: none;
-          border: none;
-      }
-  }
+                    color: white;
+                    list-style: none;
+                }
+            }
+        }
 
-  .sidepanel-body {
-      padding: 30px;
+        .sidepanel-close {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            background: none;
+            border: none;
+        }
+    }
 
-      .message-heading {
-          position: relative;
-          padding: 20px 0px;
+    .sidepanel-body {
+        padding: 30px;
 
-          .message-heading-main {
-              position: relative;
-              padding-top: 25px;
+        .message-heading {
+            position: relative;
+            padding: 20px 0px;
 
-              a {
-                  .avtar-img {
-                      height: 50px;
-                      border-radius: 50%;
-                  }
-              }
+            .message-heading-main {
+                position: relative;
+                padding-top: 25px;
 
-              .name {
-                  position: relative;
-                  left: 5px;
-                  bottom: 10px;
-              }
+                a {
+                    .avtar-img {
+                        height: 50px;
+                        border-radius: 50%;
+                    }
+                }
 
-              .email {
-                  span {
-                      a {
-                          color: burlywood;
-                      }
-                  }
+                .name {
+                    position: relative;
+                    left: 5px;
+                    bottom: 10px;
+                }
 
-                  display: inline-block;
-                  position: relative;
-                  right: 64px;
-                  top: 10px;
-              }
+                .email {
+                    span {
+                        a {
+                            color: burlywood;
+                        }
+                    }
 
-              .message-heading-right {
-                  display: inline;
-              }
-          }
-      }
+                    display: inline-block;
+                    position: relative;
+                    right: 64px;
+                    top: 10px;
+                }
 
-      .message-attachment {
-          margin-top: 40px;
-          ul {
-              list-style: none;
-              padding: 0px;
-          }
-      }
+                .message-heading-right {
+                    display: inline;
+                }
+            }
+        }
 
-      .all-mail {
-          border-top: 1px solid #e4eaec;
-          padding-bottom: 30px;
-      }
+        .message-attachment {
+            margin-top: 40px;
+            ul {
+                list-style: none;
+                padding: 0px;
+            }
+        }
 
-      .comment {
-          border-top: 1px solid #e4eaec;
-          margin-top: 20px;
-          margin-bottom: 20px;
-      }
-  }
+        .all-mail {
+            border-top: 1px solid #e4eaec;
+            padding-bottom: 30px;
+        }
+
+        .comment {
+            border-top: 1px solid #e4eaec;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
 }
