@@ -4,7 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import router from './router.js'
-import layout from './helpers/layout'
+import utils from './helpers/utilities'
+import ThemeSwitcher from './components/ThemeSwitcher'
 
 require('./bootstrap')
 
@@ -15,8 +16,11 @@ require('./bootstrap')
  */
 window.Plugin = Plugin
 
-Vue.prototype.$layout = layout
+Vue.prototype.$utils = utils
 
 const app = new Vue({
-  router
+  router,
+  components: {
+    ThemeSwitcher
+  }
 }).$mount('#app')

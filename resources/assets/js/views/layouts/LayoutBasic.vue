@@ -25,7 +25,7 @@ export default {
     }
   },
   mounted () {
-    this.$layout.set('layout-default')
+    this.$utils.setLayout('default')
   }
 }
 </script>

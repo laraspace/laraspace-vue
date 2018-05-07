@@ -1,15 +1,19 @@
 <template>
   <div class="main-content">
     <div class="page-header">
-      <h3 class="page-title">MailBox</h3>
+      <h3 class="page-title">Mailbox</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Components</a></li>
-        <li class="breadcrumb-item active">MailBox</li>
+        <li class="breadcrumb-item"><a href="#">Apps</a></li>
+        <li class="breadcrumb-item active">Mailbox</li>
       </ol>
     </div>
     <div class="mailbox">
-      <mailbox-sidebar />
+      <mailbox-sidebar
+        :selected-category="selectedCategory"
+        :categories="categories"
+        @selected="selectCategory"
+      />
 
       <div class="mailbox-content">
         <div class="mailbox-content-header">
@@ -32,18 +36,18 @@
 
             <button
               id="dropdownFolderMenu"
-              class="btn btn-light"
+              class="btn btn-light dropdown-toggle"
               type="button"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
-              <i class="icon-fa icon-fa-folder-o"/>
+              Actions
             </button>
 
             <button
               id="dropdownTagMenu"
               type="button"
-              class="btn btn-light"
+              class="btn btn-icon btn-light"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
@@ -52,129 +56,78 @@
           </div>
 
           <div class="mailbox-filters">
-            <button
-              id="dropdownCheckMenu"
-              type="button"
-              class="btn btn-light"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
-              Check All <i class="icon-fa icon-fa-angle-down"/>
-            </button>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="dropdownCheckMenu">
-              <a
-                class="dropdown-item"
-                href="#">Dropdown link</a>
-              <a
-                class="dropdown-item"
-                href="#">Dropdown link</a>
-            </div>
             <div class="mail-search">
               <input
                 id="inputEmailTo"
                 type="email"
                 placeholder="Search"
-                class="form-control">
+                class="form-control"
+                v-model="searchText"
+              >
             </div>
           </div>
         </div>
         <table class="table table-hover">
           <tbody>
-            <tr v-for="(mail,index) in mails" :key="index">
-              <td class="cell-50">
+            <tr
+              v-for="(mail,index) in filteredMails"
+              :class="{'read' : mail.read }"
+              :key="index"
+              @click="openMailModal(mail)"
+            >
+              <td class="cell-checkbox" @click.stop>
                 <div class="custom-control custom-checkbox">
                   <input
                     :id="index"
-                    v-model="selected"
-                    :value="mail"
+                    v-model="selectedMails"
+                    :value="mail.id"
                     type="checkbox"
-                    class="custom-control-input">
+                    class="custom-control-input"
+                  >
                   <label
                     :for="index"
-                    class="custom-control-label"/>
+                    class="custom-control-label"
+                  />
                 </div>
               </td>
-              <td class="cell-30">
-                <input
-                  class="star"
-                  type="checkbox"
-                  title="important">
-              </td>
-              <td class="cell-50">
-                <a>
-                  <img
-                    src="/assets/img/avatars/avatar.png"
-                    alt="avtar"
-                    class="avtar-img">
+              <td class="cell-fav">
+                <a
+                  href="#"
+                  class="btn-favorite"
+                  @click.prevent.stop="mail.favorite = !mail.favorite"
+                >
+                  <i v-if="mail.favorite" class="icon-fa icon-fa-star active" />
+                  <i v-else class="icon-fa icon-fa-star-o" />
                 </a>
               </td>
-              <td @click="openModal" >
+              <td class="cell-user">
+                <a class="user">
+                  <img :src="mail.from.avatar" class="user-avatar">
+                </a>
+              </td>
+              <td class="cell-content">
                 <div class="content">
-                  <div class="title">
+                  <div class="content-name">
+                    {{ mail.from.name }}
+                  </div>
+                  <div class="content-subject">
                     {{ mail.title }}
                   </div>
                 </div>
               </td>
-              <td class="cell-30 attachment">
-                <i class="icon-fa icon-fa-paperclip"/>
+              <td class="cell-attachment">
+                <i class="icon-fa icon-fa-paperclip attachment-icon"/>
               </td>
-              <td class="cell-130">
-                2 hour ago
+              <td class="cell-time">
+                2 hours ago
               </td>
             </tr>
           </tbody>
         </table>
-        <div class="mailbox-content-footer">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="#"
-                  aria-label="Previous"
-                >
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">5</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">6</a>
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="#"
-                  aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
 
-        <mailbox-modal :is-visible="isModalVisible" @close="closeModal"/>
+        <mailbox-footer />
 
-        <button class="compose-mail-btn" @click="openCompose">
-          <i class="icon-fa icon-fa-pencil"/>
-        </button>
+        <mailbox-modal :is-visible="isModalVisible" @close="closeMailModal"/>
 
         <mailbox-compose-modal ref="compose"/>
       </div>
@@ -186,59 +139,112 @@
 import MailboxSidebar from './MailboxSidebar'
 import MailboxModal from './MailboxModal'
 import MailboxComposeModal from './MailboxComposeModal'
+import MailboxFooter from './MailboxFooter'
 
 export default {
   components: {
     MailboxSidebar,
     MailboxModal,
-    MailboxComposeModal
+    MailboxComposeModal,
+    MailboxFooter
   },
   data () {
     return {
-      isModalVisible: false,
-      tab: 1,
-      isLeftSidebarVisible: false,
-      rightAngle: true,
-      leftAngle: false,
-      selected: [],
       mails: [
-        { 'id': '1', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '2', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '3', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '4', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '5', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '6', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '7', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' },
-        { 'id': '8', 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' }
-      ]
+        { 'id': '1', 'categories': ['inbox', 'draft'], 'from': { avatar: '/assets/img/avatars/avatar.png', name: 'Ashton White' }, 'title': 'Among going manor who did. Do ye is celebrated it sympathize considered..', favorite: false, read: true },
+        { 'id': '2', 'categories': ['inbox', 'draft', 'sent'], 'from': { avatar: '/assets/img/avatars/avatar1.png', name: 'Ben Solo' }, 'title': 'Did shy say mention enabled through elderly improve.', favorite: false, read: true },
+        { 'id': '3', 'categories': ['inbox', 'sent'], 'from': { avatar: '/assets/img/avatars/avatar2.png', name: 'Mark Futo' }, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', favorite: false, read: true },
+        { 'id': '4', 'categories': ['inbox', 'sent'], 'from': { avatar: '/assets/img/avatars/avatar.png', name: 'Charlie Brown' }, 'title': 'Yet bed any for travelling assistance indulgence unpleasing.', favorite: false, read: true },
+        { 'id': '5', 'categories': ['inbox', 'trash'], 'from': { avatar: '/assets/img/avatars/avatar1.png', name: 'Evan Sharma' }, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', favorite: false, read: false },
+        { 'id': '6', 'categories': ['inbox', 'trash'], 'from': { avatar: '/assets/img/avatars/avatar2.png', name: 'Mercy Joseph' }, 'title': 'At engage simple father of period others except. My giving do summer of though ...', favorite: false, read: true },
+        { 'id': '7', 'categories': ['inbox', 'important'], 'from': { avatar: '/assets/img/avatars/avatar.png', name: 'Shobha Thumpy' }, 'title': 'Whole front do of plate heard oh ought. His defective nor convinced residence own.', favorite: false, read: true },
+        { 'id': '8', 'categories': ['inbox', 'important'], 'from': { avatar: '/assets/img/avatars/avatar1.png', name: 'Phoebe Richard' }, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', favorite: false, read: true },
+        { 'id': '9', 'categories': ['inbox', 'important'], 'from': { avatar: '/assets/img/avatars/avatar2.png', name: 'Mark Futo' }, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', favorite: false, read: true },
+        { 'id': '10', 'categories': ['inbox'], 'from': { avatar: '/assets/img/avatars/avatar.png', name: 'Ben Solo' }, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', favorite: false, read: false }
+      ],
+      categories: [
+        { id: 1, name: 'Inbox', slug: 'inbox', icon: 'icon-fa icon-fa-inbox', unread: 4 },
+        { id: 2, name: 'Sent', slug: 'sent', icon: 'icon-fa icon-fa-send' },
+        { id: 3, name: 'Draft', slug: 'draft', icon: 'icon-fa icon-fa-edit' },
+        { id: 4, name: 'Important', slug: 'important', icon: 'icon-fa icon-fa-star' },
+        { id: 5, name: 'Trash', slug: 'trash', icon: 'icon-fa icon-fa-trash' }
+      ],
+      isModalVisible: false,
+      isLeftSidebarVisible: false,
+      selectedMails: [],
+      selectedCategory: 'inbox',
+      searchText: ''
     }
   },
   computed: {
     selectAll: {
       get: function () {
-        return this.mails ? this.selected.length === this.mails.length : false
+        return this.mails ? this.selectedMails.length === this.mails.length : false
       },
       set: function (value) {
-        var selected = []
+        let selectedMails = []
 
         if (value) {
-          this.mails.forEach(function (mails) {
-            selected.push(mails)
+          this.mails.forEach(function (mail) {
+            selectedMails.push(mail.id)
           })
         }
-        this.selected = selected
+
+        this.selectedMails = selectedMails
       }
+    },
+    filteredMails () {
+      return this.mails.filter((mail) => {
+        let categoryValid = true
+        let nameValid = true
+
+        if (this.selectedCategory) {
+          categoryValid = mail.categories.indexOf(this.selectedCategory) > -1
+        }
+
+        if (this.searchText) {
+          let searchText = this.searchText.toLowerCase()
+          nameValid = mail.title.toLowerCase().includes(searchText) || mail.from.name.toLowerCase().includes(searchText)
+        }
+
+        return categoryValid && nameValid
+      })
     }
   },
+  mounted () {
+    this.bootstrapNotifs()
+  },
   methods: {
-    openModal () {
+    openMailModal (mail) {
+      mail.read = true
+      this.bootstrapNotifs()
       this.isModalVisible = true
     },
-    closeModal () {
+    closeMailModal () {
       this.isModalVisible = false
     },
-    openCompose () {
+    openComposeModal () {
       this.$refs.compose.openModal()
+    },
+    selectCategory (category) {
+      this.selectedCategory = category
+    },
+    bootstrapNotifs () {
+      this.categories.forEach((category) => {
+        let counter = 0
+
+        this.mails.forEach((mail) => {
+          if (mail.categories.indexOf(category.slug) > -1 && !mail.read) {
+            counter++
+          }
+        })
+
+        if (counter) {
+          this.$set(category, 'unread', counter)
+        } else {
+          this.$set(category, 'unread', 0)
+        }
+      })
     }
   }
 }
