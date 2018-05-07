@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="template-container">
     <site-header/>
     <site-sidebar type="icon"/>
