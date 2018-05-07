@@ -5,55 +5,57 @@
 
     .collapse-group {
 
-        .collapse-group-item, .collapse-group-title {
-            display: block;
-
-            a {
-                color: $sidebar-font-color;
+        .collapse-group-item {
+            
+            .collapse-item-title {
                 display: block;
-                font-size: 14px;
-                padding: 12px 12px 12px 30px;
-                position: relative;
-                text-decoration: none;
 
-                &:hover {
-                    background-color: $sidemenu-item-bg-color--hover;
-                }
-            }
+                a {
+                    color: $sidebar-font-color;
+                    display: block;
+                    font-size: 14px;
+                    padding: 12px 12px 12px 30px;
+                    position: relative;
+                    text-decoration: none;
 
-            i {
-                width: 30px;
-            }
-
-        }
-
-        &.active {
-            & > .collapse-group-title {
-                & > a {
-                    color: $ls-color-primary;
-
-                    & > .icon-fa.arrow:before {
-                        content: "\f107";
+                    &:hover {
+                        background-color: $sidemenu-item-bg-color--hover;
                     }
                 }
-             }
-         }
+                & > a > .icon-fa.arrow{
+                    float: right;
+                    line-height: 1.42857;
 
-        .collapse-group-title > a > .icon-fa.arrow{
-            float: right;
-            line-height: 1.42857;
+                    &:before {
+                        content: "\f104";
+                    }
+                }
 
-            &:before {
-                content: "\f104";
+                i {
+                    width: 30px;
+                }
             }
-        }
 
-        .collapse-group-items {
-            background-color: $sidemenu-submenu-bg;
-            padding: 0;
+            &.active {
 
-            a.active{
-                color: $ls-color-primary;
+                & > .collapse-item-title {
+                    
+                    & > a {
+                        color: $ls-color-primary;
+
+                        & > .icon-fa.arrow:before {
+                            content: "\f107";
+                        }
+                    }
+                }
+            }
+            .collapse-group-items {
+                background-color: $sidemenu-submenu-bg;
+                padding: 0;
+
+                a.active{
+                    color: $ls-color-primary;
+                }
             }
         }
     }
