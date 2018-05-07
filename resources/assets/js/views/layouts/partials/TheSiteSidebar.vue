@@ -467,6 +467,14 @@
               Mailbox
             </router-link>
           </v-collapse-item>
+          
+          <v-collapse-item>
+            <router-link
+              slot="item-title"
+              to="/admin/apps/contacts">
+              Contacts
+            </router-link>
+          </v-collapse-item>
 
           <v-collapse-item>
             <router-link
