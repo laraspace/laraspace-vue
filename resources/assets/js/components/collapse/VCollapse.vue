@@ -18,7 +18,7 @@ export default {
   },
   mounted () {
     this.$nextTick(function () {
-      window.EventBus.$emit('accoardion', this.accordion)
+      window.EventBus.$emit('accordion', this.accordion)
     })
   }
 }

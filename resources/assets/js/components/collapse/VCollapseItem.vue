@@ -49,16 +49,20 @@ export default {
     }
   },
   mounted () {
-    window.EventBus.$on('accordion', (value) => {
-      this.accordion = value
-      console.log(value)
+    this.$nextTick(function () {
+      window.EventBus.$on('accordion', (value) => {
+        this.accordion = value
+        if (value === true) {
+          this.hasAccordion()
+        } else {
+          if (this.isActive) {
+            this.isCollapseOpen = this.isActive
+          } else {
+            this.isCollapseOpen = false
+          }
+        }
+      })
     })
-
-    if (this.accordion === true) {
-      this.hasAccordion()
-    } else {
-      this.isCollapseOpen = false
-    }
     this.$nextTick(() => {
       this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
       if (this.$refs.collapseItems.children.length === 0) {
@@ -71,23 +75,29 @@ export default {
       return this.$route.path.indexOf(this.activeUrl) > -1
     },
     hasAccordion () {
-      if (this.activeUrl) {
-        console.log(this.activeUrl)
-        this.isCollapseOpen = this.hasActiveUrl()
+      if (this.isActive) {
+        this.isCollapseOpen = this.isActive
       } else {
-        this.isCollapseOpen = false
+        if (this.activeUrl) {
+          this.isCollapseOpen = this.hasActiveUrl()
+        } else {
+          this.isCollapseOpen = false
+        }
       }
     },
     showCollapse () {
       let self = this
-      if (this.isCollapseOpen === false) {
-        this.$parent.$children.filter((value) => {
-          if (value !== self) {
-            if (value.isCollapseOpen === true) {
-              value.isCollapseOpen = false
+      console.log(this.accordion)
+      if (this.accordion) {
+        if (this.isCollapseOpen === false) {
+          this.$parent.$children.filter((value) => {
+            if (value !== self) {
+              if (value.isCollapseOpen === true) {
+                value.isCollapseOpen = false
+              }
             }
-          }
-        })
+          })
+        }
       }
       this.isCollapseOpen = !this.isCollapseOpen
     },
