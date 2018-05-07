@@ -3,18 +3,29 @@
 
     .side-nav {
 
-        .collapse-group-title, .collapse-group-item {
-            text-align: center;
+        .collapse-group .collapse-group-item{
 
-            a {
-                padding: 15px;
-            }
-            i {
-                display: block;
-                width: 100%;
-                margin-bottom: 0.5em;
-                font-size: 30px;
+            .collapse-item-title {
+                text-align: center;
+
+                a {
+                    padding: 15px;
+
+                    i {
+                        display: block;
+                        width: 100%;
+                        margin-bottom: 0.5em;
+                        font-size: 30px;
+                    }
+                }
+                .arrow{
+                    position: absolute;
+                    right: 21px;
+                    top: 50%;
+                    margin-top: -8px;
+                }
             }
         }
+      
     }
 }

@@ -40,6 +40,12 @@ window.axios.defaults.headers.common = {
 }
 
 /**
+ * Event Bus
+ */
+
+window.EventBus = new Vue()
+
+/**
  * Interceptors
  */
 
