@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-left">
     <div class="sidebar-body scroll-pane">
-      <div class="side-nav vue-menu">
+      <div class="side-nav">
         <v-collapse active-url="/admin/dashboard">
 
           <a
@@ -269,7 +269,7 @@
           <a
             slot="title"
             href="#">
-            <i class="icon-fa icon-fa-rocket"/>Form
+            <i class="icon-fa icon-fa-rocket"/>Forms
             <span class="icon-fa arrow icon-fa-fw"/>
           </a>
 
@@ -464,7 +464,7 @@
             <router-link
               slot="item-title"
               to="/admin/apps/mail-box">
-              <i class="icon-fa icon-fa-envelope-o"/> MailBox
+              Mailbox
             </router-link>
           </v-collapse-item>
 
@@ -472,7 +472,7 @@
             <router-link
               slot="item-title"
               to="/admin/apps/todo-item">
-              <i class="icon-fa icon-fa-check"/>Todos
+              Todos
             </router-link>
           </v-collapse-item>
         </v-collapse>

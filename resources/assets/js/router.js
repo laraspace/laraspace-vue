@@ -63,12 +63,12 @@ import VueFormWizard2 from './views/admin/forms/VueFormWizard2.vue'
 import VueFormWizard3 from './views/admin/forms/VueFormWizard3.vue'
 
 // Gallery
-import Grid from './views/admin/gallery/Grid.vue'
-import MasonryGrid from './views/admin/gallery/MasonryGrid.vue'
+import ImageGallery from './views/admin/gallery/ImageGallery.vue'
+import VideoGallery from './views/admin/gallery/VideoGallery.vue'
 
 // Apps
 import TodoItem from './views/admin/apps/TodoItem.vue'
-import MailBox from './views/admin/apps/MailBox.vue'
+import Mailbox from './views/admin/apps/mailbox/Mailbox.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'
@@ -304,15 +304,15 @@ const routes = [
         path: 'forms/form-wizard-3',
         component: VueFormWizard3
       },
-
+    
       // Gallery
       {
-        path: 'gallery/grid',
-        component: Grid
+        path: 'gallery/image-gallery',
+        component: ImageGallery
       },
       {
-        path: 'gallery/masonry-grid',
-        component: MasonryGrid
+        path: 'gallery/video-gallery',
+        component: VideoGallery
       },
 
       // Pages
@@ -330,7 +330,7 @@ const routes = [
       // Apps
       {
         path: 'apps/mail-box',
-        component: MailBox
+        component: Mailbox
       },
       {
         path: 'apps/todo-item',
@@ -411,7 +411,7 @@ const routes = [
         name: 'login 3'
       },
       {
-        path: 'register-3', 
+        path: 'register-3',
         component: Register,
         name: 'register 3'
       }

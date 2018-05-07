@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="template-container">
     <site-header/>
     <site-sidebar type="icon"/>
@@ -18,10 +18,8 @@ export default {
     SiteSidebar,
     SiteFooter
   },
-  data () {
-    return {
-      header: 'header'
-    }
+  mounted () {
+    this.$utils.set('icon-sidebar')
   }
 }
 </script>

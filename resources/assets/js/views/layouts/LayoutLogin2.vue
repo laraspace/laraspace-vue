@@ -18,20 +18,3 @@
     </div>
   </div>
 </template>
-
-<script type="text/babel">
-import Layout from '../../helpers/layout'
-export default {
-  mounted () {
-    this.setLayoutClasses()
-  },
-  destroyed () {
-    Layout.resetLogin('login-2')
-  },
-  methods: {
-    setLayoutClasses () {
-      Layout.setLogin('login-2')
-    }
-  }
-}
-</script>

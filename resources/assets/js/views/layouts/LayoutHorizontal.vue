@@ -17,10 +17,9 @@ export default {
     SiteHeaderBottom,
     SiteFooter
   },
-  data () {
-    return {
-      header: 'header'
-    }
+  mounted () {
+    this.$utils.set('horizontal')
   }
 }
 </script>
+  

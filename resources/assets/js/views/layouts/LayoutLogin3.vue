@@ -27,25 +27,3 @@
     </div>
   </div>
 </template>
-
-<script type="text/babel">
-import Layout from '../../helpers/layout'
-export default {
-  data () {
-    return {
-      login: ''
-    }
-  },
-  mounted () {
-    this.setLayoutClasses()
-  },
-  destroyed () {
-    Layout.setLogin('login-3')
-  },
-  methods: {
-    setLayoutClasses () {
-      Layout.setLogin('login-3')
-    }
-  }
-}
-</script>
