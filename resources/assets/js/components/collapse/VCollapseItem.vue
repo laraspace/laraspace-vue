@@ -45,25 +45,14 @@ export default {
       originalHeight: '',
       isCollapseOpen: true,
       hasChild: true,
-      accordion: false
+      accordion: this.$parent.accordion
     }
   },
   mounted () {
-    this.$nextTick(function () {
-      window.EventBus.$on('accordion', (value) => {
-        this.accordion = value
-        if (value === true) {
-          this.hasAccordion()
-        } else {
-          if (this.isActive) {
-            this.isCollapseOpen = this.isActive
-          } else {
-            this.isCollapseOpen = false
-          }
-        }
-      })
-    })
     this.$nextTick(() => {
+      if (this.accordion === true) {
+        this.hasActive()
+      }
       this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
       if (this.$refs.collapseItems.children.length === 0) {
         this.hasChild = false
@@ -74,7 +63,7 @@ export default {
     hasActiveUrl () {
       return this.$route.path.indexOf(this.activeUrl) > -1
     },
-    hasAccordion () {
+    hasActive () {
       if (this.isActive) {
         this.isCollapseOpen = this.isActive
       } else {

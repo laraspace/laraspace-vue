@@ -11,15 +11,6 @@ export default {
       require: true,
       default: false
     }
-  },
-  data () {
-    return {
-    }
-  },
-  mounted () {
-    this.$nextTick(function () {
-      window.EventBus.$emit('accordion', this.accordion)
-    })
   }
 }
 </script>
