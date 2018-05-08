@@ -10,19 +10,7 @@
             .collapse-item-title {
                 display: block;
 
-                a {
-                    color: $sidebar-font-color;
-                    display: block;
-                    font-size: 14px;
-                    padding: 12px 12px 12px 30px;
-                    position: relative;
-                    text-decoration: none;
-
-                    &:hover {
-                        background-color: $sidemenu-item-bg-color--hover;
-                    }
-                }
-                & > a > .icon-fa.arrow{
+                & > a > .icon-fa.arrow {
                     float: right;
                     line-height: 1.42857;
 
@@ -30,10 +18,21 @@
                         content: "\f104";
                     }
                 }
+            }
+            a {
+                color: $sidebar-font-color;
+                display: block;
+                font-size: 14px;
+                padding: 12px 12px 12px 30px;
+                position: relative;
+                text-decoration: none;
 
-                i {
-                    width: 30px;
+                &:hover {
+                    background-color: $sidemenu-item-bg-color--hover;
                 }
+            }
+            i {
+                width: 30px;
             }
 
             &.active {
@@ -52,29 +51,18 @@
             .collapse-group-items {
                 background-color: $sidemenu-submenu-bg;
                 padding: 0;
+                .collapse-group-items {
+                     background-color: lighten($sidemenu-submenu-bg, 5%);
+                    
+                    .collapse-group-items {
+                        background-color: lighten($sidemenu-submenu-bg, 8%);
+                    }
+                }
 
                 a.active{
                     color: $ls-color-primary;
                 }
             }
-        }
-    }
-
-    // Sub Menu
-    //----------------------------------
-
-    ul.submenu{
-        background: #464646;
-
-        li.has-child > a::before {
-            border-color: $sidemenu-arrow-color transparent transparent;
-            content: '\f067';
-            position: absolute;
-            right: 21px;
-            top: 50%;
-            transform: rotate(-90deg);
-            transition: all .2s ease-in-out;
-            width: 0;
         }
     }
 }
