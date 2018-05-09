@@ -1,11 +1,11 @@
 <template>
   <div class="main-content">
     <div class="page-header">
-      <h3 class="page-title">Linecons Icons</h3>
+      <h3 class="page-title">Line Icons</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Icons</a></li>
-        <li class="breadcrumb-item"><a href="#">Linecons Icons</a></li>
+        <li class="breadcrumb-item"><a href="#">Line Icons</a></li>
       </ol>
     </div>
     <div class="row">

@@ -1,46 +1,43 @@
-//DropZone
-    .dz-preview{
-      display: none;
-    }
+.dz-preview {
+    display: none;
+}
 
-    .dz-drag-hover {
-      border: 2px solid #333;
-      display: block;
+.dz-drag-hover {
+    border: 2px solid #333;
+    display: block;
 
-      .dz-message{
+    .dz-message {
         display: inline-block !important;
         opacity: 1 !important;
+    }
+}
 
-      }
+.dz-message {
+    position: fixed !important;
+    top: 60px;
+    z-index: 1;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+.alert.alert-success {
+    display: inline-block;
+}
+
+.modal-dropzone {
+
+    &.dz-drag-hover {
+        border: 2px solid black;
     }
 
     .dz-message {
-      position: fixed !important;
-      top: 60px;
-      z-index: 1;
-      width: 100%;
-      margin: 0;
-      text-align: center;
+        display: inline-block;
+        top: 10px;
+        justify-content: center;
+        position: absolute !important;
+        margin: auto;
+
+        //opacity: 1 !important;
     }
-
-    .alert.alert-success {
-      display: inline-block;
-    }
-
-// For Modal-Dropzone
-.modal-dropzone {
-  &.dz-drag-hover {
-    border: 2px solid black;
-
-  }
-  .dz-message {
-    display: inline-block;
-    top: 10px;
-    justify-content: center;
-    position: absolute!important;
-    margin: auto;
-
-
-    //opacity: 1 !important;
-  }
 }
