@@ -34,7 +34,8 @@ class LabelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+
+    {
         $label = new Label;
         $label->name = $request->label;
         $label->save();

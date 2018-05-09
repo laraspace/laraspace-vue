@@ -39,7 +39,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-         $contact = new Contact;
+               
+        $contact = new Contact;
         $contact->name = $request->contact['name'];
         $contact->phone = $request->contact['phone'];
         $contact->address = $request->contact['address'];
@@ -47,8 +48,7 @@ class ContactController extends Controller
         $contact->dob = $request->contact['dob'];
         $contact->url = $request->contact['url'];
         $contact->save();
-
-        $contact->labels()->sync($request->contactLabels);
+        $contact->labels()->sync($request->labels);
 
         return $contact;
 
@@ -85,11 +85,17 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $label = Contact::find($id);
-        $label->name = $request->label;
-        $label->save();
-
-        return $label;
+        
+        $contact = Contact::find($id);
+        $contact->name = $request->name;
+        $contact->phone = $request->phone;
+        $contact->email = $request->email;
+        $contact->address = $request->address;
+        $contact->dob = $request->dob;
+        $contact->url = $request->url;
+        $contact->save();
+        $contact->labels()->sync($request->labels);
+        return $contact;
 
     }
 
@@ -111,8 +117,8 @@ class ContactController extends Controller
     {
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('assets/admin/img/contacts/'), $imageName);
-            $imagePath = 'assets/admin/img/contacts/' . $imageName;
+            $request->image->move(public_path('assets/img/contacts/'), $imageName);
+            $imagePath = 'assets/img/contacts/' . $imageName;
             $contact->image = $imagePath;
         }
     }

@@ -38,7 +38,7 @@
                             </div>
                         </li>
                     </ul>
-                    <a href="#" class="add-label" data-toggle="modal" data-target="#addLabel">
+                    <a href="#" class="add-label" @click="openAddLabelModal">
                         <i class="icon-fa icon-fa-plus"></i> Add New Label
                     </a>
                 </div>
@@ -113,7 +113,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(contact, index) in contacts" @click="contactShow(contact)">
+                        <tr v-for="(contact, index) in contacts" @click="contactShow(contact)" >
                             <td>
                                 <div class="custom-control custom-checkbox" @click.stop>
                                     <input type="checkbox" v-model="selected" :value="contact"
@@ -133,94 +133,10 @@
                     </tbody>
                 </table>
             </div>
-            <div :class="['contact-side-panel', {'pull-left-side':sidePanel}]">
-                <header>
-                    <div class="user-profile">
-                        <a href="#" class="user-img">
-                            <img v-if="contact.images" :src="contact.image" alt="">
-                            <i class="icon-fa icon-fa-user" v-else></i>
-                        </a>
-                        <h6>{{ selectedContact.name }}</h6>
-                    </div>
-                    <div class="sidePanel-action">
-                        <a href="#">
-                            <i class="icon-fa icon-fa-folder"></i>
-                        </a>
-                        <a href="#">
-                            <i class="icon-fa icon-fa-trash"></i>
-                        </a>
-                        <a href="#" class="close-side-panel" @click="sidePanel = false">
-                            <i class="icon-fa icon-fa-remove"></i>
-                        </a>
-                    </div>
-                    <div class="edit" @click="editContact">
-                        <button class="btn btn-success edit-btn">
-                            <i :class="['icon-im', {'icon-im-pencil':iconPencil, 'icon-im-cross':iconClose}]"></i>
-                        </button>
-                    </div>
-                </header>
-                <div class="contact-detail">
-                    <form>
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" v-if="showInput" v-model="selectedContact.email" >
-                                <label class="col-form-label" v-if="viewContact">{{ selectedContact.email }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="phone" class="col-sm-2 col-form-label">Phone</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="selectedContact.phone" id="phone" 
-                                    v-if="showInput">
-                                <label class="col-form-label" v-if="viewContact">{{ selectedContact.phone }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="birthday" class="col-sm-2 col-form-label">Birthday</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="birthday" 
-                                    v-model="selectedContact.dob" v-if="showInput" >
-                                <label class="col-form-label" v-if="viewContact">{{ selectedContact.dob }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="relation" class="col-sm-2 col-form-label">Relation</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" v-model="selectedContactLabels"  id="relation"  
-                                    v-if="showInput" multiple>
-                                    <option v-for="label in labels" :value="label.id" 
-                                        :selected="isSelectLabels(label)">
-                                        {{ label.name }}
-                                    </option>
-                                </select>
-                                <label class="col-form-label" v-if="viewContact">{{ selectedContact.dob }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="address" class="col-sm-2 col-form-label">Address</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="selectedContact.address" id="address" 
-                                    v-if="showInput">
-                                <label class="col-form-label" v-if="viewContact">{{ selectedContact.address }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="url" class="col-sm-2 col-form-label">URL</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="selectedContact.url" id="url" 
-                                v-if="showInput">
-                                <label class="col-form-label" v-if="viewContact">{{ selectedContact.url }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="col-sm-2 btn btn-theme"  v-if="showInput">
-                                Edit 
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+           
+            <show-contact-modal/>
+            
+            <add-contact-label  ref="label"/> 
             <div class="modal fade" id="addLabel" ref="labelModel" tabindex="-1" 
                 role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -247,63 +163,20 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="addContact" ref="contactModel" tabindex="-1" 
-                role="dialog" aria-labelledby="addContact" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Contact</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form @submit.prevent="contactStore">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="contact.name"  
-                                    placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="contact.phone"  
-                                    placeholder="Phone">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" v-model="contact.email"  
-                                    placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="date" class="form-control" 
-                                    v-model="contact.dob"   placeholder="Birthday">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="contact.address"  
-                                    placeholder="Address">
-                                </div>
-                                <div class="form-group ">
-                                    <input type="text" class="form-control" v-model="contact.url"  
-                                    placeholder="Url">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="contactLabels" 
-                                        multiple>
-                                        <option v-for="label in labels" :value="label.id">
-                                            {{ label.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Add Contact</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+          <add-contact-modal ref="contact"/>
+          
         </div>
 </template>
 <script>
+import AddContactModal from './AddContactModal'
+import AddContactLabel from './AddLabelModal'
+import ShowContactModal from './ShowContactModal'
 export default {
+    components:{
+        AddContactModal,
+        ShowContactModal,
+        AddContactLabel
+    },
   data () {
     return {
       pullRightSide: false,
@@ -311,10 +184,6 @@ export default {
       leftAngle: false,
       selected: [],
       sidePanel: false,
-      viewContact: true,
-      showInput: false,
-      iconPencil: true,
-      iconClose: false,
       label: '',
       labels: '',
       editLabel: false,
@@ -323,49 +192,8 @@ export default {
       contact: {},
       selectedContact: {},
       contactLabels: [],
-      selectedContactLabels: [],
-      contacts: [
-        { 'image': '/assets/admin/img/avatars/avatar2.png',
-          'name': 'Tiger Nixon',
-          'phone': '4562535851',
-          'email': 'tigerNixon@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar1.png',
-          'name': 'Garrett Winters',
-          'phone': '8525356595',
-          'email': 'garrettWinters@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar2.png',
-          'name': 'Ashton Cox',
-          'phone': '7525356585',
-          'email': 'ashtonCox@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar.png',
-          'name': 'Cedric Kelly',
-          'phone': '1525456585',
-          'email': 'cedricKelly@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar2.png',
-          'name': 'Airi Satou',
-          'phone': '3565458565',
-          'email': 'airiSatou@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar1.png',
-          'name': 'Brielle Williamson',
-          'phone': '6585459515',
-          'email': 'brielleWilliamson@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar.png',
-          'name': 'Herrod Chandler',
-          'phone': '5985456575',
-          'email': 'herrodChandler@gmail.com'
-        },
-        {'image': '/assets/admin/img/avatars/avatar2.png',
-          'name': 'Rhona Davidson',
-          'phone': '8525356545',
-          'email': 'rhonaDavidson@gmail.com'
-        }
-      ]
+      
+      contacts: []
     }
   },
   computed: {
@@ -386,40 +214,50 @@ export default {
     }
   },
   mounted () {
+
     let self = this
     axios.get('/api/admin/apps/contacts/labels/')
     .then(function (response) {
-      self.labels = response.data
+      self.labels = self.$children[0].labels = response.data
+      
     })
-    axios.get('/api/admin/apps/contacts/list')
-      .then(function (response) {
-        self.contacts = response.data
-      })
+    this.getContacts()
   },
   methods: {
+      getContacts() {
+        let self = this
+        axios.get('/api/admin/apps/contacts/list')
+        .then(function (response) {
+            self.contacts = response.data
+        })
+      },
+    openAddContactModal() {
+        this.$refs.contact.openModal()
+    },
+    openAddLabelModal() {
+        this.$refs.label.openModal()
+    },
+    
+
     openLeftSidebar () {
       this.pullRightSide = !this.pullRightSide
       this.rightAngle = !this.rightAngle
       this.leftAngle = !this.leftAngle
     },
-    editContact () {
-      this.iconPencil = !this.iconPencil
-      this.iconClose = !this.iconClose
-      this.showInput = !this.showInput
-      this.viewContact = !this.viewContact
-    },
+    
     labelStore () {
       let self = this
       axios.post('contacts/labels', {'label': this.label})
         .then(function (response) {
           self.labels.push(response.data)
+          self.$children[0].labels.push(response.data)
           $(self.$refs.labelModel).modal('hide')
         })
     },
     labelRemove (label, index) {
       let self = this
       if (confirm('Are you sure to remove ' + label.name + ' label!')) {
-        axios.delete('contacts/labels/' + label.id, {'label': label})
+        axios.delete('/api/admin/apps/contacts/labels/' + label.id, {'label': label})
         .then(function (response) {
           self.labels.splice(index, 1)
         })
@@ -427,7 +265,7 @@ export default {
     },
     labelUpdate () {
       let self = this
-      axios.put('contacts/labels/' + self.selectedLabel.id, {'label': self.selectedLabel.name})
+      axios.put('/api/admin/apps/contacts/labels/' + self.selectedLabel.id, {'label': self.selectedLabel.name})
       .then(function (response) {
         self.labels.filter(function (value) {
           if (value.id == self.selectedLabel.id) {
@@ -437,27 +275,23 @@ export default {
         self.selectedLabel = false
       })
     },
-    contactStore () {
-      let self = this
-      axios.post('contacts/list', {'contact': self.contact, 'labels': self.contactLabels})
-      .then(function (response) {
-        $(self.$refs.contactModel).modal('hide')
-        self.contacts.push(response.data)
-        self.contact = {}
-        console.log(response.data)
-      })
-    },
+
     contactShow (contact) {
-      this.sidePanel = true
-      this.selectedContact = contact
+      this.$children[0].sideBox = true
+    //   this.$children[0].contactData = contact
+      this.$children[0].contact.labels = contact.labels
+      this.$children[0].contact.id = contact.id
+      this.$children[0].contact.img = contact.image
+      this.$children[0].contact.name = contact.name
+      this.$children[0].contact.phone = contact.phone
+      this.$children[0].contact.email = contact.email
+      this.$children[0].contact.address = contact.address
+      this.$children[0].contact.dob = contact.dob
+      this.$children[0].contact.labels = contact.labels
+      this.$children[0].contact.url = contact.url
     },
-    isSelectLabels (label) {
-      console.log(this.selectedContact.labels)
-      return this.selectedContact.labels.indexOf(label) === -1 ? false : true
-    },
-    openAddContactModal(){
-         this.$parent.openAddContactModal()
-    },
+   
+
   }
 }
 </script>

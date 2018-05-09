@@ -9,23 +9,17 @@
         </ol>
     </div>
     <contact-list/> 
-    <add-contact-modal ref="contact"/>
+    
 </div>
 
 </template>
 
 <script>
-import ContactList from './ContactList'
-import AddContactModal from './AddContactModal'
+import ContactList from "./ContactList";
 
 export default {
-components:{
-    ContactList,AddContactModal
-    },
-methods: {
-      openAddContactModal(){
-        this.$refs.contact.openModal()
-      }
+  components: {
+    ContactList
   }
-}
+};
 </script>
