@@ -71,12 +71,12 @@
       <div class="form-group row">
         <label for="inputLabel" class="col-sm-2 col-form-label">Relation</label>
         <div class="col-sm-10">
-          <select class="form-control" v-model="contactLabels" 
-              multiple>
-              <option v-for="label in labels" :value="label.id">
-                  {{ label.name }}
-              </option>
-          </select>
+             <multiselect
+              track-by="id"
+              label="name"
+              v-model="contactLabels"
+              :options="labels"
+              :multiple="true"/>
         </div>
       </div>
       <div class="modal-footer">
@@ -96,16 +96,16 @@
 
   <script>
  import { SweetModal } from 'sweet-modal-vue'
-
+import Multiselect from 'vue-multiselect'
 export default {
   components: {
-    SweetModal
+    SweetModal,
+    Multiselect
   },
   data (){
     return {
-      labels:'',
+      labels:[],
       contactLabels: [],
-      // selectedContactLabels: [],
       contact: {
         img:'',
         name: '',
@@ -138,7 +138,6 @@ export default {
         self.$refs.modal.close()
         self.$parent.contacts.push(response.data)
         self.contact = {}
-        console.log(response.data)
       })
     },
   }

@@ -39,7 +39,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-               
+        $labelid=[];      
+        
         $contact = new Contact;
         $contact->name = $request->contact['name'];
         $contact->phone = $request->contact['phone'];
@@ -48,9 +49,14 @@ class ContactController extends Controller
         $contact->dob = $request->contact['dob'];
         $contact->url = $request->contact['url'];
         $contact->save();
-        $contact->labels()->sync($request->labels);
+        
+        foreach ($request->labels as $label) {
+            $labelid[] = $label['id'];
+        }
 
-        return $contact;
+        $contact->labels()->sync($labelid);
+        return Contact::with('labels')->find($contact->id);
+        
 
     }
 
@@ -85,7 +91,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $labelid=[];
         $contact = Contact::find($id);
         $contact->name = $request->name;
         $contact->phone = $request->phone;
@@ -94,7 +100,11 @@ class ContactController extends Controller
         $contact->dob = $request->dob;
         $contact->url = $request->url;
         $contact->save();
-        $contact->labels()->sync($request->labels);
+       
+        foreach ($request->labels as $label) {
+            $labelid[] = $label['id'];
+        }
+        $contact->labels()->sync($labelid);
         return $contact;
 
     }

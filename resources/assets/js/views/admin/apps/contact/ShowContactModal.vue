@@ -132,6 +132,7 @@ export default {
         url:'',
       },
       contactData:[],
+
       showInput: false,
       iconPencil: true,
       iconClose: false,
@@ -139,7 +140,8 @@ export default {
       sideBox:false,
       labels: [],
       selectedLabels:[],
-      labelData: []
+      labelData: [],
+      labelsId:[],
     }
   },
   mounted(){
@@ -149,7 +151,6 @@ export default {
    watch:{
     contactData(value) {
       this.contact = value
-      console.log(value)
     }
   },
   methods:{

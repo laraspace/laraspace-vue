@@ -278,7 +278,6 @@ export default {
 
     contactShow (contact) {
       this.$children[0].sideBox = true
-    //   this.$children[0].contactData = contact
       this.$children[0].contact.labels = contact.labels
       this.$children[0].contact.id = contact.id
       this.$children[0].contact.img = contact.image
