@@ -216,17 +216,17 @@
             </router-link>
 
             <router-link
-              to="/admin/forms/wizards">
+              to="/admin/forms/form-wizard">
               Form Wizard
             </router-link>
 
             <router-link
-              to="/admin/forms/wizards-2">
+              to="/admin/forms/form-wizard-2">
               Form Wizard 2
             </router-link>
 
             <router-link
-              to="/admin/forms/wizards-3">
+              to="/admin/forms/form-wizard-3">
               Form Wizard 3
             </router-link>
 

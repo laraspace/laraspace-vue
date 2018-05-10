@@ -57,6 +57,11 @@ import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
+// form-wizard
+import VueFormWizard from './views/admin/forms/VueFormWizard.vue'
+import VueFormWizard2 from './views/admin/forms/VueFormWizard2.vue'
+import VueFormWizard3 from './views/admin/forms/VueFormWizard3.vue'
+
 // Gallery
 import ImageGallery from './views/admin/gallery/ImageGallery.vue'
 import VideoGallery from './views/admin/gallery/VideoGallery.vue'
@@ -287,7 +292,19 @@ const routes = [
         path: 'forms/vuelidate',
         component: Vuelidate
       },
-
+      {
+        path: 'forms/form-wizard',
+        component: VueFormWizard
+      },
+      {
+        path: 'forms/form-wizard-2',
+        component: VueFormWizard2
+      },
+      {
+        path: 'forms/form-wizard-3',
+        component: VueFormWizard3
+      },
+    
       // Gallery
       {
         path: 'gallery/image-gallery',
