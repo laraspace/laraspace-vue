@@ -9,7 +9,6 @@
         </ol>
     </div>
     <contact-list/> 
-    
 </div>
 
 </template>

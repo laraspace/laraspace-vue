@@ -117,8 +117,18 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        $label = Cotntact::find($id);
-        $label->delete();
+       $contact= Contact::find($id);
+
+       if($contact->labels) {
+        $labelid=[];
+
+        foreach ($contact->labels as $label) {
+            $contact->labels()->detach($label['id']);
+        }
+
+       }
+                
+        $contact->delete();
 
         return "success";
 

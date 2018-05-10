@@ -12,7 +12,7 @@
             <a href="#">
                 <i class="icon-fa icon-fa-folder"></i>
             </a>
-            <a href="#">
+            <a href="#"  @click="removeContact">
                 <i class="icon-fa icon-fa-trash"></i>
             </a>
             <a href="#" class="close-side-panel" @click="sideBox = false">
@@ -144,10 +144,6 @@ export default {
       labelsId:[],
     }
   },
-  mounted(){
-    
- 
-  },
    watch:{
     contactData(value) {
       this.contact = value
@@ -160,21 +156,26 @@ export default {
       this.showInput = !this.showInput
       this.viewContact = !this.viewContact
     },
-    updateContact() {
+    updateContact () {
         let self = this
         axios.put('/api/admin/apps/contacts/list/'+ this.contact.id,this.contact)
         .then(function (response) {
           self.sideBox=false
           self.editContact()
           self.$parent.getContacts()
-          })
-        // self.contacts = response.data
+        })
     },
-    isSelectLabels (label) {
-      // console.log(this.selectedContact.labels)
-      return this.contactData.labels.indexOf(label) === -1 ? false : true
+    removeContact () {
+       let self = this
+             
+      if (confirm('Are you sure to remove ' + self.contact.name + ' Contact!')) {
+        axios.delete('/api/admin/apps/contacts/list/' + self.contact.id, {'contact': self.contact})
+        .then(function (response) {
+            self.sideBox=false
+            self.$parent.contacts.splice(self.$parent.contacts.indexOf(self.contact), 1)
+        })
+      } 
     },
-
   }
     
   

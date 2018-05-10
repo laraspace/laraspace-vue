@@ -117,13 +117,7 @@ export default {
       }         
     }
   },
-  mounted () {
-    let self = this
-    axios.get('/api/admin/apps/contacts/labels/')
-    .then(function (response) {
-      self.labels = response.data
-    })
-  },
+
   methods: {
     openModal () {
       this.$refs.modal.open()
@@ -138,6 +132,7 @@ export default {
         self.$refs.modal.close()
         self.$parent.contacts.push(response.data)
         self.contact = {}
+        self.labels = {}
       })
     },
   }

@@ -137,32 +137,7 @@
             <show-contact-modal/>
             
             <add-contact-label  ref="label"/> 
-            <div class="modal fade" id="addLabel" ref="labelModel" tabindex="-1" 
-                role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Label</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form @submit="labelStore">
-                            <div class="modal-body">
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" v-model="label"  placeholder="Enter New Label">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+       
           <add-contact-modal ref="contact"/>
           
         </div>
@@ -185,7 +160,7 @@ export default {
       selected: [],
       sidePanel: false,
       label: '',
-      labels: '',
+      labels: [],
       editLabel: false,
       selectedLabel: '',
       showLabel: true,
@@ -213,15 +188,21 @@ export default {
       }
     }
   },
-  mounted () {
+ watch:{
+   labels(){
+      let self = this
 
-    let self = this
-    axios.get('/api/admin/apps/contacts/labels/')
-    .then(function (response) {
-      self.labels = self.$children[0].labels = response.data
-      
-    })
-    this.getContacts()
+      self.$children[2].labels = self.labels     
+   }
+ },
+  mounted () {
+    //   console.log(this.$children)
+         let self = this
+            axios.get('/api/admin/apps/contacts/labels/')
+            .then(function (response) {
+            self.labels = self.$children[0].labels = response.data
+        })
+        this.getContacts()
   },
   methods: {
       getContacts() {
@@ -231,6 +212,7 @@ export default {
             self.contacts = response.data
         })
       },
+
     openAddContactModal() {
         this.$refs.contact.openModal()
     },
@@ -244,22 +226,14 @@ export default {
       this.rightAngle = !this.rightAngle
       this.leftAngle = !this.leftAngle
     },
-    
-    labelStore () {
-      let self = this
-      axios.post('contacts/labels', {'label': this.label})
-        .then(function (response) {
-          self.labels.push(response.data)
-          self.$children[0].labels.push(response.data)
-          $(self.$refs.labelModel).modal('hide')
-        })
-    },
+   
     labelRemove (label, index) {
       let self = this
       if (confirm('Are you sure to remove ' + label.name + ' label!')) {
         axios.delete('/api/admin/apps/contacts/labels/' + label.id, {'label': label})
         .then(function (response) {
           self.labels.splice(index, 1)
+          self.getContacts()
         })
       }
     },

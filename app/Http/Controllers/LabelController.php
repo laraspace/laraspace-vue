@@ -90,7 +90,10 @@ class LabelController extends Controller
     public function destroy($id)
     {
        $label = Label::find($id);
-        $label->delete();
+       foreach ($label->contacts as $contact) {
+            $label->contacts()->detach($contact['id']);
+        }
+       $label->delete();
 
         return "success";
     }
