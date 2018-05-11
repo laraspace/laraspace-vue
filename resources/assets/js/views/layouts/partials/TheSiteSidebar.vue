@@ -315,7 +315,7 @@
             </router-link>
 
             <router-link
-              to="/admin/users">
+              to="/admin/users/all">
               All Users
             </router-link>
           </v-collapse-item>
