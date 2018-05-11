@@ -12,159 +12,199 @@
       <div class="card-body">
         <div class="row">
           <div class="col-sm-6">
+            <h5 class="section-semi-title">Reactive content</h5>
             <div class="form-group">
-              <h5 class="section-semi-title">Reactive content</h5>
-              <button class="btn btn-primary" v-tooltip.top-center="msg">Hover me</button>
+              <label>Tooltip Text</label>
+              <input v-model="tooltipText" type="text" class="form-control">
             </div>
+            <button v-tooltip.top-center="tooltipText" class="btn btn-primary">Hover me</button>
           </div>
+
           <div class="col-sm-6">
+            <h5 class="section-semi-title">Position</h5>
             <div class="form-group">
-              <h5 class="section-semi-title">Customize</h5>
-              <select name="position" v-model="positioin">
+              <label>Select a Position</label>
+              <select v-model="position" name="position" class="form-control">
                 <option value="top" >Top</option>
                 <option value="right">Right</option>
                 <option value="bottom">Bottom</option>
                 <option value="left">Left</option>
               </select>
-              <button class="btn btn-primary"
-                v-tooltip="{
-                  content: msg,
-                  placement:positioin + '-center',
-                  classes: ['info'],
-                  targetClasses: ['it-has-a-tooltip'],
-                  offset: 100,
-                  delay: {
-                    show: 500,
-                    hide: 300,
-                  },
-                }">
-                Customize Me
-              </button>
             </div>
+
+            <button
+              v-tooltip="{
+                content: tooltipText,
+                placement: position + '-center',
+              }"
+              class="btn btn-primary"
+            >
+              Hover me
+            </button>
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-5">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Show/Hide Delay</h5>
+            <button
+              v-tooltip="{
+                content: tooltipText,
+                delay: {
+                  show: 500,
+                  hide: 300,
+                },
+              }"
+              class="btn btn-primary"
+            >
+              Hover me
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Offset & custom classes</h5>
+            <button
+              v-tooltip="{
+                content: tooltipText,
+                classes: ['info'],
+                targetClasses: ['it-has-a-tooltip'],
+                offset: 30,
+              }"
+              class="btn btn-primary"
+            >
+              Hover me
+            </button>
+          </div>
+        </div>
+        <div class="row mt-5">
           <div class="col-sm-6">
             <div class="form-group">
               <h5 class="section-semi-title">Manual Mode</h5>
-              <div class="form">
-                <label><input type="checkbox" name="open" v-model="isVisible" /> Enable</label>
+              <div class="form-group">
+                <div class="form-check form-check-inline">
+                  <input id="enableCheckbox" v-model="isVisible" name="open" class="form-check-input" type="checkbox" value="option1">
+                  <label class="form-check-label" for="enableCheckbox">Enable</label>
+                </div>
               </div>
+
               <template v-if="isVisible">
-                <div class="form">
-                  <label><input type="radio" name="open2" v-model="isOpen" :value="true" /> Show</label>
-                  <label><input type="radio" name="open2" v-model="isOpen" :value="false" /> Hide</label>
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    <input id="showRadio" v-model="isOpen" :value="true" class="form-check-input" type="radio">
+                    <label class="form-check-label" for="showRadio">Show</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input id="hideRadio" v-model="isOpen" :value="false" class="form-check-input" type="radio">
+                    <label class="form-check-label" for="hideRadio">Hide</label>
+                  </div>
                 </div>
 
                 <button
-                  class="btn btn-primary"
                   v-tooltip="{
-                    content: msg,
+                    content: tooltipText,
                     show: isOpen,
                     trigger: 'manual',
                     placement: 'bottom',
                   }"
-                >A button</button>
+                  class="btn btn-primary"
+                >
+                  A button
+                </button>
               </template>
             </div>
           </div>
-          <div class="col-sm-6 ">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Groups</h5>
             <div class="form-group">
-              <h5 class="section-semi-title">Open Group Buttons</h5>
-               <a class="btn btn-danger" v-close-popover.all>Close All</a>
-               
-               <div style="display:flex; justify-content:space-around;">
-                <v-popover
-                  :auto-hide="false"
-                  open-group="group1">
-                  <button class="btn btn-primary">Group 1</button>
-                  <template slot="popover">
-                    <p>
-                      {{ msg }}
-                    </p>
-                    <a class="btn btn-info" v-close-popover>Close</a>
-                  </template>
-                  <!-- ... -->
-                </v-popover>
+              <button class="btn btn-warning" v-close-popover.all>Close All</button>
+            </div>
 
-                <v-popover
-                  :auto-hide="false"
-                  open-group="group1">
-                  <button class="btn btn-primary">Group 1</button>
-                  <template slot="popover">
-                    <p>
-                      {{ msg }}
-                    </p>
-                    <a class="btn btn-info" v-close-popover>Close</a>
-                  </template>
-                </v-popover>
+            <div class="row align-items-start">
+              <v-popover
+                :auto-hide="false"
+                open-group="group1"
+                class="col-sm-auto"
+              >
+                <button class="btn btn-primary">Click Group 1</button>
+                <template slot="popover">
+                  <p>
+                    {{ tooltipText }}
+                  </p>
+                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                </template>
+                <!-- ... -->
+              </v-popover>
 
-                <v-popover
-                  :auto-hide="false"
-                  open-group="group2">
-                  <button class="btn btn-primary">Group 2</button>
-                  <template slot="popover">
-                    <p>
-                      {{ msg }}
-                    </p>
-                    <a class="btn btn-info" v-close-popover>Close</a>
-                  </template>
-                </v-popover>
-              </div>
+              <v-popover
+                :auto-hide="false"
+                class="col-sm-auto"
+                open-group="group1">
+                <button class="btn btn-primary">Click Group 1</button>
+                <template slot="popover">
+                  <p>
+                    {{ tooltipText }}
+                  </p>
+                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                </template>
+              </v-popover>
+
+              <v-popover
+                :auto-hide="false"
+                class="col-sm-auto"
+                open-group="group2">
+                <button class="btn btn-primary">Click Group 2</button>
+                <template slot="popover">
+                  <p>
+                    {{ tooltipText }}
+                  </p>
+                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                </template>
+              </v-popover>
             </div>
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-5">
           <div class="col-sm-6">
             <div class="form-group">
-              <h5 class="section-semi-title">Use with components to create a popover</h5>
-               
-                <v-popover
-                  offset="16"
-                  :disabled="!isEnabled"
-                  :auto-hide="autohide">
+              <h5 class="section-semi-title">Custom components for popover</h5>
+              <div class="form-group">
+                <div class="form-check form-check-inline">
+                  <input id="enableCheck" v-model="isEnabled" class="form-check-input" type="checkbox">
+                  <label class="form-check-label" for="enableCheck">Enable</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input id="autoHideCheck" v-model="autohide" class="form-check-input" type="checkbox">
+                  <label class="form-check-label" for="autoHideCheck">Hide on clicking outside (autohide)</label>
+                </div>
+              </div>
 
-                  <label><input type="checkbox" name="open" v-model="isEnabled" /> Enable</label>
-                  <label><input type="checkbox" name="hide" v-model="autohide" /> Autohide</label><br>
-                  <button class="btn btn-primary">Click me</button>
+              <v-popover
+                :disabled="!isEnabled"
+                :auto-hide="autohide"
+              >
+                <button class="btn btn-primary">Click me</button>
 
-                  <template slot="popover">
-                    <input class="tooltip-content" v-model="msg" placeholder="Tooltip content" />
-                    <p>
-                      {{ msg }}
-                    </p>
-                    
-                    <a class="btn btn-info" v-close-popover>Close</a>
-                  </template>
-                </v-popover>
+                <template slot="popover">
+                  <p>
+                    {{ tooltipText }}
+                  </p>
+
+                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                </template>
+              </v-popover>
             </div>
           </div>
           <div class="col-sm-6">
             <h5 class="section-semi-title">Async content</h5>
-            
+
             <div class="form-group">
               <button
-                class="btn btn-primary"
                 v-tooltip="{
                   content: asyncContent,
                   loadingContent: '<i>Loading...</i>',
-                   delay: {
-                    show: 900,
-                    hide: 300,
-                  },
-                }">
+                }"
+                class="btn btn-primary"
+              >
                 Hover me
               </button>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
             </div>
           </div>
         </div>
@@ -172,21 +212,29 @@
     </div>
 </div>
 </template>
+
 <script>
 
 export default {
-    data() {
-      return{
-        msg: 'This is a button.',
-        count: 10,
-        isVisible:'',
-        isOpen:'',
-        isEnabled:'true',
-        autohide:'false',
-        positioin:'top',
-        asyncContent:'this Content come from server!'
-      }
-    },
-   
+  data () {
+    return {
+      tooltipText: 'I am awesome!',
+      count: 10,
+      isVisible: '',
+      isOpen: '',
+      isEnabled: true,
+      autohide: false,
+      position: 'top'
+    }
+  },
+  methods: {
+    asyncContent () {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          return resolve('Hey! This is content loaded from serverside')
+        }, 2000)
+      })
+    }
   }
+}
 </script>

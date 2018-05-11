@@ -162,29 +162,30 @@
             </a>
 
             <router-link
-              to="/admin/icons/fpsline">
-              Fpsline
-            </router-link>
-
-            <router-link
-              to="/admin/icons/fontawesome">
-              FontAwesome
-            </router-link>
-
-            <router-link
               to="/admin/icons/icomoon">
               IcoMoon
             </router-link>
 
             <router-link
-              to="/admin/icons/line">
-              Line
+              to="/admin/icons/meteo">
+              Meteo Icons
             </router-link>
 
             <router-link
-              to="/admin/icons/meteo">
-              Meteo
+              to="/admin/icons/line">
+              Line Icons
             </router-link>
+
+            <router-link
+              to="/admin/icons/fpsline">
+              FPS Line
+            </router-link>
+
+            <router-link
+              to="/admin/icons/fontawesome">
+              Font Awesome
+            </router-link>
+
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/forms">
@@ -216,17 +217,17 @@
             </router-link>
 
             <router-link
-              to="/admin/forms/wizards">
+              to="/admin/forms/form-wizard">
               Form Wizard
             </router-link>
 
             <router-link
-              to="/admin/forms/wizards-2">
+              to="/admin/forms/form-wizard-2">
               Form Wizard 2
             </router-link>
 
             <router-link
-              to="/admin/forms/wizards-3">
+              to="/admin/forms/form-wizard-3">
               Form Wizard 3
             </router-link>
 

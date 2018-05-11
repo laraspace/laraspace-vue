@@ -1,0 +1,46 @@
+$class: "disable" !default;
+  .wizard-3 {
+
+    .vue-form-wizard {
+    
+      .wizard-navigation {
+    
+        .wizard-progress-with-circle {
+            display: none !important;
+        }
+        .wizard-nav {
+    
+          .stepTitle{
+              &.active{
+                color: #333333 !important;
+                font-weight: bold;
+              }
+                position: relative;
+                bottom: 5px;
+            }
+
+          .wizard-icon-circle {
+            border-color: rgb(255, 222, 0) !important;
+            height: 3px;
+            width: 375px;
+            position: absolute;
+            top: 23px;
+            
+            &.checked{
+              border-color: #fff299!important;
+              background-color: #fff299 !important;
+            }
+
+            .wizard-icon-container {
+              background-color: #ffde00 !important;
+            }
+          }
+    
+          .wizard-icon-container {
+            background-color: #fff  !important;
+          }
+        }
+      }
+    }
+  }
+

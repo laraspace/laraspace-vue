@@ -1,0 +1,49 @@
+@import "vue-form-wizard1";
+@import "vue-form-wizard2";
+@import "vue-form-wizard3";
+
+// Common Styles For wizard
+
+.ls-wizard {
+
+  .wizard-tab-content {
+    min-height: 300px !important;
+  }
+
+  .wizard-progress-bar {
+    background-color:rgb(255, 222, 0) !important;
+    color: rgb(255, 222, 0) !important;
+    transition: unset;
+  }
+
+  .wizard-nav {
+    .wizard-icon-container {
+      background-color:rgb(255, 222, 0) !important;
+    }
+  }
+
+  .wizard-card-footer {
+
+    .wizard-footer-left {
+      
+      .wizard-btn{
+        position: absolute;
+        background-color:#007dcc!important;
+        border-color: #007dcc !important;
+        color: white;
+        right: 200px;
+        visibility: visible;
+      }
+    }
+    
+    .wizard-footer-right {
+      
+      .wizard-btn {
+        background-color: #007dcc !important;
+        border-color: #007dcc !important;
+        color: white;
+        position: relative;
+      }
+    }
+  }
+}

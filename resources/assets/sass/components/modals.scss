@@ -31,3 +31,11 @@
 .sweet-modal .sweet-title > h2 {
     line-height: inherit;
 }
+
+.sweet-modal ul.sweet-modal-tabs li.sweet-modal-tab.active a {
+    color: $ls-color-blue !important;
+}
+
+.sweet-buttons button{
+    margin-left: 10px;
+}
