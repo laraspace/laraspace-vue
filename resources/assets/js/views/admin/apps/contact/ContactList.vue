@@ -134,7 +134,7 @@
                 </table>
             </div>
            
-            <show-contact-modal/>
+            <show-contact-modal :side-panel="sidePanel" @close="closeContactModal"/>
             
             <add-contact-label  ref="label"/> 
        
@@ -196,7 +196,7 @@ export default {
    }
  },
   mounted () {
-    //   console.log(this.$children)
+  
          let self = this
             axios.get('/api/admin/apps/contacts/labels/')
             .then(function (response) {
@@ -218,6 +218,10 @@ export default {
     },
     openAddLabelModal() {
         this.$refs.label.openModal()
+    },
+    closeContactModal() {
+        this.sidePanel =false
+        
     },
     
 
@@ -251,7 +255,8 @@ export default {
     },
 
     contactShow (contact) {
-      this.$children[0].sideBox = true
+      
+      this.sidePanel = true
       this.$children[0].contact.labels = contact.labels
       this.$children[0].contact.id = contact.id
       this.$children[0].contact.img = contact.image

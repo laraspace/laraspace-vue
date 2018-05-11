@@ -1,5 +1,5 @@
 <template>
-  <div :class="['contact-side-panel', {'pull-left-side':sideBox}]" >
+  <div :class="['contact-side-panel', {'pull-left-side':sidePanel}]"  v-click-outside="closeModal">
     <header>
         <div class="user-profile">
             <a href="#" class="user-img">
@@ -15,7 +15,7 @@
             <a href="#"  @click="removeContact">
                 <i class="icon-fa icon-fa-trash"></i>
             </a>
-            <a href="#" class="close-side-panel" @click="sideBox = false">
+            <a href="#" class="close-side-panel" @click="sidePanel = false">
                 <i class="icon-fa icon-fa-remove"></i>
             </a>
         </div>
@@ -114,6 +114,13 @@
 <script>
 import Multiselect from 'vue-multiselect'
 export default {
+   props: {
+    sidePanel: {
+      type: Boolean,
+      require: true,
+      default: false
+    }
+  },
   components:{
     Multiselect
   },
@@ -137,7 +144,7 @@ export default {
       iconPencil: true,
       iconClose: false,
       viewContact: true,
-      sideBox:false,
+      
       labels: [],
       selectedLabels:[],
       labelData: [],
@@ -160,7 +167,7 @@ export default {
         let self = this
         axios.put('/api/admin/apps/contacts/list/'+ this.contact.id,this.contact)
         .then(function (response) {
-          self.sideBox=false
+          self.sidePanel=false
           self.editContact()
           self.$parent.getContacts()
         })
@@ -171,10 +178,16 @@ export default {
       if (confirm('Are you sure to remove ' + self.contact.name + ' Contact!')) {
         axios.delete('/api/admin/apps/contacts/list/' + self.contact.id, {'contact': self.contact})
         .then(function (response) {
-            self.sideBox=false
+            self.sidePanel=false
             self.$parent.contacts.splice(self.$parent.contacts.indexOf(self.contact), 1)
         })
       } 
+    },
+    closeModal() {
+        if(this.sidePanel){
+           this.$emit('close')
+        }
+
     },
   }
     
