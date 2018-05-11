@@ -251,13 +251,13 @@
             </a>
 
             <router-link
-              to="/admin/gallery/grid">
-              Grid
+              to="/admin/gallery/image">
+              Image Gallery
             </router-link>
 
             <router-link
-              to="/admin/gallery/masonry-grid">
-              Masonry Grid
+              to="/admin/gallery/video">
+              Video Gallery
             </router-link>
           </v-collapse-item>
 
