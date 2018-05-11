@@ -17,12 +17,14 @@ export default {
   // },
 
   Editors () {
-    document.getElementsByClassName('ls-summernote')[0].summernote()
+    // var editor1 =  document.getElementsByClassName('ls-summernote')[]
+    // if (editor1) {
+    //   var summernote = editor1.summernote()
+    // }
+    var editor2 = document.getElementsByClassName('ls-simplemde')[0]
 
-    var editor = document.getElementsByClassName('ls-simplemde')[0]
-
-    if (editor) {
-      var simplemde = new SimpleMDE({ element: editor })
+    if (editor2) {
+      var simplemde = new SimpleMDE({ element: editor2 })
     }
   },
   initPlugins (plugins) {
@@ -36,5 +38,5 @@ export default {
   isFunction (functionToCheck) {
     var getType = {}
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]'
-  },
+  }
 }
