@@ -1,12 +1,14 @@
 <template>
-  <div :class="['dropdown-group', {active: (toggle || isActive() ) } ]">
+  <div :class="['dropdown-group', {active: (toggle || isActive() )} ]">
     <div
       class="dropdown-group-title"
-      @click="showDropdown">
-      <slot name="title"/>
+      @click="showDropdown"
+    >
+      <slot name="activator"/>
     </div>
     <div
-      v-show="toggle" 
+      v-show="toggle"
+      v-if="hasChild"
       ref="dropdownItems"
       class="dropdown-group-items"
     >
@@ -15,7 +17,6 @@
   </div>
 </template>
 <script>
-
 export default {
   props: {
     activeUrl: {
@@ -26,15 +27,23 @@ export default {
   },
   data () {
     return {
-      toggle: false
+      toggle: false,
+      hasChild: true
     }
   },
   mounted () {
-   
+    this.$nextTick(() => {
+      if (this.$refs.dropdownItems.children.length === 0) {
+        this.hasChild = false
+      }
+    })
   },
   methods: {
     isActive () {
-      return this.$route.path.indexOf(this.activeUrl) > -1
+      if (this.activeUrl) {
+        return this.$route.path.indexOf(this.activeUrl) > -1
+      }
+      return false
     },
     showDropdown () {
       let self = this
@@ -48,7 +57,7 @@ export default {
         })
       }
       this.toggle = !this.toggle
-    },
+    }
   }
 }
 </script>

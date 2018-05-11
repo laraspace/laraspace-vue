@@ -3,7 +3,7 @@
     <div class="header-nav vue-dropdown-menu">
       <v-dropdown active-url="/admin/dashboard">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-dashboard"/>Dashboard
         </a>
@@ -14,28 +14,100 @@
             to="/admin/dashboard/basic">
             Basic
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/dashboard/ecommerce">
             Ecommerce
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/dashboard/finance">
             Finance
           </router-link>
+
+          <v-dropdown-item>
+            <a
+              slot="item-activator"
+              href="#">
+              <i class="icon-fa icon-fa-dashboard"/>Dashboard
+            </a>
+            <v-dropdown-sub-item slot="subgroup-item">
+              <router-link
+                slot="subitem-title"
+                to="/admin/layouts/sidebar">
+                Sidebar
+              </router-link>
+
+              <router-link
+                slot="subitem-title"
+                to="/admin/layouts/horizontal">
+                Horizontal
+              </router-link>
+            </v-dropdown-sub-item>
+          </v-dropdown-item>
+
+          <v-dropdown-item>
+            <a
+              slot="item-activator"
+              href="#">
+              <i class="icon-fa icon-fa-dashboard"/>Dash
+            </a>
+
+            <v-dropdown-sub-item slot="subgroup-item">
+              <router-link
+                slot="subitem-title"
+                to="/admin/layouts/sidebar">
+                Sid
+              </router-link>
+
+              <router-link
+                slot="subitem-title"
+                to="/admin/layouts/horizontal">
+                Horiz
+              </router-link>
+
+              <router-link
+                slot="subitem-title"
+                to="/admin/layouts/icons-sidebar">
+                Icon
+              </router-link>
+
+              <v-dropdown-item>
+                <a
+                  slot="item-activator"
+                  href="#">
+                  <i class="icon-fa icon-fa-dashboard"/>Dashboard
+                </a>
+                <v-dropdown-sub-item slot="subgroup-item">
+                  <router-link
+                    slot="subitem-title"
+                    to="/admin/layouts/sidebar">
+                    Sidebar
+                  </router-link>
+
+                  <router-link
+                    slot="subitem-title"
+                    to="/admin/layouts/horizontal">
+                    Horizontal
+                  </router-link>
+
+                  <router-link
+                    slot="subitem-title"
+                    to="/admin/layouts/icons-sidebar">
+                    Icon Sidebar
+                  </router-link>
+                </v-dropdown-sub-item>
+              </v-dropdown-item>
+            </v-dropdown-sub-item>
+          </v-dropdown-item>
         </v-dropdown-item>
       </v-dropdown>
 
       <v-dropdown active-url="/admin/layouts">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-th-large"/>Layouts
         </a>
@@ -46,17 +118,13 @@
             to="/admin/layouts/sidebar">
             Sidebar
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/layouts/horizontal">
             Horizontal
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/layouts/icons-sidebar">
@@ -67,7 +135,7 @@
 
       <v-dropdown active-url="/admin/basic-ui">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-star"/>Basic UI
         </a>
@@ -78,33 +146,25 @@
             to="/admin/basic-ui/buttons">
             Buttons
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/basic-ui/cards">
             Cards
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/basic-ui/typography">
             Typography
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/basic-ui/tables">
             Tables
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/basic-ui/progress-bars">
@@ -115,7 +175,7 @@
 
       <v-dropdown active-url="/admin/components">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-puzzle-piece"/>Components
         </a>
@@ -126,65 +186,49 @@
             to="/admin/components/vue-tables">
             Vue DataTables
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/vue-tabs">
             Vue Tabs
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/vue-carousel">
             Vue Carousel
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/notifications">
             Notifications
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/tooltips">
             Vue Tooltips
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/vue-carousel">
             VueCarousel
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/sweet-modals">
             Sweet Modals
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/vue-dropzone">
             VueDropzone
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/components/vee">
@@ -195,7 +239,7 @@
 
       <v-dropdown active-url="/admin/chart">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-bar-chart"/>Charts
         </a>
@@ -206,9 +250,7 @@
             to="/admin/charts/chartjs">
             Chart JS
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/charts/gauges">
@@ -219,7 +261,7 @@
 
       <v-dropdown active-url="/admin/icons">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-eye"/>Icons
         </a>
@@ -230,33 +272,25 @@
             to="/admin/icons/fpsline">
             Fpsline
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/icons/fontawesome">
             FontAwesome
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/icons/icomoon">
             IcoMoon
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/icons/line">
             Line
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/icons/meteo">
@@ -267,7 +301,7 @@
 
       <v-dropdown active-url="/admin/forms">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-rocket"/>Form
         </a>
@@ -278,65 +312,49 @@
             to="/admin/forms/general">
             General Elements
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/advanced">
             Advanced Elements
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/layouts">
             Form Layouts
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/validation">
             Form Validation
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/wizards">
             Form Wizard
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/wizards-2">
             Form Wizard 2
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/wizards-3">
             Form Wizard 3
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/editors">
             Editors
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/forms/vuelidate">
@@ -347,7 +365,7 @@
 
       <v-dropdown active-url="/admin/gallery">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-image"/>Gallery
         </a>
@@ -358,9 +376,7 @@
             to="/admin/gallery/grid">
             Grid
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/gallery/masonry-grid">
@@ -371,7 +387,7 @@
 
       <v-dropdown active-url="/admin/pages">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-image"/>Pages
         </a>
@@ -382,41 +398,31 @@
             to="/admin/pages/login">
             Login
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/pages/login-2">
             Login 2
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/pages/login-3">
             Login 3
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/pages/register">
             Register
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/pages/register-2">
             Register 2
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/pages/register-3">
@@ -427,7 +433,7 @@
 
       <v-dropdown active-url="/admin/users">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-user"/>Users
         </a>
@@ -438,9 +444,7 @@
             to="/admin/users/profile">
             Profile
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/users">
@@ -450,7 +454,7 @@
       </v-dropdown>
       <v-dropdown active-url="/admin/apps">
         <a
-          slot="title"
+          slot="activator"
           href="#">
           <i class="icon-fa icon-fa-adn"/>Apps
         </a>
@@ -461,9 +465,7 @@
             to="/admin/apps/mail-box">
             <i class="icon-fa icon-fa-envelope-o"/> MailBox
           </router-link>
-        </v-dropdown-item>
 
-        <v-dropdown-item>
           <router-link
             slot="item-title"
             to="/admin/apps/todo-item">
@@ -474,7 +476,7 @@
 
       <v-dropdown active-url="/admin/settings">
         <router-link
-          slot="title"
+          slot="activator"
           to="/admin/settings">
           <i class="icon-fa icon-fa-cogs"/>Settings
         </router-link>
@@ -486,11 +488,13 @@
 <script type="text/babel">
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
+import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
 
 export default {
   components: {
     VDropdown,
-    VDropdownItem
+    VDropdownItem,
+    VDropdownSubItem
   },
   data () {
     return {

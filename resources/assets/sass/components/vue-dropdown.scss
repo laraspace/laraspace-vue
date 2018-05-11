@@ -19,7 +19,7 @@
         color: $dropdown-link-color;
         font-size: 14px;
 	}
-	.dropdown-group-item , & > .dropdown-group-title {
+	.dropdown-group-item , & > .dropdown-group-title, .dropdown-subgroup-item{
             
 	    a.active {
 	    color: $ls-color-primary;
@@ -53,12 +53,11 @@
             display: block;
             font-size: 15px;
             padding: 10px 20px;
-        }
-		.dropdown-group {
-		  	display: block;
-		  	margin: 0;
-
-		  	.dropdown-group-title {
+		}
+		.dropdown-item-activator {
+				a{
+					position: relative;
+				}
 
 		  		a::before {
 					border-color: $dropdown-link-color transparent transparent;
@@ -75,16 +74,41 @@
 					width: 0;
 					transform: rotate(90deg);
 				}
-			}
-			.dropdown-group-items{
-			   left: 100%;
-			   top: 0;
-			   margin-left: 3px;
-			}
-			&.active > .dropdown-group-title a::before {
-			    transform: rotate(-90deg);
-			    border-color: $ls-color-primary transparent transparent;
-			}
+				&.active a{
+
+					&.active {
+					color: $ls-color-primary;
+					background-color: transparent;
+					}
+					&:hover, &:focus, &:active {
+						background-color: $sidemenu-item-bg-color--hover;
+					}	
+				}
+		}
+		.dropdown-item-activator.active a::before {
+			transform: rotate(-90deg);
+			border-color: $ls-color-primary transparent transparent;
+		}
+		.dropdown-subgroup-items {
+		  	display: block;
+			margin: 0;
+			left: 100%;
+			top: 0;
+			margin-left: 3px;
+			position: absolute;
+			width: 10rem;
+			background-color: $dropdown-bg;
+			min-width: 10rem;
+			padding: .5rem 0;
+			margin: .125rem 0 0;
+			font-size: 1rem;
+			color: $dropdown-link-color;
+			background-clip: padding-box;
+			border: 1px solid $dropdown-border-color;
+			border-radius: .25rem;
 		} 
+		.dropdown-group-item{
+			position: relative;
+		}
 	}
 }
