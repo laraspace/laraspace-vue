@@ -15,48 +15,50 @@
             <h6>Simple Modals</h6>
           </div>
           <div class="card-body">
-            <div class="demo-buttons">
-              <div class="modal-demo">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Basic Alerts</h5>
+                <p>Simple alerts to notify about a particular status</p>
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.modal.open()">
-                  Regular Alert
+                  @click="$refs.modal.open()"
+                >
+                  Regular
                 </button>
-                <sweet-modal ref="modal">This is an alert.</sweet-modal>
-              </div>
-              <div class="modal-demo">
+                <sweet-modal ref="modal">This is a regular alert!</sweet-modal>
+
                 <button
                   type="button"
-                  class="btn btn-primary"
-                  @click="$refs.success_modal.open()">
-                  Success Alert
+                  class="btn btn-success"
+                  @click="$refs.success_modal.open()"
+                >
+                  Success
                 </button>
-                <sweet-modal
-                  ref="success_modal"
-                  icon="success">
-                  This is a success!
+                <sweet-modal ref="success_modal" icon="success">
+                  This is a success alert!
+                </sweet-modal>
+
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  @click="$refs.warning_modal.open()"
+                >
+                  Warning
+                </button>
+                <sweet-modal ref="warning_modal" icon="warning">
+                  This is a warning alert!
                 </sweet-modal>
               </div>
-              <div class="modal-demo">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Custom Buttons</h5>
+                <p>Alert with a custom button & title</p>
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.warning_modal.open()">
-                  Warning Alert
-                </button>
-                <sweet-modal
-                  ref="warning_modal"
-                  icon="warning">
-                  This is a success!
-                </sweet-modal>
-              </div>
-              <div class="modal-demo">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  @click="$refs.error_modal.open()">
-                  Alert with Error and Button
+                  @click="$refs.error_modal.open()"
+                >
+                  Open
                 </button>
                 <sweet-modal
                   ref="error_modal"
@@ -66,21 +68,29 @@
                   <button
                     slot="button"
                     type="button"
-                    class="btn btn-primary">
+                    class="btn btn-primary"
+                    @click="$refs.error_modal.close()"
+                  >
                     That's fine!
                   </button>
                 </sweet-modal>
               </div>
-              <div class="modal-demo">
+            </div>
+
+            <div class="row mt-5">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Dark Theme</h5>
+                <p>It also supports a dark theme for modal and the modal overlay</p>
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.blocking_modal.open()">
+                  @click="$refs.blocking_modal.open()"
+                >
                   Dark with Blocking Error
                 </button>
                 <sweet-modal
                   ref="blocking_modal"
-                  icon="error"
+                  icon="warning"
                   hide-close-button
                   blocking
                   overlay-theme="dark"
@@ -89,17 +99,20 @@
                   <button
                     slot="button"
                     type="button"
-                    class="btn btn-danger"
+                    class="btn btn-theme"
                     @click="$refs.blocking_modal.close('darkWithBlockingError')">
-                    Press this Button
+                    Confirm
                   </button>
                 </sweet-modal>
               </div>
-              <div class="modal-demo">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Custom HTML</h5>
+                <p>You can add custom HTML as content for modal including Videos & tables (iframe)</p>
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.dark_html_modal.open()">
+                  @click="$refs.dark_html_modal.open()"
+                >
                   Dark with HTML Content
                 </button>
                 <sweet-modal
@@ -113,15 +126,20 @@
                     height="315"
                     src="https://www.youtube.com/embed/4xgx4k83zzc"
                     frameborder="0"
-                    allowfullscreen/>
+                    allowfullscreen
+                  />
                 </sweet-modal>
               </div>
-              <div class="modal-demo">
+            </div>
+            <div class="row mt-5">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Window Controls</h5>
+                <p>Add custom links or actions to the modal title</p>
                 <button
                   type="button"
                   class="btn btn-primary"
                   @click="$refs.additional_modal.open()">
-                  Additional Window Controls
+                  Open
                 </button>
                 <sweet-modal
                   ref="additional_modal"
@@ -133,160 +151,33 @@
                   </template>
                 </sweet-modal>
               </div>
-              <div class="modal-demo">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Custom Width</h5>
+                <p>Set a custom width to your modal based on your requirements</p>
                 <button
                   type="button"
                   class="btn btn-primary"
                   @click="$refs.wide_modal.open()">
-                  Ultra Wide
+                  Open
                 </button>
                 <sweet-modal
                   ref="wide_modal"
                   title="Ultra Wide"
-                  width="100%">
+                  width="90%">
                   This is a very wide modal.
                 </sweet-modal>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-header">
-            <h6>Tabbed Buttons</h6>
-          </div>
-          <div class="card-body">
-            <div class="demo-buttons">
-              <div class="modal-demo">
+            <div class="row mt-5">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Nested Modals</h5>
+                <p>You can also have a nested modal which gets triggered by the parent modal thus allowing a possibility to have multiple modals to be open at a time</p>
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.tabbed_modal.open()">
-                  Tabbed Modal
-                </button>
-                <sweet-modal ref="tabbed_modal">
-                  <sweet-modal-tab
-                    id="tab1"
-                    title="Tab 1">
-                    Contents of Tab 1
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab2"
-                    title="Tab 2">
-                    Contents of Tab 2</sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab3"
-                    title="Tab 3"
-                    disabled>Tab 3 is disabled
-                  </sweet-modal-tab>
-                </sweet-modal>
-              </div>
-              <div class="modal-demo">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  @click="$refs.tabbed_modal_icon.open()">
-                  Tabbed Modal with Icons
-                </button>
-                <sweet-modal ref="tabbed_modal_icon">
-                  <sweet-modal-tab
-                    id="tab1"
-                    :icon="icons_anchor"
-                    title="Tab 1">Contents of Tab 1
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab2"
-                    :icon="icons_sun"
-                    title="Tab 2">
-                    Contents of Tab 2
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab3"
-                    :icon="icons_leaf"
-                    title="Tab 3"
-                    disabled>
-                    Tab 3 is disabled
-                  </sweet-modal-tab>
-                  <!-- icons is an object containing SVG strings -->
-                </sweet-modal>
-              </div>
-              <div class="modal-demo">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  @click="$refs.tabbed_modal_title.open()">
-                  Tabbed Modal with Title
-                </button>
-                <sweet-modal
-                  ref="tabbed_modal_title"
-                  title="This is a Tabbed Modal">
-                  <sweet-modal-tab
-                    id="tab1"
-                    :icon="icons_anchor"
-                    title="Tab 1">Contents of Tab 1
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab2"
-                    :icon="icons_sun"
-                    title="Tab 2">
-                    Contents of Tab 2
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab3"
-                    :icon="icons_leaf"
-                    title="Tab 3"
-                    disabled>
-                    Tab 3 is disabled
-                  </sweet-modal-tab>
-                  <!-- icons is an object containing SVG strings -->
-                </sweet-modal>
-              </div>
-              <div class="modal-demo">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  @click="$refs.tabbed_modal_icon_button.open()">
-                  Tabbed Modal with Icons and Buttons
-                </button>
-                <sweet-modal ref="tabbed_modal_icon_button">
-                  <sweet-modal-tab
-                    id="tab1"
-                    :icon="icons_anchor"
-                    title="Tab 1">
-                    Contents of Tab 1
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab2"
-                    :icon="icons_sun"
-                    title="Tab 2">Contents of Tab 2
-                  </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab3"
-                    :icon="icons_leaf"
-                    title="Tab 3"
-                    disabled>
-                    Tab 3 is disabled
-                  </sweet-modal-tab>
-                  <!-- icons is an object containing SVG strings -->
-                  <button
-                    slot="button"
-                    type="button"
-                    class="btn btn-primary">Action1</button>
-                  <button
-                    slot="button"
-                    type="button"
-                    class="btn btn-primary">Action2</button>
-                </sweet-modal>
-              </div>
-              <div class="modal-demo">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  @click="$refs.nested.open()">
-                  Nested
+                  @click="$refs.nested.open()"
+                >
+                  Open
                 </button>
                 <sweet-modal ref="nested">
                   This is the parent modal.
@@ -302,12 +193,15 @@
                   This is the child modal.
                 </sweet-modal>
               </div>
-              <div class="modal-demo">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Long Scrolling Modal</h5>
+                <p>You can add as much content as you wish! It'll automatically scroll</p>
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.long_modal.open()">
-                  Very Long Modal
+                  @click="$refs.long_modal.open()"
+                >
+                  Open
                 </button>
                 <sweet-modal ref="long_modal">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -400,6 +294,120 @@
                   consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
                   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </sweet-modal>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h6>Tabbed Modals</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Basic</h5>
+                <p>You can have tabs directly inside the modal content</p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal.open()"
+                >
+                  Open
+                </button>
+                <sweet-modal ref="tabbed_modal">
+                  <sweet-modal-tab
+                    id="tab1"
+                    title="Tab 1">
+                    Contents of Tab 1
+                  </sweet-modal-tab>
+                  <sweet-modal-tab
+                    id="tab2"
+                    title="Tab 2">
+                    Contents of Tab 2</sweet-modal-tab>
+                  <sweet-modal-tab
+                    id="tab3"
+                    title="Tab 3"
+                    disabled>Tab 3 is disabled
+                  </sweet-modal-tab>
+                </sweet-modal>
+              </div>
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">With Icons</h5>
+                <p>Use custom icons to represent the tabs instead of just a boring title</p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal_icon.open()"
+                >
+                  Open
+                </button>
+                <sweet-modal ref="tabbed_modal_icon">
+                  <sweet-modal-tab
+                    id="tab1"
+                    :icon="icons_anchor"
+                    title="Tab 1">Contents of Tab 1
+                  </sweet-modal-tab>
+                  <sweet-modal-tab
+                    id="tab2"
+                    :icon="icons_sun"
+                    title="Tab 2">
+                    Contents of Tab 2
+                  </sweet-modal-tab>
+                  <sweet-modal-tab
+                    id="tab3"
+                    :icon="icons_leaf"
+                    title="Tab 3"
+                    disabled>
+                    Tab 3 is disabled
+                  </sweet-modal-tab>
+                  <!-- icons is an object containing SVG strings -->
+                </sweet-modal>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-sm-6">
+                <h5 class="section-semi-title">Custom Icon and Buttons</h5>
+                <p>Use a custom icon and multiple actions inside the modal</p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="$refs.tabbed_modal_icon_button.open()"
+                >
+                  Open
+                </button>
+                <sweet-modal ref="tabbed_modal_icon_button">
+                  <sweet-modal-tab
+                    id="tab1"
+                    :icon="icons_anchor"
+                    title="Tab 1">
+                    Contents of Tab 1
+                  </sweet-modal-tab>
+                  <sweet-modal-tab
+                    id="tab2"
+                    :icon="icons_sun"
+                    title="Tab 2">Contents of Tab 2
+                  </sweet-modal-tab>
+                  <sweet-modal-tab
+                    id="tab3"
+                    :icon="icons_leaf"
+                    title="Tab 3"
+                    disabled>
+                    Tab 3 is disabled
+                  </sweet-modal-tab>
+                  <!-- icons is an object containing SVG strings -->
+                  <button
+                    slot="button"
+                    type="button"
+                    class="btn btn-primary">Action1</button>
+                  <button
+                    slot="button"
+                    type="button"
+                    class="btn btn-primary">Action2</button>
                 </sweet-modal>
               </div>
             </div>

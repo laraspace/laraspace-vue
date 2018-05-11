@@ -93,30 +93,34 @@
     }
 
     .side-nav {
-        a {
-            color: $sidemenu-item-font-color;
 
-            &:hover {
-                background-color: $sidemenu-item-bg-color--hover;
+        .collapse-group .collapse-group-item {
+                
+            a {
+                color: $sidebar-font-color;
+
+                &:hover {
+                    background-color: $sidemenu-item-bg-color--hover;
+                }
             }
-        }
+            &.active  > .collapse-item-title > a {
+                color: $sidemenu-item-font-color--active;
+            }
+            .collapse-group-items {
+                background-color: $sidemenu-submenu-bg;
 
-        & > li.active > a {
-            color: $sidemenu-item-font-color--active;
-            border-left: 3px solid $white;
-        }
+                .collapse-group-items {
+                    background-color: darken($sidemenu-submenu-bg, 5%);
+                    
+                    .collapse-group-items {
+                        background-color: darken($sidemenu-submenu-bg, 8%);
+                    }
+                }
 
-        &.has-child > a::before {
-            border-color: $sidemenu-arrow-color transparent transparent;
-        }
-
-        ul {
-            background-color: $sidemenu-submenu-bg;
-        }
-
-        ul li.active > a {
-            color: $sidemenu-item-font-color--active;
-            background-color: $sidemenu-item-bg-color--active;
+                a.active{
+                    color: $sidemenu-item-font-color--active;
+                }
+            }
         }
     }
 
