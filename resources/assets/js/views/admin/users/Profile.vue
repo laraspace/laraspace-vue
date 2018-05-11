@@ -12,39 +12,11 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <div class="tabs tabs-default">
-              <ul
-                class="nav nav-tabs"
-                role="tablist">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    data-toggle="tab"
-                    href="#profile"
-                    role="tab">Profile</a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#messages"
-                    role="tab">Messages</a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#friends"
-                    role="tab">Friends</a>
-                </li>
-              </ul>
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div
-                  class="tab-pane active"
-                  id="profile"
-                  role="tabpanel">
-                  <div class="row">
+             <tabs class="tabs-default">
+              <tab
+                id="basic-home"
+                name="Profile">
+                   <div class="row">
                     <div class="col-sm-3">
                       <div class="avatar-container">
                         <img
@@ -96,12 +68,11 @@
                       </ul>
                     </div>
                   </div>
-                </div>
-                <div
-                  class="tab-pane"
-                  id="messages"
-                  role="tabpanel">
-                  <ul class="media-list activity-list">
+              </tab>
+              <tab
+                id="basic-profile"
+                name="Message">
+                        <ul class="media-list activity-list">
                     <li class="media">
                       <div class="media-left">
                         <a href="#">
@@ -137,12 +108,11 @@
                       </div>
                     </li>
                   </ul>
-                </div>
-                <div
-                  class="tab-pane"
-                  id="friends"
-                  role="tabpanel">
-                  <ul class="media-list friends-list">
+              </tab>
+              <tab
+                id="basic-message"
+                name="Friend">
+                <ul class="media-list friends-list">
                     <li class="media">
                       <div class="media-left">
                         <a href="#">
@@ -228,12 +198,21 @@
                       </div>
                     </li>
                   </ul>
-                </div>
-              </div>
-            </div>
+              </tab>
+            </tabs>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+import { Tabs, Tab } from 'vue-tabs-component'
+
+export default {
+  components: {
+    'tabs': Tabs,
+    'tab': Tab
+  }
+}
+</script>
