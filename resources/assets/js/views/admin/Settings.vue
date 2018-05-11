@@ -31,21 +31,36 @@
                 <div class="form-group row">
                   <label class="col-md-4 col-lg-2 form-control-label">Facebook Page URL</label>
                   <div class="col-md-8 col-lg-10">
-                    <div class="input-icon">
-                      <i class="icon-fa icon-fa-facebook"/>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span
+                          id="basic-addon2"
+                          class="input-group-text"
+                        >
+                          <i class="icon-fa icon-fa-facebook"/>
+                        </span>
+                      </div>
                       <input
                         type="text"
                         class="form-control"
                         name="facebook"
-                        value="">
+                        value=""
+                      >
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4 col-lg-2 form-control-label">Google Plus URL</label>
                   <div class="col-md-8 col-lg-10">
-                    <div class="input-icon">
-                      <i class="icon-fa icon-fa-google-plus"/>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span
+                          id="basic-addon2"
+                          class="input-group-text"
+                        >
+                          <i class="icon-fa icon-fa-google-plus"/>
+                        </span>
+                      </div>
                       <input
                         type="text"
                         class="form-control"
@@ -57,8 +72,15 @@
                 <div class="form-group row">
                   <label class="col-md-4 col-lg-2 form-control-label">Twitter URL</label>
                   <div class="col-md-8 col-lg-10">
-                    <div class="input-icon">
-                      <i class="icon-fa icon-fa-twitter"/>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span
+                          id="basic-addon2"
+                          class="input-group-text"
+                        >
+                          <i class="icon-fa icon-fa-twitter"/>
+                        </span>
+                      </div>
                       <input
                         type="text"
                         class="form-control"
