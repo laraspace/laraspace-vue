@@ -10,10 +10,15 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Multi Select <a
-          class="source-link"
-          href="https://vue-multiselect.js.org/"
-          target="_blank">source</a></h6>
+        <h6>Multi Select
+          <a
+            class="source-link"
+            href="https://vue-multiselect.js.org/"
+            target="_blank"
+          >
+            source
+          </a>
+        </h6>
       </div>
       <div class="card-body">
         <multi-select-demo />
@@ -32,21 +37,113 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Vue Color Picker <a
-          class="source-link"
-          href="http://xiaokaike.github.io/vue-color/"
-          target="_blank">source</a></h6>
+        <h6>Vue Color Picker
+          <a
+            class="source-link"
+            href="http://xiaokaike.github.io/vue-color/"
+            target="_blank"
+          >
+            source
+          </a>
+        </h6>
       </div>
       <div class="card-body">
-        <color-pickers-demo :colorpicker="colorpickerdemo"/>
-
-        <button :style="{ 'background': setColors('photoshope') }" class="btn btn-primary" @click="colorpickerdemo='photoshope'">photoshope</button>
-        <button :style="{ 'background': setColors('chrome') }" class="btn btn-primary" @click="colorpickerdemo='chrome'">chrome</button>
-        <button :style="{ 'background': setColors('slider') }" class="btn btn-primary" @click="colorpickerdemo='slider'">slider</button>
-        <button :style="{ 'background': setColors('sketch') }" class="btn btn-primary" @click="colorpickerdemo='sketch'">sketch</button>
-        <button :style="{ 'background': setColors('material') }" class="btn btn-primary" @click="colorpickerdemo='material'">material</button>
-        <button :style="{ 'background': setColors('compact') }" class="btn btn-primary" @click="colorpickerdemo='compact'">compact</button>
-        <button :style="{ 'background': setColors('swatches') }" class="btn btn-primary" @click="colorpickerdemo='swatches'">swatches</button>
+        <div class="row">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Photoshope Color Picker</h5>
+            <color-pickers-demo :colorpicker="'photoshope'" />
+            <button
+              :style="{ 'background': setColors('photoshope') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='photoshope'"
+            >
+              Apply Me
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Swatches Color Picker</h5>
+            <color-pickers-demo :colorpicker="'swatches'" />
+            <button
+              :style="{ 'background': setColors('swatches') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='swatches'"
+            >
+              Apply Me
+            </button>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Chrome Color Picker</h5>
+            <color-pickers-demo :colorpicker="'chrome'"/>
+            <button
+              :style="{ 'background': setColors('chrome') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='chrome'"
+            >
+              Apply Me
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Sketch Color Picker</h5>
+            <color-pickers-demo :colorpicker="'sketch'"/>
+            <button
+              :style="{ 'background': setColors('Sketch') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='Sketch'"
+            >
+              Apply Me
+            </button>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Slider Color Picker</h5>
+            <color-pickers-demo :colorpicker="'slider'"/>
+            <button
+              :style="{ 'background': setColors('slider') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='slider'"
+            >
+              Apply Me
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Compact Color Picker</h5>
+            <color-pickers-demo :colorpicker="'compact'"/>
+            <button
+              :style="{ 'background': setColors('compact') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='compact'"
+            >
+              Apply Me
+            </button>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Material Color Picker</h5>
+            <color-pickers-demo :colorpicker="'material'"/>
+            <button
+              :style="{ 'background': setColors('material') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='material'"
+            >
+              Apply Me
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Grayscale Color Picker</h5>
+            <color-pickers-demo :colorpicker="'grayscale'"/>
+            <button
+              :style="{ 'background': setColors('grayscale') }"
+              class="btn btn-primary demo-btn"
+              @click="colorpickerdemo='grayscale'"
+            >
+              Apply Me
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

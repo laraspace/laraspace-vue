@@ -8,12 +8,13 @@
       <material-picker v-if="colorpicker==='material'" v-model="colors" /><br>
       <compact-picker v-if="colorpicker === 'compact'" v-model="colors" /><br>
       <swatches-picker v-if="colorpicker === 'swatches'" v-model="colors" />
+      <grayscale-picker v-if="colorpicker === 'grayscale'" v-model="colors" />
     </div>
   </div>
 </template>
 
 <script>
-import { Photoshop, Material, Compact, Swatches, Slider, Chrome, Sketch } from 'vue-color'
+import { Grayscale, Photoshop, Material, Compact, Swatches, Slider, Chrome, Sketch } from 'vue-color'
 let defaultProps = {
   hex: '#194d33',
   hsl: {
@@ -44,8 +45,15 @@ export default {
     'slider-picker': Slider,
     'sketch-picker': Sketch,
     'chrome-picker': Chrome,
-    'photoshop-picker': Photoshop
-
+    'photoshop-picker': Photoshop,
+    'grayscale-picker': Grayscale
+  },
+  props: {
+    colorpicker: {
+      type: String,
+      required: true,
+      default: ''
+    }
   },
   data () {
     return {
@@ -55,13 +63,6 @@ export default {
   watch: {
     colors (value) {
       this.$parent.advcolors = value.hex
-    }
-  },
-  props: {
-    colorpicker: {
-      type: String,
-      required: true,
-      default: ''
     }
   }
 }
