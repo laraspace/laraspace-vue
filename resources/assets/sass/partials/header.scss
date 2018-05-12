@@ -60,13 +60,15 @@
         border-radius: 2px;
     }
 
-    .dropdown-menu {
+    .dropdown-group {
         background-color: $header-buttons-bg-color;
 
         i {
-            width: 25px;
             text-align: center;
-            margin-left: -5px;
+            width: auto;
+        }
+        &.has-child > .dropdown-group-title::after{
+            content: none;
         }
 
     }

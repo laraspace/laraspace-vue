@@ -82,3 +82,25 @@
         color: $white;
     }
 }
+
+//dropdown Button
+.btn-group{
+    
+    .dropdown-group {
+
+        .dropdown-group-title::after {
+            content: none;
+        }
+    }
+}
+.btn-group .dropdown-group {
+
+    .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .btn:not(.dropdown-toggle) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
