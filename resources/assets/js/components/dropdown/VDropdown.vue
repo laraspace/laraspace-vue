@@ -1,5 +1,5 @@
 <template>
-  <div :class="['dropdown-group', {active: (toggle || isActive() )} ]">
+  <div :class="['dropdown-group', {'active': (toggle || isActive() )}, {'has-child':hasChild} ]">
     <div
       class="dropdown-group-title"
       @click="showDropdown"
@@ -10,7 +10,7 @@
       v-show="toggle"
       v-if="hasChild"
       ref="dropdownItems"
-      class="dropdown-group-items"
+      :class="['dropdown-group-items',{'align-right':rightAlign}]"
     >
       <slot/>
     </div>
@@ -27,18 +27,35 @@ export default {
   },
   data () {
     return {
-      toggle: false,
-      hasChild: true
+      toggle: true,
+      hasChild: true,
+      rightAlign: false
     }
   },
   mounted () {
     this.$nextTick(() => {
+      this.setDropdownPosition()
+      window.addEventListener('resize', (e) => {
+        if (this.toggle === true) {
+          this.setDropdownPosition()
+        }
+      })
       if (this.$refs.dropdownItems.children.length === 0) {
         this.hasChild = false
       }
+      this.toggle = false
     })
   },
   methods: {
+    setDropdownPosition () {
+      let rect = this.$refs.dropdownItems.getBoundingClientRect()
+      let itemPos = rect.right + this.$refs.dropdownItems.offsetParent.offsetWidth
+      if (itemPos > window.innerWidth) {
+        this.rightAlign = true
+      } else {
+        this.rightAlign = false
+      }
+    },
     isActive () {
       if (this.activeUrl) {
         return this.$route.path.indexOf(this.activeUrl) > -1

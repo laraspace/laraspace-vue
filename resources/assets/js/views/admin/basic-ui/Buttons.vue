@@ -334,25 +334,35 @@
                     <div
                       class="btn-group"
                       role="group">
-                      <button
-                        id="btnGroupDrop1"
-                        type="button"
-                        class="btn btn-outline-default dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                        Dropdown
-                      </button>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="btnGroupDrop1">
-                        <a
-                          class="dropdown-item"
-                          href="#">Dropdown link</a>
-                        <a
-                          class="dropdown-item"
-                          href="#">Dropdown link</a>
-                      </div>
+                      <v-dropdown>
+                        <button
+                          id="btnGroupDrop1"
+                          slot="activator"
+                          type="button"
+                          class="btn btn-outline-default dropdown-toggle"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Dropdown
+                        </button>
+                        <v-dropdown-item>
+                          <a
+                            slot="item-title"
+                            class="dropdown-item"
+                            href="#"
+                          >
+                            Dropdown link
+                          </a>
+                          <a
+                            slot="item-title"
+                            class="dropdown-item"
+                            href="#"
+                          >
+                            Dropdown link
+                          </a>
+                        </v-dropdown-item>
+                      </v-dropdown>
                     </div>
                   </div>
                 </div>
@@ -445,25 +455,33 @@
                   <div
                     class="btn-group"
                     role="group">
-                    <button
-                      id="btnGroupDrop1"
-                      type="button"
-                      class="btn btn-outline-primary dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">
-                      Dropdown
-                    </button>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="btnGroupDrop1">
-                      <a
-                        class="dropdown-item"
-                        href="#">Dropdown link</a>
-                      <a
-                        class="dropdown-item"
-                        href="#">Dropdown link</a>
-                    </div>
+                    <v-dropdown>
+                      <button
+                        id="btnGroupDrop1"
+                        slot="activator"
+                        type="button"
+                        class="btn btn-outline-primary dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Dropdown
+                      </button>
+                      <v-dropdown-item>
+                        <a
+                          slot="item-title"
+                          class="dropdown-item"
+                          href="#"
+                        >Dropdown link
+                        </a>
+                        <a
+                          slot="item-title"
+                          class="dropdown-item"
+                          href="#"
+                        >Dropdown link
+                        </a>
+                      </v-dropdown-item>
+                    </v-dropdown>
                   </div>
                 </div>
                 <div
@@ -635,28 +653,35 @@
 </template>
 <script>
 import ladda from 'ladda'
+import VDropdown from '../../../components/dropdown/VDropdown'
+import VDropdownItem from '../../../components/dropdown/VDropdownItem'
+import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
 
 export default {
-  
+  components: {
+    VDropdown,
+    VDropdownItem,
+    VDropdownSubItem
+  },
   mounted () {
     // Ladda Buttons
-    ladda.bind( 'div:not(.progress-demo) .ladda-button', { timeout: 2000 } );
+    ladda.bind('div:not(.progress-demo) .ladda-button', { timeout: 2000 })
 
     // Bind progress buttons and simulate loading progress
-    ladda.bind( '.progress-demo button', {
-      callback: function( instance ) {
-        var progress = 0;
-        var interval = setInterval( function() {
-          progress = Math.min( progress + Math.random() * 0.1, 1 );
-          instance.setProgress( progress );
+    ladda.bind('.progress-demo button', {
+      callback: function (instance) {
+        var progress = 0
+        var interval = setInterval(function () {
+          progress = Math.min(progress + Math.random() * 0.1, 1)
+          instance.setProgress(progress)
 
-          if( progress === 1 ) {
-            instance.stop();
-            clearInterval( interval );
+          if (progress === 1) {
+            instance.stop()
+            clearInterval(interval)
           }
-        }, 200 );
+        }, 200)
       }
-    });
+    })
   }
 }
 </script>

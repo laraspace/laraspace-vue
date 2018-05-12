@@ -24,19 +24,17 @@
         display: inline-block;
         position: relative;
         margin-right: -5px;
-
-        i {
-            width: 25px;
+        
+        &.has-child .dropdown-group-title::after {
+            right: 20px;
+            border-color: $dropdown-header-border-color transparent transparent;
         }
-
-        a:hover {
-            background-color: $sidemenu-item-bg-color--hover;
-            color: #fff;
+        .dropdown-group-title  a {
+            padding: 12px 40px 12px 20px; 
         }
-
     }
-
 }
+
 
 @media (max-width: $small-breakpoint-below){
 

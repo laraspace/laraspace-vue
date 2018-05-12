@@ -10,8 +10,8 @@
     <slot/>
     <div
       v-show="toggle"
-      ref="dropdownSubGroupItems"
-      :class="['dropdown-subgroup-items',{'active':toggle}]"
+      ref="dropdownSubItems"
+      :class="['dropdown-subgroup-items',{'active':toggle},{'align-right':rightAlign}]"
     >
       <slot name="subgroup-item"/>
     </div>
@@ -28,16 +28,33 @@ export default {
   },
   data () {
     return {
-      toggle: false,
+      toggle: true,
       hasChild: true,
-      subGroup: false
+      subGroup: false,
+      rightAlign: false
     }
   },
   mounted () {
-  
+    console.log(this.$slots)
+    this.$nextTick(() => {
+      this.setDropdownPosition()
+      window.addEventListener('resize', (e) => {
+        if (this.toggle === true) {
+          this.setDropdownPosition()
+        }
+      })
+      this.toggle = false
+    })
   },
   methods: {
-    isActive () {
+    setDropdownPosition () {
+      let rect = this.$refs.dropdownSubItems.getBoundingClientRect()
+      let itemPos = rect.right + this.$refs.dropdownSubItems.offsetParent.offsetWidth
+      if (itemPos > window.innerWidth) {
+        this.rightAlign = true
+      } else {
+        this.rightAlign = false
+      }
     },
     showDropdown () {
       this.toggle = !this.toggle
