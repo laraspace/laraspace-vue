@@ -14,7 +14,7 @@ import 'vue-tabs-component/docs/resources/tabs-component.css'
  */
 global.notie = require('notie')
 global.toastr = require('toastr')
-window._ = require('lodash')
+global._ = require('lodash')
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -22,7 +22,7 @@ window._ = require('lodash')
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = require('vue')
+global.Vue = require('vue')
 
 // Vue.directive('tooltip', VTooltip)
 // Vue.directive('close-popover', VClosePopover)
@@ -33,9 +33,9 @@ window.Vue = require('vue')
  * included with Laravel will automatically verify the header's value.
  */
 
-window.axios = require('axios')
+global.axios = require('axios')
 
-window.axios.defaults.headers.common = {
+global.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'
 }
 
@@ -43,13 +43,13 @@ window.axios.defaults.headers.common = {
  * Event Bus
  */
 
-window.EventBus = new Vue()
+global.EventBus = new Vue()
 
 /**
  * Interceptors
  */
 
-window.axios.interceptors.request.use(function (config) {
+global.axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   const AUTH_TOKEN = Ls.get('auth.token')
 
