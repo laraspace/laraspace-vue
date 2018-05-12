@@ -17,8 +17,8 @@
               v-model="GroupValue"
               :options="GroupOptions"
               :multiple="true"
-              group-values="libs"
-              group-label="language"
+              group-values="city"
+              group-label="timezone"
               placeholder="Type to search"
               track-by="name"
               label="name">
@@ -45,28 +45,82 @@ export default {
       selected: null,
       value: '',
       GroupValue: '',
-      SingleOptions: ['Select option', 'options', 'selected', 'mulitple', 'label', 'searchable', 'clearOnSelect', 'hideSelected', 'maxHeight', 'allowEmpty', 'showLabels', 'onChange', 'touched'],
-      MultiOptions: ['list', 'of', 'options'],
+      SingleOptions: ['Alaska', 'Hawaii', 'California', 'Nevada', 'Oregon', 'Washington'],
+      MultiOptions:  ['Alaska', 'Hawaii', 'California', 'Nevada', 'Oregon', 'Washington'],
       GroupOptions: [
         {
-          language: 'Javascript',
-          libs: [
-            { name: 'Vue.js', category: 'Front-end' },
-            { name: 'Adonis', category: 'Backend' }
+          timezone: 'Alaskan/Hawaiian Time Zone',
+          city: [
+            { name: 'Alaska'},
+            { name: 'Hawaii'}
           ]
         },
         {
-          language: 'Ruby',
-          libs: [
-            { name: 'Rails', category: 'Backend' },
-            { name: 'Sinatra', category: 'Backend' }
+          timezone: 'Pacific Time Zone',
+          city: [
+            { name: 'California'},
+            { name: 'Nevada'},
+            { name: 'Oregon'},
+            { name: 'Washington'},
           ]
         },
         {
-          language: 'Other',
-          libs: [
-            { name: 'Laravel', category: 'Backend' },
-            { name: 'Phoenix', category: 'Backend' }
+          timezone: 'Mountain Time Zone',
+          city: [
+            { name: 'Arizona'},
+            { name: 'Colorado'},
+            { name: 'Idaho'},
+            { name: 'Montana'},
+            { name: 'Nebraska'},
+            { name: 'New Mexico'},
+            { name: 'North Dakota'},
+            { name: 'Utah'},
+            { name: 'Wyoming'},
+          ]
+        },
+        {
+          timezone: 'Central Time Zone',
+          city: [
+            { name: 'Alabama'},
+            { name: 'Arkansas'},
+            { name: 'Illinois'},
+            { name: 'Iowa'},
+            { name: 'Kansas'},
+            { name: 'Kentucky'},
+            { name: 'Louisiana'},
+            { name: 'Minnesota'},
+            { name: 'Mississippi'},
+            { name: 'Missouri'},
+            { name: 'Oklahoma'},
+            { name: 'South Dakota'},
+            { name: 'Texas'},
+            { name: 'Tennessee'},
+            { name: 'Wisconsin'},
+          ]
+        },
+        {
+          timezone: 'Eastern Time Zone',
+          city: [
+            { name: 'Connecticut'},
+            { name: 'Delaware'},
+            { name: 'Florida'},
+            { name: 'Georgia'},
+            { name: 'Indiana'},
+            { name: 'Maine'},
+            { name: 'Maryland'},
+            { name: 'Massachusetts'},
+            { name: 'Michigan'},
+            { name: 'New Hampshire'},
+            { name: 'New Jersey'},
+            { name: 'New York'},
+            { name: 'North Carolina'},
+            { name: 'Ohio'},
+            { name: 'Pennsylvania'},
+            { name: 'Rhode Island'},
+            { name: 'South Carolina'},
+            { name: 'Vermont'},
+            { name: 'Virginia'},
+            { name: 'West Virginia'},
           ]
         }
       ],
@@ -74,5 +128,4 @@ export default {
     }
   },
 }
-
 </script>
