@@ -67,7 +67,7 @@
             text-align: center;
             width: auto;
         }
-        & > .dropdown-group-title::after{
+        &.has-child > .dropdown-group-title::after{
             content: none;
         }
 

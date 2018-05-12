@@ -24,15 +24,13 @@
         display: inline-block;
         position: relative;
         margin-right: -5px;
-
-        .dropdown-group-title {
-            a {
-                padding: 12px 40px 12px 20px; 
-            }
-            &::after {
-                right: 20px;
-                border-color: $dropdown-header-border-color transparent transparent;
-            }
+        
+        &.has-child .dropdown-group-title::after {
+            right: 20px;
+            border-color: $dropdown-header-border-color transparent transparent;
+        }
+        .dropdown-group-title  a {
+            padding: 12px 40px 12px 20px; 
         }
     }
 }

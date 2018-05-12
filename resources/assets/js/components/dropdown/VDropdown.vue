@@ -1,5 +1,5 @@
 <template>
-  <div :class="['dropdown-group', {active: (toggle || isActive() )} ]">
+  <div :class="['dropdown-group', {'active': (toggle || isActive() )}, {'has-child':hasChild} ]">
     <div
       class="dropdown-group-title"
       @click="showDropdown"
