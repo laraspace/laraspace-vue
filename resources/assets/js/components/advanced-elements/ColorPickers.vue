@@ -3,10 +3,10 @@
     <div class="col-xl-4 mb-4">
       <photoshop-picker v-if="colorpicker === 'photoshope'" v-model="colors" />
       <slider-picker v-if="colorpicker === 'slider'" v-model="colors" />
-      <sketch-picker v-if="colorpicker === 'sketch'" v-model="colors" /> 
+      <sketch-picker v-if="colorpicker === 'sketch'" v-model="colors" />
       <chrome-picker v-if="colorpicker ==='chrome'" v-model="colors" />
       <material-picker v-if="colorpicker==='material'" v-model="colors" /><br>
-     <compact-picker v-if="colorpicker === 'compact'" v-model="colors" /><br>
+      <compact-picker v-if="colorpicker === 'compact'" v-model="colors" /><br>
       <swatches-picker v-if="colorpicker === 'swatches'" v-model="colors" />
     </div>
   </div>
@@ -47,9 +47,14 @@ export default {
     'photoshop-picker': Photoshop
 
   },
+  data () {
+    return {
+      colors: defaultProps
+    }
+  },
   watch: {
-    colors(value) {
-      this.$parent.advcolors= value.hex
+    colors (value) {
+      this.$parent.advcolors = value.hex
     }
   },
   props: {
@@ -58,12 +63,6 @@ export default {
       required: true,
       default: ''
     }
-  },
-  data () {
-    return {
-      colors: defaultProps,
-    }
-  },
- 
+  }
 }
 </script>

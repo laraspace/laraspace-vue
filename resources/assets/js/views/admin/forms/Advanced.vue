@@ -40,14 +40,13 @@
       <div class="card-body">
         <color-pickers-demo :colorpicker="colorpickerdemo"/>
 
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='photoshope'">photoshope</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='chrome'">chrome</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='slider'">slider</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='sketch'">sketch</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='material'">material</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='compact'">compact</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='swatches'">swatches</button>
-        
+        <button :style="{ 'background': setColors('photoshope') }" class="btn btn-primary" @click="colorpickerdemo='photoshope'">photoshope</button>
+        <button :style="{ 'background': setColors('chrome') }" class="btn btn-primary" @click="colorpickerdemo='chrome'">chrome</button>
+        <button :style="{ 'background': setColors('slider') }" class="btn btn-primary" @click="colorpickerdemo='slider'">slider</button>
+        <button :style="{ 'background': setColors('sketch') }" class="btn btn-primary" @click="colorpickerdemo='sketch'">sketch</button>
+        <button :style="{ 'background': setColors('material') }" class="btn btn-primary" @click="colorpickerdemo='material'">material</button>
+        <button :style="{ 'background': setColors('compact') }" class="btn btn-primary" @click="colorpickerdemo='compact'">compact</button>
+        <button :style="{ 'background': setColors('swatches') }" class="btn btn-primary" @click="colorpickerdemo='swatches'">swatches</button>
       </div>
     </div>
   </div>
@@ -59,17 +58,22 @@ import TextMaskDemo from '../../../components/advanced-elements/TextMask.vue'
 
 export default {
   components: {
-   'color-pickers-demo' : ColorPickersDemo,
-   'multi-select-demo' : MultiSelectDemo,
-   'text-mask-demo' : TextMaskDemo,
+    'color-pickers-demo': ColorPickersDemo,
+    'multi-select-demo': MultiSelectDemo,
+    'text-mask-demo': TextMaskDemo
   },
-  data(){
-    return{
-      colorpickerdemo:'',
-      advcolors: '',
+  data () {
+    return {
+      colorpickerdemo: '',
+      advcolors: ''
     }
-
+  },
+  methods: {
+    setColors (picker) {
+      if (this.colorpickerdemo === picker) {
+        return this.advcolors
+      }
+    }
   }
 }
 </script>
-
