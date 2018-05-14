@@ -14,7 +14,9 @@ import 'vue-tabs-component/docs/resources/tabs-component.css'
  */
 global.notie = require('notie')
 global.toastr = require('toastr')
-global._ = require('lodash')
+window.summernote = require('summernote/dist/summernote')
+window.SimpleMDE = require('simplemde/src/js/simplemde')
+window._ = require('lodash')
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -38,12 +40,6 @@ global.axios = require('axios')
 global.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'
 }
-
-/**
- * Event Bus
- */
-
-global.EventBus = new Vue()
 
 /**
  * Interceptors

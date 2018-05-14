@@ -10,10 +10,15 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Multi Select <a
-          class="source-link"
-          href="https://vue-multiselect.js.org/"
-          target="_blank">source</a></h6>
+        <h6>Multi Select
+          <a
+            class="source-link"
+            href="https://vue-multiselect.js.org/"
+            target="_blank"
+          >
+            source
+          </a>
+        </h6>
       </div>
       <div class="card-body">
         <multi-select-demo />
@@ -32,22 +37,63 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Vue Color Picker <a
-          class="source-link"
-          href="http://xiaokaike.github.io/vue-color/"
-          target="_blank">source</a></h6>
+        <h6>Vue Color Picker
+          <a
+            class="source-link"
+            href="http://xiaokaike.github.io/vue-color/"
+            target="_blank"
+          >
+            source
+          </a>
+        </h6>
       </div>
       <div class="card-body">
-        <color-pickers-demo :colorpicker="colorpickerdemo"/>
+        <div class="row">
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Photoshope</h5>
+            <color-pickers-demo :colorpicker="'photoshope'" />
+            <div
+              :style="{ 'background': advcolors }"
+              class="demo-div"
+            >
+              Applied on Me
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Swatches</h5>
+            <color-pickers-demo :colorpicker="'swatches'" />
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Sketch</h5>
+            <color-pickers-demo :colorpicker="'sketch'"/>
+          </div>
 
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='photoshope'">photoshope</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='chrome'">chrome</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='slider'">slider</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='sketch'">sketch</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='material'">material</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='compact'">compact</button>
-          <button class="btn btn-primary" :style="{ 'background': advcolors }"  @click="colorpickerdemo='swatches'">swatches</button>
-        
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Chrome</h5>
+            <color-pickers-demo :colorpicker="'chrome'"/>
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Compact</h5>
+            <color-pickers-demo :colorpicker="'compact'"/>
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Material</h5>
+            <color-pickers-demo :colorpicker="'material'"/>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Slider</h5>
+            <color-pickers-demo :colorpicker="'slider'"/>
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section-semi-title">Grayscale</h5>
+            <color-pickers-demo :colorpicker="'grayscale'"/>
+          </div>
+          <div class="col-sm-4"/>
+        </div>
       </div>
     </div>
   </div>
@@ -59,17 +105,14 @@ import TextMaskDemo from '../../../components/advanced-elements/TextMask.vue'
 
 export default {
   components: {
-   'color-pickers-demo' : ColorPickersDemo,
-   'multi-select-demo' : MultiSelectDemo,
-   'text-mask-demo' : TextMaskDemo,
+    'color-pickers-demo': ColorPickersDemo,
+    'multi-select-demo': MultiSelectDemo,
+    'text-mask-demo': TextMaskDemo
   },
-  data(){
-    return{
-      colorpickerdemo:'',
-      advcolors: '',
+  data () {
+    return {
+      advcolors: ''
     }
-
   }
 }
 </script>
-

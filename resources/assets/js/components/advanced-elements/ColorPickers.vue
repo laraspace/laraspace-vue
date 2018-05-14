@@ -3,17 +3,18 @@
     <div class="col-xl-4 mb-4">
       <photoshop-picker v-if="colorpicker === 'photoshope'" v-model="colors" />
       <slider-picker v-if="colorpicker === 'slider'" v-model="colors" />
-      <sketch-picker v-if="colorpicker === 'sketch'" v-model="colors" /> 
+      <sketch-picker v-if="colorpicker === 'sketch'" v-model="colors" />
       <chrome-picker v-if="colorpicker ==='chrome'" v-model="colors" />
       <material-picker v-if="colorpicker==='material'" v-model="colors" /><br>
-     <compact-picker v-if="colorpicker === 'compact'" v-model="colors" /><br>
+      <compact-picker v-if="colorpicker === 'compact'" v-model="colors" /><br>
       <swatches-picker v-if="colorpicker === 'swatches'" v-model="colors" />
+      <grayscale-picker v-if="colorpicker === 'grayscale'" v-model="colors" />
     </div>
   </div>
 </template>
 
 <script>
-import { Photoshop, Material, Compact, Swatches, Slider, Chrome, Sketch } from 'vue-color'
+import { Grayscale, Photoshop, Material, Compact, Swatches, Slider, Chrome, Sketch } from 'vue-color'
 let defaultProps = {
   hex: '#194d33',
   hsl: {
@@ -44,13 +45,8 @@ export default {
     'slider-picker': Slider,
     'sketch-picker': Sketch,
     'chrome-picker': Chrome,
-    'photoshop-picker': Photoshop
-
-  },
-  watch: {
-    colors(value) {
-      this.$parent.advcolors= value.hex
-    }
+    'photoshop-picker': Photoshop,
+    'grayscale-picker': Grayscale
   },
   props: {
     colorpicker: {
@@ -61,9 +57,13 @@ export default {
   },
   data () {
     return {
-      colors: defaultProps,
+      colors: defaultProps
     }
   },
- 
+  watch: {
+    colors (value) {
+      this.$parent.advcolors = value.hex
+    }
+  }
 }
 </script>
