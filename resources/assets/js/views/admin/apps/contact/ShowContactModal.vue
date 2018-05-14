@@ -1,162 +1,192 @@
 <template>
-  <div :class="['contact-side-panel', {'pull-left-side':sidePanel}]"  v-click-outside="closeModal">
+  <div v-click-outside="closeModal" :class="['contact-side-panel', {'pull-left-side':sidePanel}]" >
     <header>
-        <div class="user-profile">
-            <a href="#" class="user-img">
-                <img v-if="contact.images" :src="contact.image" alt="">
-                <i class="icon-fa icon-fa-user" v-else></i>
-            </a>
-            <h6>{{ contact.name }}</h6>
-        </div>
-        <div class="sidePanel-action">
-            <a href="#">
-                <i class="icon-fa icon-fa-folder"></i>
-            </a>
-            <a href="#"  @click="removeContact">
-                <i class="icon-fa icon-fa-trash"></i>
-            </a>
-            <a href="#" class="close-side-panel" @click="sidePanel = false">
-                <i class="icon-fa icon-fa-remove"></i>
-            </a>
-        </div>
-        <div class="edit" @click="editContact">
-            <button class="btn btn-success edit-btn">
-                <i :class="['icon-im', {'icon-im-pencil':iconPencil, 'icon-im-cross':iconClose}]"></i>
-            </button>
-        </div>
+      <div class="user-profile">
+        <a href="#" class="user-img">
+          <img v-if="contact.images" :src="contact.image" alt="">
+          <i v-else class="icon-fa icon-fa-user"/>
+        </a>
+        <h6>{{ contact.name }}</h6>
+      </div>
+      <div class="sidePanel-action">
+        <a href="#">
+          <i class="icon-fa icon-fa-folder"/>
+        </a>
+        <a href="#" @click="removeContact">
+          <i class="icon-fa icon-fa-trash"/>
+        </a>
+        <a href="#" class="close-side-panel" @click="sidePanel = false">
+          <i class="icon-fa icon-fa-remove"/>
+        </a>
+      </div>
+      <div class="edit" @click="editContact">
+        <button class="btn btn-success edit-btn">
+          <i :class="['icon-im', {'icon-im-pencil':iconPencil, 'icon-im-cross':iconClose}]"/>
+        </button>
+      </div>
     </header>
     <div class="contact-detail">
-        <form  @submit.prevent="updateContact">
-            <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Name</label>
-                <div class="col-sm-10">
-                    <input
-                    type="text"
-                    class="form-control"
-                    v-if="showInput"
-                    v-model="contact.name"
-                    >
-                    <label class="col-form-label" v-if="viewContact">{{ contact.name }}</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                    <input
-                    name="email"
-                    type="text"
-                    class="form-control"
-                    v-if="showInput"
-                    v-model="contact.email"
-                    >
-                    <label class="col-form-label" v-if="viewContact">{{ contact.email }}</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
-                <div class="col-sm-10">
-                    <input
-                        name="phone"
-                        type="text"
-                        class="form-control"
-                        v-model="contact.phone"
-                        id="phone" 
-                        v-if="showInput">
-                    <label class="col-form-label" v-if="viewContact">{{ contact.phone }}</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="birthday" class="col-sm-2 col-form-label">Birthday</label>
-                <div class="col-sm-10">
-                    <input type="date" name="dob" class="form-control ls-datepicker" id="birthday" 
-                        v-model="contact.dob" v-if="showInput" >
-                    <label class="col-form-label" v-if="viewContact">{{ contact.dob }}</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="relation" class="col-sm-2 col-form-label">Relation</label>
-                <div class="col-sm-10">
-                    <multiselect
-                      track-by="id"
-                      label="name"
-                      v-if="showInput"
-                      v-model="contact.labels"
-                      :options="labels"
-                      :multiple="true"/>
-                    <label class="col-form-label" v-if="viewContact" v-for="label in contact.labels">{{ label.name }}</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="address" class="col-sm-2 col-form-label">Address</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="contact.address" id="address" 
-                        v-if="showInput">
-                    <label class="col-form-label" v-if="viewContact">{{ contact.address }}</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="url" class="col-sm-2 col-form-label">URL</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="contact.url" id="url" 
-                    v-if="showInput">
-                    <label class="col-form-label" v-if="viewContact">{{ contact.url }}</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="col-sm-2 btn btn-theme"  v-if="showInput">
-                    Update 
-                </button>
-            </div>
-        </form>
+      <form @submit.prevent="updateContact">
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input
+              v-if="showInput"
+              v-model="contact.name"
+              type="text"
+              class="form-control"
+            >
+            <label v-if="viewContact" class="col-form-label">{{ contact.name }}</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input
+              v-if="showInput"
+              v-model="contact.email"
+              name="email"
+              type="text"
+              class="form-control"
+            >
+            <label v-if="viewContact" class="col-form-label">{{ contact.email }}</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+          <div class="col-sm-10">
+            <input
+              v-if="showInput"
+              id="phone"
+              v-model="contact.phone"
+              name="phone"
+              type="text"
+              class="form-control"
+            >
+            <label v-if="viewContact" class="col-form-label">{{ contact.phone }}</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="birthday" class="col-sm-2 col-form-label">Birthday</label>
+          <div class="col-sm-10">
+            <input
+              v-if="showInput"
+              id="birthday"
+              v-model="contact.dob"
+              type="date"
+              name="dob"
+              class="form-control ls-datepicker"
+            >
+            <label v-if="viewContact" class="col-form-label">
+              {{ contact.dob }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="relation" class="col-sm-2 col-form-label">Relation</label>
+          <div class="col-sm-10">
+            <multiselect
+              v-if="showInput"
+              v-model="contact.labels"
+              :options="labels"
+              :multiple="true"
+              track-by="id"
+              label="name"
+            />
+            <label
+              v-for="label in contact.labels"
+              v-if="viewContact"
+              :key="label.id"
+              class="col-form-label"
+            >
+              {{ label.name }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="address" class="col-sm-2 col-form-label">Address</label>
+          <div class="col-sm-10">
+            <input
+              v-if="showInput"
+              id="address"
+              v-model="contact.address"
+              type="text"
+              class="form-control"
+            >
+            <label v-if="viewContact" class="col-form-label">
+              {{ contact.address }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="url" class="col-sm-2 col-form-label">URL</label>
+          <div class="col-sm-10">
+            <input
+              v-if="showInput"
+              id="url"
+              v-model="contact.url"
+              type="text"
+              class="form-control"
+            >
+            <label v-if="viewContact" class="col-form-label" >
+              {{ contact.url }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <button v-if="showInput" type="submit" class="col-sm-2 btn btn-theme">
+            Update
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 <script>
 import Multiselect from 'vue-multiselect'
 export default {
-   props: {
+  components: {
+    Multiselect
+  },
+  props: {
     sidePanel: {
       type: Boolean,
       require: true,
       default: false
     }
   },
-  components:{
-    Multiselect
-  },
 
-  data() {
-    return{
-      contact:{
-        id:'',
-        img:'',
+  data () {
+    return {
+      contact: {
+        id: '',
+        img: '',
         name: '',
         phone: '',
         email: '',
-        address:'',
-        dob:'',
-        labels:'',
-        url:'',
+        address: '',
+        dob: '',
+        labels: '',
+        url: ''
       },
-      contactData:[],
+      contactData: [],
 
       showInput: false,
       iconPencil: true,
       iconClose: false,
       viewContact: true,
-      
       labels: [],
-      selectedLabels:[],
+      selectedLabels: [],
       labelData: [],
-      labelsId:[],
+      labelsId: []
     }
   },
-   watch:{
-    contactData(value) {
+  watch: {
+    contactData (value) {
       this.contact = value
     }
   },
-  methods:{
+  methods: {
     editContact () {
       this.iconPencil = !this.iconPencil
       this.iconClose = !this.iconClose
@@ -164,33 +194,29 @@ export default {
       this.viewContact = !this.viewContact
     },
     updateContact () {
-        let self = this
-        axios.put('/api/admin/apps/contacts/list/'+ this.contact.id,this.contact)
+      let self = this
+      axios.put('/api/admin/apps/contacts/list/' + this.contact.id, this.contact)
         .then(function (response) {
-          self.sidePanel=false
+          self.sidePanel = false
           self.editContact()
           self.$parent.getContacts()
         })
     },
     removeContact () {
-       let self = this
-             
+      let self = this
       if (confirm('Are you sure to remove ' + self.contact.name + ' Contact!')) {
         axios.delete('/api/admin/apps/contacts/list/' + self.contact.id, {'contact': self.contact})
-        .then(function (response) {
-            self.sidePanel=false
+          .then(function (response) {
+            self.sidePanel = false
             self.$parent.contacts.splice(self.$parent.contacts.indexOf(self.contact), 1)
-        })
-      } 
+          })
+      }
     },
-    closeModal() {
-        if(this.sidePanel){
-           this.$emit('close')
-        }
-
-    },
+    closeModal () {
+      if (this.sidePanel) {
+        this.$emit('close')
+      }
+    }
   }
-    
-  
 }
 </script>
