@@ -24,19 +24,18 @@
         <button type="sumbit" class="btn btn-primary">Save</button>
       </div>
     </form>
-</sweet-modal>
+  </sweet-modal>
 </template>
-
-  <script>
- import { SweetModal } from 'sweet-modal-vue'
+<script>
+import { SweetModal } from 'sweet-modal-vue'
 
 export default {
   components: {
     SweetModal
   },
-  data (){
+  data () {
     return {
-      label:'',
+      label: ''
     }
   },
   methods: {
@@ -49,14 +48,12 @@ export default {
     labelStore () {
       let self = this
       axios.post('/api/admin/apps/contacts/labels', {'label': self.label})
-      .then(function (response) {
-        self.$refs.modal.close()
-        self.$parent.labels.push(response.data)
-        self.lable = {}
-      })
-    },
+        .then(function (response) {
+          self.$refs.modal.close()
+          self.$parent.labels.push(response.data)
+          self.lable = {}
+        })
+    }
   }
 }
 </script>
-  
-  

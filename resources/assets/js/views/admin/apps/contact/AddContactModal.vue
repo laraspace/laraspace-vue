@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputPhone" class="col-sm-2 col-form-label" >Phone</label>
+        <label for="inputPhone" class="col-sm-2 col-form-label">Phone</label>
         <div class="col-sm-10">
           <input
             id="inputPhone"
@@ -66,17 +66,18 @@
             type="text"
             class="form-control"
           >
-      </div>
+        </div>
       </div>
       <div class="form-group row">
         <label for="inputLabel" class="col-sm-2 col-form-label">Relation</label>
         <div class="col-sm-10">
-             <multiselect
-              track-by="id"
-              label="name"
-              v-model="contactLabels"
-              :options="labels"
-              :multiple="true"/>
+          <multiselect
+            v-model="contactLabels"
+            :options="labels"
+            :multiple="true"
+            track-by="id"
+            label="name"
+          />
         </div>
       </div>
       <div class="modal-footer">
@@ -91,30 +92,30 @@
         <button type="sumbit" class="btn btn-primary">Save</button>
       </div>
     </form>
-</sweet-modal>
+  </sweet-modal>
 </template>
 
-  <script>
- import { SweetModal } from 'sweet-modal-vue'
+<script>
+import { SweetModal } from 'sweet-modal-vue'
 import Multiselect from 'vue-multiselect'
 export default {
   components: {
     SweetModal,
     Multiselect
   },
-  data (){
+  data () {
     return {
-      labels:[],
+      labels: [],
       contactLabels: [],
       contact: {
-        img:'',
+        img: '',
         name: '',
         phone: '',
         email: '',
-        address:'',
-        dob:'',
-        url:'',
-      }         
+        address: '',
+        dob: '',
+        url: ''
+      }
     }
   },
 
@@ -127,16 +128,17 @@ export default {
     },
     contactStore () {
       let self = this
-      axios.post('/api/admin/apps/contacts/list', {'contact': self.contact, 'labels': self.contactLabels})
-      .then(function (response) {
-        self.$refs.modal.close()
-        self.$parent.contacts.push(response.data)
-        self.contact = {}
-        self.labels = {}
+      axios.post('/api/admin/apps/contacts/list', {
+        contact: self.contact,
+        labels: self.contactLabels
       })
-    },
+        .then(function (response) {
+          self.$refs.modal.close()
+          self.$parent.contacts.push(response.data)
+          self.contact = {}
+          self.labels = {}
+        })
+    }
   }
 }
 </script>
-  
-  
