@@ -334,7 +334,7 @@
                     <div
                       class="btn-group"
                       role="group">
-                      <v-dropdown>
+                      <v-dropdown :toggle-arrow="false">
                         <button
                           id="btnGroupDrop1"
                           slot="activator"
@@ -455,7 +455,7 @@
                   <div
                     class="btn-group"
                     role="group">
-                    <v-dropdown>
+                    <v-dropdown :toggle-arrow="false">
                       <button
                         id="btnGroupDrop1"
                         slot="activator"

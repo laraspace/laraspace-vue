@@ -1,5 +1,8 @@
 <template>
-  <div :class="['dropdown-group', {'active': (toggle || isActive() )}, {'has-child':hasChild} ]">
+  <div :class="['dropdown-group',
+                {'active': (toggle || isActive() )},
+                {'has-child':hasChild},
+                {'toggle-arrow':(hasChild)&&(toggleArrow)}]">
     <div
       class="dropdown-group-title"
       @click="showDropdown"
@@ -23,6 +26,11 @@ export default {
       type: String,
       require: true,
       default: String
+    },
+    toggleArrow: {
+      type: Boolean,
+      require: true,
+      default: true
     }
   },
   data () {

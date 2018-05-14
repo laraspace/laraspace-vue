@@ -84,23 +84,24 @@
 }
 
 //dropdown Button
-.btn-group{
-    
-    .dropdown-group {
-
-        .dropdown-group-title::after {
-            content: none;
-        }
-    }
-}
-.btn-group .dropdown-group {
+.btn-group .btn-group .dropdown-group {
 
     .btn {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
-    .btn:not(.dropdown-toggle) {
+    .btn-group:not(:last-child) > .btn {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+    }
+}
+.btn-group-vertical {
+    > .btn-group:not(:last-child) .dropdown-group .btn{
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    > .btn-group .dropdown-group .btn{
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
     }
 }

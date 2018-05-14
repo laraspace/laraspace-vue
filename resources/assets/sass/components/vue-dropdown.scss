@@ -11,7 +11,7 @@
 		}
 	}
 	
-	&.has-child .dropdown-group-title::after {
+	&.has-child.toggle-arrow .dropdown-group-title::after {
 		position: absolute;
 		top: 50%;
 		width: 0;
@@ -25,7 +25,7 @@
 		border-bottom: 0;
 		border-left: 0.3em solid transparent;
 	}
-	&.has-child.active > .dropdown-group-title::after {
+	&.has-child.toggle-arrow.active > .dropdown-group-title::after {
 		border-color: $dropdown-header-color transparent transparent;
 	}
 	a {

@@ -42,15 +42,6 @@ global.axios.defaults.headers.common = {
 }
 
 /**
-<<<<<<< HEAD
-=======
- * Event Bus
- */
-
-global.EventBus = new Vue()
-
-/**
->>>>>>> a3016ef3f26506276fe4cffc4892cf12d23c34d1
  * Interceptors
  */
 
@@ -87,4 +78,3 @@ Vue.use(VueRouter)
 Vue.use(VeeValidate)
 Vue.use(VuePrism)
 Vue.use(VTooltip)
-
