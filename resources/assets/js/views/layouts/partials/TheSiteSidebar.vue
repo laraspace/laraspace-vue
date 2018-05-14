@@ -127,11 +127,6 @@
               to="/admin/components/tooltips">
               Vue Tooltips
             </router-link>
-
-            <router-link
-              to="/admin/components/vee">
-              Vee Validate
-            </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/chart">
@@ -239,6 +234,11 @@
             <router-link
               to="/admin/forms/vuelidate">
               Vuelidate
+            </router-link>
+
+            <router-link
+              to="/admin/forms/vee-validate">
+              Vee Validate
             </router-link>
           </v-collapse-item>
 

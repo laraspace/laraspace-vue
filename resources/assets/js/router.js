@@ -230,10 +230,6 @@ const routes = [
         component: VueCarousel
       },
       {
-        path: 'components/vee',
-        component: VeeValidate
-      },
-      {
         path: 'components/tooltips',
         component: VueTooltips
       },
@@ -291,6 +287,10 @@ const routes = [
       {
         path: 'forms/vuelidate',
         component: Vuelidate
+      },
+      {
+        path: 'forms/vee-validate',
+        component: VeeValidate
       },
       {
         path: 'forms/form-wizard',
