@@ -7,12 +7,14 @@
         id="logo-desk"
         src="/assets/img/logo-desk.png"
         alt="Laraspace Logo"
-        class="d-none d-md-inline">
+        class="d-none d-md-inline"
+      >
       <img
         id="logo-mobile"
         src="/assets/img/logo-mobile.png"
         alt="Laraspace Logo"
-        class="d-md-none">
+        class="d-md-none"
+      >
     </a>
     <a
       href="#"
@@ -24,66 +26,85 @@
     </a>
     <ul class="action-list">
       <li>
-        <div class="dropdown-menu dropdown-menu-right">
-          <v-dropdown>
-            <a
-              slot="title"
-              href="#">
-              <i class="icon-fa icon-fa-plus"/>fgfdsgfd
+        <v-dropdown>
+          <a slot="activator" href="#">
+            <i class="icon-fa icon-fa-plus"/>
+          </a>
+          <v-dropdown-item>
+            <a slot="item-title" href="#">
+              <i class="icon-fa icon-fa-edit"/> New Post
             </a>
-            <v-dropdown-item>
-              <a
-                slot="item-title"
-                href="#"><i class="icon-fa icon-fa-edit"/> New Post</a>
-            </v-dropdown-item>
-            <v-dropdown-item>
-              <a
-                slot="item-title"
-                href="#"><i class="icon-fa icon-fa-tag"/> New Category</a>
-            </v-dropdown-item>
-            <v-dropdown-item>
-              <a
-                slot="item-title"
-                href="#"><i class="icon-fa icon-fa-star"/> Separated link</a>
-            </v-dropdown-item>
-          </v-dropdown>
-        </div>
+            <a slot="item-title" href="#">
+              <i class="icon-fa icon-fa-tag"/> New Category
+            </a>
+            <a slot="item-title" href="#">
+              <i class="icon-fa icon-fa-star"/> Separated link
+            </a>
+          </v-dropdown-item>
+        </v-dropdown>
       </li>
       <li>
-        <a
-          href="#"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"><i class="icon-fa icon-fa-bell"/></a>
-        <div class="dropdown-menu dropdown-menu-right notification-dropdown">
-          <h6 class="dropdown-header">Notifications</h6>
+        <v-dropdown>
           <a
-            class="dropdown-item"
-            href="#"><i class="icon-fa icon-fa-user"/> New User was Registered</a>
-          <a
-            class="dropdown-item"
-            href="#"><i class="icon-fa icon-fa-comment"/> A Comment has been posted.</a>
-        </div>
-      </li>
-      <li>
-        <a
-          href="#"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          class="avatar">
-          <img
-            src="/assets/img/avatars/avatar.png"
-            alt="Avatar"></a>
-        <div class="dropdown-menu dropdown-menu-right notification-dropdown">
-          <router-link
-            class="dropdown-item"
-            to="/admin/settings"><i class="icon-fa icon-fa-cogs"/> Settings</router-link>
-          <a
+            slot="activator"
             href="#"
-            class="dropdown-item"
-            @click.prevent="logout"><i class="icon-fa icon-fa-sign-out"/> Logout</a>
-        </div>
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="icon-fa icon-fa-bell"/>
+          </a>
+          <v-dropdown-item>
+            <h6 slot="item-title" class="dropdown-header">
+              Notifications
+            </h6>
+            <a
+              slot="item-title"
+              class="dropdown-item"
+              href="#"
+            >
+              <i class="icon-fa icon-fa-user"/> New User was Registered
+            </a>
+            <a
+              slot="item-title"
+              class="dropdown-item"
+              href="#"
+            >
+              <i class="icon-fa icon-fa-comment"/> A Comment has been posted.
+            </a>
+          </v-dropdown-item>
+        </v-dropdown>
+      </li>
+      <li>
+        <v-dropdown>
+          <a
+            slot="activator"
+            href="#"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="avatar"
+          >
+            <img src="/assets/img/avatars/avatar.png" alt="Avatar">
+          </a>
+          <v-dropdown-item>
+            <router-link
+              slot="item-title"
+              class="dropdown-item"
+              to="/admin/settings"
+            >
+              <i class="icon-fa icon-fa-cogs"/> Settings
+            </router-link>
+            <a
+              slot="item-title"
+              href="#"
+              class="dropdown-item"
+              @click.prevent="logout"
+            >
+              <i class="icon-fa icon-fa-sign-out"/> Logout
+            </a>
+          </v-dropdown-item>
+        </v-dropdown>
       </li>
     </ul>
   </header>
@@ -92,11 +113,13 @@
 import Auth from '../../../services/auth'
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
+import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
 
 export default {
   components: {
     VDropdown,
-    VDropdownItem
+    VDropdownItem,
+    VDropdownSubItem
   },
   data () {
     return {

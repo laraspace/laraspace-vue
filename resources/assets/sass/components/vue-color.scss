@@ -4,7 +4,15 @@
     height: 130px !important;
 }
 // Apply Me button
-.demo-btn {
-    position: absolute;
-    bottom: 0;
+.demo-div {
+    position: fixed;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 60px;
+    width: 90px;
+    padding: 10px;
+    right: 0px;
+    top: 300px;
+    background: #194D33;
+    color: white;
 }
