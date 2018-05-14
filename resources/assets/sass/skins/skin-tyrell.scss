@@ -96,7 +96,7 @@
     .side-nav {
 
         .collapse-group .collapse-group-item {
-                
+
             a {
                 color: $sidebar-font-color;
 
@@ -112,7 +112,7 @@
 
                 .collapse-group-items {
                     background-color: darken($sidemenu-submenu-bg, 5%);
-                    
+
                     .collapse-group-items {
                         background-color: darken($sidemenu-submenu-bg, 8%);
                     }
@@ -167,7 +167,7 @@
 
     //Tabs
 
-  
+
 // Tabs Default
 //----------------------------------
 
@@ -241,7 +241,7 @@
 .tabs-component.tabs-simple {
 
     .tabs-component-tabs .tabs-component-tab {
-        
+
         a {
             color: $ls-color-black;
         }
@@ -280,7 +280,7 @@
 
         &.is-active {
             border-right: 3px solid $ls-color-theme;
-            color: $ls-color-theme; 
+            color: $ls-color-theme;
 
         }
     }
@@ -348,11 +348,11 @@
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
-            
+
             &.multiselect__option--selected {
                 background: $ls-color-gray--light;
                 color: $ls-color-black;
-            
+
                 &::after {
                     background: $ls-color-gray--dark;
                     color:$ls-color-black;
@@ -361,7 +361,7 @@
 
             &::after {
                 background: $ls-color-gray--dark;
-                color:$ls-color-black;
+                color: $ls-color-black;
             }
         }
 
@@ -383,7 +383,7 @@
                     &::after {
                         color: $white;
                     }
-                } 
+                }
             }
         }
     }

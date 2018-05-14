@@ -133,7 +133,7 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header">Height Progress Bar</div>
+      <div class="card-header">Custom Height Progress Bars</div>
       <div class="card-body">
         <div
           class="progress"
@@ -210,7 +210,7 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header">Animated stripes Progress Bars</div>
+      <div class="card-header">Animated Striped Progress Bars</div>
       <div class="card-body">
         <div class="progress">
           <div

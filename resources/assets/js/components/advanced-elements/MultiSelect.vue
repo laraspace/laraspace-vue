@@ -6,7 +6,7 @@
         v-model="value"
         :options="SingleOptions"
         :searchable="true"
-        :close-on-select="true"
+        :close-on-select="false"
         :show-labels="true"
         placeholder="Pick a value"
       />
