@@ -104,30 +104,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-header">
-            <h6>Easy Flash Notifications</h6>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <p>
-                  Laraspace provides an easy way for your Laravel Application to handle notification alerts
-                  using any of the above plugins. Just call any of the functions mentioned below inside
-                  your controller method and you'll see the notification in the view.
-                </p>
-                <p><code>flash()->success('You've Logged in Successfully.');</code></p>
-                <p><code>flash()->warning('There's something wrong.');</code></p>
-                <p><code>flash()->error('Validation Error');</code></p>
-                <p><code>flash()->info('Laraspace is Awesome!');</code></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

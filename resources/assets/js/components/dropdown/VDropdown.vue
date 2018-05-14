@@ -1,86 +1,80 @@
 <template>
-  <div :class="['dropdown-group', {active: toggle} ]">
-    <div 
+  <div :class="['dropdown-group', {'active': (toggle || isActive() )}, {'has-child':hasChild} ]">
+    <div
       class="dropdown-group-title"
-      @click="showDropdown">
-      <slot name="title"></slot>
+      @click="showDropdown"
+    >
+      <slot name="activator"/>
     </div>
-    <transition
-      name="fade"
-      mode="in-out">
-      <div
-        class="dropdown-group-items"
-        v-show="toggle"
-        ref="dropdownItems"
-        :style="'max-height:'+height+'px'">
-        <slot></slot>
-      </div>
-    </transition>
+    <div
+      v-show="toggle"
+      v-if="hasChild"
+      ref="dropdownItems"
+      :class="['dropdown-group-items',{'align-right':rightAlign}]"
+    >
+      <slot/>
+    </div>
   </div>
 </template>
 <script>
-
 export default {
   props: {
     activeUrl: {
       type: String,
       require: true,
       default: String
-    },
+    }
   },
   data () {
     return {
-      height: '',
-      originalHeight: '',
       toggle: true,
+      hasChild: true,
+      rightAlign: false
     }
   },
   mounted () {
-    this.$nextTick(function(){
-        this.height = this.originalHeight = this.$refs.dropdownItems.clientHeight
-    })
-    console.log(this);
-    if (this.isActive() == true) {
-      this.toggle =  true
-    } else {
+    this.$nextTick(() => {
+      this.setDropdownPosition()
+      window.addEventListener('resize', (e) => {
+        if (this.toggle === true) {
+          this.setDropdownPosition()
+        }
+      })
+      if (this.$refs.dropdownItems.children.length === 0) {
+        this.hasChild = false
+      }
       this.toggle = false
-    }
+    })
   },
   methods: {
+    setDropdownPosition () {
+      let rect = this.$refs.dropdownItems.getBoundingClientRect()
+      let itemPos = rect.right + this.$refs.dropdownItems.offsetParent.offsetWidth
+      if (itemPos > window.innerWidth) {
+        this.rightAlign = true
+      } else {
+        this.rightAlign = false
+      }
+    },
     isActive () {
-      return this.$route.path.indexOf(this.activeUrl) > -1
+      if (this.activeUrl) {
+        return this.$route.path.indexOf(this.activeUrl) > -1
+      }
+      return false
     },
     showDropdown () {
       let self = this
-      if(this.toggle == false) {
-        this.$parent.$children.filter(function(value) {
-          if(value != self) {
-            if(value.toggle == true) {
+      if (this.toggle === false) {
+        this.$parent.$children.filter(function (value) {
+          if (value !== self) {
+            if (value.toggle === true) {
               value.toggle = false
             }
           }
         })
       }
-      this.toggle = !this.toggle 
-    },
-    afterEnter () {
-      this.height = this.originalHeight
-    },
-    afterLeave () {
-      this.height = 0
+      this.toggle = !this.toggle
     }
   }
 }
 </script>
-<style scoped>
-.dropdown-group-items {
-  overflow: hidden;
-  transition: max-height .3s ease-in-out;
-}
-.slide-enter-active, .slide-leave-active {
-  overflow: hidden;
-}
-.slide-leave-to {
-  max-height: 0px !important;
-}
-</style>

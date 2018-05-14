@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
 
     Route::group(['prefix' => 'settings'], function () {
 
-            Route::post('/social', [
+        Route::post('/social', [
             'as' => 'admin.settings.social', 'uses' => 'Demo\SettingsController@postSocial'
         ]);
     });
@@ -52,6 +52,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
         Route::delete('/{id}',[
             'as' => 'admin.users.delete', 'uses' => 'Demo\PagesController@destroy'
         ]);
+
+    });
+
+    Route::group(['prefix' => 'apps/contacts'], function (){
+
+        Route::resource('/list', 'ContactController');
+        Route::resource('/labels', 'LabelController');
 
     });
 

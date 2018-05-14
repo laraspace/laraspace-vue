@@ -77,8 +77,10 @@
 @import "components/vue-wizard";
 @import "components/vue-tabs";
 @import "components/tooltips";
+@import "components/vue-dropdown";
 @import "components/gallery";
 @import "components/modals";
+@import "components/vue-multi-select";
 
 
 // Pages
@@ -98,6 +100,7 @@
 //----------------------------------
 
 @import "apps/mailbox";
+@import "apps/contact";
 
 
 

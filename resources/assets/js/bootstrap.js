@@ -24,7 +24,7 @@ window._ = require('lodash')
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = require('vue')
+global.Vue = require('vue')
 
 // Vue.directive('tooltip', VTooltip)
 // Vue.directive('close-popover', VClosePopover)
@@ -35,17 +35,26 @@ window.Vue = require('vue')
  * included with Laravel will automatically verify the header's value.
  */
 
-window.axios = require('axios')
+global.axios = require('axios')
 
-window.axios.defaults.headers.common = {
+global.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * Event Bus
+ */
+
+global.EventBus = new Vue()
+
+/**
+>>>>>>> a3016ef3f26506276fe4cffc4892cf12d23c34d1
  * Interceptors
  */
 
-window.axios.interceptors.request.use(function (config) {
+global.axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   const AUTH_TOKEN = Ls.get('auth.token')
 
