@@ -35,7 +35,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$slots)
     this.$nextTick(() => {
       this.setDropdownPosition()
       window.addEventListener('resize', (e) => {
