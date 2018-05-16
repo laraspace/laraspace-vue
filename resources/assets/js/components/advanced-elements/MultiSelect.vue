@@ -7,7 +7,7 @@
         :options="SingleOptions"
         :searchable="true"
         :close-on-select="false"
-        :show-labels="true"
+        :show-labels="false"
         placeholder="Pick a value"
       />
     </div>
