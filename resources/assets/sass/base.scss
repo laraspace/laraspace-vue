@@ -1,7 +1,9 @@
 // Basic Styles
 // -------------------------
 
-html, body , .site-wrapper{
+html,
+body,
+.site-wrapper {
     height: 100%;
 }
 
@@ -12,7 +14,12 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: $heading-font-color;
     font-weight: normal;
 }
@@ -20,24 +27,28 @@ h1, h2, h3, h4, h5, h6 {
 a {
     color: $ls-color-black--light;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         color: lighten($ls-color-black--light, 10%);
         text-decoration: none;
         outline: none;
     }
-
 }
 
-mark, .mark {
+mark,
+.mark {
     background-color: $ls-color-primary;
 }
 
-code, .code {
+code,
+.code {
     background-color: $code-bg;
     color: $ls-color-primary;
 }
 
-:active, :focus, :hover {
+:active,
+:focus,
+:hover {
     outline: 0;
 }
 

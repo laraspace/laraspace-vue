@@ -1,5 +1,5 @@
 .login-page.login-2 {
-
+    
     .login-box {
         color: #333;
         background: #fff;
@@ -15,7 +15,7 @@
         color: #333;
 
         &:hover {
-            color : lighten(#333, 10%);
+            color: lighten(#333, 10%);
         }
     }
 
@@ -36,12 +36,11 @@
         color: $ls-color-primary;
 
         &:hover {
-            color : darken($ls-color-primary, 10%);
+            color: darken($ls-color-primary, 10%);
         }
     }
 
-    .logo-main img{
+    .logo-main img {
         width: 200px;
     }
-
 }

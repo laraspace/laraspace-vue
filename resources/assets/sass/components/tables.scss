@@ -1,4 +1,5 @@
 .table {
+    
     th,
     td {
         font-size: 0.9rem;
@@ -26,10 +27,9 @@
             margin-right: 8px;
             padding-right: 8px;
         }
-
     }
 
-    tr:hover .table__actions{
+    tr:hover .table__actions {
         opacity: 1;
     }
 }
@@ -139,7 +139,6 @@
     content: "↓";
 }
 
-
 // Pagination
 .table-component .pagination {
     justify-content: flex-end !important;
@@ -169,5 +168,4 @@
         pointer-events: none;
         cursor: auto;
     }
-
 }

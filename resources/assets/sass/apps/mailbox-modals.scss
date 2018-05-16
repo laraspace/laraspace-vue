@@ -39,15 +39,13 @@
             }
 
             .mail-menu {
-                ul {
-                    li {
-                        padding-left: 15px;
-                        padding-bottom: 10px;
-                    }
+                color: white;
+                list-style: none;
+            }
 
-                    color: white;
-                    list-style: none;
-                }
+            .mail-menu ul li {
+                padding-left: 15px;
+                padding-bottom: 10px;
             }
         }
 
@@ -65,50 +63,42 @@
 
         .message-heading {
             position: relative;
-            padding: 20px 0px;
+            padding: 50px 0px 20px 0px;
 
-            .message-heading-main {
+            a .avtar-img {
+                height: 50px;
+                border-radius: 50%;
+            }
+
+            .name {
                 position: relative;
-                padding-top: 25px;
+                left: 5px;
+                bottom: 10px;
+            }
 
-                a {
-                    .avtar-img {
-                        height: 50px;
-                        border-radius: 50%;
-                    }
-                }
+            .email span a {
+                color: burlywood;
+            }
 
-                .name {
-                    position: relative;
-                    left: 5px;
-                    bottom: 10px;
-                }
+            .email {
+                display: inline-block;
+                position: relative;
+                right: 64px;
+                top: 10px;
+            }
 
-                .email {
-                    span {
-                        a {
-                            color: burlywood;
-                        }
-                    }
-
-                    display: inline-block;
-                    position: relative;
-                    right: 64px;
-                    top: 10px;
-                }
-
-                .message-heading-right {
-                    display: inline;
-                }
+            .message-heading-right {
+                display: inline;
             }
         }
 
         .message-attachment {
             margin-top: 40px;
-            ul {
-                list-style: none;
-                padding: 0px;
-            }
+        }
+
+        .message-attachment ul {
+            list-style: none;
+            padding: 0px;
         }
 
         .all-mail {

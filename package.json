@@ -46,6 +46,7 @@
     "notie": "^4.3.1",
     "popper.js": "^1.12.9",
     "prismjs": "^1.14.0",
+    "sass-convert": "^0.5.2",
     "simplemde": "^1.11.2",
     "summernote": "^0.8.8",
     "sweet-modal-vue": "^2.0.0",

@@ -1,10 +1,10 @@
 .btn {
+    font-family: $base-font-family;
+
     &.btn-pressable:active {
         transform: translate(0px, 3px);
         -webkit-transform: translate(0px, 3px);
     }
-
-    font-family: $base-font-family;
 }
 
 // Disable Outline on focus
@@ -32,7 +32,8 @@
 
 .btn-theme {
     @include button-variant($ls-color-primary, $ls-color-primary);
-    $color:$ls-color-secondary;
+
+    $color: $ls-color-secondary;
 }
 
 .btn-outline-theme {
@@ -52,6 +53,7 @@
 .btn-icon {
     padding: 0.6rem;
     line-height: 1em;
+
     i {
         text-align: center;
     }
@@ -73,9 +75,8 @@
     overflow: visible !important;
 }
 
-
 // Color Overrides
-.btn-success,.btn-warning, .btn-info {
+.btn-success, .btn-warning, .btn-info {
     color: $white;
 
     &:hover {

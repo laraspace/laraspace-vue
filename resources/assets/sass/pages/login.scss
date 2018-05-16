@@ -30,6 +30,7 @@
             font-size: 14px;
             margin-top: 50px;
             text-align: center;
+
             p {
                 margin-bottom: 10px;
             }
@@ -62,9 +63,12 @@
     }
 
     .login-wrapper .c-input {
+
         > input {
+            
             &:checked ~ .c-indicator {
                 background-color: #333;
+
                 @include box-shadow(none);
             }
 
@@ -75,6 +79,7 @@
 
             &:active ~ .c-indicator {
                 background-color: darken(#333, 5%);
+
                 @include box-shadow(none);
             }
         }

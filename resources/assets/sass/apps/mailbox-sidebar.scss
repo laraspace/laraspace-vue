@@ -8,7 +8,7 @@
     transform: translateX(-200px);
     transition: transform 0.3s ease-in-out;
     z-index: 1;
-    padding: 10px;
+    padding: 15px;
 
     .sidebar-menu {
         list-style: none;
@@ -32,11 +32,11 @@
                 padding: 15px 0px 12px 0px;
                 position: relative;
                 text-decoration: none;
+            }
 
-                span {
-                    float: right;
-                    margin-top: 3px;
-                }
+            a span {
+                float: right;
+                margin-top: 3px;
             }
         }
     }
@@ -55,17 +55,18 @@
         cursor: pointer;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
-        background-color:#f8f8f8;
+        background-color: #f8f8f8;
         right: -20px;
         opacity: 1;
         transition: opacity 0.3s ease;
 
         &:hover {
-            background-color: #e5e5e5
+            background-color: #e5e5e5;
         }
     }
 
     &:hover {
+        
         .left-sidebar-btn {
             opacity: 1 !important;
         }

@@ -1,9 +1,9 @@
 .login-page.login-1 {
 
-    .login-wrapper{
-
+    .login-wrapper {
+        
         &::before {
-            background-image: url('/assets/img/skynight.jpg');
+            background-image: url("/assets/img/skynight.jpg");
             background-position: center top;
             background-size: cover;
             content: '';
@@ -25,7 +25,5 @@
             width: 100%;
             z-index: -1;
         }
-
     }
-
 }

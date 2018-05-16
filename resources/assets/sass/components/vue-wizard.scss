@@ -6,44 +6,36 @@
 
 .ls-wizard {
 
-  .wizard-tab-content {
-    min-height: 300px !important;
-  }
-
-  .wizard-progress-bar {
-    background-color:rgb(255, 222, 0) !important;
-    color: rgb(255, 222, 0) !important;
-    transition: unset;
-  }
-
-  .wizard-nav {
-    .wizard-icon-container {
-      background-color:rgb(255, 222, 0) !important;
+    .wizard-tab-content {
+        min-height: 300px !important;
     }
-  }
 
-  .wizard-card-footer {
+    .wizard-progress-bar {
+        background-color: rgb(255, 222, 0) !important;
+        color: rgb(255, 222, 0) !important;
+        transition: unset;
+    }
 
-    .wizard-footer-left {
-      
-      .wizard-btn{
-        position: absolute;
-        background-color:#007dcc!important;
-        border-color: #007dcc !important;
-        color: white;
-        right: 200px;
-        visibility: visible;
-      }
+    .wizard-nav .wizard-icon-container {
+        background-color: rgb(255, 222, 0) !important;
     }
-    
-    .wizard-footer-right {
-      
-      .wizard-btn {
-        background-color: #007dcc !important;
-        border-color: #007dcc !important;
-        color: white;
-        position: relative;
-      }
+
+    .wizard-card-footer {
+        
+        .wizard-footer-left .wizard-btn {
+            position: absolute;
+            background-color: #007dcc !important;
+            border-color: #007dcc !important;
+            color: white;
+            right: 200px;
+            visibility: visible;
+        }
+
+        .wizard-footer-right .wizard-btn {
+            background-color: #007dcc !important;
+            border-color: #007dcc !important;
+            color: white;
+            position: relative;
+        }
     }
-  }
 }

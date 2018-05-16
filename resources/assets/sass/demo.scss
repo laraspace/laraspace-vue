@@ -18,7 +18,7 @@
     }
 }
 
-easy-pie-chart {
+.easy-pie-chart {
     position: relative;
     display: inline-block;
     width: 80px;
@@ -47,27 +47,26 @@ easy-pie-chart {
 
 // Icons
 // -------------------------
-.icon-container {
-    .demo-icon {
-        .icon-classname {
-            margin-left: 20px;
-        }
+.icon-container .demo-icon {
 
-        .icon-box {
-            height: 50px;
-            width: 50px;
-            padding: 10px;
-            border-radius: 3px;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            border: 2px solid #ffeb3b;
+    .icon-classname {
+        margin-left: 20px;
+    }
 
-            &:hover {
-                background-color: #ffeb3b;
-            }
+    .icon-box {
+        height: 50px;
+        width: 50px;
+        padding: 10px;
+        border-radius: 3px;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: 2px solid #ffeb3b;
+
+        &:hover {
+            background-color: #ffeb3b;
         }
     }
 }
@@ -88,15 +87,17 @@ easy-pie-chart {
 
             @if $last-equal {
                 @for $i from 2 through $max-cols {
-                    $screen-width: ($min-width * $i)+ ($gutter * $i);
-                    $column-width: (100% / $i);
+                    $screen-width: $min-width * $i + $gutter * $i;
+                    $column-width: 100% / $i;
+
                     @media (min-width: $screen-width) {
                         max-width: calc(#{$column-width} - #{$gutter});
                     }
                 }
 
-                $column-width: (100% / $max-cols);
-                @media (min-width: $min-width*$max-cols) {
+                $column-width: 100% / $max-cols;
+
+                @media (min-width: $min-width * $max-cols) {
                     min-width: calc(#{$column-width} - #{$gutter});
                 }
             }
@@ -107,6 +108,7 @@ easy-pie-chart {
 @include n-columns(350px, 20px, true, 5);
 
 .icon-container {
+
     .demo-icon {
         display: flex;
         flex-direction: row;
@@ -120,6 +122,7 @@ easy-pie-chart {
 // Buttons
 // -------------------------
 .buttons-demo {
+
     .btn {
         margin-bottom: 10px;
     }
@@ -139,15 +142,13 @@ easy-pie-chart {
 }
 
 //Sweet Modal
-.sweet-modal-demo {
-    .demo-buttons {
-        display: flex;
-        flex-wrap: wrap;
+.sweet-modal-demo .demo-buttons {
+    display: flex;
+    flex-wrap: wrap;
 
-        .modal-demo {
-            margin-left: 10px;
-            margin-bottom: 10px;
-        }
+    .modal-demo {
+        margin-left: 10px;
+        margin-bottom: 10px;
     }
 }
 
@@ -156,160 +157,165 @@ easy-pie-chart {
     display: none;
 }
 
-.media-manager {
-    .media-display {
-        .card {
-            margin-bottom: 0;
-        }
-        ul {
-            &.media-list {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                padding: 1.25rem;
+.media-manager .media-display {
 
-                li {
-                    min-width: 200px;
-                    max-width: 250px;
-                    list-style-type: none;
-                    margin: 10px;
-                    border-radius: 5px;
-                    background-color: #efefef;
-                    color: $ls-color-black--light;
-                    margin-left: 20px;
+    .card {
+        margin-bottom: 0;
+    }
 
-                    &:hover {
-                        cursor: pointer;
-                    }
-                    &.selected {
-                        background-color: $ls-color-yellow;
-                    }
-                    .media-data {
-                        text-align: center;
-                        padding: 10px;
-                        display: flex;
-                        align-items: center;
+    ul .media-list {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1.25rem;
 
-                        i {
-                            margin-right: 10px;
-                            flex: 1;
-                        }
-                        img {
-                            width: 70px;
-                            flex: 1;
-                            height: 48px;
-                            margin-right: 10px;
-                        }
-                        .media-info {
-                            flex: 2;
-                            overflow: hidden;
+        li {
+            min-width: 200px;
+            max-width: 250px;
+            list-style-type: none;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: #efefef;
+            color: $ls-color-black--light;
+            margin-left: 20px;
 
-                            h4 {
-                                margin: 0;
-                                text-overflow: ellipsis;
-                                overflow: hidden;
-                                white-space: nowrap;
-                                font-size: 1rem;
-                                text-align: left;
-                            }
-                            small {
-                                font-weight: 200;
-                                display: block;
-                                text-align: left;
-                            }
-                        }
-                    }
-                }
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.selected {
+                background-color: $ls-color-yellow;
             }
         }
-        .media-body {
-            padding: 0;
-            .media-path {
-                ol.breadcrumb {
-                    margin: 0;
-                    border-radius: 0;
-                    li:first-child {
-                        text-transform: capitalize;
-                    }
-                }
-            }
-        }
-        .media-type {
-            height: 100%;
 
-            .card {
-                height: 100%;
-                border-radius: 0;
-                .card-header {
-                    padding: 50px 0;
-                }
-                .card-body {
-                    .media-info {
-                        .items {
-                            display: flex;
-                            flex-wrap: wrap;
-                            font-size: 0.9rem;
-                            a {
-                                color: lightblue;
-                                cursor: pointer;
-                                flex: 1;
-                            }
-                            p {
-                                flex: 1;
-                            }
-                            label {
-                                font-weight: bold;
-                                margin-right: 10px;
-                            }
-                        }
-                    }
-                }
+        li .media-data {
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+
+            i {
+                margin-right: 10px;
+                flex: 1;
+            }
+
+            img {
+                width: 70px;
+                flex: 1;
+                height: 48px;
+                margin-right: 10px;
+            }
+
+            .media-info {
+                flex: 2;
+                overflow: hidden;
+            }
+
+            .media-info h4 {
+                margin: 0;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 1rem;
+                text-align: left;
+            }
+
+            .media-info small {
+                font-weight: 200;
+                display: block;
+                text-align: left;
             }
         }
     }
-    .progress {
-        margin-top: 0px;
-        height: 3px;
+
+    .media-body {
+        padding: 0;
+    }
+
+    .media-body .media-path ol.breadcrumb {
+        margin: 0;
+        border-radius: 0;
+
+        li:first-child {
+            text-transform: capitalize;
+        }
+    }
+
+    .media-type {
+        height: 100%;
+    }
+
+    .media-type .card {
+        height: 100%;
+        border-radius: 0;
+
+        .card-header {
+            padding: 50px 0;
+        }
+
+        .card-body .media-info .items {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+
+            a {
+                color: lightblue;
+                cursor: pointer;
+                flex: 1;
+            }
+
+            p {
+                flex: 1;
+            }
+
+            label {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+        }
     }
 }
 
+.media-manager .progress {
+    margin-top: 0px;
+    height: 3px;
+}
+
 @media (max-width: $small-breakpoint) {
-    .modal-media {
-        .modal-dialog {
-            .modal-content {
-                overflow: hidden;
-                .side-menu {
-                    background: black;
-                    margin: 8px 10px 6px 10px;
-                    width: 26px;
-                    float: right;
-                }
+    .modal-media .modal-dialog .modal-content {
+        overflow: hidden;
 
-                .left-menu {
-                    left: -127px;
-                    display: block !important;
-                    background: #333;
-                    height: 100%;
-                    top: 0;
-                    z-index: 30;
-                    transition: left 0.3s ease;
-                    &.sidebar-open {
-                        left: 0px;
+        .side-menu {
+            background: black;
+            margin: 8px 10px 6px 10px;
+            width: 26px;
+            float: right;
+        }
 
-                        .tabs-vertical.nav-tabs li a {
-                            border-right-color: #333;
-                        }
-                    }
-                    .tabs-vertical .nav-tabs li a.active {
-                        background-color: unset;
-                    }
-                }
-                .media-upload-content {
-                    padding: 0px;
-                }
-                .modal-body {
-                }
+        .left-menu {
+            left: -127px;
+            display: block !important;
+            background: #333;
+            height: 100%;
+            top: 0;
+            z-index: 30;
+            transition: left 0.3s ease;
+
+            &.sidebar-open {
+                left: 0px;
             }
+
+            &.sidebar-open .tabs-vertical.nav-tabs li a {
+                border-right-color: #333;
+            }
+
+            .tabs-vertical .nav-tabs li a.active {
+                background-color: unset;
+            }
+        }
+
+        .media-upload-content {
+            padding: 0px;
         }
     }
 }
@@ -417,7 +423,7 @@ easy-pie-chart {
         right: -250px;
         width: 250px;
 
-        .skins .skin-item{
+        .skins .skin-item {
             min-width: calc(100% - 20px);
         }
     }

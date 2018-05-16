@@ -10,7 +10,9 @@
         background-color: $ls-color-secondary;
         color: $ls-color-primary;
 
-        &:hover, &:active, &:focus {
+        &:hover,
+        &:active,
+        &:focus {
             background-color: $ls-color-secondary;
             color: $ls-color-primary;
         }
@@ -31,7 +33,9 @@
         background-color: $brand-primary;
         color: $white;
 
-        &:hover, &:active, &:focus {
+        &:hover,
+        &:active,
+        &:focus {
             background-color: $brand-primary;
             color: $white;
         }
@@ -54,28 +58,30 @@
         border-radius: 0;
         color: $ls-color-black--light;
 
-        &:hover, &:active, &:focus {
+        &:hover,
+        &:active,
+        &:focus {
             border-bottom: 3px solid $ls-color-primary;
             border-color: lighten($ls-color-primary, 30%);
         }
-
-        &.active {
-            background-color: transparent;
-            border-bottom: 3px solid $ls-color-primary;
-            color: $ls-color-black;
-
-            &:hover, &:active, &:focus {
-                border-bottom: 3px solid $ls-color-primary;
-                border-color: $ls-color-primary;
-                color: $ls-color-black;
-            }
-        }
     }
 
+    .nav-link.active {
+        background-color: transparent;
+        border-bottom: 3px solid $ls-color-primary;
+        color: $ls-color-black;
+
+        &:hover,
+        &:active,
+        &:focus {
+            border-bottom: 3px solid $ls-color-primary;
+            border-color: $ls-color-primary;
+            color: $ls-color-black;
+        }
+    }
 }
 
 .tabs-vertical {
-
     @include clearfix;
 
     .nav-tabs {
@@ -100,19 +106,23 @@
             border-color: transparent;
             border-right-color: $ls-color-secondary;
 
-            &:hover, &:active, &:focus {
+            &:hover,
+            &:active,
+            &:focus {
                 background-color: $white;
                 border-color: $ls-color-secondary;
             }
+        }
 
-            &.active {
+        li a.active {
+            background-color: $ls-color-secondary;
+            color: $ls-color-primary;
+
+            &:hover,
+            &:active,
+            &:focus {
                 background-color: $ls-color-secondary;
                 color: $ls-color-primary;
-
-                &:hover, &:active, &:focus {
-                    background-color: $ls-color-secondary;
-                    color: $ls-color-primary;
-                }
             }
         }
     }
@@ -123,19 +133,22 @@
         li a {
             border-right-color: $brand-primary;
 
-            &:hover, &:active, &:focus {
+            &:hover,
+            &:active,
+            &:focus {
                 background-color: $white;
                 border-color: $brand-primary;
             }
+        }
+        li a.active {
+            background-color: $brand-primary;
+            color: $white;
 
-            &.active {
+            &:hover,
+            &:active,
+            &:focus {
                 background-color: $brand-primary;
                 color: $white;
-
-                &:hover, &:active, &:focus {
-                    background-color: $brand-primary;
-                    color: $white;
-                }
             }
         }
     }
@@ -159,7 +172,9 @@
                 background: transparent;
             }
 
-            &:hover, &:active, &:focus {
+            &:hover,
+            &:active,
+            &:focus {
                 background-color: transparent;
                 border-right: 3px solid $ls-color-primary;
                 border-bottom: 0;
@@ -172,8 +187,8 @@
     background-color: #fff;
     border: 1px solid transparent;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 
     .panel-heading a {
         text-decoration: none;
