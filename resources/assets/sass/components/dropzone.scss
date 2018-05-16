@@ -1,7 +1,8 @@
 .vue-dropzone .dz-preview  {
     width: 150px !important;
     height:150px !important;
-    
+    background: transparent !important;
+
     .dz-details {
         background-color:$ls-color-yellow !important;
         border-radius:30px!important;
@@ -14,27 +15,27 @@
         border-radius:30px !important;
         width: 150px !important;
         height:150px !important;
-        
+
     }
 
     .dz-error-message {
         top: 160px !important;
-        left: 5px !important;   
+        left: 5px !important;
         &::after {
             top: -6px !important;
             transform: rotate(180deg) !important;
         }
     }
-    
+
     .dz-upload {
         background: $ls-color-black !important;
     }
-    
+
     .dz-error-mark svg #Page-1 g{
         fill:$ls-color-black !important;
-    } 
-    
+    }
+
     .dz-success-mark svg g path{
         fill:$ls-color-black !important;
-    } 
+    }
 }
