@@ -57,6 +57,7 @@
         }
 
         .action-list li {
+
             a {
                 background-color: $header-buttons-bg-color;
                 color: $header-buttons-font-color;
@@ -90,6 +91,7 @@
     }
 
     .side-nav .collapse-group .collapse-group-item {
+
         a {
             color: $sidebar-font-color;
         }
@@ -127,6 +129,7 @@
     }
 
     .header-nav li {
+
         a {
             color: $header-menu-item-font-color;
         }
@@ -159,110 +162,114 @@
         }
     }
 
-    //Tabs
+    //Vue-Tabs
 
-    .tabs-default .nav-link {
-        .nav-link.active {
-            background-color: $ls-color-theme;
-            color: $white;
+    // Tabs Default
+    //----------------------------------
 
-            &:hover,
-            &:active,
-            &:focus {
-                background-color: $ls-color-theme;
+    .tabs-component.tabs-default {
+
+        .tabs-component-tab {
+
+            a {
+                color: $ls-color-black;
+            }
+
+            a:hover {
+                color: $ls-color-black;
+            }
+
+            &.is-active {
+                border: 1px solid $ls-color-theme;
+                background: $ls-color-theme;
+                color: $white;
+            }
+
+            &.is-active a {
                 color: $white;
             }
         }
 
-        .nav-link:hover {
+        .tabs-component-tab:hover {
             border: 1px solid $ls-color-theme;
         }
 
-        .nav-tabs {
-            border-bottom: 1px solid $ls-color-theme;
+        .tabs-component-panels {
+            border-top: 1px solid $ls-color-theme !important;
         }
     }
 
-    .tabs-simple .nav-link {
-        background-color: transparent;
-        color: $ls-color-black--light;
+    // Tabs Vertical
+    //----------------------------------
 
-        &:hover,
-        &:active,
-        &:focus {
-            border-bottom: 3px solid $ls-color-theme;
-            border-color: lighten($ls-color-theme, 30%);
-        }
+    .tabs-component.tabs-vertical .tabs-component-tabs {
+        border-right: 1px solid $ls-color-theme !important;
 
-        &.active {
-            background-color: transparent;
-            border-bottom: 3px solid $ls-color-theme;
-            color: $ls-color-black;
+        .tabs-component-tab {
 
-            &:hover,
-            &:active,
-            &:focus {
-                border-bottom: 3px solid $ls-color-theme;
-                border-color: $ls-color-theme;
+            a, a:hover {
                 color: $ls-color-black;
             }
+
+            &.is-active {
+                background: $ls-color-theme;
+            }
+
+            &.is-active a {
+                color: $white;
+            }
+
+            &:hover {
+                border: 1px solid $ls-color-theme;
+            }
         }
     }
 
-    .tabs-vertical .nav-tabs {
-        border-color: $ls-color-theme;
+    // Tabs Simple
+    //----------------------------------
 
-        li a {
-            background-color: $white;
-            border-color: transparent;
-            border-right-color: $ls-color-theme;
+    .tabs-component.tabs-simple {
 
-            &:hover,
-            &:active,
-            &:focus {
-                background-color: $white;
-                border-color: $ls-color-theme;
+        .tabs-component-tabs .tabs-component-tab {
+
+            a {
+                color: $ls-color-black;
             }
-        }
 
-        li a.active {
-            background-color: $ls-color-theme;
-            color: $white;
+            a:hover {
+                color: $ls-color-black;
+                border-bottom: 3px solid lighten($ls-color-theme, 30%);
+            }
 
-            &:hover,
-            &:active,
-            &:focus {
-                background-color: $ls-color-theme;
+            &.is-active {
+                border-bottom: 3px solid $ls-color-theme;
                 color: $white;
             }
         }
+
+        .tabs-component-panels {
+            border-top: 1px solid #ddd !important;
+        }
     }
 
-    .tabs-vertical.tabs-simple .nav-tabs {
+    // Tabs Simple Vertical
+    //----------------------------------
+
+    .tabs-component.tabs-simple-vertical .tabs-component-tabs {
         border-right: 1px solid #ddd;
 
-        li {
-            margin: 0;
-        }
-
-        li a {
-            background: transparent;
-            border-right: 3px solid transparent;
-            border-radius: 0;
-
-            &.active {
-                border-bottom: 0;
+        .tabs-component-tab {
+            a {
                 color: $ls-color-black;
-                border-right: 3px solid $ls-color-theme;
-                background: transparent;
             }
 
-            &:hover,
-            &:active,
-            &:focus {
-                background-color: transparent;
+            a:hover {
+                border-right: 3px solid lighten($ls-color-theme, 30%);
+            }
+
+            &.is-active {
                 border-right: 3px solid $ls-color-theme;
-                border-bottom: 0;
+                color: $ls-color-theme;
             }
         }
     }
@@ -328,41 +335,43 @@
     }
 
     //SELECT 2
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: $ls-color-theme;
-        color: $white;
+    .multiselect {
 
-        .select2-selection--multiple .select2-selection__choice {
-            background-color: $ls-color-theme;
+        .multiselect__option--highlight {
+            background: $ls-color-theme;
             color: $white;
+
+            &.multiselect__option--selected {
+                background: $ls-color-gray--light;
+                color: $ls-color-black;
+            }
+
+            &.multiselect__option--selected::after {
+                background: $ls-color-gray--dark;
+                color: $ls-color-black;
+            }
+
+            &::after {
+                background: $ls-color-gray--dark;
+                color: $ls-color-black;
+            }
         }
 
-        .select2-dropdown {
-            border: solid $ls-color-theme 1px;
+        &:hover {
+            background: $ls-color-gray--light;
         }
 
-        .select2-container--open.select2-container--below .select2-selection {
-            border: 1px solid $ls-color-theme;
-            border-bottom-color: transparent;
-        }
-
-        .select2-dropdown--below {
-            border-top-color: transparent;
-        }
-
-        .select2-selection--multiple .select2-selection__choice__remove {
+        .multiselect__tags-wrap .multiselect__tag {
+            background: $ls-color-theme;
             color: $white;
-        }
-    }
 
-    //Bootstrap SELECT
-    .bootstrap-select .dropdown-menu a {
-        color: $header-buttons-font-color;
+            .multiselect__tag-icon:hover {
+                background: $ls-color-theme;
+            }
 
-        &:hover,
-        &:active,
-        &:focus {
-            background-color: $header-buttons-bg-color--hover;
+            .multiselect__tag-icon::after {
+                color: $white;
+            }
         }
     }
 
@@ -375,6 +384,7 @@
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {
+
         .current a,
         .current a:active,
         .current a:hover {
@@ -391,7 +401,9 @@
     }
 
     .form-wizard-2 {
+
         & > .steps > ul {
+
             .current .number,
             .done .number {
                 border: 2px solid $ls-color-theme;
@@ -415,6 +427,7 @@
         }
 
         &.icon-wizard > .steps > ul {
+
             .current i,
             .done i {
                 border: 2px solid $ls-color-theme;
@@ -426,16 +439,13 @@
             }
         }
 
-        &.vertical-wizard {
-            .steps > ul {
-                .done:after {
-                    background: $ls-color-theme !important;
-                }
-            }
+        &.vertical-wizard .steps > ul  .done:after {
+            background: $ls-color-theme !important;
         }
     }
 
     .form-wizard-3 > .steps > ul {
+        
         .current a {
             border-bottom: 3px solid $ls-color-theme;
             color: $ls-color-black;

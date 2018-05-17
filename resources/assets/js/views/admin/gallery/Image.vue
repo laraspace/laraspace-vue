@@ -14,18 +14,22 @@
         <gallery
           :images="images"
           :index="imgIndex"
-          @close="imgIndex = null"/>
+          @close="imgIndex = null"
+        />
         <div
-          class="my-gallery image-gallery">
+          class="my-gallery image-gallery"
+        >
           <div class="row">
             <figure
               v-for="(image, bindex) in images"
               :key="bindex"
-              class="col-lg-3 col-md-6 col-xs-12">
+              class="col-lg-3 col-md-6 col-xs-12"
+            >
               <img
                 :style="{ backgroundImage: 'url(' + image + ')', width: '480px', height:'280px' }"
-                class="image img-fluid"
-                @click="imgIndex = bindex">
+                class="demo image img-fluid"
+                @click="imgIndex = bindex"
+              >
             </figure>
           </div>
         </div>

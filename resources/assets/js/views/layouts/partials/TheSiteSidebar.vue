@@ -81,7 +81,7 @@
 
             <router-link
               to="/admin/basic-ui/progress-bars">
-              Progress Bar
+              Progress Bars
             </router-link>
           </v-collapse-item>
 
@@ -126,11 +126,6 @@
             <router-link
               to="/admin/components/tooltips">
               Vue Tooltips
-            </router-link>
-
-            <router-link
-              to="/admin/components/vee">
-              Vee Validate
             </router-link>
           </v-collapse-item>
 
@@ -240,6 +235,11 @@
               to="/admin/forms/vuelidate">
               Vuelidate
             </router-link>
+
+            <router-link
+              to="/admin/forms/vee-validate">
+              Vee Validate
+            </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/gallery">
@@ -251,21 +251,22 @@
             </a>
 
             <router-link
-              to="/admin/gallery/grid">
-              Grid
+              to="/admin/gallery/image">
+              Image Gallery
             </router-link>
 
             <router-link
-              to="/admin/gallery/masonry-grid">
-              Masonry Grid
+              to="/admin/gallery/video">
+              Video Gallery
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/pages">
             <a
               slot="item-title"
-              href="#">
-              <i class="icon-fa icon-fa-image"/>Pages
+              href="#"
+            >
+              <i class="icon-fa icon-fa-file"/> Pages
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
@@ -314,7 +315,7 @@
             </router-link>
 
             <router-link
-              to="/admin/users">
+              to="/admin/users/all">
               All Users
             </router-link>
           </v-collapse-item>
@@ -330,6 +331,11 @@
             <router-link
               to="/admin/apps/mail-box">
               MailBox
+            </router-link>
+
+            <router-link
+              to="/admin/apps/contacts">
+              Contacts
             </router-link>
 
             <router-link

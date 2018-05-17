@@ -11,11 +11,13 @@
 @import "../../../node_modules/font-awesome/scss/font-awesome.scss";
 @import "../../../node_modules/notie/src/notie";
 @import "../../../node_modules/toastr/toastr";
-@import "../../../node_modules/amcharts3/amcharts/plugins/export/export.css";
-@import "../../../node_modules/morris.js/morris.css";
-@import "../../../node_modules/prismjs/themes/prism.css";
-@import "../../../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
-@import "../../../node_modules/ladda/css/ladda.scss";
+@import '../../../node_modules/amcharts3/amcharts/plugins/export/export.css';
+@import '../../../node_modules/morris.js/morris.css';
+@import '../../../node_modules/prismjs/themes/prism.css';
+@import '../../../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+@import '../../../node_modules/ladda/css/ladda.scss';
+@import '../../../node_modules/summernote/dist/summernote.css';
+@import '../../../node_modules/simplemde/src/css/simplemde.css';
 
 // Icons
 //----------------------------------
@@ -68,8 +70,11 @@
 @import "components/vue-wizard";
 @import "components/vue-tabs";
 @import "components/tooltips";
+@import "components/vue-dropdown";
 @import "components/gallery";
 @import "components/modals";
+@import "components/vue-color";
+@import "components/vue-multi-select";
 
 // Pages
 //----------------------------------
@@ -87,5 +92,6 @@
 //----------------------------------
 
 @import "apps/mailbox";
+@import "apps/contact";
 
 @import "demo";

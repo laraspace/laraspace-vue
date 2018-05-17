@@ -16,6 +16,9 @@
         <div class="ls-summernote">
           Hello Summernote
         </div>
+        <summernote
+          name="editor"
+        />
       </div>
     </div>
     <div class="card">
@@ -49,16 +52,23 @@
 </template>
 
 <script type="text/babel">
-// summernote
-// import SummerNote from 'summernote/dist/summernote-bs4'
-// import 'summernote/dist/summernote-bs4.css'
-// // simpleMDE
-// import 'simplemde/src/css/simplemde.css'
-// window.SimpleMDE = require('simplemde/src/js/simplemde')
 import Plugin from '../../../helpers/plugin'
+
 export default {
+  components: {
+    'summernote': require('summernote/dist/summernote')
+  },
   mounted () {
     Plugin.initPlugins(['Editors'])
+    // // var editor1 =  document.getElementsByClassName('ls-summernote')
+    // // if (editor1) {
+    // //   var summernote = new SummerNote({ element: editor1 })
+    // // }
+    // var editor2 = document.getElementsByClassName('ls-simplemde')[0]
+
+    // if (editor2) {
+    //   var simplemde = new SimpleMDE({ element: editor2 })
+    // }
   }
 }
 </script>

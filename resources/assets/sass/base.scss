@@ -35,9 +35,13 @@ a {
     }
 }
 
-mark,
+mark, 
 .mark {
-    background-color: $ls-color-primary;
+    background-color: #efefef;
+    border-radius: 5px;
+    color: $ls-color-black;
+    padding: 0.2em 0.4em;
+    margin: 0 1px;
 }
 
 code,

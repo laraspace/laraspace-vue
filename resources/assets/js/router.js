@@ -63,12 +63,13 @@ import VueFormWizard2 from './views/admin/forms/VueFormWizard2.vue'
 import VueFormWizard3 from './views/admin/forms/VueFormWizard3.vue'
 
 // Gallery
-import ImageGallery from './views/admin/gallery/ImageGallery.vue'
-import VideoGallery from './views/admin/gallery/VideoGallery.vue'
+import ImageGallery from './views/admin/gallery/Image.vue'
+import VideoGallery from './views/admin/gallery/Video.vue'
 
 // Apps
 import TodoItem from './views/admin/apps/TodoItem.vue'
 import Mailbox from './views/admin/apps/mailbox/Mailbox.vue'
+import Contact from './views/admin/apps/contact/Contact.vue'
 
 // users
 import Users from './views/admin/users/Users.vue'
@@ -230,10 +231,6 @@ const routes = [
         component: VueCarousel
       },
       {
-        path: 'components/vee',
-        component: VeeValidate
-      },
-      {
         path: 'components/tooltips',
         component: VueTooltips
       },
@@ -293,6 +290,10 @@ const routes = [
         component: Vuelidate
       },
       {
+        path: 'forms/vee-validate',
+        component: VeeValidate
+      },
+      {
         path: 'forms/form-wizard',
         component: VueFormWizard
       },
@@ -304,14 +305,14 @@ const routes = [
         path: 'forms/form-wizard-3',
         component: VueFormWizard3
       },
-    
+
       // Gallery
       {
-        path: 'gallery/image-gallery',
+        path: 'gallery/image',
         component: ImageGallery
       },
       {
-        path: 'gallery/video-gallery',
+        path: 'gallery/video',
         component: VideoGallery
       },
 
@@ -323,7 +324,7 @@ const routes = [
         component: Profile
       },
       {
-        path: 'users',
+        path: 'users/all',
         component: Users
       },
 
@@ -335,6 +336,10 @@ const routes = [
       {
         path: 'apps/todo-item',
         component: TodoItem
+      },
+      {
+        path: 'apps/contacts',
+        component: Contact
       },
 
       // Settings

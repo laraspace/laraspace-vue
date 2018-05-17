@@ -11,26 +11,25 @@
     </div>
     <div class="card">
       <div class="card-body ">
-          <gallery 
-            :images="images" 
-            :index="VidIndex" 
-            :options="{youTubeVideoIdProperty: 'youtube', youTubeClickToPlay: true}"
-            @close="index = null"
-            ></gallery>
-     
+        <gallery
+          :images="images"
+          :index="VidIndex"
+          :options="{youTubeVideoIdProperty: 'youtube', youTubeClickToPlay: true}"
+          @close="index = null"
+        />
         <div class="my-gallery">
           <div class="row">
             <figure
-                v-for="(image, vindex) in images"
-                :key="vindex"
-                class="col-lg-3 col-md-6 col-xs-12">
-                <div
-                  class="demo image img-fluid"
-                  @click="VidIndex = vindex"
-                  :style="{ backgroundImage: 'url(' + image.poster + ')', width: '480px', height:'225px' }"
-                ></div>
+              v-for="(image, vindex) in images"
+              :key="vindex"
+              class="col-lg-3 col-md-6 col-xs-12"
+            >
+              <div
+                :style="{ backgroundImage: 'url(' + image.poster + ')', width: '480px', height:'225px' }"
+                class="demo image img-fluid"
+                @click="VidIndex = vindex"
+              />
             </figure>
-                
           </div>
         </div>
       </div>
@@ -45,9 +44,9 @@ export default {
   components: {
     gallery: VueGallery
   },
-   data: function () {
+  data: function () {
     return {
-     images: [
+      images: [
         {
           title: 'A YouYube video',
           href: 'https://www.youtube.com/watch?v=3pn2SI4KGJc',
@@ -66,30 +65,30 @@ export default {
           title: 'Image',
           href: 'https://www.youtube.com/watch?v=ZN2SwwfeCRc',
           type: 'text/html',
-          youtube:'ZN2SwwfeCRc',
+          youtube: 'ZN2SwwfeCRc',
           poster: 'https://img.youtube.com/vi/ZN2SwwfeCRc/0.jpg'
-      	},
+        },
         {
           title: 'Image',
           href: 'https://www.youtube.com/watch?v=DjxEhLTRtPY',
           type: 'text/html',
-          youtube:'DjxEhLTRtPY',
+          youtube: 'DjxEhLTRtPY',
           poster: 'https://img.youtube.com/vi/DjxEhLTRtPY/0.jpg'
-      	},
+        },
         {
           title: 'Image',
           href: 'https://www.youtube.com/watch?v=Ce4tYw6IE70',
           type: 'text/html',
-          youtube:'Ce4tYw6IE70',
+          youtube: 'Ce4tYw6IE70',
           poster: 'https://img.youtube.com/vi/Ce4tYw6IE70/0.jpg'
-      	},
+        },
         {
           title: 'Image',
           href: 'https://www.youtube.com/watch?v=3rHXrA80NH4',
           type: 'text/html',
-          youtube:'3rHXrA80NH4',
+          youtube: '3rHXrA80NH4',
           poster: 'https://img.youtube.com/vi/3rHXrA80NH4/0.jpg'
-      	},
+        },
         {
           title: 'A YouYube video',
           href: 'https://www.youtube.com/watch?v=3pn2SI4KGJc',
@@ -101,12 +100,12 @@ export default {
           title: 'Image',
           href: 'https://www.youtube.com/watch?v=k_GM1JA608Y',
           type: 'text/html',
-          youtube:'k_GM1JA608Y',
+          youtube: 'k_GM1JA608Y',
           poster: 'https://img.youtube.com/vi/k_GM1JA608Y/0.jpg'
-      	},
+        }
       ],
       VidIndex: null
     }
-   }
+  }
 }
 </script>

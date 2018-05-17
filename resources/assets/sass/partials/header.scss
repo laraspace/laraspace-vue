@@ -1,5 +1,4 @@
 .brand-main {
-
     img {
         height: 25px;
         padding-top: 6px;
@@ -14,7 +13,7 @@
     font-size: 14px;
     line-height: 14px;
     padding: 6px;
-    
+
     &:active,
     &:focus,
     &:visited {
@@ -34,6 +33,10 @@
         height: 36px;
         margin: 0;
         padding: 0 4px;
+    }
+
+    .dropdown-group {
+        background-color: $header-buttons-bg-color;
 
         a {
             background-color: $header-buttons-bg-color;
@@ -50,27 +53,24 @@
             color: $header-font-color;
         }
 
-    }
-
-    .avatar {
-        padding: 0;
-        background-color: transparent;
-    }
-
-    .avatar img {
-        width: 36px;
-        border-radius: 2px;
-    }
-
-    .dropdown-menu {
-        background-color: $header-buttons-bg-color;
-
-        i {
-            width: 25px;
-            text-align: center;
-            margin-left: -5px;
+        .avatar {
+            padding: 0;
+            background-color: transparent;
+        }
+        
+        .avatar img {
+            width: 36px;
+            border-radius: 2px;
         }
 
+        i {
+            text-align: center;
+            width: auto;
+        }
+
+        &.has-child > .dropdown-group-title::after {
+            content: none;
+        }
     }
 
     .notification-dropdown {
@@ -87,11 +87,9 @@
     .dropdown-divider {
         background-color: $dropdown-divider-bg;
     }
-
 }
 
-@media(max-width: $small-breakpoint-below) {
-
+@media (max-width: $small-breakpoint-below) {
     .nav-toggle {
         display: inline-block;
         margin-left: 10px;

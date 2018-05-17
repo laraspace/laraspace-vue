@@ -75,8 +75,10 @@ export default {
       this.$validator.validateAll()
 
       if (!this.errors.any()) {
-        Auth.login(this.loginData).then(() => {
-          this.$router.push('/admin/dashboard/basic')
+        Auth.login(this.loginData).then((res) => {
+          if (res) {
+            this.$router.push('/admin/dashboard/basic')
+          }
         })
       }
     }
