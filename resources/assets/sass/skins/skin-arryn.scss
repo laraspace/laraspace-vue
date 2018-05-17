@@ -296,6 +296,29 @@
         color: $white !important;
     }
 
+    // Dropzone
+    
+    .vue-dropzone .dz-preview  {
+
+        .dz-details {
+            background-color:$ls-color-theme !important;
+            color:$white !important;
+        }
+
+        .dz-upload {
+            background: $white !important;
+        }
+        
+        .dz-error-mark svg #Page-1 g{
+            fill:$white !important;
+        } 
+        
+        .dz-success-mark svg g path{
+            fill:white !important;
+        } 
+    }
+
+
     //Dropdown
     .dropdown-menu {
         background-color: $dropdown-bg;
