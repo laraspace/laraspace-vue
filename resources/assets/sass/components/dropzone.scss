@@ -1,43 +1,41 @@
-.dz-preview {
-    display: none;
-}
+.vue-dropzone .dz-preview  {
+    width: 150px !important;
+    height:150px !important;
+    background: transparent !important;
 
-.dz-drag-hover {
-    border: 2px solid #333;
-    display: block;
-
-    .dz-message {
-        display: inline-block !important;
-        opacity: 1 !important;
-    }
-}
-
-.dz-message {
-    position: fixed !important;
-    top: 60px;
-    z-index: 1;
-    width: 100%;
-    margin: 0;
-    text-align: center;
-}
-
-.alert.alert-success {
-    display: inline-block;
-}
-
-.modal-dropzone {
-
-    &.dz-drag-hover {
-        border: 2px solid black;
+    .dz-details {
+        background-color:$ls-color-yellow !important;
+        border-radius:30px!important;
+        color:$ls-color-black !important;
+        text-align: center !important;
+        padding-top: 50px !important;
     }
 
-    .dz-message {
-        display: inline-block;
-        top: 10px;
-        justify-content: center;
-        position: absolute !important;
-        margin: auto;
+    .dz-image {
+        border-radius:30px !important;
+        width: 150px !important;
+        height:150px !important;
 
-        //opacity: 1 !important;
+    }
+
+    .dz-error-message {
+        top: 160px !important;
+        left: 5px !important;
+        &::after {
+            top: -6px !important;
+            transform: rotate(180deg) !important;
+        }
+    }
+
+    .dz-upload {
+        background: $ls-color-black !important;
+    }
+
+    .dz-error-mark svg #Page-1 g{
+        fill:$ls-color-black !important;
+    }
+
+    .dz-success-mark svg g path{
+        fill:$ls-color-black !important;
     }
 }

@@ -29,18 +29,26 @@
           <textarea class="form-control"/>
         </div>
       </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-          @click="closeModal"
-        >
-          Cancel
-        </button>
-        <button type="sumbit" class="btn btn-primary">Send</button>
-      </div>
     </form>
+
+    <button
+      slot="button"
+      type="button"
+      class="btn btn-default"
+      data-dismiss="modal"
+      @click="closeModal"
+    >
+      Cancel
+    </button>
+
+    <button
+      slot="button"
+      type="button"
+      class="btn btn-primary"
+      @click="closeModal"
+    >
+      Send Mail
+    </button>
   </sweet-modal>
 </template>
 
