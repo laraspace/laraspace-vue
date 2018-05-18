@@ -57,7 +57,7 @@ import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
-// form-wizard
+// Wizard
 import VueFormWizard from './views/admin/forms/VueFormWizard.vue'
 import VueFormWizard2 from './views/admin/forms/VueFormWizard2.vue'
 import VueFormWizard3 from './views/admin/forms/VueFormWizard3.vue'
@@ -67,11 +67,11 @@ import ImageGallery from './views/admin/gallery/Image.vue'
 import VideoGallery from './views/admin/gallery/Video.vue'
 
 // Apps
-import TodoItem from './views/admin/apps/TodoItem.vue'
-import Mailbox from './views/admin/apps/mailbox/Mailbox.vue'
-import Contact from './views/admin/apps/contact/Contact.vue'
+import TodosApp from './views/admin/apps/TodosApp.vue'
+import MailboxApp from './views/admin/apps/mailbox/MailboxApp.vue'
+import ContactsApp from './views/admin/apps/contacts/ContactsApp.vue'
 
-// users
+// Users
 import Users from './views/admin/users/Users.vue'
 import Profile from './views/admin/users/Profile.vue'
 
@@ -330,16 +330,16 @@ const routes = [
 
       // Apps
       {
-        path: 'apps/mail-box',
-        component: Mailbox
+        path: 'apps/mailbox',
+        component: MailboxApp
       },
       {
-        path: 'apps/todo-item',
-        component: TodoItem
+        path: 'apps/todos',
+        component: TodosApp
       },
       {
         path: 'apps/contacts',
-        component: Contact
+        component: ContactsApp
       },
 
       // Settings

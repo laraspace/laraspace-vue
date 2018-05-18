@@ -1,10 +1,7 @@
 <template>
   <div class="dropdown-group-item">
     <slot name="item-title"/>
-    <div
-      :class="['dropdown-item-activator' ,{'active':toggle}]"
-      @click="showDropdown"
-    >
+    <div :class="['dropdown-item-activator' ,{'active':toggle}]" @click="showDropdown">
       <slot name="item-activator"/>
     </div>
     <slot/>

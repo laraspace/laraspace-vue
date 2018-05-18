@@ -13,7 +13,8 @@
         <vue-dropzone
           id="dropzone"
           ref="myVueDropzone"
-          :options="dropzoneOptions" />
+          :options="dropzoneOptions"
+        />
       </div>
     </div>
   </div>

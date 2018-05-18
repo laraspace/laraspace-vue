@@ -16,7 +16,8 @@ class PagesController extends Controller
         }
     }
 
-    public function allUsers() {
+    public function allUsers()
+    {
        return $users = User::paginate(5);
     }
 

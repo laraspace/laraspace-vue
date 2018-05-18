@@ -18,20 +18,14 @@
       <div class="mailbox-content">
         <div class="mailbox-content-header">
           <div class="mailbox-actions">
-            <div
-              class="custom-control custom-checkbox"
-              style="display:inline-block"
-            >
+            <div class="custom-control custom-checkbox" style="display:inline-block">
               <input
                 id="customCheckAll"
                 v-model="selectAll"
                 type="checkbox"
                 class="custom-control-input"
               >
-              <label
-                class="custom-control-label"
-                for="customCheckAll"
-              />
+              <label class="custom-control-label" for="customCheckAll"/>
             </div>
 
             <button
@@ -40,7 +34,8 @@
               type="button"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               Actions
             </button>
 
@@ -50,7 +45,8 @@
               class="btn btn-icon btn-light"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <i class="icon-fa icon-fa-tag"/>
             </button>
           </div>
@@ -59,10 +55,10 @@
             <div class="mail-search">
               <input
                 id="inputEmailTo"
+                v-model="searchText"
                 type="email"
                 placeholder="Search"
                 class="form-control"
-                v-model="searchText"
               >
             </div>
           </div>
@@ -84,10 +80,7 @@
                     type="checkbox"
                     class="custom-control-input"
                   >
-                  <label
-                    :for="index"
-                    class="custom-control-label"
-                  />
+                  <label :for="index" class="custom-control-label"/>
                 </div>
               </td>
               <td class="cell-fav">

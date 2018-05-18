@@ -67,8 +67,12 @@
                   <h6>Card with Button Actions</h6>
                 </div>
                 <div class="actions">
-                  <button class="btn btn-primary btn-sm"><i class="icon-fa icon-fa-plus"/> Add New</button>
-                  <button class="btn btn-danger btn-sm"><i class="icon-fa icon-fa-trash"/> Delete</button>
+                  <button class="btn btn-primary btn-sm">
+                    <i class="icon-fa icon-fa-plus"/> Add New
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="icon-fa icon-fa-trash"/> Delete
+                  </button>
                 </div>
               </div>
               <div class="card-body">
@@ -82,27 +86,24 @@
                   <h6>Card with Dropdown Button</h6>
                 </div>
                 <div class="actions">
-                  <div
-                    class="btn-group"
-                    role="group">
+                  <div class="btn-group" role="group">
                     <button
                       id="cardDropButton"
                       type="button"
                       class="btn btn-sm btn-outline-primary dropdown-toggle"
                       data-toggle="dropdown"
                       aria-haspopup="true"
-                      aria-expanded="true">
+                      aria-expanded="true"
+                    >
                       Filters
                     </button>
-                    <div
-                      class="dropdown-menu dropdown-menu-right"
-                      aria-labelledby="cardDropButton">
-                      <a
-                        class="dropdown-item"
-                        href="#">Update</a>
-                      <a
-                        class="dropdown-item"
-                        href="#">Delete</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cardDropButton">
+                      <a class="dropdown-item" href="#">
+                        Update
+                      </a>
+                      <a class="dropdown-item" href="#">
+                        Delete
+                      </a>
                     </div>
                   </div>
                 </div>

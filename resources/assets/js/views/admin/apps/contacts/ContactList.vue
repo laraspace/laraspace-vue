@@ -91,7 +91,11 @@
             </div>
           </div>
           <div class="action2" role="group">
-            <button type="button" class="btn btn-outline-default" @click="openAddContactModal">
+            <button
+              type="button"
+              class="btn btn-outline-default"
+              @click="openAddContactModal"
+            >
               Add Contact
             </button>
           </div>
@@ -152,8 +156,9 @@
                   v-model="selected"
                   :value="contact"
                   type="checkbox"
-                  class="custom-control-input selectable-item" >
-                <label :for="index" class="custom-control-label" />
+                  class="custom-control-input selectable-item"
+                >
+                <label :for="index" class="custom-control-label"/>
               </div>
             </td>
             <td>

@@ -12,34 +12,22 @@
       <div class="card-body">
         <carousel>
           <slide>
-            <img
-              src="/assets/img/demo/gallery/13.jpg"
-              >
+            <img src="/assets/img/demo/gallery/13.jpg">
           </slide>
           <slide>
-            <img
-              src="/assets/img/demo/gallery/16.jpg"
-              >
+            <img src="/assets/img/demo/gallery/16.jpg">
           </slide>
           <slide>
-            <img
-              src="/assets/img/demo/gallery/15.jpg"
-              >
+            <img src="/assets/img/demo/gallery/15.jpg">
           </slide>
           <slide>
-            <img
-              src="/assets/img/demo/gallery/16.jpg"
-              >
+            <img src="/assets/img/demo/gallery/16.jpg">
           </slide>
           <slide>
-            <img
-              src="/assets/img/demo/gallery/13.jpg"
-              >
+            <img src="/assets/img/demo/gallery/13.jpg">
           </slide>
           <slide>
-            <img
-              src="/assets/img/demo/gallery/15.jpg"
-            >
+            <img src="/assets/img/demo/gallery/15.jpg">
           </slide>
         </carousel>
       </div>

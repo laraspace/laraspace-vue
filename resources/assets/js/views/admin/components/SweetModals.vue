@@ -63,7 +63,8 @@
                 <sweet-modal
                   ref="error_modal"
                   icon="error"
-                  title="Oh noes…">
+                  title="Oh noes…"
+                >
                   This is an error…
                   <button
                     slot="button"
@@ -94,13 +95,15 @@
                   hide-close-button
                   blocking
                   overlay-theme="dark"
-                  modal-theme="dark">
+                  modal-theme="dark"
+                >
                   This is an error…
                   <button
                     slot="button"
                     type="button"
                     class="btn btn-theme"
-                    @click="$refs.blocking_modal.close('darkWithBlockingError')">
+                    @click="$refs.blocking_modal.close('darkWithBlockingError')"
+                  >
                     Confirm
                   </button>
                 </sweet-modal>
@@ -118,7 +121,8 @@
                 <sweet-modal
                   ref="dark_html_modal"
                   modal-theme="dark"
-                  overlay-theme="dark">
+                  overlay-theme="dark"
+                >
                   This is <b>HTML</b>-<i>Content</i>.
                   <br><br>
                   <iframe
@@ -138,12 +142,11 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.additional_modal.open()">
+                  @click="$refs.additional_modal.open()"
+                >
                   Open
                 </button>
-                <sweet-modal
-                  ref="additional_modal"
-                  title="Alert">
+                <sweet-modal ref="additional_modal" title="Alert">
                   This is an alert.
                   <template slot="box-action">
                     <a href="#">Action 1</a> &nbsp;
@@ -157,13 +160,15 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  @click="$refs.wide_modal.open()">
+                  @click="$refs.wide_modal.open()"
+                >
                   Open
                 </button>
                 <sweet-modal
                   ref="wide_modal"
                   title="Ultra Wide"
-                  width="90%">
+                  width="90%"
+                >
                   This is a very wide modal.
                 </sweet-modal>
               </div>
@@ -185,7 +190,8 @@
                     slot="button"
                     type="button"
                     class="btn btn-primary"
-                    @click="$refs.nestedChild.open()">
+                    @click="$refs.nestedChild.open()"
+                  >
                     Open Child Modal
                   </button>
                 </sweet-modal>
@@ -320,19 +326,18 @@
                   Open
                 </button>
                 <sweet-modal ref="tabbed_modal">
-                  <sweet-modal-tab
-                    id="tab1"
-                    title="Tab 1">
+                  <sweet-modal-tab id="tab1" title="Tab 1">
                     Contents of Tab 1
                   </sweet-modal-tab>
-                  <sweet-modal-tab
-                    id="tab2"
-                    title="Tab 2">
-                    Contents of Tab 2</sweet-modal-tab>
+                  <sweet-modal-tab id="tab2" title="Tab 2">
+                    Contents of Tab 2
+                  </sweet-modal-tab>
                   <sweet-modal-tab
                     id="tab3"
                     title="Tab 3"
-                    disabled>Tab 3 is disabled
+                    disabled
+                  >
+                    Tab 3 is disabled
                   </sweet-modal-tab>
                 </sweet-modal>
               </div>
@@ -350,19 +355,23 @@
                   <sweet-modal-tab
                     id="tab1"
                     :icon="icons_anchor"
-                    title="Tab 1">Contents of Tab 1
+                    title="Tab 1"
+                  >
+                    Contents of Tab 1
                   </sweet-modal-tab>
                   <sweet-modal-tab
                     id="tab2"
                     :icon="icons_sun"
-                    title="Tab 2">
+                    title="Tab 2"
+                  >
                     Contents of Tab 2
                   </sweet-modal-tab>
                   <sweet-modal-tab
                     id="tab3"
                     :icon="icons_leaf"
                     title="Tab 3"
-                    disabled>
+                    disabled
+                  >
                     Tab 3 is disabled
                   </sweet-modal-tab>
                   <!-- icons is an object containing SVG strings -->
@@ -384,30 +393,40 @@
                   <sweet-modal-tab
                     id="tab1"
                     :icon="icons_anchor"
-                    title="Tab 1">
+                    title="Tab 1"
+                  >
                     Contents of Tab 1
                   </sweet-modal-tab>
                   <sweet-modal-tab
                     id="tab2"
                     :icon="icons_sun"
-                    title="Tab 2">Contents of Tab 2
+                    title="Tab 2"
+                  >
+                    Contents of Tab 2
                   </sweet-modal-tab>
                   <sweet-modal-tab
                     id="tab3"
                     :icon="icons_leaf"
                     title="Tab 3"
-                    disabled>
+                    disabled
+                  >
                     Tab 3 is disabled
                   </sweet-modal-tab>
                   <!-- icons is an object containing SVG strings -->
                   <button
                     slot="button"
                     type="button"
-                    class="btn btn-primary">Action1</button>
+                    class="btn btn-primary"
+                  >
+                    Action1
+                  </button>
                   <button
                     slot="button"
                     type="button"
-                    class="btn btn-primary">Action2</button>
+                    class="btn btn-primary"
+                  >
+                    Action2
+                  </button>
                 </sweet-modal>
               </div>
             </div>
@@ -416,7 +435,6 @@
       </div>
     </div>
   </div>
-
 </template>
 <script type="text/babel">
 import { SweetModal, SweetModalTab } from 'sweet-modal-vue'

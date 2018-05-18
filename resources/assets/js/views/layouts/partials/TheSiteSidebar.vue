@@ -4,342 +4,273 @@
       <div class="side-nav">
         <v-collapse accordion>
           <v-collapse-item active-url="/admin/dashboard">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-dashboard"/>Dashboard
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/dashboard/basic">
+            <router-link to="/admin/dashboard/basic">
               Basic
             </router-link>
 
-            <router-link
-              to="/admin/dashboard/ecommerce">
+            <router-link to="/admin/dashboard/ecommerce">
               Ecommerce
             </router-link>
 
-            <router-link
-              to="/admin/dashboard/finance">
+            <router-link to="/admin/dashboard/finance">
               Finance
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/layouts">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-th-large"/>Layouts
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/layouts/sidebar">
+            <router-link to="/admin/layouts/sidebar">
               Sidebar
             </router-link>
 
-            <router-link
-              to="/admin/layouts/horizontal">
+            <router-link to="/admin/layouts/horizontal">
               Horizontal
             </router-link>
 
-            <router-link
-              to="/admin/layouts/icons-sidebar">
+            <router-link to="/admin/layouts/icons-sidebar">
               Icon Sidebar
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/basic-ui">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-star"/>Basic UI
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/basic-ui/buttons">
+            <router-link to="/admin/basic-ui/buttons">
               Buttons
             </router-link>
 
-            <router-link
-              to="/admin/basic-ui/cards">
+            <router-link to="/admin/basic-ui/cards">
               Cards
             </router-link>
 
-            <router-link
-              to="/admin/basic-ui/typography">
+            <router-link to="/admin/basic-ui/typography">
               Typography
             </router-link>
 
-            <router-link
-              to="/admin/basic-ui/tables">
+            <router-link to="/admin/basic-ui/tables">
               Tables
             </router-link>
 
-            <router-link
-              to="/admin/basic-ui/progress-bars">
+            <router-link to="/admin/basic-ui/progress-bars">
               Progress Bars
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/components">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-puzzle-piece"/>Components
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/components/notifications">
+            <router-link to="/admin/components/notifications">
               Notifications
             </router-link>
 
-            <router-link
-              to="/admin/components/sweet-modals">
+            <router-link to="/admin/components/sweet-modals">
               Sweet Modals
             </router-link>
 
-            <router-link
-              to="/admin/components/vue-carousel">
+            <router-link to="/admin/components/vue-carousel">
               Vue Carousel
             </router-link>
 
-            <router-link
-              to="/admin/components/vue-dropzone">
+            <router-link to="/admin/components/vue-dropzone">
               Vue Dropzone
             </router-link>
 
-            <router-link
-              to="/admin/components/vue-tables">
+            <router-link to="/admin/components/vue-tables">
               Vue DataTables
             </router-link>
 
-            <router-link
-              to="/admin/components/vue-tabs">
+            <router-link to="/admin/components/vue-tabs">
               Vue Tabs
             </router-link>
 
-            <router-link
-              to="/admin/components/tooltips">
+            <router-link to="/admin/components/tooltips">
               Vue Tooltips
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/chart">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-bar-chart"/>Charts
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/charts/chartjs">
+            <router-link to="/admin/charts/chartjs">
               Chart JS
             </router-link>
 
-            <router-link
-              to="/admin/charts/gauges">
+            <router-link to="/admin/charts/gauges">
               Gauges
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/icons">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-eye"/>Icons
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/icons/icomoon">
+            <router-link to="/admin/icons/icomoon">
               IcoMoon
             </router-link>
 
-            <router-link
-              to="/admin/icons/meteo">
+            <router-link to="/admin/icons/meteo">
               Meteo Icons
             </router-link>
 
-            <router-link
-              to="/admin/icons/line">
+            <router-link to="/admin/icons/line">
               Line Icons
             </router-link>
 
-            <router-link
-              to="/admin/icons/fpsline">
+            <router-link to="/admin/icons/fpsline">
               FPS Line
             </router-link>
 
-            <router-link
-              to="/admin/icons/fontawesome">
+            <router-link to="/admin/icons/fontawesome">
               Font Awesome
             </router-link>
 
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/forms">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-rocket"/>Forms
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/forms/general">
+            <router-link to="/admin/forms/general">
               General Elements
             </router-link>
 
-            <router-link
-              to="/admin/forms/advanced">
+            <router-link to="/admin/forms/advanced">
               Advanced Elements
             </router-link>
 
-            <router-link
-              to="/admin/forms/layouts">
+            <router-link to="/admin/forms/layouts">
               Form Layouts
             </router-link>
 
-            <router-link
-              to="/admin/forms/validation">
+            <router-link to="/admin/forms/validation">
               Form Validation
             </router-link>
 
-            <router-link
-              to="/admin/forms/form-wizard">
+            <router-link to="/admin/forms/form-wizard">
               Form Wizard
             </router-link>
 
-            <router-link
-              to="/admin/forms/form-wizard-2">
+            <router-link to="/admin/forms/form-wizard-2">
               Form Wizard 2
             </router-link>
 
-            <router-link
-              to="/admin/forms/form-wizard-3">
+            <router-link to="/admin/forms/form-wizard-3">
               Form Wizard 3
             </router-link>
 
-            <router-link
-              to="/admin/forms/editors">
+            <router-link to="/admin/forms/editors">
               Editors
             </router-link>
 
-            <router-link
-              to="/admin/forms/vuelidate">
+            <router-link to="/admin/forms/vuelidate">
               Vuelidate
             </router-link>
 
-            <router-link
-              to="/admin/forms/vee-validate">
+            <router-link to="/admin/forms/vee-validate">
               Vee Validate
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/gallery">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-image"/>Gallery
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/gallery/image">
+            <router-link to="/admin/gallery/image">
               Image Gallery
             </router-link>
 
-            <router-link
-              to="/admin/gallery/video">
+            <router-link to="/admin/gallery/video">
               Video Gallery
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/pages">
-            <a
-              slot="item-title"
-              href="#"
+            <a slot="item-title" href="#"
             >
               <i class="icon-fa icon-fa-file"/> Pages
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/pages/login">
+            <router-link to="/admin/pages/login">
               Login
             </router-link>
 
-            <router-link
-              to="/admin/pages/login-2">
+            <router-link to="/admin/pages/login-2">
               Login 2
             </router-link>
 
-            <router-link
-              to="/admin/pages/login-3">
+            <router-link to="/admin/pages/login-3">
               Login 3
             </router-link>
 
-            <router-link
-              to="/admin/pages/register">
+            <router-link to="/admin/pages/register">
               Register
             </router-link>
 
-            <router-link
-              to="/admin/pages/register-2">
+            <router-link to="/admin/pages/register-2">
               Register 2
             </router-link>
 
-            <router-link
-              to="/admin/pages/register-3">
+            <router-link to="/admin/pages/register-3">
               Register 3
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/users">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-user"/>Users
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link
-              to="/admin/users/profile">
+            <router-link to="/admin/users/profile">
               Profile
             </router-link>
 
-            <router-link
-              to="/admin/users/all">
+            <router-link to="/admin/users/all">
               All Users
             </router-link>
           </v-collapse-item>
 
           <v-collapse-item active-url="/admin/apps">
-            <a
-              slot="item-title"
-              href="#">
+            <a slot="item-title" href="#">
               <i class="icon-fa icon-fa-adn"/>Apps
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
             <router-link
-              to="/admin/apps/mail-box">
-              MailBox
+              to="/admin/apps/mailbox">
+              Mailbox
             </router-link>
 
-            <router-link
-              to="/admin/apps/contacts">
+            <router-link to="/admin/apps/contacts">
               Contacts
             </router-link>
 
-            <router-link
-              to="/admin/apps/todo-item">
+            <router-link to="/admin/apps/todos">
               Todos
             </router-link>
           </v-collapse-item>

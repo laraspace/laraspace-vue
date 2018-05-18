@@ -3,31 +3,32 @@
     <h5 class="todo-title">TODOS APP</h5>
     <p class="text-sm-center">This Demo showcases a simple workflow with VueJS , Vue Resource and Laravel. </p>
     <input
+      v-model="newTodo.title"
       type="text"
       class="form-control todo-field"
-      v-model="newTodo.title"
       placeholder="New Todo"
-      @keyup.enter="addTodo">
+      @keyup.enter="addTodo"
+    >
     <div class="todo-block scroll-pane">
-      <ul
-        class="todo-list"
-        v-show="todos.length">
-        <li
-          v-for="(todo,index) in todos"
-          :key="index">
+      <ul v-show="todos.length" class="todo-list">
+        <li v-for="(todo,index) in todos" :key="index">
           <input
-            type="checkbox"
-            class="toggle"
             :id="index"
             :true-value="1"
             :false-value="0"
             v-model="todo.completed"
-            @change="toggleTodoComplete(todo)">
+            type="checkbox"
+            class="toggle"
+            @change="toggleTodoComplete(todo)"
+          >
           <label :for="index">{{ todo.title }}</label>
           <a
             href="#"
             class="remove-link"
-            @click.prevent="removeTodo(todo)"><i class="icon-fa icon-fa-close"/></a>
+            @click.prevent="removeTodo(todo)"
+          >
+            <i class="icon-fa icon-fa-close"/>
+          </a>
         </li>
       </ul>
     </div>

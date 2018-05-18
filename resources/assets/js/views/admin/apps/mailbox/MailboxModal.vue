@@ -1,12 +1,13 @@
 <template>
-  <div :class="['mailbox-modal', { 'is-visible': isVisible }]" v-click-outside="closeModal">
+  <div v-click-outside="closeModal" :class="['mailbox-modal', { 'is-visible': isVisible }]" >
     <div class="sidepanel-header">
       <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
       <div class="mail-action">
         <a
           data-toggle="dropdown"
           aria-haspopup="true"
-          aria-expanded="false">
+          aria-expanded="false"
+        >
           <i class="icon-fa icon-fa-ellipsis-h"/>
         </a>
         <div class="dropdown-menu mail-menu">
@@ -20,9 +21,7 @@
         <a href="#"><i class="icon-fa icon-fa-chevron-left"/></a>
         <a href="#"><i class="icon-fa icon-fa-chevron-right"/></a>
       </div>
-      <button
-        class="sidepanel-close"
-        @click="closeModal">
+      <button class="sidepanel-close" @click="closeModal">
         <i class="icon-fa icon-fa-close"/>
       </button>
     </div>
@@ -33,7 +32,8 @@
             <img
               src="/assets/img/avatars/avatar.png"
               alt="avtar"
-              class="avtar-img">
+              class="avtar-img"
+            >
           </a>
           <span class="name">John Deo</span>
           <div class="email">
@@ -91,7 +91,8 @@
               <img
                 src="/assets/img/avatars/avatar.png"
                 alt="avtar"
-                class="avtar-img">
+                class="avtar-img"
+              >
             </a>
             <span class="name">John Deo</span>
             <div class="email">
@@ -125,7 +126,8 @@
               <img
                 src="/assets/img/avatars/avatar.png"
                 alt="avtar"
-                class="avtar-img">
+                class="avtar-img"
+              >
             </a>
             <span class="name">John Deo</span>
             <div class="email">
@@ -159,7 +161,8 @@
           id="reply"
           name="comment"
           cols="75"
-          rows="4"/>
+          rows="4"
+        />
         <button class="btn btn-primary">
           Reply
         </button>
@@ -182,7 +185,7 @@ export default {
       if (this.isVisible) {
         this.$emit('close')
       }
-    },
+    }
   }
 }
 </script>

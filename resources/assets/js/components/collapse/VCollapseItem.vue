@@ -1,9 +1,6 @@
 <template>
   <div :class="['collapse-group-item', { active: isCollapseOpen } ]">
-    <div
-      class="collapse-item-title"
-      @click="showCollapse"
-    >
+    <div class="collapse-item-title" @click="showCollapse">
       <slot name="item-title"/>
     </div>
     <transition

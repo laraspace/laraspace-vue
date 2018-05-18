@@ -24,18 +24,9 @@
           sort-by="songs"
           sort-order="asc"
         >
-          <table-column
-            show="firstName"
-            label="First name"
-          />
-          <table-column
-            show="lastName"
-            label="Last name"
-          />
-          <table-column
-            show="instrument"
-            label="Instrument"
-          />
+          <table-column show="firstName" label="First name"/>
+          <table-column show="lastName" label="Last name"/>
+          <table-column show="instrument" label="Instrument"/>
           <table-column
             show="songs"
             label="Songs"
@@ -53,16 +44,10 @@
           >
             <template slot-scope="row">
               <div class="table__actions">
-                <a
-                  class="btn btn-default btn-sm"
-                  href="/admin/conversations/243/edit"
-                >
+                <a class="btn btn-default btn-sm" href="/admin/conversations/243/edit">
                   Edit
                 </a>
-                <a
-                  class="btn btn-default btn-sm"
-                  href="/admin/conversations/243/edit"
-                >
+                <a class="btn btn-default btn-sm" href="/admin/conversations/243/edit">
                   Delete
                 </a>
               </div>
@@ -77,14 +62,11 @@
         <h6>Asynchronous Pagination</h6>
       </div>
       <div class="card-body">
-        <table-component
-          :data="fetchData"
-          table-class="table"
-        >
-          <table-column show="name" label="Name"></table-column>
-          <table-column show="email" label="Email"></table-column>
-          <table-column show="role" label="Role"></table-column>
-          <table-column show="created_at" label="Registered On"></table-column>
+        <table-component :data="fetchData" table-class="table">
+          <table-column show="name" label="Name"/>
+          <table-column show="email" label="Email"/>
+          <table-column show="role" label="Role"/>
+          <table-column show="created_at" label="Registered On"/>
           <table-column
             :sortable="false"
             :filterable="false"
