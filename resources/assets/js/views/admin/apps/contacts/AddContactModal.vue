@@ -2,8 +2,8 @@
   <sweet-modal ref="modal">
     <form @submit.prevent="contactStore">
       <div class="form-group row">
-        <label for="inputEmailTo" class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
+        <label for="inputEmailTo" class="col-sm-3 col-form-label">Name</label>
+        <div class="col-sm-9">
           <input
             id="inputEmailTo"
             v-model="contact.name"
@@ -13,8 +13,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputPhone" class="col-sm-2 col-form-label">Phone</label>
-        <div class="col-sm-10">
+        <label for="inputPhone" class="col-sm-3 col-form-label">Phone</label>
+        <div class="col-sm-9">
           <input
             id="inputPhone"
             v-model="contact.phone"
@@ -24,8 +24,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
+        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
           <input
             id="inputEmail"
             v-model="contact.email"
@@ -35,8 +35,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputDob" class="col-sm-2 col-form-label">Birth Date</label>
-        <div class="col-sm-10">
+        <label for="inputDob" class="col-sm-3 col-form-label">Birth Date</label>
+        <div class="col-sm-9">
           <input
             id="inputDob"
             v-model="contact.dob"
@@ -48,8 +48,8 @@
       <div class="form-group row">
         <label
           for="inputAddress"
-          class="col-sm-2 col-form-label">Address</label>
-        <div class="col-sm-10">
+          class="col-sm-3 col-form-label">Address</label>
+        <div class="col-sm-9">
           <textarea
             id="inputAddress"
             v-model="contact.address"
@@ -58,8 +58,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputContactUrl" class="col-sm-2 col-form-label">Url</label>
-        <div class="col-sm-10">
+        <label for="inputContactUrl" class="col-sm-3 col-form-label">Url</label>
+        <div class="col-sm-9">
           <input
             id="inputContactUrl"
             v-model="contact.url"
@@ -69,8 +69,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputLabel" class="col-sm-2 col-form-label">Relation</label>
-        <div class="col-sm-10">
+        <label for="inputLabel" class="col-sm-3 col-form-label">Relation</label>
+        <div class="col-sm-9">
           <multiselect
             v-model="contactLabels"
             :options="labels"

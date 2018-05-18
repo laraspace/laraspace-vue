@@ -329,8 +329,8 @@
             </a>
 
             <router-link
-              to="/admin/apps/mail-box">
-              MailBox
+              to="/admin/apps/mailbox">
+              Mailbox
             </router-link>
 
             <router-link
@@ -339,7 +339,7 @@
             </router-link>
 
             <router-link
-              to="/admin/apps/todo-item">
+              to="/admin/apps/todos">
               Todos
             </router-link>
           </v-collapse-item>
