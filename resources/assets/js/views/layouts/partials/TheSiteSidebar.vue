@@ -261,15 +261,16 @@
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
-            <router-link to="/admin/apps/mail-box">
-              MailBox
+            <router-link
+              to="/admin/apps/mailbox">
+              Mailbox
             </router-link>
 
             <router-link to="/admin/apps/contacts">
               Contacts
             </router-link>
 
-            <router-link to="/admin/apps/todo-item">
+            <router-link to="/admin/apps/todos">
               Todos
             </router-link>
           </v-collapse-item>
