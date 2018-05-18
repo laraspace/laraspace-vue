@@ -48,7 +48,7 @@
           </div>
           <div class="col-sm-6">
             <h5 class="section-semi-title">Responsive</h5>
-            <carousel :scrollPerPage="true" :perPageCustom="[[480, 1],[768, 1],[992, 3]]">
+            <carousel :scrollPerPage="true" :perPageCustom="[[320, 1],[768, 2],[992, 3]]">
               <slide>
                 <img src="/assets/img/demo/gallery/11.jpg" class="img-fluid">
               </slide>
