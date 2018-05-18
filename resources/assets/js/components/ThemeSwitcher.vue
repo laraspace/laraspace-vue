@@ -1,5 +1,5 @@
 <template>
-  <div class="skin-tools" :class="{'is-open' : this.isOpen}">
+  <div :class="{'is-open' :isOpen}" class="skin-tools" >
     <a class="skin-tools-action" @click="isOpen = !isOpen">
       <i class="icon-fa icon-fa-cog" />
     </a>

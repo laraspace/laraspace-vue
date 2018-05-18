@@ -18,27 +18,25 @@
             <h5 class="section-semi-title">Horizontal</h5>
             <form>
               <div class="form-group row">
-                <label
-                  for="inputEmail1"
-                  class="col-sm-2 col-form-label">Email</label>
+                <label for="inputEmail1" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                   <input
                     id="inputEmail1"
                     type="email"
                     class="form-control"
-                    placeholder="Email">
+                    placeholder="Email"
+                  >
                 </div>
               </div>
               <div class="form-group row">
-                <label
-                  for="inputPassword1"
-                  class="col-sm-2 col-form-label">Password</label>
+                <label for="inputPassword1" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
                   <input
                     id="inputPassword1"
                     type="password"
                     class="form-control"
-                    placeholder="Password">
+                    placeholder="Password"
+                  >
                 </div>
               </div>
             </form>
@@ -50,13 +48,12 @@
                   id="exampleFormControlInput1"
                   type="email"
                   class="form-control"
-                  placeholder="name@example.com">
+                  placeholder="name@example.com"
+                >
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Example select</label>
-                <select
-                  id="exampleFormControlSelect1"
-                  class="form-control">
+                <select id="exampleFormControlSelect1" class="form-control">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -69,7 +66,8 @@
                 <select
                   id="exampleFormControlSelect2"
                   multiple
-                  class="form-control">
+                  class="form-control"
+                >
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -82,14 +80,16 @@
                 <textarea
                   id="exampleFormControlTextarea1"
                   class="form-control"
-                  rows="3"/>
+                  rows="3"
+                />
               </div>
               <div class="form-group">
                 <label for="exampleFormControlFile1">Example file input</label>
                 <input
                   id="exampleFormControlFile1"
                   type="file"
-                  class="form-control-file">
+                  class="form-control-file"
+                >
                 <small class="text-muted">This is some placeholder block-level help text for the above
                 input. It's a bit lighter and easily wraps to a new line.
                 </small>
@@ -101,7 +101,8 @@
             <form
               id="needs-validation"
               class="was-validated"
-              novalidate>
+              novalidate
+            >
               <div class="form-group">
                 <label for="firstName">First name</label>
                 <input
@@ -110,7 +111,8 @@
                   class="form-control is-valid"
                   placeholder="First name"
                   value="Mark"
-                  required>
+                  required
+                >
               </div>
               <div class="form-group">
                 <label for="lastName">Last name</label>
@@ -118,7 +120,8 @@
                   id="lastName"
                   type="text"
                   class="form-control is-valid"
-                  required>
+                  required
+                >
                 <div class="invalid-feedback">
                   Please provide a last name.
                 </div>
@@ -133,10 +136,9 @@
                   id="customControlValidation1"
                   type="checkbox"
                   class="custom-control-input"
-                  required>
-                <label
-                  class="custom-control-label"
-                  for="customControlValidation1">
+                  required
+                >
+                <label class="custom-control-label" for="customControlValidation1">
                   Check this customcheckbox
                 </label>
                 <div class="invalid-feedback">Example invalid feedback text</div>
@@ -147,10 +149,9 @@
                   type="radio"
                   class="custom-control-input"
                   name="radio-stacked"
-                  required>
-                <label
-                  class="custom-control-label"
-                  for="customControlValidation2">
+                  required
+                >
+                <label class="custom-control-label" for="customControlValidation2">
                   Toggle this customradio
                 </label>
               </div>
@@ -160,10 +161,9 @@
                   type="radio"
                   class="custom-control-input"
                   name="radio-stacked"
-                  required>
-                <label
-                  class="custom-control-label"
-                  for="customControlValidation3">
+                  required
+                >
+                <label class="custom-control-label" for="customControlValidation3">
                   Or toggle this other custom radio
                 </label>
                 <div class="invalid-feedback">More example invalid feedback text</div>
@@ -184,10 +184,9 @@
                   id="validatedCustomFile"
                   type="file"
                   class="custom-file-input"
-                  required>
-                <label
-                  class="custom-file-label"
-                  for="validatedCustomFile">Choose file...</label>
+                  required
+                >
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                 <div class="invalid-feedback">Example invalid custom file feedback</div>
               </div>
             </form>
@@ -226,27 +225,25 @@
                 </h5>
                 <form>
                   <div class="form-group row">
-                    <label
-                      for="inputEmail2"
-                      class="col-sm-2 col-form-label">Email</label>
+                    <label for="inputEmail2" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                       <input
                         id="inputEmail2"
                         type="email"
                         class="form-control"
-                        placeholder="Email">
+                        placeholder="Email"
+                      >
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label
-                      for="inputPassword2"
-                      class="col-sm-2 col-form-label">Password</label>
+                    <label for="inputPassword2" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
                       <input
                         id="inputPassword2"
                         type="password"
                         class="form-control"
-                        placeholder="Password">
+                        placeholder="Password"
+                      >
                     </div>
                   </div>
                 </form>
@@ -259,20 +256,18 @@
                       id="inlineCheckbox1"
                       class="form-check-input"
                       type="checkbox"
-                      value="option1">
-                    <label
-                      class="form-check-label"
-                      for="inlineCheckbox1">1</label>
+                      value="option1"
+                    >
+                    <label class="form-check-label" for="inlineCheckbox1">1</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
                       id="inlineCheckbox2"
                       class="form-check-input"
                       type="checkbox"
-                      value="option2">
-                    <label
-                      class="form-check-label"
-                      for="inlineCheckbox2">2</label>
+                      value="option2"
+                    >
+                    <label class="form-check-label" for="inlineCheckbox2">2</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
@@ -280,10 +275,9 @@
                       class="form-check-input"
                       type="checkbox"
                       value="option3"
-                      disabled>
-                    <label
-                      class="form-check-label"
-                      for="inlineCheckbox3">3 (disabled)</label>
+                      disabled
+                    >
+                    <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
                   </div>
                 </form>
               </div>
@@ -301,10 +295,9 @@
                       type="radio"
                       name="exampleRadios"
                       value="option1"
-                      checked>
-                    <label
-                      class="form-check-label"
-                      for="exampleRadios1">
+                      checked
+                    >
+                    <label class="form-check-label" for="exampleRadios1">
                       Default radio
                     </label>
                   </div>
@@ -314,10 +307,9 @@
                       class="form-check-input"
                       type="radio"
                       name="exampleRadios"
-                      value="option2">
-                    <label
-                      class="form-check-label"
-                      for="exampleRadios2">
+                      value="option2"
+                    >
+                    <label class="form-check-label" for="exampleRadios2">
                       Second default radio
                     </label>
                   </div>
@@ -328,10 +320,9 @@
                       type="radio"
                       name="exampleRadios"
                       value="option3"
-                      disabled>
-                    <label
-                      class="form-check-label"
-                      for="exampleRadios3">
+                      disabled
+                    >
+                    <label class="form-check-label" for="exampleRadios3">
                       Disabled radio
                     </label>
                   </div>
@@ -346,10 +337,9 @@
                       class="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      value="option1">
-                    <label
-                      class="form-check-label"
-                      for="inlineRadio1">1</label>
+                      value="option1"
+                    >
+                    <label class="form-check-label" for="inlineRadio1">1</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
@@ -357,10 +347,9 @@
                       class="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      value="option2">
-                    <label
-                      class="form-check-label"
-                      for="inlineRadio2">2</label>
+                      value="option2"
+                    >
+                    <label class="form-check-label" for="inlineRadio2">2</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
@@ -369,10 +358,9 @@
                       type="radio"
                       name="inlineRadioOptions"
                       value="option3"
-                      disabled>
-                    <label
-                      class="form-check-label"
-                      for="inlineRadio3">3 (disabled)</label>
+                      disabled
+                    >
+                    <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
                   </div>
                 </form>
               </div>

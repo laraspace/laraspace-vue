@@ -12,7 +12,7 @@
         <a href="#">
           <i :class="category.icon"/>
           {{ category.name }}
-          <span class="badge badge-pill badge-danger" v-if="category.unread">{{ category.unread }}</span>
+          <span v-if="category.unread" class="badge badge-pill badge-danger" >{{ category.unread }}</span>
         </a>
       </li>
     </ul>
@@ -32,7 +32,16 @@
 
 <script>
 export default {
-  props: ['categories', 'selectedCategory'],
+  props: {
+    categories: {
+      type: Array,
+      required: true
+    },
+    selectedCategory: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       isSidebarVisible: true

@@ -4,9 +4,7 @@
     class="main-content">
     <div class="row">
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Sales
           </span>
@@ -18,15 +16,14 @@
           <div
             class="easy-pie-chart"
             data-percent="20"
-            data-color="#007dcc">
+            data-color="#007dcc"
+          >
             <span class="percent text-primary"/>
           </div>
         </a>
       </div>
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Profit
           </span>
@@ -36,15 +33,14 @@
           <div
             class="easy-pie-chart"
             data-percent="50"
-            data-color="#4fc47f" >
+            data-color="#4fc47f"
+          >
             <span class="percent text-success"/>
           </div>
         </a>
       </div>
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Expense
           </span>
@@ -54,15 +50,14 @@
           <div
             class="easy-pie-chart"
             data-percent="70"
-            data-color="#f35a3d">
+            data-color="#f35a3d"
+          >
             <span class="percent text-danger"/>
           </div>
         </a>
       </div>
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Revenue
           </span>
@@ -72,7 +67,8 @@
           <div
             class="easy-pie-chart"
             data-percent="80"
-            data-color="#5BBFDE">
+            data-color="#5BBFDE"
+          >
             <span class="percent text-info"/>
           </div>
         </a>
@@ -86,29 +82,36 @@
               <h6><i class="icon-fa icon-fa-bar-chart text-success"/> Total Expenses</h6>
             </div>
             <div class="actions tabs-simple">
-              <ul
-                class="nav nav-tabs"
-                role="tablist">
+              <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                   <a
                     class="nav-link active"
                     data-toggle="tab"
                     href="#balanceSummry"
-                    role="tab">Daily</a>
+                    role="tab"
+                  >
+                    Daily
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a
                     class="nav-link"
                     data-toggle="tab"
                     href="#monthlyProfit"
-                    role="tab">Monthly</a>
+                    role="tab"
+                  >
+                    Monthly
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a
                     class="nav-link"
                     data-toggle="tab"
                     href="#yearly"
-                    role="tab">Yearly</a>
+                    role="tab"
+                  >
+                    Yearly
+                  </a>
                 </li>
               </ul>
             </div>
@@ -119,26 +122,32 @@
               <div
                 id="balanceSummry"
                 class="tab-pane active"
-                role="tabpanel">
+                role="tabpanel"
+              >
                 <line-chart
                   :labels="['Oct 10', 'Oct 11', 'Oct 12', 'Oct 13', 'Oct 14', 'Oct 15', 'Oct 16']"
-                  :values="[200 , 1000 , 300, 551, 516, 225, 40]"/>
+                  :values="[200 , 1000 , 300, 551, 516, 225, 40]"
+                />
               </div>
               <div
                 id="monthlyProfit"
                 class="tab-pane"
-                role="tabpanel">
+                role="tabpanel"
+              >
                 <line-chart
                   :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-                  :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"/>
+                  :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"
+                />
               </div>
               <div
                 id="yearly"
                 class="tab-pane"
-                role="tabpanel">
+                role="tabpanel"
+              >
                 <line-chart
                   :labels="['2011', '2012', '2013', '2014', '2015', '2016', '2017']"
-                  :values="[10000, 20000, 12444, 15000, 17000, 14000, 20000]"/>
+                  :values="[10000, 20000, 12444, 15000, 17000, 14000, 20000]"
+                />
               </div>
             </div>
           </div>
@@ -153,27 +162,20 @@
               <h6><i class="icon-fa icon-fa-credit-card text-primary"/> Summary</h6>
             </div>
             <div class="actions">
-              <div
-                class="btn-group"
-                role="group">
+              <div class="btn-group" role="group">
                 <button
                   id="summaryFilterDrop"
                   type="button"
                   class="btn btn-sm btn-outline-primary dropdown-toggle"
                   data-toggle="dropdown"
                   aria-haspopup="true"
-                  aria-expanded="true">
+                  aria-expanded="true"
+                >
                   Filters
                 </button>
-                <div
-                  class="dropdown-menu dropdown-menu-right"
-                  aria-labelledby="summaryFilterDrop">
-                  <a
-                    class="dropdown-item"
-                    href="#">October</a>
-                  <a
-                    class="dropdown-item"
-                    href="#">September</a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="summaryFilterDrop">
+                  <a class="dropdown-item" href="#">October</a>
+                  <a class="dropdown-item" href="#">September</a>
                 </div>
               </div>
             </div>
@@ -183,7 +185,8 @@
               :labels="['Revenue', 'Expense', 'Profit']"
               :values="[300, 50, 250]"
               :bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"
-              :hover-bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"/>
+              :hover-bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"
+            />
           </div>
         </div>
       </div>
@@ -201,7 +204,8 @@
           <div class="card-body">
             <bar-chart
               :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-              :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"/>
+              :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"
+            />
           </div>
         </div>
       </div>

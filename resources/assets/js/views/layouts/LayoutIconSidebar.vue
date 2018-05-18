@@ -19,7 +19,7 @@ export default {
     SiteFooter
   },
   mounted () {
-    this.$utils.set('icon-sidebar')
+    this.$utils.setLayout('icon-sidebar')
   }
 }
 </script>

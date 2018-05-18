@@ -8,10 +8,12 @@
         <li class="breadcrumb-item active">Users</li>
       </ol>
       <div class="page-actions">
-        <a
-          href="#"
-          class="btn btn-primary"><i class="icon-fa icon-fa-plus"/> New User</a>
-        <button class="btn btn-danger"><i class="icon-fa icon-fa-trash"/> Delete </button>
+        <a href="#" class="btn btn-primary">
+          <i class="icon-fa icon-fa-plus"/> New User
+        </a>
+        <button class="btn btn-danger">
+          <i class="icon-fa icon-fa-trash"/> Delete
+        </button>
       </div>
     </div>
     <div class="row">
@@ -26,7 +28,8 @@
               id="responsive-datatable"
               class="table table-striped table-bordered"
               cellspacing="0"
-              width="100%">
+              width="100%"
+            >
               <thead>
                 <tr>
                   <th>Name</th>
@@ -37,9 +40,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  v-for="(user, index) in users"
-                  :key="index">
+                <tr v-for="(user, index) in users" :key="index">
                   <td>{{ user.name }}</td>
                   <td>{{ user.email }}</td>
                   <td>{{ user.role }}</td>
@@ -51,11 +52,12 @@
                       </a>
                     </router-link>
                     <a
-                      @click="deleteUser(user.id)"
                       class="btn btn-default btn-sm"
                       data-delete
-                      data-confirmation="notie">
-                      <i class="icon-fa icon-fa-trash"/>Delete
+                      data-confirmation="notie"
+                      @click="deleteUser(user.id)"
+                    >
+                      <i class="icon-fa icon-fa-trash"/> Delete
                     </a>
                   </td>
                 </tr>

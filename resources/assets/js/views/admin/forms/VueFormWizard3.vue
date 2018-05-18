@@ -15,29 +15,22 @@
       <div class="card-body">
         <div class="content ls-wizard wizard-3">
           <form-wizard
-            @on-complete="onComplete"
             shape="tab"
             title=""
             subtitle=""
-            stepSize="sm">
-            <tab-content
-              title="Step 1"
-              icon="ti-user">
+            step-size="sm"
+            @on-complete="onComplete"
+          >
+            <tab-content title="Step 1" icon="ti-user">
               My first tab content
             </tab-content>
-            <tab-content
-              title="Step 2"
-              icon="ti-settings">
+            <tab-content title="Step 2" icon="ti-settings">
               My second tab content
             </tab-content>
-            <tab-content
-              title="Step 3"
-              icon="ti-check">
+            <tab-content title="Step 3" icon="ti-check">
               Yuhuuu! This seems pretty damn simple
             </tab-content>
-            <tab-content
-              title="Step 4"
-              icon="ti-check">
+            <tab-content title="Step 4" icon="ti-check">
               Yuhuuu! This seems pretty damn simple
             </tab-content>
           </form-wizard>

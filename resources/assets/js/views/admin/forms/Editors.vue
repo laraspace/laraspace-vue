@@ -16,9 +16,7 @@
         <div class="ls-summernote">
           Hello Summernote
         </div>
-        <summernote
-          name="editor"
-        />
+        <summernote name="editor"/>
       </div>
     </div>
     <div class="card">

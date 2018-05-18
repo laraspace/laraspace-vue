@@ -44,39 +44,25 @@
               </div>
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Outline Buttons</h5>
-                <button
-                  type="button"
-                  class="btn btn-outline-theme">
+                <button type="button" class="btn btn-outline-theme">
                   Theme
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-primary">
+                <button type="button" class="btn btn-outline-primary">
                   Primary
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary">
+                <button type="button" class="btn btn-outline-secondary">
                   Secondary
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-success">
+                <button type="button" class="btn btn-outline-success">
                   Success
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-info">
+                <button type="button" class="btn btn-outline-info">
                   Info
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-warning">
+                <button type="button" class="btn btn-outline-warning">
                   Warning
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger">
+                <button type="button" class="btn btn-outline-danger">
                   Danger
                 </button>
               </div>
@@ -195,20 +181,15 @@
                   <div
                     class="btn-group btn-group-sm"
                     role="group"
-                    aria-label="Basic example">
-                    <button
-                      type="button"
-                      class="btn btn-outline-default">
+                    aria-label="Basic example"
+                  >
+                    <button type="button" class="btn btn-outline-default">
                       Left
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-default">
+                    <button type="button" class="btn btn-outline-default">
                       Middle
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-default">
+                    <button type="button" class="btn btn-outline-default">
                       Right
                     </button>
                   </div>
@@ -217,20 +198,15 @@
                   <div
                     class="btn-group"
                     role="group"
-                    aria-label="Basic example">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary">
+                    aria-label="Basic example"
+                  >
+                    <button type="button" class="btn btn-outline-primary">
                       Left
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary">
                       Middle
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary">
                       Right
                     </button>
                   </div>
@@ -239,16 +215,17 @@
                   <div
                     class="btn-group btn-group-lg"
                     role="group"
-                    aria-label="Basic example">
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger">Left</button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger">Middle</button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger">Right</button>
+                    aria-label="Basic example"
+                  >
+                    <button type="button" class="btn btn-outline-danger">
+                      Left
+                    </button>
+                    <button type="button" class="btn btn-outline-danger">
+                      Middle
+                    </button>
+                    <button type="button" class="btn btn-outline-danger">
+                      Right
+                    </button>
                   </div>
                 </div>
               </div>
@@ -258,59 +235,47 @@
                   <div
                     class="btn-toolbar"
                     role="toolbar"
-                    aria-label="Toolbar with button groups">
+                    aria-label="Toolbar with button groups"
+                  >
                     <div
                       class="btn-group mr-2"
                       role="group"
-                      aria-label="First group">
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      aria-label="First group"
+                    >
+                      <button type="button" class="btn btn-outline-default">
                         1
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      <button type="button" class="btn btn-outline-default">
                         2
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      <button type="button" class="btn btn-outline-default">
                         3
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      <button type="button" class="btn btn-outline-default">
                         4
                       </button>
                     </div>
                     <div
                       class="btn-group mr-2"
                       role="group"
-                      aria-label="Second group">
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      aria-label="Second group"
+                    >
+                      <button type="button" class="btn btn-outline-default">
                         5
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      <button type="button" class="btn btn-outline-default">
                         6
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      <button type="button" class="btn btn-outline-default">
                         7
                       </button>
                     </div>
                     <div
                       class="btn-group"
                       role="group"
-                      aria-label="Third group">
-                      <button
-                        type="button"
-                        class="btn btn-outline-default">
+                      aria-label="Third group"
+                    >
+                      <button type="button" class="btn btn-outline-default">
                         8
                       </button>
                     </div>
@@ -320,20 +285,15 @@
                   <div
                     class="btn-group"
                     role="group"
-                    aria-label="Button group with nested dropdown">
-                    <button
-                      type="button"
-                      class="btn btn-outline-default">
+                    aria-label="Button group with nested dropdown"
+                  >
+                    <button type="button" class="btn btn-outline-default">
                       1
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-default">
+                    <button type="button" class="btn btn-outline-default">
                       2
                     </button>
-                    <div
-                      class="btn-group"
-                      role="group">
+                    <div class="btn-group" role="group">
                       <v-dropdown :toggle-arrow="false">
                         <button
                           id="btnGroupDrop1"
@@ -370,64 +330,50 @@
                   <div
                     class="btn-toolbar"
                     role="toolbar"
-                    aria-label="Toolbar with button groups">
+                    aria-label="Toolbar with button groups"
+                  >
                     <div
                       class="btn-group mr-2"
                       role="group"
-                      aria-label="First group">
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-info">
+                      aria-label="First group"
+                    >
+                      <button type="button" class="btn btn-icon btn-info">
                         <i class="icon-fa icon-fa-align-left"/>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-info">
+                      <button type="button" class="btn btn-icon btn-info">
                         <i class="icon-fa icon-fa-align-center"/>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-info">
+                      <button type="button" class="btn btn-icon btn-info">
                         <i class="icon-fa icon-fa-align-right"/>
                       </button>
                     </div>
                     <div
                       class="btn-group mr-2"
                       role="group"
-                      aria-label="First group">
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-info">
+                      aria-label="First group"
+                    >
+                      <button type="button" class="btn btn-icon btn-info">
                         <i class="icon-fa icon-fa-bold"/>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-info">
+                      <button type="button" class="btn btn-icon btn-info">
                         <i class="icon-fa icon-fa-italic"/>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-info">
+                      <button type="button" class="btn btn-icon btn-info">
                         <i class="icon-fa icon-fa-underline"/>
                       </button>
                     </div>
                     <div
                       class="btn-group mr-2"
                       role="group"
-                      aria-label="First group">
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-outline-info">
+                      aria-label="First group"
+                    >
+                      <button type="button" class="btn btn-icon btn-outline-info">
                         <i class="icon-fa icon-fa-file-image-o"/>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-outline-info">
+                      <button type="button" class="btn btn-icon btn-outline-info">
                         <i class="icon-fa icon-fa-folder"/>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-icon btn-outline-info">
+                      <button type="button" class="btn btn-icon btn-outline-info">
                         <i class="icon-fa icon-fa-pencil"/>
                       </button>
                     </div>
@@ -441,20 +387,15 @@
                 <div
                   class="btn-group-vertical"
                   role="group"
-                  aria-label="Button group with nested dropdown">
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary">
+                  aria-label="Button group with nested dropdown"
+                >
+                  <button type="button" class="btn btn-outline-primary">
                     1
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary">
+                  <button type="button" class="btn btn-outline-primary">
                     2
                   </button>
-                  <div
-                    class="btn-group"
-                    role="group">
+                  <div class="btn-group" role="group">
                     <v-dropdown :toggle-arrow="false">
                       <button
                         id="btnGroupDrop1"
@@ -472,13 +413,15 @@
                           slot="item-title"
                           class="dropdown-item"
                           href="#"
-                        >Dropdown link
+                        >
+                          Dropdown link
                         </a>
                         <a
                           slot="item-title"
                           class="dropdown-item"
                           href="#"
-                        >Dropdown link
+                        >
+                          Dropdown link
                         </a>
                       </v-dropdown-item>
                     </v-dropdown>
@@ -487,20 +430,15 @@
                 <div
                   class="btn-group-vertical"
                   role="group"
-                  aria-label="Button group with nested dropdown">
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-outline-primary">
+                  aria-label="Button group with nested dropdown"
+                >
+                  <button type="button" class="btn btn-icon btn-outline-primary">
                     <i class="icon-fa icon-fa-file"/>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-outline-primary">
+                  <button type="button" class="btn btn-icon btn-outline-primary">
                     <i class="icon-fa icon-fa-pencil"/>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-outline-primary">
+                  <button type="button" class="btn btn-icon btn-outline-primary">
                     <i class="icon-fa icon-fa-image"/>
                   </button>
                 </div>
@@ -508,41 +446,23 @@
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Justified Button Group</h5>
                 <div class="btn-group btn-group-justified">
-                  <div
-                    class="btn-group"
-                    role="group">
-                    <button
-                      type="button"
-                      class="btn btn-primary">
-                      <i
-                        class="icon-fa icon-fa-list"
-                        aria-hidden="true"/>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary">
+                      <i class="icon-fa icon-fa-list" aria-hidden="true"/>
                       <br>
                       <span class="text-uppercase hidden-xs">Listing</span>
                     </button>
                   </div>
-                  <div
-                    class="btn-group"
-                    role="group">
-                    <button
-                      type="button"
-                      class="btn btn-info">
-                      <i
-                        class="icon-fa icon-fa-star"
-                        aria-hidden="true"/>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-info">
+                      <i class="icon-fa icon-fa-star" aria-hidden="true"/>
                       <br>
                       <span class="text-uppercase hidden-xs">Review</span>
                     </button>
                   </div>
-                  <div
-                    class="btn-group"
-                    role="group">
-                    <button
-                      type="button"
-                      class="btn btn-success">
-                      <i
-                        class="icon-fa icon-fa-rocket"
-                        aria-hidden="true"/>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success">
+                      <i class="icon-fa icon-fa-rocket" aria-hidden="true"/>
                       <br>
                       <span class="text-uppercase hidden-xs">Details</span>
                     </button>
@@ -565,24 +485,16 @@
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Expand</h5>
                 <div class="form-group">
-                  <button
-                    class="btn btn-primary ladda-button"
-                    data-style="expand-left">
+                  <button class="btn btn-primary ladda-button" data-style="expand-left">
                     <span class="ladda-label">expand-left</span>
                   </button>
-                  <button
-                    class="btn btn-primary ladda-button"
-                    data-style="expand-right">
+                  <button class="btn btn-primary ladda-button" data-style="expand-right">
                     <span class="ladda-label">expand-right</span>
                   </button>
-                  <button
-                    class="btn btn-primary ladda-button"
-                    data-style="expand-up">
+                  <button class="btn btn-primary ladda-button" data-style="expand-up">
                     <span class="ladda-label">expand-up</span>
                   </button>
-                  <button
-                    class="btn btn-primary ladda-button"
-                    data-style="expand-down">
+                  <button class="btn btn-primary ladda-button" data-style="expand-down">
                     <span class="ladda-label">expand-down</span>
                   </button>
                 </div>
@@ -590,14 +502,10 @@
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Zoom</h5>
                 <div class="form-group">
-                  <button
-                    class="btn btn-info ladda-button"
-                    data-style="zoom-in">
+                  <button class="btn btn-info ladda-button" data-style="zoom-in">
                     <span class="ladda-label">zoom-in</span>
                   </button>
-                  <button
-                    class="btn btn-info ladda-button"
-                    data-style="zoom-out">
+                  <button class="btn btn-info ladda-button" data-style="zoom-out">
                     <span class="ladda-label">zoom-out</span>
                   </button>
                 </div>
@@ -607,14 +515,10 @@
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Progress Bar</h5>
                 <div class="form-group progress-demo">
-                  <button
-                    class="btn btn-warning ladda-button"
-                    data-style="expand-left">
+                  <button class="btn btn-warning ladda-button" data-style="expand-left">
                     <span class="ladda-label">expand-left</span>
                   </button>
-                  <button
-                    class="btn btn-warning ladda-button"
-                    data-style="expand-right">
+                  <button class="btn btn-warning ladda-button" data-style="expand-right">
                     <span class="ladda-label">expand-right</span>
                   </button>
                 </div>
@@ -622,24 +526,16 @@
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Slide</h5>
                 <div class="form-group">
-                  <button
-                    class="btn btn-danger ladda-button"
-                    data-style="slide-left">
+                  <button class="btn btn-danger ladda-button" data-style="slide-left">
                     <span class="ladda-label">slide-left</span>
                   </button>
-                  <button
-                    class="btn btn-danger ladda-button"
-                    data-style="slide-right">
+                  <button class="btn btn-danger ladda-button" data-style="slide-right">
                     <span class="ladda-label">slide-right</span>
                   </button>
-                  <button
-                    class="btn btn-danger ladda-button"
-                    data-style="slide-up">
+                  <button class="btn btn-danger ladda-button" data-style="slide-up">
                     <span class="ladda-label">slide-up</span>
                   </button>
-                  <button
-                    class="btn btn-danger ladda-button"
-                    data-style="slide-down">
+                  <button class="btn btn-danger ladda-button" data-style="slide-down">
                     <span class="ladda-label">slide-down</span>
                   </button>
                 </div>

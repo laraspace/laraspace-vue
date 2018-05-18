@@ -44,30 +44,21 @@
             </a>
           </li>
         </ul>
-        <a
-          class="left-sidebar-btn"
-          @click="openLeftSidebar">
+        <a class="left-sidebar-btn" @click="openLeftSidebar">
           <i :class="['icon-fa', {'icon-fa-angle-right':rightAngle, 'icon-fa-angle-left':leftAngle}]"/>
         </a>
       </div>
       <div class="mailbox-content">
         <div class="mailbox-content-header">
-
           <div class="mailbox-actions">
-            <div
-              class="custom-control custom-checkbox"
-              style="display:inline-block"
-            >
+            <div class="custom-control custom-checkbox" style="display:inline-block">
               <input
                 id="customCheckAll"
                 v-model="selectAll"
                 type="checkbox"
                 class="custom-control-input"
               >
-              <label
-                class="custom-control-label"
-                for="customCheckAll"
-              />
+              <label class="custom-control-label" for="customCheckAll"/>
             </div>
 
             <button
@@ -76,7 +67,8 @@
               type="button"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <i class="icon-fa icon-fa-folder-o"/>
             </button>
 
@@ -86,7 +78,8 @@
               class="btn btn-light"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <i class="icon-fa icon-fa-tag"/>
             </button>
           </div>
@@ -98,33 +91,31 @@
               class="btn btn-light"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               Check All<i class="icon-fa icon-fa-angle-down"/>
             </button>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="dropdownCheckMenu">
-              <a
-                class="dropdown-item"
-                href="#">Dropdown link</a>
-              <a
-                class="dropdown-item"
-                href="#">Dropdown link</a>
+            <div class="dropdown-menu" aria-labelledby="dropdownCheckMenu">
+              <a class="dropdown-item" href="#">
+                Dropdown link
+              </a>
+              <a class="dropdown-item" href="#">
+                Dropdown link
+              </a>
             </div>
             <div class="mail-search">
               <input
                 id="inputEmailTo"
                 type="email"
                 placeholder="Search"
-                class="form-control">
+                class="form-control"
+              >
             </div>
           </div>
         </div>
         <table class="table table-hover">
           <tbody>
-            <tr
-              v-for="(mail,index) in mails"
-              :key="index" >
+            <tr v-for="(mail,index) in mails" :key="index">
               <td class="cell-50">
                 <div class="custom-control custom-checkbox">
                   <input
@@ -132,24 +123,25 @@
                     v-model="selected"
                     :value="mail"
                     type="checkbox"
-                    class="custom-control-input">
-                  <label
-                    :for="index"
-                    class="custom-control-label"/>
+                    class="custom-control-input"
+                  >
+                  <label :for="index" class="custom-control-label"/>
                 </div>
               </td>
               <td class="cell-30">
                 <input
                   class="star"
                   type="checkbox"
-                  title="important">
+                  title="important"
+                >
               </td>
               <td class="cell-50">
                 <a>
                   <img
                     src="/assets/img/avatars/avatar.png"
                     alt="avtar"
-                    class="avtar-img">
+                    class="avtar-img"
+                  >
                 </a>
               </td>
               <td @click="openMail" >
@@ -174,56 +166,40 @@
         <div class="mail-footer">
           <nav aria-label="Page navigation example">
             <ul class="pagination">
-              <li
-                class="page-item"
-                @click="tabMinus">
+              <li class="page-item" @click="tabMinus">
                 <a
                   class="page-link"
                   href="#"
-                  aria-label="Previous">
+                  aria-label="Previous"
+                >
                   <span aria-hidden="true">&laquo;</span>
                   <span class="sr-only">Previous</span>
                 </a>
               </li>
-              <li
-                :class="['page-item', {'active' : tab === 1}]"
-                @click="tab = 1">
-                <a
-                  class="page-link"
-                  href="#">1</a></li>
-              <li
-                :class="['page-item', {'active' : tab === 2}]"
-                @click="tab = 2"><a
-                  class="page-link"
-                  href="#">2</a></li>
-              <li
-                :class="['page-item', {'active' : tab === 3}]"
-                @click="tab = 3"><a
-                  class="page-link"
-                  href="#">3</a></li>
-              <li
-                :class="['page-item', {'active' : tab === 4}]"
-                @click="tab = 4"><a
-                  class="page-link"
-                  href="#">4</a></li>
-              <li
-                :class="['page-item', {'active' : tab === 5}]"
-                @click="tab = 5"><a
-                  class="page-link"
-                  href="#">5</a></li>
-              <li
-                :class="['page-item', {'active' : tab === 6}]"
-                @click="tab = 6">
-                <a
-                  class="page-link"
-                  href="#">6</a></li>
-              <li
-                class="page-item"
-                @click="tabPlus">
+              <li :class="['page-item', {'active' : tab === 1}]" @click="tab = 1">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li :class="['page-item', {'active' : tab === 2}]" @click="tab = 2">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li :class="['page-item', {'active' : tab === 3}]" @click="tab = 3">
+                <a class="page-link" href="#">3</a>
+              </li>
+              <li :class="['page-item', {'active' : tab === 4}]" @click="tab = 4">
+                <a class="page-link" href="#">4</a>
+              </li>
+              <li :class="['page-item', {'active' : tab === 5}]" @click="tab = 5">
+                <a class="page-link" href="#">5</a>
+              </li>
+              <li :class="['page-item', {'active' : tab === 6}]" @click="tab = 6">
+                <a class="page-link" href="#">6</a>
+              </li>
+              <li class="page-item" @click="tabPlus">
                 <a
                   class="page-link"
                   href="#"
-                  aria-label="Next">
+                  aria-label="Next"
+                >
                   <span aria-hidden="true">&raquo;</span>
                   <span class="sr-only">Next</span>
                 </a>
@@ -240,7 +216,8 @@
               <a
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false">
+                aria-expanded="false"
+              >
                 <i class="icon-fa icon-fa-ellipsis-h"/>
               </a>
               <div class="dropdown-menu mail-menu">
@@ -254,9 +231,7 @@
               <a href="#"><i class="icon-fa icon-fa-chevron-left"/></a>
               <a href="#"><i class="icon-fa icon-fa-chevron-right"/></a>
             </div>
-            <button
-              class="sidepanel-close"
-              @click="closeMail">
+            <button class="sidepanel-close" @click="closeMail">
               <i class="icon-fa icon-fa-close"/>
             </button>
           </div>
@@ -267,7 +242,8 @@
                   <img
                     src="/assets/img/avatars/avatar.png"
                     alt="avtar"
-                    class="avtar-img">
+                    class="avtar-img"
+                  >
                 </a>
                 <span class="name">John Deo</span>
                 <div class="email">
@@ -325,7 +301,8 @@
                     <img
                       src="/assets/img/avatars/avatar.png"
                       alt="avtar"
-                      class="avtar-img">
+                      class="avtar-img"
+                    >
                   </a>
                   <span class="name">John Deo</span>
                   <div class="email">
@@ -359,7 +336,8 @@
                     <img
                       src="/assets/img/avatars/avatar.png"
                       alt="avtar"
-                      class="avtar-img">
+                      class="avtar-img"
+                    >
                   </a>
                   <span class="name">John Deo</span>
                   <div class="email">
@@ -393,7 +371,8 @@
                 id="replay"
                 name="comment"
                 cols="75"
-                rows="4"/>
+                rows="4"
+              />
               <button class="btn btn-primary">
                 Replay
               </button>
@@ -407,51 +386,49 @@
               @click="$refs.modal.open()">
               Regular Alert
             </button> -->
-        <button
-          class="create-mail btn btn-info rounded-circle"
-          @click="$refs.modal.open()"
-        >
+        <button class="create-mail btn btn-info rounded-circle" @click="$refs.modal.open()">
           <i class="icon-fa icon-fa-pencil"/>
         </button>
         <sweet-modal ref="modal">
           <form>
-                <div class="form-group row">
-                  <label
-                    for="inputEmailTo"
-                    class="col-sm-2 col-form-label">Email To</label>
-                  <div class="col-sm-10"><input
-                    id="inputEmailTo"
-                    type="email"
-                    class="form-control"></div>
-                </div>
-                <div class="form-group row">
-                  <label
-                    for="inputSubject"
-                    class="col-sm-2 col-form-label">Subject</label>
-                  <div class="col-sm-10"><input
-                    id="inputSubject"
-                    type="text"
-                    class="form-control"></div>
-                </div>
-              <br><br>
-              <div class="form-group row">
-                <label
-                    for="inputSubject"
-                    class="col-sm-2 col-form-label">Message</label>
-                <div class="col-sm-10">
-                  <textarea
+            <div class="form-group row">
+              <label for="inputEmailTo" class="col-sm-2 col-form-label">Email To</label>
+              <div class="col-sm-10">
+                <input
+                  id="inputEmailTo"
+                  type="email"
                   class="form-control"
-                    />
-                </div>
+                >
               </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputSubject" class="col-sm-2 col-form-label">Subject</label>
+              <div class="col-sm-10">
+                <input
+                  id="inputSubject"
+                  type="text"
+                  class="form-control"
+                >
+              </div>
+            </div>
+            <br><br>
+            <div class="form-group row">
+              <label for="inputSubject" class="col-sm-2 col-form-label">Message</label>
+              <div class="col-sm-10">
+                <textarea class="form-control"/>
+              </div>
+            </div>
             <div class="modal-footer">
               <button
                 type="button"
                 class="btn btn-secondary"
-                data-dismiss="modal">Cancle</button>
-              <button
-                type="sumbit"
-                class="btn btn-primary">Send</button>
+                data-dismiss="modal"
+              >
+                Cancle
+              </button>
+              <button type="sumbit" class="btn btn-primary">
+                Send
+              </button>
             </div>
           </form>
         </sweet-modal>
@@ -464,11 +441,12 @@ import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 
 export default {
   components: {
-    SweetModal
+    SweetModal,
+    SweetModalTab
   },
   data () {
     return {
-      isModalVisible : false,
+      isModalVisible: false,
       tab: 1,
       pullRightSide: false,
       rightAngle: true,
@@ -505,10 +483,10 @@ export default {
   },
   methods: {
     openMail () {
-      this.isModalVisible  = true
+      this.isModalVisible = true
     },
     closeMail () {
-      this.isModalVisible  = false
+      this.isModalVisible = false
     },
     openLeftSidebar () {
       this.pullRightSide = !this.pullRightSide

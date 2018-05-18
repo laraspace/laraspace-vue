@@ -16,9 +16,7 @@
           :index="imgIndex"
           @close="imgIndex = null"
         />
-        <div
-          class="my-gallery image-gallery"
-        >
+        <div class="my-gallery image-gallery">
           <div class="row">
             <figure
               v-for="(image, bindex) in images"

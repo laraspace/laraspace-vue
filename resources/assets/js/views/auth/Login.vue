@@ -1,8 +1,5 @@
 <template>
-  <form
-    id="loginForm"
-    @submit.prevent="validateBeforeSubmit"
-  >
+  <form id="loginForm" @submit.prevent="validateBeforeSubmit">
     <div :class="{'form-group' : true }">
       <input
         v-validate
@@ -25,9 +22,8 @@
         name="password"
         data-vv-rules="required"
       >
-      <div
-        v-show="errors.has('password')"
-        class="invalid-feedback">{{ errors.first('password') }}
+      <div v-show="errors.has('password')" class="invalid-feedback">
+        {{ errors.first('password') }}
       </div>
     </div>
     <div class="other-actions row">
@@ -39,16 +35,13 @@
               type="checkbox"
               name="remember"
             >
-            <span class="c-indicator" />
+            <span class="c-indicator"/>
             Remember Me
           </label>
         </div>
       </div>
       <div class="col-sm-6 text-sm-right">
-        <a
-          href="#"
-          class="forgot-link"
-        >
+        <a href="#" class="forgot-link">
           Forgot Password?
         </a>
       </div>

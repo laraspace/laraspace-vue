@@ -17,33 +17,25 @@
           <div class="col-lg-6 mb-4">
             <h5 class="section-semi-title">Basic</h5>
             <tabs class="tabs-default">
-              <tab
-                id="basic-home"
-                name="Home">
+              <tab id="basic-home" name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-profile"
-                name="Profile">
+              <tab id="basic-profile" name="Profile">
                 This is the content of the second tab
                 <p>
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-message"
-                name="Message">
+              <tab id="basic-message" name="Message">
                 The fragment that is appended to the url can be customized
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-setting"
-                name="Setting">
+              <tab id="basic-setting" name="Setting">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -55,31 +47,23 @@
           <div class="col-lg-6 mb-4">
             <h5 class="section-semi-title">basic primary color</h5>
             <tabs class="tabs-default primary">
-              <tab
-                id="basic-primary-home"
-                name="Home">
+              <tab id="basic-primary-home" name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-primary-profile"
-                name="Profile">
+              <tab id="basic-primary-profile" name="Profile">
                 This is the content of the second tab
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               </tab>
-              <tab
-                id="basic-primary-message"
-                name="Message">
+              <tab id="basic-primary-message" name="Message">
                 The fragment that is appended to the url can be customized
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-primary-setting"
-                name="Setting">
+              <tab id="basic-primary-setting" name="Setting">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -92,33 +76,25 @@
           <div class="col-lg-6 mb-4">
             <h5 class="section-semi-title">VERTICAL</h5>
             <tabs class="tabs-vertical">
-              <tab
-                id="basic-vertical-home"
-                name="Home">
+              <tab id="basic-vertical-home" name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-vertical-profile"
-                name="Profile">
+              <tab id="basic-vertical-profile" name="Profile">
                 This is the content of the second tab
                 <p>
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-vertical-message"
-                name="Message">
+              <tab id="basic-vertical-message" name="Message">
                 The fragment that is appended to the url can be customized
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="basic-vertical-setting"
-                name="Setting">
+              <tab id="basic-vertical-setting" name="Setting">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -129,33 +105,25 @@
           <div class="col-lg-6 mb-4">
             <h5 class="section-semi-title">vertical primary color</h5>
             <tabs class="tabs-vertical primary">
-              <tab
-                id="vertical-primary-home"
-                name="Home">
+              <tab id="vertical-primary-home" name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="vertical-primary-Profile"
-                name="Profile">
+              <tab id="vertical-primary-Profile" name="Profile">
                 This is the content of the second tab
                 <p>
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="vertical-primary-message"
-                name="Message">
+              <tab id="vertical-primary-message" name="Message">
                 The fragment that is appended to the url can be customized
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="vertical-primary-setting"
-                name="Fourth">
+              <tab id="vertical-primary-setting" name="Fourth">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -175,33 +143,25 @@
           <div class="col-lg-6 mb-4">
             <h5 class="section-semi-title">BASIC</h5>
             <tabs class="tabs-simple">
-              <tab
-                id="simple-home"
-                name="Home">
+              <tab id="simple-home" name="Home">
                 This is the content of the first tab
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="simple-profile"
-                name="Profile">
+              <tab id="simple-profile" name="Profile">
                 This is the content of the second tab
                 <p>
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui hic corporis aspernatur non.
                 </p>
               </tab>
-              <tab
-                id="simple-message"
-                name="Message">
+              <tab id="simple-message" name="Message">
                 The fragment that is appended to the url can be customized
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="simple-setting"
-                name="Setting">
+              <tab id="simple-setting" name="Setting">
                 A prefix and a suffix can be added
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -224,9 +184,7 @@
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 </p>
               </tab>
-              <tab
-                id="hello-mark"
-                name="Message">
+              <tab id="hello-mark" name="Message">
                 The fragment that is appended to the url can be customized
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.

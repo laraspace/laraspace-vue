@@ -26,10 +26,15 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Text Mask <a
-          class="source-link"
-          href="https://text-mask.github.io/text-mask/"
-          target="_blank">source</a></h6>
+        <h6>Text Mask
+          <a
+            class="source-link"
+            href="https://text-mask.github.io/text-mask/"
+            target="_blank"
+          >
+            source
+          </a>
+        </h6>
       </div>
       <div class="card-body">
         <text-mask-demo/>
@@ -52,10 +57,7 @@
           <div class="col-sm-4">
             <h5 class="section-semi-title">Photoshope</h5>
             <color-pickers-demo :colorpicker="'photoshope'" />
-            <div
-              :style="{ 'background': advcolors }"
-              class="demo-div"
-            >
+            <div :style="{ 'background': advcolors }" class="demo-div">
               Applied on Me
             </div>
           </div>
@@ -67,7 +69,6 @@
             <h5 class="section-semi-title">Sketch</h5>
             <color-pickers-demo :colorpicker="'sketch'"/>
           </div>
-
         </div>
         <div class="row mt-5">
           <div class="col-sm-4">

@@ -22,13 +22,11 @@
         </div>
       </div>
       <div class="form-group row">
-        <label
-          for="inputSubject"
-          class="col-sm-2 col-form-label">Message</label>
+        <label for="inputSubject" class="col-sm-2 col-form-label">
+          Message
+        </label>
         <div class="col-sm-10">
-          <textarea
-            class="form-control"
-          />
+          <textarea class="form-control"/>
         </div>
       </div>
       <div class="modal-footer">

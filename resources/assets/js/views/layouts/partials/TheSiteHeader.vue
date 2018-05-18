@@ -1,8 +1,6 @@
 <template>
   <header class="site-header">
-    <a
-      href="#"
-      class="brand-main">
+    <a href="#" class="brand-main">
       <img
         id="logo-desk"
         src="/assets/img/logo-desk.png"
@@ -19,7 +17,8 @@
     <a
       href="#"
       class="nav-toggle"
-      @click="onNavToggle">
+      @click="onNavToggle"
+    >
       <div class="hamburger hamburger--htla">
         <span>toggle menu</span>
       </div>

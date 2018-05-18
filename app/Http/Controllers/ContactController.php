@@ -1,11 +1,8 @@
 <?php
-
 namespace Laraspace\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laraspace\Contact;
-
-
 
 class ContactController extends Controller
 {
