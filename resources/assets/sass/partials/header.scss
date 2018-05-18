@@ -33,6 +33,16 @@
         height: 36px;
         margin: 0;
         padding: 0 4px;
+
+        > a {
+            background-color: $header-buttons-bg-color;
+            border-radius: 2px;
+            color: $header-buttons-font-color;
+            display: inline-block;
+            font-size: 14px;
+            line-height: 14px;
+            padding: 11px;
+        }
     }
 
     .dropdown-group {
@@ -57,7 +67,7 @@
             padding: 0;
             background-color: transparent;
         }
-        
+
         .avatar img {
             width: 36px;
             border-radius: 2px;

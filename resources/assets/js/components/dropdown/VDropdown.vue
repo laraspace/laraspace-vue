@@ -1,8 +1,10 @@
 <template>
-  <div :class="['dropdown-group',
-                {'active': (toggle || isActive() )},
-                {'has-child':hasChild},
-                {'toggle-arrow':(hasChild)&&(toggleArrow)}]"
+  <div :class="[
+    'dropdown-group',
+    {'active': (toggle || isActive() )},
+    {'has-child':hasChild},
+    {'toggle-arrow':(hasChild)&&(toggleArrow)}
+  ]"
   >
     <div class="dropdown-group-title" @click="showDropdown">
       <slot name="activator"/>
@@ -11,7 +13,7 @@
       v-show="toggle"
       v-if="hasChild"
       ref="dropdownItems"
-      :class="['dropdown-group-items',{'align-right':rightAlign}]"
+      :class="['dropdown-group-items',{'align-right':alignRight}]"
     >
       <slot/>
     </div>
@@ -35,7 +37,7 @@ export default {
     return {
       toggle: true,
       hasChild: true,
-      rightAlign: false
+      alignRight: false
     }
   },
   mounted () {
@@ -57,9 +59,9 @@ export default {
       let rect = this.$refs.dropdownItems.getBoundingClientRect()
       let itemPos = rect.right + this.$refs.dropdownItems.offsetParent.offsetWidth
       if (itemPos > window.innerWidth) {
-        this.rightAlign = true
+        this.alignRight = true
       } else {
-        this.rightAlign = false
+        this.alignRight = false
       }
     },
     isActive () {
