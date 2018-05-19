@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Laraspace\Contact;
+use App\Contact;
 
 class ContactsTableSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class ContactsTableSeeder extends Seeder
      */
     public function run()
     {
-       Contact::create([
+        Contact::create([
            'image'=> '/assets/img/avatars/avatar2.png',
           'name'=> 'Tiger Nixon',
           'phone'=> '4562535851',
@@ -20,9 +20,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
           'image'=>'/assets/img/avatars/avatar1.png',
           'name'=> 'Garrett Winters',
           'phone'=> '8525356595',
@@ -30,9 +29,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
           'image'=> '/assets/img/avatars/avatar2.png',
           'name'=> 'Ashton Cox',
           'phone'=> '7525356585',
@@ -40,9 +38,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
           'image'=> '/assets/img/avatars/avatar.png',
           'name'=> 'Cedric Kelly',
           'phone'=> '1525456585',
@@ -50,9 +47,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
            'image'=> '/assets/img/avatars/avatar2.png',
           'name'=> 'Airi Satou',
           'phone'=> '3565458565',
@@ -60,9 +56,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
           'image'=> '/assets/img/avatars/avatar1.png',
           'name'=> 'Brielle Williamson',
           'phone'=> '6585459515',
@@ -70,9 +65,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
            'image'=> '/assets/img/avatars/avatar.png',
           'name'=> 'Herrod Chandler',
           'phone'=> '5985456575',
@@ -80,9 +74,8 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
-       Contact::create([
+        Contact::create([
           'image'=> '/assets/img/avatars/avatar2.png',
           'name'=> 'Rhona Davidson',
           'phone'=> '8525356545',
@@ -90,7 +83,6 @@ class ContactsTableSeeder extends Seeder
           'address'=>'US',
           'dob'=>\Carbon\Carbon::parse('16-05-1991'),
           'url'=>'www.contactdemo.com',
-          
         ]);
     }
 }

@@ -15,7 +15,8 @@
           <a
             class="source-link"
             href="https://monterail.github.io/vuelidate/#sub-basic-usage"
-            target="_blank">
+            target="_blank"
+          >
             source
           </a>
         </h6>
@@ -27,16 +28,13 @@
             :class="{ 'is-invalid': $v.name.$error }"
             v-model.trim="name"
             class="form-control"
-            @input="$v.name.$touch()">
+            @input="$v.name.$touch()"
+          >
           <div v-if="$v.name.$error">
-            <span
-              v-if="!$v.name.required"
-              class="help-block help-block-error">
+            <span v-if="!$v.name.required" class="help-block help-block-error">
               Field is required
             </span>
-            <span
-              v-if="!$v.name.minLength"
-              class="help-block help-block-error">
+            <span v-if="!$v.name.minLength" class="help-block help-block-error">
               Name must have at least { {$v.name.$params.minLength.min} } letters.
             </span>
           </div>
@@ -48,11 +46,10 @@
             :class="{ 'is-invalid': $v.age.$error }"
             v-model.trim="age"
             class="form-control"
-            @blur="$v.age.$touch()">
+            @blur="$v.age.$touch()"
+          >
           <div v-if="$v.age.$error">
-            <span
-              v-if="!$v.age.between"
-              class="help-block help-block-error">
+            <span v-if="!$v.age.between" class="help-block help-block-error">
               Must be between { {$v.age.$params.between.min} } and { {$v.age.$params.between.max} }
             </span>
           </div>
@@ -66,7 +63,10 @@
           <a
             class="source-link"
             href="https://monterail.github.io/vuelidate/#sub-contextified-validators"
-            target="_blank">source</a>
+            target="_blank"
+          >
+            source
+          </a>
         </h6>
       </div>
       <div class="card-body">
@@ -76,16 +76,13 @@
             :class="{ 'is-invalid': $v.password.$error }"
             v-model.trim="password"
             class="form-control"
-            @input="$v.password.$touch()">
+            @input="$v.password.$touch()"
+          >
           <div v-if="$v.password.$error">
-            <span
-              v-if="!$v.password.required"
-              class="help-block help-block-error">
+            <span v-if="!$v.password.required" class="help-block help-block-error">
               Password is required.
             </span>
-            <span
-              v-if="!$v.password.minLength"
-              class="help-block help-block-error">
+            <span v-if="!$v.password.minLength" class="help-block help-block-error">
               Password must have at least {{ $v.password.$params.minLength.min }} letters.
             </span>
           </div>
@@ -96,11 +93,10 @@
             :class="{ 'is-invalid': $v.repeatPassword.$error }"
             v-model.trim="repeatPassword"
             class="form-control"
-            @input="$v.repeatPassword.$touch()">
+            @input="$v.repeatPassword.$touch()"
+          >
           <div v-if="$v.repeatPassword.$error">
-            <span
-              v-if="!$v.repeatPassword.sameAsPassword"
-              class="help-block help-block-error">
+            <span v-if="!$v.repeatPassword.sameAsPassword" class="help-block help-block-error">
               Passwords must be identical.
             </span>
           </div>
@@ -114,7 +110,10 @@
           <a
             class="source-link"
             href="https://monterail.github.io/vuelidate/#sub-asynchronous-validation"
-            target="_blank">source</a>
+            target="_blank"
+          >
+            source
+          </a>
         </h6>
       </div>
       <div class="card-body">
@@ -124,16 +123,13 @@
             :class="{ 'is-invalid': $v.email.$error, 'form-group--loading': $v.email.$pending }"
             v-model.trim.lazy="email"
             class="form-control"
-            @change="$v.email.$touch()">
+            @change="$v.email.$touch()"
+          >
           <div v-if="$v.email.$error">
-            <span
-              v-if="!$v.email.required"
-              class="help-block help-block-error">
+            <span v-if="!$v.email.required" class="help-block help-block-error">
               Email is required.
             </span>
-            <span
-              v-if="!$v.email.isUnique"
-              class="help-block help-block-error">
+            <span v-if="!$v.email.isUnique" class="help-block help-block-error">
               This email is already registered.
             </span>
           </div>

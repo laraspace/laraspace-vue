@@ -4,9 +4,7 @@
     class="main-content">
     <div class="row">
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Sales
           </span>
@@ -18,15 +16,14 @@
           <div
             class="easy-pie-chart"
             data-percent="20"
-            data-color="#007dcc">
+            data-color="#007dcc"
+          >
             <span class="percent text-primary"/>
           </div>
         </a>
       </div>
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Profit
           </span>
@@ -36,15 +33,14 @@
           <div
             class="easy-pie-chart"
             data-percent="50"
-            data-color="#4fc47f" >
+            data-color="#4fc47f"
+          >
             <span class="percent text-success"/>
           </div>
         </a>
       </div>
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Expense
           </span>
@@ -54,15 +50,14 @@
           <div
             class="easy-pie-chart"
             data-percent="70"
-            data-color="#f35a3d">
+            data-color="#f35a3d"
+          >
             <span class="percent text-danger"/>
           </div>
         </a>
       </div>
       <div class="col-md-12 col-lg-6">
-        <a
-          class="dashbox dashbox-circle-progress"
-          href="#">
+        <a class="dashbox dashbox-circle-progress" href="#">
           <span class="desc">
             Revenue
           </span>
@@ -72,7 +67,8 @@
           <div
             class="easy-pie-chart"
             data-percent="80"
-            data-color="#5BBFDE">
+            data-color="#5BBFDE"
+          >
             <span class="percent text-info"/>
           </div>
         </a>
@@ -154,7 +150,8 @@
               :labels="['Revenue', 'Expense', 'Profit']"
               :values="[300, 50, 250]"
               :bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"
-              :hover-bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"/>
+              :hover-bg-colors="['#5BBFDE','#f35a3d','#4fc47f']"
+            />
           </div>
         </div>
       </div>
@@ -172,7 +169,8 @@
           <div class="card-body">
             <bar-chart
               :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
-              :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"/>
+              :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"
+            />
           </div>
         </div>
       </div>

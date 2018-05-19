@@ -1,5 +1,5 @@
 <template>
-<div class="main-content buttons-demo">
+  <div class="main-content buttons-demo">
     <div class="page-header">
       <h3 class="page-title">ToolTips</h3>
       <ol class="breadcrumb">
@@ -15,7 +15,11 @@
             <h5 class="section-semi-title">Reactive content</h5>
             <div class="form-group">
               <label>Tooltip Text</label>
-              <input v-model="tooltipText" type="text" class="form-control">
+              <input
+                v-model="tooltipText"
+                type="text"
+                class="form-control"
+              >
             </div>
             <button v-tooltip.top-center="tooltipText" class="btn btn-primary">Hover me</button>
           </div>
@@ -80,7 +84,14 @@
               <h5 class="section-semi-title">Manual Mode</h5>
               <div class="form-group">
                 <div class="form-check form-check-inline">
-                  <input id="enableCheckbox" v-model="isVisible" name="open" class="form-check-input" type="checkbox" value="option1">
+                  <input
+                    id="enableCheckbox"
+                    v-model="isVisible"
+                    name="open"
+                    class="form-check-input"
+                    type="checkbox"
+                    value="option1"
+                  >
                   <label class="form-check-label" for="enableCheckbox">Enable</label>
                 </div>
               </div>
@@ -88,11 +99,23 @@
               <template v-if="isVisible">
                 <div class="form-group">
                   <div class="form-check form-check-inline">
-                    <input id="showRadio" v-model="isOpen" :value="true" class="form-check-input" type="radio">
+                    <input
+                      id="showRadio"
+                      v-model="isOpen"
+                      :value="true"
+                      class="form-check-input"
+                      type="radio"
+                    >
                     <label class="form-check-label" for="showRadio">Show</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input id="hideRadio" v-model="isOpen" :value="false" class="form-check-input" type="radio">
+                    <input
+                      id="hideRadio"
+                      v-model="isOpen"
+                      :value="false"
+                      class="form-check-input"
+                      type="radio"
+                    >
                     <label class="form-check-label" for="hideRadio">Hide</label>
                   </div>
                 </div>
@@ -114,7 +137,7 @@
           <div class="col-sm-6">
             <h5 class="section-semi-title">Groups</h5>
             <div class="form-group">
-              <button class="btn btn-warning" v-close-popover.all>Close All</button>
+              <button v-close-popover.all class="btn btn-warning" >Close All</button>
             </div>
 
             <div class="row align-items-start">
@@ -128,7 +151,7 @@
                   <p>
                     {{ tooltipText }}
                   </p>
-                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                  <button v-close-popover class="btn btn-theme btn-sm">Close</button>
                 </template>
                 <!-- ... -->
               </v-popover>
@@ -136,26 +159,28 @@
               <v-popover
                 :auto-hide="false"
                 class="col-sm-auto"
-                open-group="group1">
+                open-group="group1"
+              >
                 <button class="btn btn-primary">Click Group 1</button>
                 <template slot="popover">
                   <p>
                     {{ tooltipText }}
                   </p>
-                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                  <button v-close-popover class="btn btn-theme btn-sm">Close</button>
                 </template>
               </v-popover>
 
               <v-popover
                 :auto-hide="false"
                 class="col-sm-auto"
-                open-group="group2">
+                open-group="group2"
+              >
                 <button class="btn btn-primary">Click Group 2</button>
                 <template slot="popover">
                   <p>
                     {{ tooltipText }}
                   </p>
-                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                  <button v-close-popover class="btn btn-theme btn-sm">Close</button>
                 </template>
               </v-popover>
             </div>
@@ -167,19 +192,30 @@
               <h5 class="section-semi-title">Custom components for popover</h5>
               <div class="form-group">
                 <div class="form-check form-check-inline">
-                  <input id="enableCheck" v-model="isEnabled" class="form-check-input" type="checkbox">
-                  <label class="form-check-label" for="enableCheck">Enable</label>
+                  <input
+                    id="enableCheck"
+                    v-model="isEnabled"
+                    class="form-check-input"
+                    type="checkbox"
+                  >
+                  <label class="form-check-label" for="enableCheck">
+                    Enable
+                  </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input id="autoHideCheck" v-model="autohide" class="form-check-input" type="checkbox">
-                  <label class="form-check-label" for="autoHideCheck">Hide on clicking outside (autohide)</label>
+                  <input
+                    id="autoHideCheck"
+                    v-model="autohide"
+                    class="form-check-input"
+                    type="checkbox"
+                  >
+                  <label class="form-check-label" for="autoHideCheck">
+                    Hide on clicking outside (autohide)
+                  </label>
                 </div>
               </div>
 
-              <v-popover
-                :disabled="!isEnabled"
-                :auto-hide="autohide"
-              >
+              <v-popover :disabled="!isEnabled" :auto-hide="autohide">
                 <button class="btn btn-primary">Click me</button>
 
                 <template slot="popover">
@@ -187,7 +223,7 @@
                     {{ tooltipText }}
                   </p>
 
-                  <button class="btn btn-theme btn-sm" v-close-popover>Close</button>
+                  <button v-close-popover class="btn btn-theme btn-sm">Close</button>
                 </template>
               </v-popover>
             </div>
@@ -210,11 +246,10 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-
 export default {
   data () {
     return {

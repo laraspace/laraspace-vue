@@ -33,7 +33,8 @@
         <a
           class="page-link"
           href="#"
-          aria-label="Next">
+          aria-label="Next"
+        >
           <span aria-hidden="true">&raquo;</span>
           <span class="sr-only">Next</span>
         </a>

@@ -11,7 +11,7 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <todo-item></todo-item>
+        <todo-item/>
       </div>
     </div>
   </div>

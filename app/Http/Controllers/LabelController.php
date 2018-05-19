@@ -1,8 +1,8 @@
 <?php
 
-namespace Laraspace\Http\Controllers;
-use Laraspace\Label;
+namespace App\Http\Controllers;
 
+use App\Label;
 use Illuminate\Http\Request;
 
 class LabelController extends Controller
@@ -34,7 +34,6 @@ class LabelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-
     {
         $label = new Label;
         $label->name = $request->label;

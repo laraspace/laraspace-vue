@@ -15,7 +15,9 @@
             <h6>Example Usage</h6>
           </div>
           <div class="card-body">
-            <pre class="language-php"><code>&lt;i class="icon-fl icon-fl-heart"&gt;&lt;/i&gt;</code></pre>
+            <pre class="language-php">
+              <code>&lt;i class="icon-fl icon-fl-heart"&gt;&lt;/i&gt;</code>
+            </pre>
           </div>
         </div>
       </div>

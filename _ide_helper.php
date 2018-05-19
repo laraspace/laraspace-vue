@@ -1167,7 +1167,7 @@ namespace {
          */
         public static function handle($input, $output = null){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \Laraspace\Console\Kernel::handle($input, $output);
+            return \App\Console\Kernel::handle($input, $output);
         }
         
         /**
@@ -1180,7 +1180,7 @@ namespace {
          */
         public static function terminate($input, $status){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \Laraspace\Console\Kernel::terminate($input, $status);
+            \App\Console\Kernel::terminate($input, $status);
         }
         
         /**
@@ -1193,7 +1193,7 @@ namespace {
          */
         public static function command($signature, $callback){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \Laraspace\Console\Kernel::command($signature, $callback);
+            return \App\Console\Kernel::command($signature, $callback);
         }
         
         /**
@@ -1205,7 +1205,7 @@ namespace {
          */
         public static function registerCommand($command){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \Laraspace\Console\Kernel::registerCommand($command);
+            \App\Console\Kernel::registerCommand($command);
         }
         
         /**
@@ -1219,7 +1219,7 @@ namespace {
          */
         public static function call($command, $parameters = array(), $outputBuffer = null){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \Laraspace\Console\Kernel::call($command, $parameters, $outputBuffer);
+            return \App\Console\Kernel::call($command, $parameters, $outputBuffer);
         }
         
         /**
@@ -1232,7 +1232,7 @@ namespace {
          */
         public static function queue($command, $parameters = array()){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \Laraspace\Console\Kernel::queue($command, $parameters);
+            \App\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1243,7 +1243,7 @@ namespace {
          */
         public static function all(){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \Laraspace\Console\Kernel::all();
+            return \App\Console\Kernel::all();
         }
         
         /**
@@ -1254,7 +1254,7 @@ namespace {
          */
         public static function output(){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \Laraspace\Console\Kernel::output();
+            return \App\Console\Kernel::output();
         }
         
         /**
@@ -1265,7 +1265,7 @@ namespace {
          */
         public static function bootstrap(){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \Laraspace\Console\Kernel::bootstrap();
+            \App\Console\Kernel::bootstrap();
         }
         
         /**
@@ -1277,7 +1277,7 @@ namespace {
          */
         public static function setArtisan($artisan){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \Laraspace\Console\Kernel::setArtisan($artisan);
+            \App\Console\Kernel::setArtisan($artisan);
         }
         
     }
@@ -1424,7 +1424,7 @@ namespace {
         /**
          * Get the currently authenticated user.
          *
-         * @return \Laraspace\User|null 
+         * @return \App\User|null 
          * @static 
          */
         public static function user(){
@@ -1456,7 +1456,7 @@ namespace {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \Laraspace\User|false 
+         * @return \App\User|false 
          * @static 
          */
         public static function onceUsingId($id){
@@ -1515,7 +1515,7 @@ namespace {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \Laraspace\User|false 
+         * @return \App\User|false 
          * @static 
          */
         public static function loginUsingId($id, $remember = false){
@@ -1558,7 +1558,7 @@ namespace {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \Laraspace\User 
+         * @return \App\User 
          * @static 
          */
         public static function getLastAttempted(){
@@ -1672,7 +1672,7 @@ namespace {
         /**
          * Return the currently cached user.
          *
-         * @return \Laraspace\User|null 
+         * @return \App\User|null 
          * @static 
          */
         public static function getUser(){
@@ -1714,7 +1714,7 @@ namespace {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \Laraspace\User 
+         * @return \App\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */
