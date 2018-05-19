@@ -30,7 +30,9 @@
         text-transform: uppercase;
     }
 
-    &:active, &:focus, &:hover {
+    &:active,
+    &:focus,
+    &:hover {
         text-decoration: none;
         background-color: $ls-color-gray--light;
     }
@@ -57,7 +59,6 @@
         margin-bottom: 15px;
         font-size: 26px;
     }
-
 }
 
 .dashbox-circle-progress {
@@ -72,7 +73,7 @@
     }
 }
 
-@media(min-width: 1200px) and (max-width: 1400px) {
+@media (min-width: 1200px) and (max-width: 1400px) {
     .dashbox {
         padding: 15px;
 
@@ -90,5 +91,19 @@
 
     .dashbox-circle-progress {
         padding: 30px;
+    }
+}
+
+//Finanace
+.card.with-tabs .tabs-component {
+
+    .tabs-component-tabs {
+        position: absolute;
+        right: 1.25rem;
+        top: 14px;
+    }
+
+    .tabs-component-panels {
+        border: 0 !important;
     }
 }
