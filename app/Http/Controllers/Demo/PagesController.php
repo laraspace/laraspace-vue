@@ -1,9 +1,9 @@
 <?php
-namespace Laraspace\Http\Controllers\Demo;
+namespace App\Http\Controllers\Demo;
 
-use Laraspace\User;
+use App\User;
 use Illuminate\Http\Request;
-use Laraspace\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {

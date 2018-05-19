@@ -1,7 +1,8 @@
 <?php
-namespace Laraspace\Http\Controllers;
 
-use Laraspace\Label;
+namespace App\Http\Controllers;
+
+use App\Label;
 use Illuminate\Http\Request;
 
 class LabelController extends Controller
