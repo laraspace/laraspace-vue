@@ -1,9 +1,9 @@
 <?php
-namespace Laraspace\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Laraspace\Http\Requests;
-use Laraspace\Space\Settings\Setting;
+use App\Http\Requests;
+use App\Space\Settings\Setting;
 
 class FrontendController extends Controller
 {

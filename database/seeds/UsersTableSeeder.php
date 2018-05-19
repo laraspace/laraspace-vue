@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Database\Seeder;
-use Laraspace\User;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {

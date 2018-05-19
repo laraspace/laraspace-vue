@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Laraspace\Contact;
+use App\Contact;
 
 class ContactsTableSeeder extends Seeder
 {
