@@ -1,11 +1,13 @@
 <template>
   <div class="dropdown-group-item">
     <slot name="item-title"/>
+    <slot name="item-title-divider"/>
     <div
       :class="['dropdown-item-activator' ,{'active':toggle}]"
       @click="showDropdown"
     >
       <slot name="item-activator"/>
+      <slot name="item-activator-divider"/>
     </div>
     <slot/>
     <div
@@ -48,10 +50,13 @@ export default {
   methods: {
     setDropdownPosition () {
       let rect = this.$refs.dropdownSubItems.getBoundingClientRect()
-      let itemPos = rect.right + this.$refs.dropdownSubItems.offsetParent.offsetWidth
+      let offsetPos = (rect.width - this.$refs.dropdownSubItems.offsetParent.offsetWidth)
+      let itemPos = rect.right + rect.width + offsetPos
       if (itemPos > window.innerWidth) {
         this.rightAlign = true
-      } else {
+      }
+      itemPos += offsetPos + rect.width + offsetPos
+      if (itemPos < window.innerWidth) {
         this.rightAlign = false
       }
     },

@@ -1,5 +1,4 @@
 .skin-targaryen {
-
     // Theme Colors :
     $ls-color-theme: #343A52;
 
@@ -29,8 +28,11 @@
 
     //DROPDOWN
     $dropdown-bg: $ls-color-theme;
+    $dropdown-bg--hover: lighten($ls-color-theme, 10%);
     $dropdown-border-color: darken($ls-color-theme, 10%);
     $dropdown-divider-bg: $ls-color-gray--very-dark;
+    $dropdown-activator-color: $white;
+    $dropdown-activator-color--hover: $white;
     $dropdown-header-color: $white;
     $dropdown-header-border-color: $ls-color-gray--very-dark;
 
@@ -47,6 +49,7 @@
             background-color: $header-buttons-bg-color;
             color: $header-buttons-font-color;
         }
+
         .hamburger span {
             background: $header-buttons-font-color;
         }
@@ -73,7 +76,6 @@
         }
 
         .notification-dropdown {
-
             .dropdown-header {
                 border-bottom: 1px solid $dropdown-header-border-color;
                 color: $dropdown-header-color;
@@ -89,13 +91,10 @@
 
     .sidebar-left {
         background-color: $sidebar-bg-color;
-
     }
 
     .side-nav {
-
         .collapse-group .collapse-group-item {
-                
             a {
                 color: $sidebar-font-color;
 
@@ -103,21 +102,23 @@
                     background-color: $sidemenu-item-bg-color--hover;
                 }
             }
-            &.active  > .collapse-item-title > a {
+
+            &.active > .collapse-item-title > a {
                 color: $sidemenu-item-font-color--active;
             }
+
             .collapse-group-items {
                 background-color: $sidemenu-submenu-bg;
 
                 .collapse-group-items {
                     background-color: darken($sidemenu-submenu-bg, 5%);
-                    
+
                     .collapse-group-items {
                         background-color: darken($sidemenu-submenu-bg, 8%);
                     }
                 }
 
-                a.active{
+                a.active {
                     color: $sidemenu-item-font-color--active;
                 }
             }
@@ -131,7 +132,6 @@
     }
 
     .header-nav {
-
         li a {
             color: $header-menu-item-font-color;
 
@@ -144,13 +144,14 @@
         li.active > a {
             color: $header-menu-item-font-color--active;
             background-color: $header-menu-item-bg-color--active;
+
             &:hover {
                 color: $header-menu-item-font-color--active;
                 background-color: $header-menu-item-bg-color--active;
             }
         }
 
-        li .dropdown-item.active{
+        li .dropdown-item.active {
             color: $header-menu-item-font-color--active;
             background-color: $header-menu-item-bg-color--active;
 
@@ -159,59 +160,20 @@
                 background-color: $header-menu-item-bg-color--hover;
             }
         }
-
     }
 
     //Tabs
 
-    
-// Tabs Default
-//----------------------------------
+    // Tabs Default
+    //----------------------------------
 
-.tabs-component.tabs-default {
-
-    .tabs-component-tab {
-
-        a {
-            color: $ls-color-black;
-        }
-
-        a:hover {
-            color: $ls-color-black;
-        }
-
-        &.is-active {
-            a {
-                color: $white;
-            }
-            border: 1px solid $ls-color-theme;
-            background: $ls-color-theme;
-            color: $white;
-        }
-    }
-
-    .tabs-component-tab:hover {
-        border: 1px solid $ls-color-theme;
-    }
-
-    .tabs-component-panels {
-        border-top: 1px solid $ls-color-theme !important;
-    }
-
-}
-
-
-// Tabs Vertical
-//----------------------------------
-
-.tabs-component.tabs-vertical {
-
-    .tabs-component-tabs {
-        border-right: 1px solid $ls-color-theme !important;
-
+    .tabs-component.tabs-default {
         .tabs-component-tab {
+            a {
+                color: $ls-color-black;
+            }
 
-            a, a:hover {
+            a:hover {
                 color: $ls-color-black;
             }
 
@@ -220,68 +182,95 @@
                     color: $white;
                 }
 
+                border: 1px solid $ls-color-theme;
                 background: $ls-color-theme;
+                color: $white;
             }
         }
 
         .tabs-component-tab:hover {
             border: 1px solid $ls-color-theme;
         }
-    }
 
-}
-
-
-// Tabs Simple
-//----------------------------------
-
-.tabs-component.tabs-simple {
-
-    .tabs-component-tabs .tabs-component-tab {
-        
-        a {
-            color: $ls-color-black;
-        }
-        a:hover {
-            color: $ls-color-black;
-            border-bottom: 3px solid lighten($ls-color-theme ,30%);
-        }
-
-        &.is-active {
-            border-bottom: 3px solid $ls-color-theme;
-            color: $white;
+        .tabs-component-panels {
+            border-top: 1px solid $ls-color-theme !important;
         }
     }
 
-    .tabs-component-panels {
-        border-top: 1px solid #ddd !important;
-    }
-}
+    // Tabs Vertical
+    //----------------------------------
 
-// Tabs Simple Vertical
-//----------------------------------
+    .tabs-component.tabs-vertical {
+        .tabs-component-tabs {
+            border-right: 1px solid $ls-color-theme !important;
 
-.tabs-component.tabs-simple-vertical .tabs-component-tabs {
+            .tabs-component-tab {
+                a, a:hover {
+                    color: $ls-color-black;
+                }
 
-    border-right: 1px solid #ddd;
+                &.is-active {
+                    a {
+                        color: $white;
+                    }
 
-    .tabs-component-tab {
+                    background: $ls-color-theme;
+                }
+            }
 
-        a {
-            color: $ls-color-black;
-        }
-
-        a:hover {
-            border-right: 3px solid lighten($ls-color-theme,30%);
-        }
-
-        &.is-active {
-            border-right: 3px solid $ls-color-theme;
-            color: $ls-color-theme; 
-
+            .tabs-component-tab:hover {
+                border: 1px solid $ls-color-theme;
+            }
         }
     }
-}
+
+    // Tabs Simple
+    //----------------------------------
+
+    .tabs-component.tabs-simple {
+        .tabs-component-tabs .tabs-component-tab {
+            a {
+                color: $ls-color-black;
+            }
+
+            a:hover {
+                color: $ls-color-black;
+                border-bottom: 3px solid lighten($ls-color-theme, 30%);
+            }
+
+            &.is-active {
+                border-bottom: 3px solid $ls-color-theme;
+                color: $white;
+            }
+        }
+
+        .tabs-component-panels {
+            border-top: 1px solid #ddd !important;
+        }
+    }
+
+    // Tabs Simple Vertical
+    //----------------------------------
+
+    .tabs-component.tabs-simple-vertical .tabs-component-tabs {
+        border-right: 1px solid #ddd;
+
+        .tabs-component-tab {
+            a {
+                color: $ls-color-black;
+            }
+
+            a:hover {
+                border-right: 3px solid lighten($ls-color-theme, 30%);
+            }
+
+            &.is-active {
+                border-right: 3px solid $ls-color-theme;
+                color: $ls-color-theme;
+            }
+        }
+    }
+
     //MISC
     code, .code {
         background-color: $code-bg;
@@ -294,7 +283,6 @@
     }
 
     .todo-container {
-
         h5 {
             color: $white !important;
         }
@@ -302,53 +290,88 @@
         background-color: $ls-color-theme !important;
         color: $white !important;
     }
-    // Dropzone
-    
-    .vue-dropzone .dz-preview  {
 
+    // Dropzone
+
+    .vue-dropzone .dz-preview {
         .dz-details {
-            background-color:$ls-color-theme !important;
-            color:$white !important;
+            background-color: $ls-color-theme !important;
+            color: $white !important;
         }
 
         .dz-upload {
             background: $white !important;
         }
-        
-        .dz-error-mark svg #Page-1 g{
-            fill:$white !important;
-        } 
-        
-        .dz-success-mark svg g path{
-            fill:white !important;
-        } 
+
+        .dz-error-mark svg #Page-1 g {
+            fill: $white !important;
+        }
+
+        .dz-success-mark svg g path {
+            fill: white !important;
+        }
     }
 
     //Dropdown
-    .dropdown-menu {
-        background-color: $dropdown-bg;
-        border: 1px solid $dropdown-border-color;
-        color: $white;
-
-        .dropdown-header {
-            border-bottom: 1px solid $dropdown-header-border-color;
-            color: $dropdown-header-color;
+    .dropdown-group {
+        &.active > .dropdown-group-title,
+        &.active > .dropdown-group-title a {
+            color: $dropdown-activator-color--hover;
+            background-color: $dropdown-bg--hover;
         }
 
-        .dropdown-item {
+        &.has-child.toggle-arrow.active > .dropdown-group-title::after {
+            border-color: $dropdown-header-color transparent transparent;
+        }
+
+        a {
+            color: $dropdown-activator-color;
+        }
+
+        a.active, a:hover {
+            color: $dropdown-activator-color--hover;
+            background-color: $dropdown-bg--hover;
+        }
+
+        .dropdown-group-items {
             color: $ls-color-black;
+            background-color: $dropdown-bg;
+            border: 1px solid $dropdown-border-color;
         }
 
-        a:hover {
-            background-color: $header-buttons-bg-color--hover;
-            color: $header-buttons-font-color;
+        .dropdown-group-items .dropdown-item-activator {
+            a::before {
+                border-color: $dropdown-activator-color transparent transparent;
+            }
+
+            &.active a {
+                color: $dropdown-activator-color--hover;
+                background-color: $dropdown-bg--hover;
+            }
+
+            &.active a:hover,
+            &.active a:focus,
+            &.active a:active {
+                background-color: $dropdown-bg--hover;
+            }
+        }
+
+        .dropdown-group-items .dropdown-item-activator.active a::before {
+            border-color: $dropdown-header-color transparent transparent;
+        }
+
+        .dropdown-group-items .dropdown-subgroup-items {
+            background-color: $dropdown-bg;
+            color: $dropdown-activator-color;
+            border: 1px solid $dropdown-header-border-color;
         }
     }
 
     //Buttons
     .btn-theme {
         @include button-variant($ls-color-theme, $ls-color-theme);
-        $color:$ls-color-secondary;
+
+        $color: $ls-color-secondary;
     }
 
     .btn-theme-outline {
@@ -363,46 +386,44 @@
 
     //SELECT 2
     .multiselect {
-
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
-            
+
             &.multiselect__option--selected {
                 background: $ls-color-gray--light;
                 color: $ls-color-black;
-            
+
                 &::after {
                     background: $ls-color-gray--dark;
-                    color:$ls-color-black;
+                    color: $ls-color-black;
                 }
             }
 
             &::after {
                 background: $ls-color-gray--dark;
-                color:$ls-color-black;
+                color: $ls-color-black;
             }
         }
 
-        &:hover{
+        &:hover {
             background: $ls-color-gray--light;
         }
 
         .multiselect__tags-wrap {
-
             .multiselect__tag {
                 background: $ls-color-theme;
                 color: $white;
 
-                .multiselect__tag-icon{
-
+                .multiselect__tag-icon {
                     &:hover {
                         background: $ls-color-theme;
                     }
+
                     &::after {
                         color: $white;
                     }
-                } 
+                }
             }
         }
     }
@@ -411,14 +432,13 @@
     .datepicker-dropdown {
         color: $body-color;
         background-color: $white;
-        border: 1px solid rgba(0, 0, 0, .15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
     }
 
     //FORM WIZARDS
-    .form-wizard-1 > .steps{
-
+    .form-wizard-1 > .steps {
         .current a,
-        .current a:active ,
+        .current a:active,
         .current a:hover {
             background-color: $ls-color-theme;
             color: $white;
@@ -433,7 +453,6 @@
     }
 
     .form-wizard-2 {
-
         > .steps > ul {
             .current .number,
             .done .number {
@@ -458,7 +477,6 @@
         }
 
         &.icon-wizard > .steps > ul {
-
             .current i,
             .done i {
                 border: 2px solid $ls-color-theme;
@@ -471,25 +489,21 @@
         }
 
         &.vertical-wizard {
-
             .steps > ul {
-
                 .done:after {
                     background: $ls-color-theme !important;
                 }
             }
-
         }
     }
 
-    .form-wizard-3 > .steps > ul{
-
-        .current a{
+    .form-wizard-3 > .steps > ul {
+        .current a {
             border-bottom: 3px solid $ls-color-theme;
             color: $ls-color-black;
         }
 
-        .done a{
+        .done a {
             border-bottom: 2px solid lighten($ls-color-theme, 30%);
             color: $ls-color-black;
         }
@@ -501,11 +515,4 @@
             background-color: $sidemenu-submenu-bg !important;
         }
     }
-
 }
-
-
-
-
-
-

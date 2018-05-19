@@ -1,8 +1,11 @@
 <template>
-  <div :class="['dropdown-group',
-                {'active': (toggle || isActive() )},
-                {'has-child':hasChild},
-                {'toggle-arrow':(hasChild)&&(toggleArrow)}]">
+  <div
+    v-click-outside="closeDropdown"
+    :class="['dropdown-group',
+             {'active': (toggle || isActive() )},
+             {'has-child':hasChild},
+             {'toggle-arrow':(hasChild)&&(toggleArrow)}]"
+  >
     <div
       class="dropdown-group-title"
       @click="showDropdown"
@@ -57,10 +60,13 @@ export default {
   methods: {
     setDropdownPosition () {
       let rect = this.$refs.dropdownItems.getBoundingClientRect()
-      let itemPos = rect.right + this.$refs.dropdownItems.offsetParent.offsetWidth
+      let offsetPos = (rect.width - this.$refs.dropdownItems.offsetParent.offsetWidth)
+      let itemPos = rect.right + offsetPos
       if (itemPos > window.innerWidth) {
         this.rightAlign = true
-      } else {
+      }
+      itemPos += offsetPos
+      if (itemPos < window.innerWidth) {
         this.rightAlign = false
       }
     },
@@ -82,6 +88,9 @@ export default {
         })
       }
       this.toggle = !this.toggle
+    },
+    closeDropdown () {
+      this.toggle = false
     }
   }
 }

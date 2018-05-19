@@ -59,10 +59,10 @@
             <div class="mail-search">
               <input
                 id="inputEmailTo"
+                v-model="searchText"
                 type="email"
                 placeholder="Search"
                 class="form-control"
-                v-model="searchText"
               >
             </div>
           </div>
