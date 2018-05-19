@@ -10,26 +10,150 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <carousel>
-          <slide>
-            <img src="/assets/img/demo/gallery/13.jpg">
-          </slide>
-          <slide>
-            <img src="/assets/img/demo/gallery/16.jpg">
-          </slide>
-          <slide>
-            <img src="/assets/img/demo/gallery/15.jpg">
-          </slide>
-          <slide>
-            <img src="/assets/img/demo/gallery/16.jpg">
-          </slide>
-          <slide>
-            <img src="/assets/img/demo/gallery/13.jpg">
-          </slide>
-          <slide>
-            <img src="/assets/img/demo/gallery/15.jpg">
-          </slide>
-        </carousel>
+        <div class="row">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Basic</h5>
+            <carousel :perPageCustom="[[480, 2],[768, 3]]">
+              <slide>
+                <img src="/assets/img/demo/gallery/1.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/2.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/3.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/4.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/5.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/6.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/7.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/8.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/9.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/10.jpg" class="img-fluid">
+              </slide>
+            </carousel>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Responsive</h5>
+            <carousel :scrollPerPage="true" :perPageCustom="[[320, 1],[768, 2],[992, 3]]">
+              <slide>
+                <img src="/assets/img/demo/gallery/11.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/12.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/9.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/4.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/3.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/6.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/2.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/8.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/1.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/10.jpg" class="img-fluid">
+              </slide>
+            </carousel>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Auto Play</h5>
+            <carousel :autoplay="true" :perPageCustom="[[480, 2],[768, 3]]">
+              <slide>
+                <img src="/assets/img/demo/gallery/9.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/5.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/1.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/7.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/3.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/8.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/2.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/6.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/4.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/10.jpg" class="img-fluid">
+              </slide>
+            </carousel>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="section-semi-title">Navigation</h5>
+            <carousel :navigationEnabled="true" :perPageCustom="[[480, 2],[768, 3],[992, 3]]">
+              <slide>
+                <img src="/assets/img/demo/gallery/4.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/8.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/10.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/12.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/5.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/11.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/2.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/8.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/1.jpg" class="img-fluid">
+              </slide>
+              <slide>
+                <img src="/assets/img/demo/gallery/6.jpg" class="img-fluid">
+              </slide>
+            </carousel>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -44,3 +168,10 @@ export default {
   }
 }
 </script>
+<style>
+.VueCarousel-slide {
+  position: relative;
+  text-align: center;
+  min-height: 100px !important;
+}
+</style>
