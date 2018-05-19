@@ -20,7 +20,8 @@
                       <img
                         src="/assets/img/avatars/avatar-lg.png"
                         alt="Admin Avatar"
-                        class="img-fluid">
+                        class="img-fluid"
+                      >
                     </div>
                   </div>
                   <div class="col-sm-9">
@@ -40,11 +41,14 @@
                             <img
                               class="media-object img-thumbnail"
                               src="/assets/img/avatars/avatar1.png"
-                              alt="Generic placeholder image">
+                              alt="Generic placeholder image"
+                            >
                           </a>
                         </div>
                         <div class="media-body">
-                          <h4 class="media-heading">Shane White <span>just posted an update</span></h4>
+                          <h4 class="media-heading">
+                            Shane White <span>just posted an update</span>
+                          </h4>
                           <small>Today at 3.50pm</small>
                           <p class="mt-2">"Hello Everyone! Its been a fun morning!"</p>
                         </div>
@@ -55,11 +59,14 @@
                             <img
                               class="media-object img-thumbnail"
                               src="/assets/img/avatars/avatar2.png"
-                              alt="Generic placeholder image">
+                              alt="Generic placeholder image"
+                            >
                           </a>
                         </div>
                         <div class="media-body">
-                          <h4 class="media-heading">Adam David <span>just became friends with</span> Shane White </h4>
+                          <h4 class="media-heading">
+                            Adam David <span>just became friends with</span> Shane White
+                          </h4>
                           <small>Yesterday at 9pm</small>
                         </div>
                       </li>
@@ -75,11 +82,14 @@
                         <img
                           class="media-object img-thumbnail"
                           src="/assets/img/avatars/avatar1.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading">Adam David <span>sent a message</span></h4>
+                      <h4 class="media-heading">
+                        Adam David <span>sent a message</span>
+                      </h4>
                       <small>Today at 3.50pm</small>
                       <p class="mt-2">"When you have children, you always have family. They will always be your priority, your responsibility.
                       And a man, a man provides. And he does it even when he's not appreciated or respected or even loved. He simply bears up and he does it. Because he's a man."
@@ -92,7 +102,8 @@
                         <img
                           class="media-object img-thumbnail"
                           src="/assets/img/avatars/avatar2.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
@@ -113,7 +124,8 @@
                         <img
                           class="media-object"
                           src="/assets/img/avatars/avatar1.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
@@ -127,7 +139,8 @@
                         <img
                           class="media-object"
                           src="/assets/img/avatars/avatar2.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
@@ -141,7 +154,8 @@
                         <img
                           class="media-object"
                           src="/assets/img/avatars/avatar1.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
@@ -155,7 +169,8 @@
                         <img
                           class="media-object"
                           src="/assets/img/avatars/avatar2.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
@@ -169,7 +184,8 @@
                         <img
                           class="media-object"
                           src="/assets/img/avatars/avatar1.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">
@@ -183,7 +199,8 @@
                         <img
                           class="media-object"
                           src="/assets/img/avatars/avatar2.png"
-                          alt="Generic placeholder image">
+                          alt="Generic placeholder image"
+                        >
                       </a>
                     </div>
                     <div class="media-body">

@@ -1,5 +1,4 @@
 <?php
-
 namespace Laraspace;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,5 +9,4 @@ class Label extends Model
     {
         return $this->belongsToMany(Contact::class);
     }
-
 }

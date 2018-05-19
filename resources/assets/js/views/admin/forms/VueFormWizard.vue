@@ -15,26 +15,21 @@
       <div class="card-body">
         <div class="content ls-wizard">
           <form-wizard
-            stepSize="sm"
+            step-size="sm"
             shape="tab"
-            @on-complete="onComplete">
-            <tab-content
-              title="Step 1"
-              icon="1">
+            @on-complete="onComplete"
+          >
+            <tab-content title="Step 1" icon="1">
               <span class="number">1</span>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label>First Name</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>DOB</label>
@@ -42,7 +37,8 @@
                       <input
                         type="text"
                         class="form-control ls-datepicker"
-                        value="06/10/2017">
+                        value="06/10/2017"
+                      >
                       <div class="input-group-append">
                         <span class="input-group-text">
                           <i class="icon-fa icon-fa-calendar"/>
@@ -63,110 +59,78 @@
                   </div>
                   <div class="form-group">
                     <label>Occupation</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                 </div>
               </div>
             </tab-content>
-            <tab-content
-              title="Step 2"
-              icon="2">
+            <tab-content title="Step 2" icon="2">
               <span class="number">2</span>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label>Email</label>
-                    <input
-                      type="email"
-                      class="form-control">
+                    <input type="email" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>Phone No.</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label>Password</label>
-                    <input
-                      type="password"
-                      class="form-control">
+                    <input type="password" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>Password Confirmation</label>
-                    <input
-                      type="password"
-                      class="form-control">
+                    <input type="password" class="form-control">
                   </div>
                 </div>
               </div>
             </tab-content>
-            <tab-content
-              title="Step 3"
-              icon="3">
+            <tab-content title="Step 3" icon="3">
               <span class="number">3</span>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label>Address Line1</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>Address Line2</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>City</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label>State</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label>Pincode</label>
-                    <input
-                      type="text"
-                      class="form-control">
+                    <input type="text" class="form-control">
                   </div>
                 </div>
               </div>
             </tab-content>
-            <tab-content
-              title="Step 4"
-              icon="4">
+            <tab-content title="Step 4" icon="4">
               <span class="number">4</span>
               <div class="form-group">
                 <label>Facebook</label>
-                <input
-                  type="text"
-                  class="form-control">
+                <input type="text" class="form-control">
               </div>
               <div class="form-group">
                 <label>Twitter</label>
-                <input
-                  type="text"
-                  class="form-control">
+                <input type="text" class="form-control">
               </div>
               <div class="form-group">
                 <label>Google +</label>
-                <input
-                  type="text"
-                  class="form-control">
+                <input type="text" class="form-control">
               </div>
             </tab-content>
           </form-wizard>

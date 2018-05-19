@@ -17,28 +17,16 @@
           <div class="card-body buttons-demo">
             <div class="row">
               <div class="col-sm-12">
-                <button
-                  class="btn btn-success"
-                  @click="toastrNotifs('success')"
-                >
+                <button class="btn btn-success" @click="toastrNotifs('success')">
                   Success
                 </button>
-                <button
-                  class="btn btn-info"
-                  @click="toastrNotifs('info')"
-                >
+                <button class="btn btn-info" @click="toastrNotifs('info')">
                   Info
                 </button>
-                <button
-                  class="btn btn-danger"
-                  @click="toastrNotifs('error')"
-                >
+                <button class="btn btn-danger" @click="toastrNotifs('error')">
                   Error
                 </button>
-                <button
-                  class="btn btn-warning"
-                  @click="toastrNotifs('warning')"
-                >
+                <button class="btn btn-warning" @click="toastrNotifs('warning')">
                   Warning
                 </button>
               </div>
@@ -56,46 +44,25 @@
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
-                <button
-                  class="btn btn-success"
-                  @click="notieNotifs('success')"
-                >
+                <button class="btn btn-success" @click="notieNotifs('success')">
                   Success
                 </button>
-                <button
-                  class="btn btn-info"
-                  @click="notieNotifs('info')"
-                >
+                <button class="btn btn-info" @click="notieNotifs('info')">
                   Info
                 </button>
-                <button
-                  class="btn btn-danger"
-                  @click="notieNotifs('error')"
-                >
+                <button class="btn btn-danger" @click="notieNotifs('error')">
                   Error
                 </button>
-                <button
-                  class="btn btn-warning"
-                  @click="notieNotifs('warning')"
-                >
+                <button class="btn btn-warning" @click="notieNotifs('warning')">
                   Warning
                 </button>
-                <button
-                  class="btn btn-primary"
-                  @click="notieNotifs('confirm')"
-                >
+                <button class="btn btn-primary" @click="notieNotifs('confirm')">
                   Confirm
                 </button>
-                <button
-                  class="btn btn-outline-primary"
-                  @click="notieNotifs('input')"
-                >
+                <button class="btn btn-outline-primary" @click="notieNotifs('input')">
                   Input
                 </button>
-                <button
-                  class="btn btn-primary btn-rounded"
-                  @click="notieNotifs('select')"
-                >
+                <button class="btn btn-primary btn-rounded" @click="notieNotifs('select')">
                   Select
                 </button>
               </div>

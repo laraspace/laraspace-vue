@@ -2,11 +2,9 @@
   <div :class="['dropdown-group',
                 {'active': (toggle || isActive() )},
                 {'has-child':hasChild},
-                {'toggle-arrow':(hasChild)&&(toggleArrow)}]">
-    <div
-      class="dropdown-group-title"
-      @click="showDropdown"
-    >
+                {'toggle-arrow':(hasChild)&&(toggleArrow)}]"
+  >
+    <div class="dropdown-group-title" @click="showDropdown">
       <slot name="activator"/>
     </div>
     <div

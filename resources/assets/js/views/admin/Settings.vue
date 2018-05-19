@@ -24,19 +24,14 @@
             <h6>Example Social Settings</h6>
           </div>
           <div class="card-body">
-            <form
-              action="/api/admin/settings/social"
-              method="post">
+            <form action="/api/admin/settings/social" method="post">
               <div class="form-body">
                 <div class="form-group row">
                   <label class="col-md-4 col-lg-2 form-control-label">Facebook Page URL</label>
                   <div class="col-md-8 col-lg-10">
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <span
-                          id="basic-addon2"
-                          class="input-group-text"
-                        >
+                        <span id="basic-addon2" class="input-group-text">
                           <i class="icon-fa icon-fa-facebook"/>
                         </span>
                       </div>
@@ -54,10 +49,7 @@
                   <div class="col-md-8 col-lg-10">
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <span
-                          id="basic-addon2"
-                          class="input-group-text"
-                        >
+                        <span id="basic-addon2" class="input-group-text">
                           <i class="icon-fa icon-fa-google-plus"/>
                         </span>
                       </div>
@@ -65,7 +57,8 @@
                         type="text"
                         class="form-control"
                         name="google"
-                        value="">
+                        value=""
+                      >
                     </div>
                   </div>
                 </div>
@@ -74,10 +67,7 @@
                   <div class="col-md-8 col-lg-10">
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <span
-                          id="basic-addon2"
-                          class="input-group-text"
-                        >
+                        <span id="basic-addon2" class="input-group-text">
                           <i class="icon-fa icon-fa-twitter"/>
                         </span>
                       </div>
@@ -85,14 +75,15 @@
                         type="text"
                         class="form-control"
                         name="twitter"
-                        value="">
+                        value=""
+                      >
                     </div>
                   </div>
                 </div>
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary">
+                Save
+              </button>
             </form>
           </div>
         </div>

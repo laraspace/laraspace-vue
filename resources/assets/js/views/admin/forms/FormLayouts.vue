@@ -23,7 +23,8 @@
                     id="inputFirstName"
                     type="text"
                     class="form-control"
-                    placeholder="First Name">
+                    placeholder="First Name"
+                  >
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputLastName">Password</label>
@@ -31,7 +32,8 @@
                     id="inputLastName"
                     type="password"
                     class="form-control"
-                    placeholder="Last Name">
+                    placeholder="Last Name"
+                  >
                 </div>
               </div>
               <div class="form-group">
@@ -41,10 +43,10 @@
                   type="email"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email">
-                <small
-                  id="emailHelp"
-                  class="form-text text-muted">We'll never share your email with
+                  placeholder="Enter email"
+                >
+                <small id="emailHelp" class="form-text text-muted">
+                  We'll never share your email with
                   anyone else.
                 </small>
               </div>
@@ -54,7 +56,8 @@
                   id="inputUserName"
                   type="text"
                   class="form-control"
-                  placeholder="Username">
+                  placeholder="Username"
+                >
               </div>
               <div class="form-group">
                 <label>Gender</label>
@@ -65,10 +68,9 @@
                       class="form-check-input"
                       type="radio"
                       name="gender"
-                      value="male">
-                    <label
-                      class="form-check-label"
-                      for="checkMale">Male</label>
+                      value="male"
+                    >
+                    <label class="form-check-label" for="checkMale">Male</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
@@ -76,10 +78,9 @@
                       class="form-check-input"
                       type="radio"
                       name="gender"
-                      value="female">
-                    <label
-                      class="form-check-label"
-                      for="checkFemale">Female</label>
+                      value="female"
+                    >
+                    <label class="form-check-label" for="checkFemale">Female</label>
                   </div>
                 </div>
               </div>
@@ -89,7 +90,8 @@
                   id="exampleInputPassword1"
                   type="password"
                   class="form-control"
-                  placeholder="Password">
+                  placeholder="Password"
+                >
               </div>
               <button class="btn btn-primary">Submit</button>
             </form>
@@ -104,51 +106,47 @@
           <div class="card-body">
             <form>
               <div class="form-group row">
-                <label
-                  for="firstName"
-                  class="col-sm-2 col-form-label">First Name</label>
+                <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
                   <input
                     id="firstName"
                     type="text"
                     class="form-control"
-                    placeholder="First Name">
+                    placeholder="First Name"
+                  >
                 </div>
               </div>
               <div class="form-group row">
-                <label
-                  for="lastName"
-                  class="col-sm-2 col-form-label">Last Name</label>
+                <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
                   <input
                     id="lastName"
                     type="text"
                     class="form-control"
-                    placeholder="Last Name">
+                    placeholder="Last Name"
+                  >
                 </div>
               </div>
               <div class="form-group row">
-                <label
-                  for="email"
-                  class="col-sm-2 col-form-label">Email</label>
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                   <input
                     id="email"
                     type="email"
                     class="form-control"
-                    placeholder="Email">
+                    placeholder="Email"
+                  >
                 </div>
               </div>
               <div class="form-group row">
-                <label
-                  for="password"
-                  class="col-sm-2 col-form-label">Password</label>
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
                   <input
                     id="password"
                     type="password"
                     class="form-control"
-                    placeholder="Password">
+                    placeholder="Password"
+                  >
                 </div>
               </div>
               <button class="btn btn-success">Save</button>
@@ -166,25 +164,23 @@
           <div class="card-body">
             <form class="form-inline">
               <div class="form-group">
-                <label
-                  for="staticEmail2"
-                  class="sr-only">Email</label>
+                <label for="staticEmail2" class="sr-only">Email</label>
                 <input
                   id="staticEmail2"
                   type="text"
                   readonly
                   class="form-control-plaintext"
-                  value="email@example.com">
+                  value="email@example.com"
+                >
               </div>
               <div class="form-group mx-sm-3">
-                <label
-                  for="inputPassword2"
-                  class="sr-only">Password</label>
+                <label for="inputPassword2" class="sr-only">Password</label>
                 <input
                   id="inputPassword2"
                   type="password"
                   class="form-control"
-                  placeholder="Password">
+                  placeholder="Password"
+                >
               </div>
               <button
                 class="btn btn-primary">Confirm identity</button>

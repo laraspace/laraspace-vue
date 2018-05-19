@@ -10,23 +10,26 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h6>Jquery Validate <a
-          class="source-link"
-          href="https://jqueryvalidation.org/"
-          target="_blank">source</a>
+        <h6>Jquery Validate
+          <a
+            class="source-link"
+            href="https://jqueryvalidation.org/"
+            target="_blank"
+          >
+            source
+          </a>
         </h6>
       </div>
       <div class="card-body">
-        <form
-          id="validateForm"
-          novalidate>
+        <form id="validateForm" novalidate>
           <div class="form-group">
             <label>Email address</label>
             <input
               type="email"
               class="form-control"
               name="email"
-              placeholder="Email">
+              placeholder="Email"
+            >
           </div>
           <div class="form-group">
             <label>Username</label>
@@ -34,7 +37,8 @@
               type="text"
               class="form-control"
               name="username"
-              placeholder="Username">
+              placeholder="Username"
+            >
           </div>
           <div class="form-group">
             <label>Password</label>
@@ -43,7 +47,8 @@
               type="password"
               class="form-control"
               name="password"
-              placeholder="Password">
+              placeholder="Password"
+            >
           </div>
           <div class="form-group">
             <label>Retype Password</label>
@@ -51,7 +56,8 @@
               type="password"
               name="password_confirmation"
               class="form-control"
-              placeholder="Password">
+              placeholder="Password"
+            >
           </div>
           <div class="form-group">
             <div class="checkbox checkbox-full">
@@ -59,7 +65,8 @@
                 <input
                   type="checkbox"
                   value=""
-                  name="terms">
+                  name="terms"
+                >
                 I Accept Terms & Conditions
               </label>
             </div>

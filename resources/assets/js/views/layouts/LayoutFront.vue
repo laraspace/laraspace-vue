@@ -1,14 +1,13 @@
 <template>
   <div class="template-container">
     <header class="site-header">
-      <a
-        href="#"
-        class="brand-main">
+      <a href="#" class="brand-main">
         <img
           id="logo-desk"
           src="/assets/img/logo-desk.png"
           alt="Laraspace Logo"
-          class="hidden-sm-down">
+          class="hidden-sm-down"
+        >
       </a>
       <ul class="action-list">
         <li>

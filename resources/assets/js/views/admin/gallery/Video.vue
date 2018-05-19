@@ -10,7 +10,7 @@
       </ol>
     </div>
     <div class="card">
-      <div class="card-body ">
+      <div class="card-body">
         <gallery
           :images="images"
           :index="VidIndex"

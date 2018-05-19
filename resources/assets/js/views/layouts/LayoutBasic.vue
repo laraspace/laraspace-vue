@@ -2,9 +2,7 @@
   <div class="template-container">
     <site-header/>
     <site-sidebar type="basic"/>
-    <transition
-      name="fade"
-      mode="out-in">
+    <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
     <site-footer/>
