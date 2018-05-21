@@ -131,4 +131,10 @@
 			position: relative;
 		}
 	}
+	.item-divider{
+		border-top:1px solid $white;
+		height: 1px;
+		margin: .5rem 0;
+		overflow: hidden;
+	}
 }

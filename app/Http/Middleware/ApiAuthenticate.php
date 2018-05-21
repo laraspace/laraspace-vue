@@ -1,7 +1,7 @@
 <?php
-namespace Laraspace\Http\Middleware;
+namespace App\Http\Middleware;
 
-use Laraspace\Exceptions\JWTInvalidException;
+use App\Exceptions\JWTInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;

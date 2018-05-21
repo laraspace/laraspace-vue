@@ -81,75 +81,28 @@
             <div class="caption">
               <h6><i class="icon-fa icon-fa-bar-chart text-success"/> Total Expenses</h6>
             </div>
-            <div class="actions tabs-simple">
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    data-toggle="tab"
-                    href="#balanceSummry"
-                    role="tab"
-                  >
-                    Daily
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#monthlyProfit"
-                    role="tab"
-                  >
-                    Monthly
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#yearly"
-                    role="tab"
-                  >
-                    Yearly
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
           <div class="card-body">
             <!-- Tab panes -->
-            <div class="tab-content">
-              <div
-                id="balanceSummry"
-                class="tab-pane active"
-                role="tabpanel"
-              >
+            <tabs class="tabs-simple">
+              <tab id="balanceSummry" name="Daily">
                 <line-chart
                   :labels="['Oct 10', 'Oct 11', 'Oct 12', 'Oct 13', 'Oct 14', 'Oct 15', 'Oct 16']"
                   :values="[200 , 1000 , 300, 551, 516, 225, 40]"
                 />
-              </div>
-              <div
-                id="monthlyProfit"
-                class="tab-pane"
-                role="tabpanel"
-              >
+              </tab>
+              <tab id="monthlyProfit" name="Monthly">
                 <line-chart
                   :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
                   :values="[5000, 6000 , 2000 , 7000 , 1000 , 3000 , 5000]"
                 />
-              </div>
-              <div
-                id="yearly"
-                class="tab-pane"
-                role="tabpanel"
-              >
+              </tab>
+              <tab id="yearly" name="Yearly">
                 <line-chart
                   :labels="['2011', '2012', '2013', '2014', '2015', '2016', '2017']"
-                  :values="[10000, 20000, 12444, 15000, 17000, 14000, 20000]"
-                />
-              </div>
-            </div>
+                  :values="[10000, 20000, 12444, 15000, 17000, 14000, 20000]"/>
+              </tab>
+            </tabs>
           </div>
         </div>
       </div>
@@ -162,21 +115,33 @@
               <h6><i class="icon-fa icon-fa-credit-card text-primary"/> Summary</h6>
             </div>
             <div class="actions">
-              <div class="btn-group" role="group">
-                <button
-                  id="summaryFilterDrop"
-                  type="button"
-                  class="btn btn-sm btn-outline-primary dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="true"
-                >
-                  Filters
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="summaryFilterDrop">
-                  <a class="dropdown-item" href="#">October</a>
-                  <a class="dropdown-item" href="#">September</a>
-                </div>
+              <div
+                class="btn-group"
+                role="group">
+                <v-dropdown :toggle-arrow="false">
+                  <button
+                    slot="activator"
+                    type="button"
+                    class="btn btn-sm btn-outline-primary dropdown-toggle">
+                    Filters
+                  </button>
+                  <v-dropdown-item>
+                    <a
+                      slot="item-title"
+                      class="dropdown-item"
+                      href="#"
+                    >
+                      October
+                    </a>
+                    <a
+                      slot="item-title"
+                      class="dropdown-item"
+                      href="#"
+                    >
+                      September
+                    </a>
+                  </v-dropdown-item>
+                </v-dropdown>
               </div>
             </div>
           </div>
@@ -215,14 +180,24 @@
 
 <script type="text/babel">
 import 'easy-pie-chart/dist/easypiechart'
+import { Tabs, Tab } from 'vue-tabs-component'
 import LineChart from '../../../components/chartjs/LineChart.vue'
 import BarChart from '../../../components/chartjs/BarChart.vue'
 import PieChart from '../../../components/chartjs/PieChart.vue'
+import VDropdown from '../../../components/dropdown/VDropdown'
+import VDropdownItem from '../../../components/dropdown/VDropdownItem'
+import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
+
 export default {
   components: {
     LineChart,
     BarChart,
-    PieChart
+    PieChart,
+    Tabs,
+    Tab,
+    VDropdown,
+    VDropdownItem,
+    VDropdownSubItem
   },
   data () {
     return {
