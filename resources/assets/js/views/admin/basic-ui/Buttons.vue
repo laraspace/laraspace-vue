@@ -308,14 +308,14 @@
                         </button>
                         <v-dropdown-item>
                           <a
-                            slot="item-title"
+                            slot="dropdown-item"
                             class="dropdown-item"
                             href="#"
                           >
                             Dropdown link
                           </a>
                           <a
-                            slot="item-title"
+                            slot="dropdown-item"
                             class="dropdown-item"
                             href="#"
                           >
@@ -410,14 +410,14 @@
                       </button>
                       <v-dropdown-item>
                         <a
-                          slot="item-title"
+                          slot="dropdown-item"
                           class="dropdown-item"
                           href="#"
                         >
                           Dropdown link
                         </a>
                         <a
-                          slot="item-title"
+                          slot="dropdown-item"
                           class="dropdown-item"
                           href="#"
                         >
@@ -551,13 +551,11 @@
 import ladda from 'ladda'
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
-import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
 
 export default {
   components: {
     VDropdown,
     VDropdownItem,
-    VDropdownSubItem
   },
   mounted () {
     // Ladda Buttons
