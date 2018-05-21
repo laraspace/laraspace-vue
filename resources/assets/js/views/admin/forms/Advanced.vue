@@ -220,11 +220,13 @@ export default {
       this.highlighted.to = val
     },
     disableTo (val) {
+      this.disabledDates.ranges[0].to = ''
       if (this.disabledDates.ranges[0].to === '') {
         this.disabledDates.ranges[0].to = val
       }
     },
     disableFrom (val) {
+      this.disabledDates.ranges[0].from = ''
       if (this.disabledDates.ranges[0].from === '') {
         this.disabledDates.ranges[0].from = val
       }
