@@ -42,6 +42,79 @@
     </div>
     <div class="card">
       <div class="card-header">
+        <h6>Date Picker
+          <a
+            class="source-link"
+            href="https://github.com/charliekassel/vuejs-datepicker"
+            target="_blank"
+          >
+            source
+          </a>
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Default Date Picker</h5>
+            <date-picker-demo input-class="form-control" placeholder="Select Date"/>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Formate Date Picker</h5>
+            <date-picker-demo :format="format" input-class="form-control"/>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Inline Date Picker</h5>
+            <date-picker-demo :inline="true"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Highlited Date</h5>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">From:</label>
+              <div class="col-sm-10">
+                <date-picker-demo input-class="form-control" @selected="highlightFrom"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">To:</label>
+              <div class="col-sm-10">
+                <date-picker-demo input-class="form-control" @selected="highlightTo"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">Result:</label>
+              <div class="col-sm-10">
+                <date-picker-demo :highlighted="highlighted" input-class="form-control"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <h5 class="section-semi-title">Minmum & Maximum Date Disable</h5>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">From:</label>
+              <div class="col-sm-10">
+                <date-picker-demo input-class="form-control" @selected="disableFrom"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">To:</label>
+              <div class="col-sm-10">
+                <date-picker-demo input-class="form-control" @selected="disableTo"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">Result:</label>
+              <div class="col-sm-10">
+                <date-picker-demo :disabled-dates="disabledDates" input-class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
         <h6>Vue Color Picker
           <a
             class="source-link"
@@ -103,16 +176,58 @@
 import ColorPickersDemo from '../../../components/advanced-elements/ColorPickers.vue'
 import MultiSelectDemo from '../../../components/advanced-elements/MultiSelect.vue'
 import TextMaskDemo from '../../../components/advanced-elements/TextMask.vue'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   components: {
     'color-pickers-demo': ColorPickersDemo,
     'multi-select-demo': MultiSelectDemo,
-    'text-mask-demo': TextMaskDemo
+    'text-mask-demo': TextMaskDemo,
+    'date-picker-demo': Datepicker
   },
   data () {
     return {
-      advcolors: ''
+      advcolors: '',
+      format: 'd MMMM yyyy',
+      disabledDates: {
+        ranges: [{
+          to: '',
+          from: ''
+        }]
+      },
+      highlighted: {}
+    }
+  },
+  methods: {
+    highlightFrom (val) {
+      if (typeof this.highlighted.from === 'undefined') {
+        this.highlighted = {
+          to: this.highlighted.to,
+          daysOfMonth: this.highlighted.daysOfMonth,
+          from: null
+        }
+      }
+      this.highlighted.from = val
+    },
+    highlightTo (val) {
+      if (typeof this.highlighted.to === 'undefined') {
+        this.highlighted = {
+          to: null,
+          daysOfMonth: this.highlighted.daysOfMonth,
+          from: this.highlighted.from
+        }
+      }
+      this.highlighted.to = val
+    },
+    disableTo (val) {
+      if (this.disabledDates.ranges[0].to === '') {
+        this.disabledDates.ranges[0].to = val
+      }
+    },
+    disableFrom (val) {
+      if (this.disabledDates.ranges[0].from === '') {
+        this.disabledDates.ranges[0].from = val
+      }
     }
   }
 }
