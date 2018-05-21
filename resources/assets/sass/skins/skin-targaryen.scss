@@ -75,11 +75,9 @@
             background-color: $ls-color-theme;
         }
 
-        .notification-dropdown {
-            .dropdown-header {
-                border-bottom: 1px solid $dropdown-header-border-color;
-                color: $dropdown-header-color;
-            }
+        .notification-dropdown .dropdown-header {
+            border-bottom: 1px solid $dropdown-header-border-color;
+            color: $dropdown-header-color;
         }
 
         .dropdown-divider {
@@ -155,7 +153,9 @@
             color: $header-menu-item-font-color--active;
             background-color: $header-menu-item-bg-color--active;
 
-            &:hover, &:focus, &:active {
+            &:hover, 
+            &:focus, 
+            &:active {
                 color: $header-menu-item-font-color--active;
                 background-color: $header-menu-item-bg-color--hover;
             }

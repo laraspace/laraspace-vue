@@ -72,12 +72,15 @@
         }
 
     }
+     .notification-dropdown {
+        padding: 5px !important;
 
-    .dropdown-header {
-        border-bottom: 1px solid $ls-color-gray--very-dark;
-        color: $ls-color-primary;
-        padding: 3px 10px 8px;
-        margin-bottom: 0;
+        .dropdown-header {
+            border-bottom: 1px solid $ls-color-gray--very-dark;
+            color: $ls-color-primary;
+            padding: 3px 10px 8px;
+            margin-bottom: 0;
+        }
     }
 
     .dropdown-divider {

@@ -56,7 +56,7 @@ export default {
       if (this.toggle === false) {
         this.$parent.$children.filter(function (value) {
           if (value !== self) {
-            if ((value.$children[0].toggle === true)&&(value.toggle === true)) {
+            if ((value.$children[0].toggle === true) && (value.toggle === true)) {
               value.toggle = false
               value.$children[0].toggle = false
             }

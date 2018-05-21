@@ -54,7 +54,7 @@
           >
             <i class="icon-fa icon-fa-bell"/>
           </a>
-          <v-dropdown-item>
+          <v-dropdown-item class-name="notification-dropdown">
             <h6 slot="dropdown-item" class="dropdown-header">
               Notifications
             </h6>
@@ -119,7 +119,7 @@ export default {
   components: {
     VDropdown,
     VDropdownItem,
-    VDropdownItemDivider,
+    VDropdownItemDivider
   },
   data () {
     return {

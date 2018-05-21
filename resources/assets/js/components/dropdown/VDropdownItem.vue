@@ -1,24 +1,33 @@
 <template>
-  <div ref="dropdownItems" class="dropdown-group-item">
-  <div
-    :class="['dropdown-item-activator' ,{'active':toggle}]"
-    @click="showDropdown"
-  >
-    <slot name="item-activator"/>
+  <div class="dropdown-group-item">
+    <div
+      :class="['dropdown-item-activator' ,{'active':toggle}]"
+      @click="showDropdown"
+    >
+      <slot name="item-activator"/>
+    </div>
+    <div
+      v-show="toggle"
+      ref="dropdownSubItems"
+      :class="['dropdown-group-items',
+               {'active': toggle},
+               {'align-right': rightAlign},
+               className
+      ]"
+    >
+      <slot name="dropdown-item"/>
+    </div>
   </div>
-  <div
-    v-show="toggle"
-    ref="dropdownSubItems"
-    :class="['dropdown-group-items',{'active':toggle},{'align-right':rightAlign}]"
-  >
-    <slot name="dropdown-item"/>
-  </div>
-</div>
 </template>
 <script>
 export default {
   props: {
     activeUrl: {
+      type: String,
+      require: true,
+      default: String
+    },
+    className: {
       type: String,
       require: true,
       default: String
@@ -35,9 +44,9 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.setDropdownPosition()
-      window.addEventListener('resize', (e) => {
+      window.addEventListener('resize', e => {
         if (this.toggle === true) {
-          this.setDropdownPosition()  
+          this.setDropdownPosition()
         }
       })
       this.toggle = false
@@ -46,7 +55,8 @@ export default {
   methods: {
     setDropdownPosition () {
       let rect = this.$refs.dropdownSubItems.getBoundingClientRect()
-      let offsetPos = (rect.width - this.$refs.dropdownSubItems.offsetParent.offsetWidth)
+      let offsetPos =
+        rect.width - this.$refs.dropdownSubItems.offsetParent.offsetWidth
       let itemPos = rect.right + rect.width + offsetPos
       if (itemPos > window.innerWidth) {
         this.rightAlign = true
