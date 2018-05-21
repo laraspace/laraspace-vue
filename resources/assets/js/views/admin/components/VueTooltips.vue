@@ -1,7 +1,7 @@
 <template>
   <div class="main-content buttons-demo">
     <div class="page-header">
-      <h3 class="page-title">ToolTips</h3>
+      <h3 class="page-title">Tooltips</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Components</a></li>
