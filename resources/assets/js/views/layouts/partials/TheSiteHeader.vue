@@ -30,13 +30,14 @@
             <i class="icon-fa icon-fa-plus"/>
           </a>
           <v-dropdown-item>
-            <a slot="item-title" href="#">
+            <a slot="dropdown-item" href="#">
               <i class="icon-fa icon-fa-edit"/> New Post
             </a>
-            <a slot="item-title" href="#">
+            <a slot="dropdown-item" href="#">
               <i class="icon-fa icon-fa-tag"/> New Category
             </a>
-            <a slot="item-title" href="#">
+            <v-dropdown-item-divider slot="dropdown-item"/>
+            <a slot="dropdown-item" href="#">
               <i class="icon-fa icon-fa-star"/> Separated link
             </a>
           </v-dropdown-item>
@@ -54,18 +55,18 @@
             <i class="icon-fa icon-fa-bell"/>
           </a>
           <v-dropdown-item>
-            <h6 slot="item-title" class="dropdown-header">
+            <h6 slot="dropdown-item" class="dropdown-header">
               Notifications
             </h6>
             <a
-              slot="item-title"
+              slot="dropdown-item"
               class="dropdown-item"
               href="#"
             >
               <i class="icon-fa icon-fa-user"/> New User was Registered
             </a>
             <a
-              slot="item-title"
+              slot="dropdown-item"
               class="dropdown-item"
               href="#"
             >
@@ -88,14 +89,14 @@
           </a>
           <v-dropdown-item>
             <router-link
-              slot="item-title"
+              slot="dropdown-item"
               class="dropdown-item"
               to="/admin/settings"
             >
               <i class="icon-fa icon-fa-cogs"/> Settings
             </router-link>
             <a
-              slot="item-title"
+              slot="dropdown-item"
               href="#"
               class="dropdown-item"
               @click.prevent="logout"
@@ -112,13 +113,13 @@
 import Auth from '../../../services/auth'
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
-import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
+import VDropdownItemDivider from '../../../components/dropdown/VDropdownItemDivider'
 
 export default {
   components: {
     VDropdown,
     VDropdownItem,
-    VDropdownSubItem
+    VDropdownItemDivider,
   },
   data () {
     return {

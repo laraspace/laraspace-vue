@@ -361,10 +361,8 @@
             border-color: $dropdown-header-color transparent transparent;
         }
 
-        .dropdown-group-items .dropdown-subgroup-items {
-            background-color: $dropdown-bg;
-            color: $dropdown-activator-color;
-            border: 1px solid $dropdown-header-border-color;
+        .dropdown-item-divider{
+            border-color: $dropdown-divider-bg;
         }
     }
 

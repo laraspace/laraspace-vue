@@ -7,15 +7,13 @@
         </a>
 
         <v-dropdown-item>
-          <router-link slot="item-title" to="/admin/dashboard/basic">
+          <router-link slot="dropdown-item" to="/admin/dashboard/basic">
             Basic
           </router-link>
-
-          <router-link slot="item-title" to="/admin/dashboard/ecommerce">
+          <router-link slot="dropdown-item" to="/admin/dashboard/ecommerce">
             Ecommerce
           </router-link>
-
-          <router-link slot="item-title" to="/admin/dashboard/finance">
+          <router-link slot="dropdown-item" to="/admin/dashboard/finance">
             Finance
           </router-link>
         </v-dropdown-item>
@@ -27,15 +25,15 @@
         </a>
 
         <v-dropdown-item>
-          <router-link slot="item-title" to="/admin/layouts/sidebar">
+          <router-link slot="dropdown-item" to="/admin/layouts/sidebar">
             Sidebar
           </router-link>
 
-          <router-link slot="item-title" to="/admin/layouts/horizontal">
+          <router-link slot="dropdown-item" to="/admin/layouts/horizontal">
             Horizontal
           </router-link>
 
-          <router-link slot="item-title" to="/admin/layouts/icons-sidebar">
+          <router-link slot="dropdown-item" to="/admin/layouts/icons-sidebar">
             Icon Sidebar
           </router-link>
         </v-dropdown-item>
@@ -47,23 +45,23 @@
         </a>
 
         <v-dropdown-item>
-          <router-link slot="item-title" to="/admin/basic-ui/buttons">
+          <router-link slot="dropdown-item" to="/admin/basic-ui/buttons">
             Buttons
           </router-link>
 
-          <router-link slot="item-title" to="/admin/basic-ui/cards">
+          <router-link slot="dropdown-item" to="/admin/basic-ui/cards">
             Cards
           </router-link>
 
-          <router-link slot="item-title" to="/admin/basic-ui/typography">
+          <router-link slot="dropdown-item" to="/admin/basic-ui/typography">
             Typography
           </router-link>
 
-          <router-link slot="item-title" to="/admin/basic-ui/tables">
+          <router-link slot="dropdown-item" to="/admin/basic-ui/tables">
             Tables
           </router-link>
 
-          <router-link slot="item-title" to="/admin/basic-ui/progress-bars">
+          <router-link slot="dropdown-item" to="/admin/basic-ui/progress-bars">
             Progress Bar
           </router-link>
         </v-dropdown-item>
@@ -75,39 +73,39 @@
         </a>
 
         <v-dropdown-item>
-          <router-link slot="item-title" to="/admin/components/vue-tables">
+          <router-link slot="dropdown-item" to="/admin/components/vue-tables">
             Vue DataTables
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/vue-tabs">
+          <router-link slot="dropdown-item" to="/admin/components/vue-tabs">
             Vue Tabs
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/vue-carousel">
+          <router-link slot="dropdown-item" to="/admin/components/vue-carousel">
             Vue Carousel
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/notifications">
+          <router-link slot="dropdown-item" to="/admin/components/notifications">
             Notifications
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/tooltips">
+          <router-link slot="dropdown-item" to="/admin/components/tooltips">
             Vue Tooltips
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/vue-carousel">
+          <router-link slot="dropdown-item" to="/admin/components/vue-carousel">
             VueCarousel
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/sweet-modals">
+          <router-link slot="dropdown-item" to="/admin/components/sweet-modals">
             Sweet Modals
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/vue-dropzone">
+          <router-link slot="dropdown-item" to="/admin/components/vue-dropzone">
             VueDropzone
           </router-link>
 
-          <router-link slot="item-title" to="/admin/components/vee">
+          <router-link slot="dropdown-item" to="/admin/components/vee">
             Vee Validate
           </router-link>
         </v-dropdown-item>
@@ -119,39 +117,39 @@
         </a>
 
         <v-dropdown-item>
-          <router-link slot="item-title" to="/admin/forms/general">
+          <router-link slot="dropdown-item" to="/admin/forms/general">
             General Elements
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/advanced">
+          <router-link slot="dropdown-item" to="/admin/forms/advanced">
             Advanced Elements
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/layouts">
+          <router-link slot="dropdown-item" to="/admin/forms/layouts">
             Form Layouts
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/validation">
+          <router-link slot="dropdown-item" to="/admin/forms/validation">
             Form Validation
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/wizards">
+          <router-link slot="dropdown-item" to="/admin/forms/wizards">
             Form Wizard
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/wizards-2">
+          <router-link slot="dropdown-item" to="/admin/forms/wizards-2">
             Form Wizard 2
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/wizards-3">
+          <router-link slot="dropdown-item" to="/admin/forms/wizards-3">
             Form Wizard 3
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/editors">
+          <router-link slot="dropdown-item" to="/admin/forms/editors">
             Editors
           </router-link>
 
-          <router-link slot="item-title" to="/admin/forms/vuelidate">
+          <router-link slot="dropdown-item" to="/admin/forms/vuelidate">
             Vuelidate
           </router-link>
         </v-dropdown-item>
@@ -169,13 +167,11 @@
 <script type="text/babel">
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
-import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
 
 export default {
   components: {
     VDropdown,
-    VDropdownItem,
-    VDropdownSubItem
+    VDropdownItem
   },
   data () {
     return {

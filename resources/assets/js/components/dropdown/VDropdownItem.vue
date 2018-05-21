@@ -1,23 +1,19 @@
 <template>
-  <div class="dropdown-group-item">
-    <slot name="item-title"/>
-    <slot name="item-title-divider"/>
-    <div
-      :class="['dropdown-item-activator' ,{'active':toggle}]"
-      @click="showDropdown"
-    >
-      <slot name="item-activator"/>
-      <slot name="item-activator-divider"/>
-    </div>
-    <slot/>
-    <div
-      v-show="toggle"
-      ref="dropdownSubItems"
-      :class="['dropdown-subgroup-items',{'active':toggle},{'align-right':rightAlign}]"
-    >
-      <slot name="subgroup-item"/>
-    </div>
+  <div ref="dropdownItems" class="dropdown-group-item">
+  <div
+    :class="['dropdown-item-activator' ,{'active':toggle}]"
+    @click="showDropdown"
+  >
+    <slot name="item-activator"/>
   </div>
+  <div
+    v-show="toggle"
+    ref="dropdownSubItems"
+    :class="['dropdown-group-items',{'active':toggle},{'align-right':rightAlign}]"
+  >
+    <slot name="dropdown-item"/>
+  </div>
+</div>
 </template>
 <script>
 export default {
@@ -41,7 +37,7 @@ export default {
       this.setDropdownPosition()
       window.addEventListener('resize', (e) => {
         if (this.toggle === true) {
-          this.setDropdownPosition()
+          this.setDropdownPosition()  
         }
       })
       this.toggle = false
@@ -61,6 +57,15 @@ export default {
       }
     },
     showDropdown () {
+      if (this.toggle === false) {
+        this.$parent.$children.filter(function (value) {
+          if (value !== self) {
+            if (value.toggle === true) {
+              value.toggle = false
+            }
+          }
+        })
+      }
       this.toggle = !this.toggle
     }
   }
