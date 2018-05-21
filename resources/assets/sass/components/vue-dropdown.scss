@@ -105,22 +105,13 @@
 			transform: rotate(-90deg);
 			border-color: $ls-color-primary transparent transparent;
 		}
-		.dropdown-subgroup-items {
+		.dropdown-group-items {
 		  	display: block;
 			margin: 0;
 			left: 100%;
 			top: 0;
 			position: absolute;
-			width: 10rem;
-			background-color: $dropdown-bg;
-			min-width: 10rem;
-			padding: .5rem 0;
 			margin: .125rem .125rem 0;
-			font-size: 1rem;
-			color: $dropdown-link-color;
-			background-clip: padding-box;
-			border: 1px solid $dropdown-border-color;
-			border-radius: .25rem;
 
 			&.align-right{
 				right: 100%;
@@ -131,7 +122,7 @@
 			position: relative;
 		}
 	}
-	.item-divider{
+	.dropdown-item-divider{
 		border-top:1px solid $white;
 		height: 1px;
 		margin: .5rem 0;

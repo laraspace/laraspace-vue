@@ -75,11 +75,9 @@
             background-color: $white;
         }
 
-        .notification-dropdown {
-            .dropdown-header {
-                border-bottom: 1px solid $dropdown-header-border-color;
-                color: $dropdown-header-color;
-            }
+        .notification-dropdown .dropdown-header {
+            border-bottom: 1px solid $dropdown-header-border-color;
+            color: $dropdown-header-color;
         }
 
         .dropdown-divider {
@@ -316,6 +314,7 @@
 
     //Dropdown
     .dropdown-group {
+
         &.active > .dropdown-group-title,
         &.active > .dropdown-group-title a {
             color: $dropdown-activator-color--hover;
@@ -361,11 +360,8 @@
         .dropdown-group-items .dropdown-item-activator.active a::before {
             border-color: $dropdown-header-color transparent transparent;
         }
-
-        .dropdown-group-items .dropdown-subgroup-items {
-            background-color: $dropdown-bg;
-            color: $dropdown-activator-color;
-            border: 1px solid $dropdown-header-border-color;
+        .dropdown-item-divider{
+            border-color: $dropdown-divider-bg;
         }
     }
 
@@ -388,6 +384,7 @@
 
     //SELECT 2
     .multiselect {
+        
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
@@ -431,11 +428,28 @@
     }
 
     //DATEPICKER
-    .datepicker-dropdown {
-        color: $body-color;
-        background-color: $white;
-        border: 1px solid rgba(0, 0, 0, 0.15);
+    .vdp-datepicker__calendar .cell {
+
+        &:not(.blank):not(.disabled) {
+
+            &.day:hover,
+            &.month:hover,
+            &.year:hover {
+                border: 1px solid $ls-color-theme !important;
+            }
+        }
+        
+        &.selected {
+            background: $ls-color-theme !important;
+            color:$white;
+        }
+        
+        &.highlighted {
+            color:$white;
+            background:lighten($ls-color-theme,25%) !important;
+        }
     }
+
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {

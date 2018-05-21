@@ -60,7 +60,25 @@
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Formate Date Picker</h5>
-            <date-picker-demo :format="format" input-class="form-control"/>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">Result</label>
+              <div class="col-sm-10">
+                <date-picker-demo :format="format" input-class="form-control"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label">Formats</label>
+              <div class="col-sm-10">
+                <multi-select
+                  v-model="format"
+                  :options="FormatOptions"
+                  :allow-empty="false"
+                  :show-labels="false"
+                  :searchable="true"
+                  placeholder="Pick a Format"
+                />
+              </div>
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Inline Date Picker</h5>
@@ -71,40 +89,40 @@
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Highlited Date</h5>
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">From:</label>
+              <label class="col-sm-2 form-control-label">From</label>
               <div class="col-sm-10">
                 <date-picker-demo input-class="form-control" @selected="highlightFrom"/>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">To:</label>
+              <label class="col-sm-2 form-control-label">To</label>
               <div class="col-sm-10">
                 <date-picker-demo input-class="form-control" @selected="highlightTo"/>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Result:</label>
+              <label class="col-sm-2 form-control-label">Result</label>
               <div class="col-sm-10">
                 <date-picker-demo :highlighted="highlighted" input-class="form-control"/>
               </div>
             </div>
           </div>
           <div class="col-xl-4 mb-4">
-            <h5 class="section-semi-title">Minmum & Maximum Date Disable</h5>
+            <h5 class="section-semi-title">Disable Specific Range Of Date</h5>
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">From:</label>
+              <label class="col-sm-2 form-control-label">From</label>
               <div class="col-sm-10">
                 <date-picker-demo input-class="form-control" @selected="disableFrom"/>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">To:</label>
+              <label class="col-sm-2 form-control-label">To</label>
               <div class="col-sm-10">
                 <date-picker-demo input-class="form-control" @selected="disableTo"/>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Result:</label>
+              <label class="col-sm-2 form-control-label">Result</label>
               <div class="col-sm-10">
                 <date-picker-demo :disabled-dates="disabledDates" input-class="form-control" />
               </div>
@@ -177,18 +195,21 @@ import ColorPickersDemo from '../../../components/advanced-elements/ColorPickers
 import MultiSelectDemo from '../../../components/advanced-elements/MultiSelect.vue'
 import TextMaskDemo from '../../../components/advanced-elements/TextMask.vue'
 import Datepicker from 'vuejs-datepicker'
+import Multiselect from 'vue-multiselect'
 
 export default {
   components: {
     'color-pickers-demo': ColorPickersDemo,
     'multi-select-demo': MultiSelectDemo,
     'text-mask-demo': TextMaskDemo,
-    'date-picker-demo': Datepicker
+    'date-picker-demo': Datepicker,
+    'multi-select': Multiselect
   },
   data () {
     return {
       advcolors: '',
-      format: 'd MMMM yyyy',
+      format: 'd MMM yyyy',
+      FormatOptions: ['d MMM yyyy', 'd MMMM yyyy', 'yyyy-MM-dd', 'dsu MMM yyyy', 'D dsu MMM yyyy'],
       disabledDates: {
         ranges: [{
           to: '',

@@ -120,7 +120,9 @@
 
         <mailbox-footer />
 
-        <mailbox-modal :is-visible="isModalVisible" @close="closeMailModal"/>
+        <transition name="fade">
+          <mailbox-modal v-show="isModalVisible" :is-visible="isModalVisible" @close="closeMailModal" />
+        </transition>
 
         <mailbox-compose-modal ref="compose"/>
       </div>
@@ -167,6 +169,11 @@ export default {
       selectedMails: [],
       selectedCategory: 'inbox',
       searchText: ''
+    }
+  },
+  watch: {
+    selectedCategory () {
+      this.isModalVisible = false
     }
   },
   computed: {

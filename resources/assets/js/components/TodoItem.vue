@@ -66,7 +66,7 @@ export default {
     })
   },
   methods: {
-    addTodo () {
+    async addTodo () {
       let vm = this
       let url = '/api/admin/todos'
 
@@ -74,38 +74,28 @@ export default {
         return
       }
 
-      window.axios.post(url, vm.newTodo).then(
-        function (request) {
-          vm.todos.push({
-            id: request.data.todo.id,
-            title: request.data.todo.title,
-            completed: false
-          })
-          vm.newTodo = {
-            id: '',
-            title: '',
-            completed: false
-          }
-        },
-        function (error) {
-          if (error) {
-            alert('error')
-          }
-        }
-      )
+      let response = await window.axios.post(url, vm.newTodo)
+
+      vm.todos.push({
+        id: response.data.todo.id,
+        title: response.data.todo.title,
+        completed: false
+      })
+
+      vm.newTodo = {
+        id: '',
+        title: '',
+        completed: false
+      }
     },
 
-    removeTodo (todo) {
+    async removeTodo (todo) {
       let url = '/api/admin/todos/' + todo.id
       let vm = this
-      window.axios.post(url, { _method: 'DELETE' }).then(
-        function (request) {
-          var index = vm.todos.indexOf(todo)
-          vm.todos.splice(index, 1)
-        },
-        function (error) {
-          console.log(error)
-        })
+      await window.axios.post(url, { _method: 'DELETE' })
+
+      let index = vm.todos.indexOf(todo)
+      vm.todos.splice(index, 1)
     },
     toggleTodoComplete (todo) {
       let url = '/api/admin/todos/toggleTodo/' + todo.id

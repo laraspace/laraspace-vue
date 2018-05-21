@@ -77,11 +77,9 @@
             background-color: $white;
         }
 
-        .notification-dropdown {
-            .dropdown-header {
-                border-bottom: 1px solid $dropdown-header-border-color;
-                color: $dropdown-header-color;
-            }
+        .notification-dropdown .dropdown-header {
+            border-bottom: 1px solid $dropdown-header-border-color;
+            color: $dropdown-header-color;
         }
 
         .dropdown-divider {
@@ -351,6 +349,7 @@
 
     //SELECT 2
     .multiselect {
+        
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
@@ -441,10 +440,8 @@
             border-color: $dropdown-header-color transparent transparent;
         }
 
-        .dropdown-group-items .dropdown-subgroup-items {
-            background-color: $dropdown-bg;
-            color: $dropdown-activator-color;
-            border: 1px solid $dropdown-header-border-color;
+        .dropdown-item-divider{
+            border-color: $dropdown-divider-bg;
         }
     }
 
@@ -460,11 +457,28 @@
     }
 
     //DATEPICKER
-    .datepicker-dropdown {
-        color: $body-color;
-        background-color: $white;
-        border: 1px solid rgba(0, 0, 0, 0.15);
+    .vdp-datepicker__calendar .cell {
+
+         &:not(.blank):not(.disabled) {
+
+            &.day:hover,
+            &.month:hover,
+            &.year:hover {
+                border: 1px solid $ls-color-theme !important;
+            }
+        }
+        
+        &.selected {
+            color:$white;
+            background: $ls-color-theme !important;
+        }
+        
+        &.highlighted {
+            color:$white;
+            background:lighten($ls-color-theme,25%) !important;
+        }
     }
+
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {

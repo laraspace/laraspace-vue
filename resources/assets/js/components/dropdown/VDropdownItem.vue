@@ -1,21 +1,21 @@
 <template>
   <div class="dropdown-group-item">
-    <slot name="item-title"/>
-    <slot name="item-title-divider"/>
     <div
       :class="['dropdown-item-activator' ,{'active':toggle}]"
       @click="showDropdown"
     >
       <slot name="item-activator"/>
-      <slot name="item-activator-divider"/>
     </div>
-    <slot/>
     <div
       v-show="toggle"
       ref="dropdownSubItems"
-      :class="['dropdown-subgroup-items',{'active':toggle},{'align-right':rightAlign}]"
+      :class="['dropdown-group-items',
+               {'active': toggle},
+               {'align-right': rightAlign},
+               className
+      ]"
     >
-      <slot name="subgroup-item"/>
+      <slot name="dropdown-item"/>
     </div>
   </div>
 </template>
@@ -23,6 +23,11 @@
 export default {
   props: {
     activeUrl: {
+      type: String,
+      require: true,
+      default: String
+    },
+    className: {
       type: String,
       require: true,
       default: String
@@ -39,7 +44,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.setDropdownPosition()
-      window.addEventListener('resize', (e) => {
+      window.addEventListener('resize', e => {
         if (this.toggle === true) {
           this.setDropdownPosition()
         }
@@ -50,7 +55,8 @@ export default {
   methods: {
     setDropdownPosition () {
       let rect = this.$refs.dropdownSubItems.getBoundingClientRect()
-      let offsetPos = (rect.width - this.$refs.dropdownSubItems.offsetParent.offsetWidth)
+      let offsetPos =
+        rect.width - this.$refs.dropdownSubItems.offsetParent.offsetWidth
       let itemPos = rect.right + rect.width + offsetPos
       if (itemPos > window.innerWidth) {
         this.rightAlign = true
@@ -61,6 +67,15 @@ export default {
       }
     },
     showDropdown () {
+      if (this.toggle === false) {
+        this.$parent.$children.filter(function (value) {
+          if (value !== self) {
+            if (value.toggle === true) {
+              value.toggle = false
+            }
+          }
+        })
+      }
       this.toggle = !this.toggle
     }
   }

@@ -18,7 +18,6 @@ class ContactController extends Controller
 
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -37,8 +36,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $labelid=[];      
-        
+        $labelid=[];
+
         $contact = new Contact;
         $contact->name = $request->contact['name'];
         $contact->phone = $request->contact['phone'];
@@ -47,14 +46,14 @@ class ContactController extends Controller
         $contact->dob = $request->contact['dob'];
         $contact->url = $request->contact['url'];
         $contact->save();
-        
+
         foreach ($request->labels as $label) {
             $labelid[] = $label['id'];
         }
 
         $contact->labels()->sync($labelid);
         return Contact::with('labels')->find($contact->id);
-        
+
 
     }
 
@@ -98,7 +97,7 @@ class ContactController extends Controller
         $contact->dob = $request->dob;
         $contact->url = $request->url;
         $contact->save();
-       
+
         foreach ($request->labels as $label) {
             $labelid[] = $label['id'];
         }
@@ -125,12 +124,13 @@ class ContactController extends Controller
         }
 
        }
-                
+
         $contact->delete();
 
         return "success";
 
     }
+
     public function ImageStore ()
     {
         if ($request->hasFile('image')) {

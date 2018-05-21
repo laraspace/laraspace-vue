@@ -127,14 +127,14 @@
                   </button>
                   <v-dropdown-item>
                     <a
-                      slot="item-title"
+                      slot="dropdown-item"
                       class="dropdown-item"
                       href="#"
                     >
                       October
                     </a>
                     <a
-                      slot="item-title"
+                      slot="dropdown-item"
                       class="dropdown-item"
                       href="#"
                     >
@@ -186,7 +186,6 @@ import BarChart from '../../../components/chartjs/BarChart.vue'
 import PieChart from '../../../components/chartjs/PieChart.vue'
 import VDropdown from '../../../components/dropdown/VDropdown'
 import VDropdownItem from '../../../components/dropdown/VDropdownItem'
-import VDropdownSubItem from '../../../components/dropdown/VDropdownSubItem'
 
 export default {
   components: {
@@ -197,7 +196,6 @@ export default {
     Tab,
     VDropdown,
     VDropdownItem,
-    VDropdownSubItem
   },
   data () {
     return {
