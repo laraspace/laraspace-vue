@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     handleDonutGauges () {
-      var OptsDonuts = {
+      let OptsDonuts = {
         angle: 0.35, // The span of the gauge arc
         lineWidth: 0.07, // The line thickness
         radiusScale: 1, // Relative radius
@@ -70,7 +70,7 @@ export default {
       let elements = document.getElementsByClassName('donut-gauge')
       for (let el of elements) {
         if (OptsDonuts !== false) {
-          var donut = new Donut(el).setOptions(OptsDonuts)
+          let donut = new Donut(el).setOptions(OptsDonuts)
           donut.maxValue = 3000 // set max gauge value
           donut.setMinValue(0) // set min value
           donut.animationSpeed = 32 // set animation speed (32 is default value)

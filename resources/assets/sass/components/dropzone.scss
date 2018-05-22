@@ -1,7 +1,12 @@
 .vue-dropzone .dz-preview  {
+  
     width: 150px !important;
     height:150px !important;
     background: transparent !important;
+    
+    &:hover {
+        z-index: 100 !important;
+    }
 
     .dz-details {
         background-color:$ls-color-yellow !important;
@@ -9,6 +14,9 @@
         color:$ls-color-black !important;
         text-align: center !important;
         padding-top: 50px !important;
+        .dz-size {
+            margin-bottom: 0 !important;
+        }
     }
 
     .dz-image {
@@ -38,4 +46,15 @@
     .dz-success-mark svg g path{
         fill:$ls-color-black !important;
     }
+    .dz-remove {
+        color: $ls-color-black !important;
+        margin-left: 20px !important;
+        padding: 5px !important;
+        bottom: 20px !important;
+        border: 2px $ls-color-black solid !important;
+        font-size: 0.7rem !important;
+        font-weight: 600 !important;
+    }
+
+    
 }

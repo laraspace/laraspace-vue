@@ -18,7 +18,7 @@ class PagesController extends Controller
 
     public function allUsers()
     {
-       return $users = User::paginate(5);
+       return $users = User::whereRole('user')->paginate(5);
     }
 
     public function destroy($id)

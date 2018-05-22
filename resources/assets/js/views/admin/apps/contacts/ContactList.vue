@@ -214,7 +214,7 @@ export default {
           : false
       },
       set: function (value) {
-        var selected = []
+        let selected = []
 
         if (value) {
           this.contacts.forEach(function (contact) {
@@ -232,20 +232,18 @@ export default {
     }
   },
   mounted () {
-    let self = this
-    axios.get('/api/admin/apps/contacts/labels/').then(function (response) {
-      self.labels = self.$children[0].labels = response.data
-    })
+    this.getLabels()
     this.getContacts()
   },
   methods: {
-    getContacts () {
-      let self = this
-      axios.get('/api/admin/apps/contacts/list').then(function (response) {
-        self.contacts = response.data
-      })
+    async getContacts () {
+      let response = await axios.get('/api/admin/apps/contacts/list')
+      this.contacts = response.data
     },
-
+    async getLabels () {
+      let response = await axios.get('/api/admin/apps/contacts/labels/')
+      this.labels = self.$children[0].labels = response.data
+    },
     openAddContactModal () {
       this.$refs.contact.openModal()
     },
@@ -262,31 +260,23 @@ export default {
       this.leftAngle = !this.leftAngle
     },
 
-    labelRemove (label, index) {
-      let self = this
+    async labelRemove (label, index) {
       if (confirm('Are you sure to remove ' + label.name + ' label!')) {
-        axios.delete('/api/admin/apps/contacts/labels/' + label.id, {
-          label: label
-        })
-          .then(function (response) {
-            self.labels.splice(index, 1)
-            self.getContacts()
-          })
+        await axios.delete('/api/admin/apps/contacts/labels/' + label.id, {label: label})
+        this.labels.splice(index, 1)
+        this.getContacts()
       }
     },
-    labelUpdate () {
-      let self = this
-      axios.put('/api/admin/apps/contacts/labels/' + self.selectedLabel.id, {
+    async labelUpdate () {
+      await axios.put('/api/admin/apps/contacts/labels/' + self.selectedLabel.id, {
         label: self.selectedLabel.name
       })
-        .then(function (response) {
-          self.labels.filter(function (value) {
-            if (value.id === self.selectedLabel.id) {
-              value.name = self.selectedLabel.name
-            }
-          })
-          self.selectedLabel = false
-        })
+      this.labels.filter(function (value) {
+        if (value.id === self.selectedLabel.id) {
+          value.name = self.selectedLabel.name
+        }
+      })
+      this.selectedLabel = false
     },
 
     contactShow (contact) {

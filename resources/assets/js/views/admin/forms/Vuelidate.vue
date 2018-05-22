@@ -174,17 +174,14 @@ export default {
     },
     email: {
       required,
-      isUnique (value) {
+      async isUnique (value) {
         // standalone validator ideally should not assume a field is required
         if (value === '') return true
 
         // simulate async call, fail for all logins with even length
 
-        return window.axios
-          .post('/api/admin/vuelidate/email-exist', { email: value })
-          .then(response => {
-            return response.data
-          })
+        let response = await window.axios.post('/api/admin/vuelidate/email-exist', { email: value })
+        return response.data
       }
     }
   }

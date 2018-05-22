@@ -14,7 +14,7 @@ export default {
   },
 
   reset (prefix) {
-    var regx = new RegExp('\\b' + prefix + '(.*)?\\b', 'g')
+    let regx = new RegExp('\\b' + prefix + '(.*)?\\b', 'g')
     document.body.className = document.body.className.replace(regx, '')
   },
 

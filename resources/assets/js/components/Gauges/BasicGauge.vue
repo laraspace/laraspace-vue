@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     handleGauges () {
-      var OptsBasic = {
+      let OptsBasic = {
         angle: 0.15, /// The span of the gauge arc
         lineWidth: 0.44, // The line thickness
         pointer: {
@@ -48,7 +48,7 @@ export default {
       let elements = document.getElementsByClassName('basic-gauge')
       for (let el of elements) {
         if (OptsBasic !== false) {
-          var gauge = new Gauge(el).setOptions(OptsBasic)
+          let gauge = new Gauge(el).setOptions(OptsBasic)
           gauge.maxValue = 3000 // set max gauge value
           gauge.setMinValue(0) // set min value
           gauge.animationSpeed = 32 // set animation speed (32 is default value)

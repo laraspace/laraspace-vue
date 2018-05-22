@@ -1,8 +1,8 @@
 export default {
   // EasyPieChart () {
-  //   var elems = $('.easy-pie-chart')
+  //   let elems = $('.easy-pie-chart')
   //   elems.each(function (index, element) {
-  //     var color = $(this).data('color') ? $(this).data('color') : '#ffde00'
+  //     let color = $(this).data('color') ? $(this).data('color') : '#ffde00'
 
   //     let myBarChart = new EasyPieChart(element, {
   //       scaleColor: false,
@@ -17,14 +17,14 @@ export default {
   // },
 
   Editors () {
-    // var editor1 =  document.getElementsByClassName('ls-summernote')[]
+    // let editor1 =  document.getElementsByClassName('ls-summernote')[]
     // if (editor1) {
-    //   var summernote = editor1.summernote()
+    //   let summernote = editor1.summernote()
     // }
-    var editor2 = document.getElementsByClassName('ls-simplemde')[0]
+    let editor2 = document.getElementsByClassName('ls-simplemde')[0]
 
     if (editor2) {
-      var simplemde = new SimpleMDE({ element: editor2 })
+      let simplemde = new SimpleMDE({ element: editor2 })
     }
   },
   initPlugins (plugins) {
@@ -36,7 +36,7 @@ export default {
   },
 
   isFunction (functionToCheck) {
-    var getType = {}
+    let getType = {}
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]'
   }
 }
