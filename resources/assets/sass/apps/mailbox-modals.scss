@@ -1,119 +1,118 @@
 .mailbox-modal {
-    position: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 200px);
+    max-width: 100%;
+    left: 200px;
     background: white;
-    top: 60px;
-    height: auto;
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    max-width: 600px;
-    width: 100%;
-    right: -620px;
-    bottom: 0px;
-    box-shadow: -10px 0 20px 0 rgba(66, 66, 66, 0.2);
-    z-index: 1050;
+    z-index: 30;
     transition: right 0.5s;
 
     &.is-visible {
         right: 0px;
     }
 
-    .sidepanel-header {
+    .mail-header {
         position: relative;
-        padding: 40px 30px;
-        padding-right: 120px;
-        background-color: $ls-color-secondary;
-        color: white;
+        padding: 10px 20px;
 
         h3 {
             margin: 0;
-            color: white;
         }
 
-        .mail-action {
-            position: absolute;
-            right: 10px;
-            top: 95px;
+        .mail-actions {
 
-            a {
-                margin-left: 12px;
+            .mail-action-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
             }
 
-            .mail-menu {
-                ul {
-                    li {
-                        padding-left: 15px;
-                        padding-bottom: 10px;
-                    }
+            .action {
+                display: inline-block;
+                margin-right: 5px;
+            }
 
-                    color: white;
-                    list-style: none;
+            .action a {
+                display: inline-block;
+                font-size: 16px;
+                color: #bababa;
+                padding: 5px 10px;
+
+                &:hover {
+                    color: #55595c;
                 }
             }
-        }
 
-        .sidepanel-close {
-            position: absolute;
-            right: 25px;
-            top: 15px;
-            background: none;
-            border: none;
+            .action i {
+                width: auto;
+                text-align: center;
+            }
+
         }
     }
 
-    .sidepanel-body {
-        padding: 30px;
+    .mail-body {
+        padding: 10px 20px;
+
+        .mail-subject {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            padding: 20px 0px;
+            border-bottom: 1px solid #d9d9d9;
+        }
 
         .message-heading {
             position: relative;
-            padding: 20px 0px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            margin-bottom: 15px;
 
-            .message-heading-main {
-                position: relative;
-                padding-top: 25px;
+            .avatar-img {
+                height: 40px;
+                border-radius: 50%;
+            }
+
+            .message-from {
+                display: flex;
+                align-items: center;
+            }
+
+            .from-text {
+                margin-left: 10px;
+            }
+
+            .email {
 
                 a {
-                    .avtar-img {
-                        height: 50px;
-                        border-radius: 50%;
-                    }
+                    color: $ls-color-black;
                 }
 
-                .name {
-                    position: relative;
-                    left: 5px;
-                    bottom: 10px;
-                }
+                display: inline-block;
+            }
 
-                .email {
-                    span {
-                        a {
-                            color: burlywood;
-                        }
-                    }
-
-                    display: inline-block;
-                    position: relative;
-                    right: 64px;
-                    top: 10px;
-                }
-
-                .message-heading-right {
-                    display: inline;
-                }
+            .message-heading-right {
+                display: inline;
             }
         }
 
+
         .message-attachment {
             margin-top: 40px;
+
             ul {
                 list-style: none;
                 padding: 0px;
             }
-        }
-
-        .all-mail {
-            border-top: 1px solid #e4eaec;
-            padding-bottom: 30px;
         }
 
         .comment {
@@ -121,5 +120,9 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
+    }
+
+    .btn-icon.btn-sm {
+        padding: 0.5rem;
     }
 }
