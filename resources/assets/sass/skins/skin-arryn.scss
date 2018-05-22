@@ -60,6 +60,7 @@
         }
 
         .action-list li {
+
             a {
                 background-color: $header-buttons-bg-color;
                 color: $header-buttons-font-color;
@@ -93,7 +94,9 @@
     }
 
     .side-nav {
+
         .collapse-group .collapse-group-item {
+
             a {
                 color: $sidebar-font-color;
 
@@ -168,6 +171,7 @@
     //----------------------------------
 
     .tabs-component.tabs-default {
+
         .tabs-component-tab {
             a {
                 color: $ls-color-black;
@@ -201,6 +205,7 @@
     //----------------------------------
 
     .tabs-component.tabs-vertical {
+
         .tabs-component-tabs {
             border-right: 1px solid $ls-color-theme !important;
 
@@ -228,6 +233,7 @@
     //----------------------------------
 
     .tabs-component.tabs-simple {
+
         .tabs-component-tabs .tabs-component-tab {
             a {
                 color: $ls-color-black;
@@ -294,6 +300,7 @@
     // Dropzone
 
     .vue-dropzone .dz-preview {
+
         .dz-details {
             background-color: $ls-color-theme !important;
             color: $white !important;
@@ -314,6 +321,7 @@
 
     //Dropdown
     .dropdown-group {
+
         &.active > .dropdown-activator > a {
             color: $dropdown-activator-color--hover;
         }
@@ -413,6 +421,7 @@
         }
 
         .multiselect__tags-wrap {
+
             .multiselect__tag {
                 background: $ls-color-theme;
                 color: $white;
@@ -456,6 +465,7 @@
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {
+
         .current a,
         .current a:active,
         .current a:hover {
@@ -472,7 +482,9 @@
     }
 
     .form-wizard-2 {
+
         > .steps > ul {
+
             .current .number,
             .done .number {
                 border: 2px solid $ls-color-theme;
@@ -507,16 +519,13 @@
             }
         }
 
-        &.vertical-wizard {
-            .steps > ul {
-                .done:after {
-                    background: $ls-color-theme !important;
-                }
-            }
+        &.vertical-wizard  .steps > ul .done:after {
+            background: $ls-color-theme !important;
         }
     }
 
     .form-wizard-3 > .steps > ul {
+        
         .current a {
             border-bottom: 3px solid $ls-color-theme;
             color: $ls-color-black;
