@@ -193,23 +193,17 @@ export default {
       this.showInput = !this.showInput
       this.viewContact = !this.viewContact
     },
-    updateContact () {
-      let self = this
-      axios.put('/api/admin/apps/contacts/list/' + this.contact.id, this.contact)
-        .then(function (response) {
-          self.sidePanel = false
-          self.editContact()
-          self.$parent.getContacts()
-        })
+    async updateContact () {
+      await axios.put('/api/admin/apps/contacts/list/' + this.contact.id, this.contact)
+      this.sidePanel = false
+      this.editContact()
+      this.$parent.getContacts()
     },
-    removeContact () {
-      let self = this
+    async removeContact () {
       if (confirm('Are you sure to remove ' + self.contact.name + ' Contact!')) {
-        axios.delete('/api/admin/apps/contacts/list/' + self.contact.id, {'contact': self.contact})
-          .then(function (response) {
-            self.sidePanel = false
-            self.$parent.contacts.splice(self.$parent.contacts.indexOf(self.contact), 1)
-          })
+        await axios.delete('/api/admin/apps/contacts/list/' + self.contact.id, {'contact': self.contact})
+        this.sidePanel = false
+        this.$parent.contacts.splice(self.$parent.contacts.indexOf(self.contact), 1)
       }
     },
     closeModal () {

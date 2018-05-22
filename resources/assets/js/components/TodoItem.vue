@@ -60,10 +60,7 @@ export default {
     }
   },
   mounted () {
-    let vm = this
-    window.axios.get('/api/admin/todos').then(function (response) {
-      vm.todos = response.data
-    })
+    this.getTodo()
   },
   methods: {
     async addTodo () {
@@ -97,16 +94,19 @@ export default {
       let index = vm.todos.indexOf(todo)
       vm.todos.splice(index, 1)
     },
-    toggleTodoComplete (todo) {
-      let url = '/api/admin/todos/toggleTodo/' + todo.id
-      // let vm = this
+    async getTodo () {
+      let response = await window.axios.get('/api/admin/todos')
 
-      window.axios.post(url, { completed: todo.completed }).then(function (request) {
-        console.log(request)
-      },
-      function (error) {
+      this.todos = response.data
+    },
+    async toggleTodoComplete (todo) {
+      let url = '/api/admin/todos/toggleTodo/' + todo.id
+      try {
+        let response = await window.axios.post(url, { completed: todo.completed })
+        console.log(response)
+      } catch (error) {
         console.log(error)
-      })
+      }
     }
   }
 }

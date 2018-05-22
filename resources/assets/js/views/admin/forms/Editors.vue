@@ -58,14 +58,14 @@ export default {
   },
   mounted () {
     Plugin.initPlugins(['Editors'])
-    // // var editor1 =  document.getElementsByClassName('ls-summernote')
+    // // let editor1 =  document.getElementsByClassName('ls-summernote')
     // // if (editor1) {
-    // //   var summernote = new SummerNote({ element: editor1 })
+    // //   let summernote = new SummerNote({ element: editor1 })
     // // }
-    // var editor2 = document.getElementsByClassName('ls-simplemde')[0]
+    // let editor2 = document.getElementsByClassName('ls-simplemde')[0]
 
     // if (editor2) {
-    //   var simplemde = new SimpleMDE({ element: editor2 })
+    //   let simplemde = new SimpleMDE({ element: editor2 })
     // }
   }
 }

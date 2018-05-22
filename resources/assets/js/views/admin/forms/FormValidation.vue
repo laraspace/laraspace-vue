@@ -87,7 +87,7 @@ export default {
     handleValidation () {
       // for more info visit the official plugin documentation:
       // http://docs.jquery.com/Plugins/Validation
-      var form = document.getElementById('validateForm')
+      let form = document.getElementById('validateForm')
 
       form.validate({
         errorElement: 'span', // default input error message container

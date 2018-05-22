@@ -24,28 +24,27 @@
             <div class="card-actions" />
           </div>
           <div class="card-body">
-            <table
-              id="responsive-datatable"
-              class="table table-striped table-bordered"
-              cellspacing="0"
-              width="100%"
+            <table-component
+              :data="getUsers"
+              sort-by="row.name"
+              sort-order="desc"
+              table-class="table table-bordered"
             >
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Registered On</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(user, index) in users" :key="index">
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.role }}</td>
-                  <td>{{ user.created_at }}</td>
-                  <td>
+              <table-column show="name" label="Name"/>
+              <table-column show="email" label="Email"/>
+              <table-column show="role" label="Role"/>
+              <table-column
+                show="created_at"
+                label="Registered On"
+                data-type="date:YYYY-MM-DD h:i:s"
+              />
+              <table-column
+                :sortable="false"
+                :filterable="false"
+                label=""
+              >
+                <template slot-scope="row">
+                  <div class="table__actions">
                     <router-link to="/admin/users/profile">
                       <a class="btn btn-default btn-sm">
                         <i class="icon-fa icon-fa-search"/> View
@@ -55,14 +54,14 @@
                       class="btn btn-default btn-sm"
                       data-delete
                       data-confirmation="notie"
-                      @click="deleteUser(user.id)"
+                      @click="deleteUser(row.id)"
                     >
                       <i class="icon-fa icon-fa-trash"/> Delete
                     </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                </template>
+              </table-column>
+            </table-component>
           </div>
         </div>
       </div>
@@ -70,53 +69,62 @@
   </div>
 </template>
 <script type="text/babel">
+import { TableComponent, TableColumn } from 'vue-table-component'
+
 export default {
+  components: {
+    TableComponent,
+    TableColumn
+  },
   data () {
     return {
       users: []
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      this.getUsers()
-    })
+
   },
   methods: {
-    getUsers () {
-      let vm = this
-      window.axios.get('/api/admin/users/get')
-        .then(function (response) {
-          vm.users = response.data
-        })
-        .then(() => {
-          // Plugin.initPlugins(['DataTables'])
-        }).catch(function (error) {
-          if (error) {
-            window.toastr['error']('There was an error', 'Error')
+    async getUsers ({ page, filter, sort }) {
+      try {
+        const response = await axios.get(`/api/admin/users/get?page=${page}`)
+
+        return {
+          data: response.data.data,
+          pagination: {
+            totalPages: response.data.last_page,
+            currentPage: page,
+            count: response.data.count
           }
-        })
+        }
+      } catch (error) {
+        if (error) {
+          window.toastr['error']('There was an error', 'Error')
+        }
+      }
     },
     deleteUser (id) {
-      let vm = this
+      let self = this
       window.notie.confirm({
         text: 'Are you sure?',
         cancelCallback: function () {
           window.toastr['info']('Cancel')
         },
         submitCallback: function () {
-          window.axios
-            .delete('/api/admin/users/' + id)
-            .then(function (response) {
-              vm.users = response.data
-              window.toastr['success']('User Deleted', 'Success')
-            })
-            .catch(function (error) {
-              if (error) {
-                window.toastr['error']('There was an error', 'Error')
-              }
-            })
+          self.deleteUserData(id)
         }
       })
+    },
+    async deleteUserData (id) {
+      try {
+        let response = await window.axios.delete('/api/admin/users/' + id)
+        this.users = response.data
+        window.toastr['success']('User Deleted', 'Success')
+      } catch (error) {
+        if (error) {
+          window.toastr['error']('There was an error', 'Error')
+        }
+      }
     }
   }
 }
