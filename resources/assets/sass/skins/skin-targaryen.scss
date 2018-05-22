@@ -310,6 +310,11 @@
         .dz-success-mark svg g path {
             fill: white !important;
         }
+
+        .dz-remove {
+            color: $white !important;
+            border: 2px $white solid !important;
+        }
     }
 
     //Dropdown
