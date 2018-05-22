@@ -455,6 +455,19 @@
         }
     }
 
+    // Vue-Carousel
+    .VueCarousel-dot {
+
+        .VueCarousel-dot-button {
+            background: $ls-color-gray--very-dark!important;
+        }
+
+        &.VueCarousel-dot--active {
+            .VueCarousel-dot-button {
+                background: $ls-color-theme !important;
+            }
+        }
+    }
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {
