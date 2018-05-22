@@ -57,11 +57,6 @@ import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
-// Wizard
-import VueFormWizard from './views/admin/forms/VueFormWizard.vue'
-import VueFormWizard2 from './views/admin/forms/VueFormWizard2.vue'
-import VueFormWizard3 from './views/admin/forms/VueFormWizard3.vue'
-
 // Gallery
 import ImageGallery from './views/admin/gallery/Image.vue'
 import VideoGallery from './views/admin/gallery/Video.vue'
@@ -235,8 +230,7 @@ const routes = [
         component: VueTooltips
       },
 
-      // chart
-
+      // Charts
       {
         path: 'charts/chartjs',
         component: Chartjs
@@ -293,18 +287,6 @@ const routes = [
         path: 'forms/vee-validate',
         component: VeeValidate
       },
-      {
-        path: 'forms/form-wizard',
-        component: VueFormWizard
-      },
-      {
-        path: 'forms/form-wizard-2',
-        component: VueFormWizard2
-      },
-      {
-        path: 'forms/form-wizard-3',
-        component: VueFormWizard3
-      },
 
       // Gallery
       {
@@ -315,8 +297,6 @@ const routes = [
         path: 'gallery/video',
         component: VideoGallery
       },
-
-      // Pages
 
       // Users
       {
@@ -380,13 +360,11 @@ const routes = [
     children: [
       {
         path: 'login',
-        component: Login,
-        name: 'login 1'
+        component: Login
       },
       {
         path: 'register',
-        component: Register,
-        name: 'register-1'
+        component: Register
       }
     ]
   },
@@ -396,13 +374,11 @@ const routes = [
     children: [
       {
         path: 'login-2',
-        component: Login,
-        name: 'login 2'
+        component: Login
       },
       {
         path: 'register-2',
-        component: Register,
-        name: 'register 2'
+        component: Register
       }
     ]
   },
@@ -412,13 +388,11 @@ const routes = [
     children: [
       {
         path: 'login-3',
-        component: Login,
-        name: 'login 3'
+        component: Login
       },
       {
         path: 'register-3',
-        component: Register,
-        name: 'register 3'
+        component: Register
       }
     ]
   },

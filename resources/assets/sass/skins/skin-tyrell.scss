@@ -382,6 +382,7 @@
 
     //Vue Select
     .multiselect {
+        
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
@@ -425,10 +426,27 @@
     }
 
     //DATEPICKER
-    .datepicker-dropdown {
-        color: $body-color;
-        background-color: $white;
-        border: 1px solid rgba(0, 0, 0, 0.15);
+    .vdp-datepicker__calendar .cell {
+
+        &:not(.blank):not(.disabled) {
+
+            &.day:hover,
+            &.month:hover,
+            &.year:hover {
+                border: 1px solid $ls-color-theme !important;
+            }
+        }
+        
+        &.selected {
+            background: $ls-color-theme !important;
+            color:$white;
+        }
+       
+        &.highlighted {
+            background:lighten($ls-color-theme,25%) !important;
+            color:$white;
+            
+        }
     }
     
     // Vue-Carousel
@@ -444,6 +462,7 @@
             }
         }
     }
+
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {

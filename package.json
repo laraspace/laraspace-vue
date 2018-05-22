@@ -56,6 +56,8 @@
     "vue-tabs-component": "^1.4.0",
     "vue-text-mask": "^6.0.0",
     "vue2-dropzone": "^3.0.6",
-    "vuelidate": "^0.6.1"
+    "vuejs-datepicker": "^1.2.2",
+    "vuelidate": "^0.6.1",
+    "zoom.js": "github:fat/zoom.js"
   }
 }

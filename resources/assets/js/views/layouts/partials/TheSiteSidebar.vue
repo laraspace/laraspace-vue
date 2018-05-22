@@ -164,22 +164,6 @@
               Form Layouts
             </router-link>
 
-            <router-link to="/admin/forms/validation">
-              Form Validation
-            </router-link>
-
-            <router-link to="/admin/forms/form-wizard">
-              Form Wizard
-            </router-link>
-
-            <router-link to="/admin/forms/form-wizard-2">
-              Form Wizard 2
-            </router-link>
-
-            <router-link to="/admin/forms/form-wizard-3">
-              Form Wizard 3
-            </router-link>
-
             <router-link to="/admin/forms/editors">
               Editors
             </router-link>
