@@ -126,18 +126,15 @@ export default {
     closeModal () {
       this.$refs.modal.close()
     },
-    contactStore () {
-      let self = this
-      axios.post('/api/admin/apps/contacts/list', {
+    async contactStore () {
+      let response = await axios.post('/api/admin/apps/contacts/list', {
         contact: self.contact,
         labels: self.contactLabels
       })
-        .then(function (response) {
-          self.$refs.modal.close()
-          self.$parent.contacts.push(response.data)
-          self.contact = {}
-          self.labels = {}
-        })
+      this.$refs.modal.close()
+      this.$parent.contacts.push(response.data)
+      this.contact = {}
+      this.labels = {}
     }
   }
 }

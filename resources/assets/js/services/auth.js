@@ -1,32 +1,38 @@
 import Ls from './ls'
 export default {
-  login (loginData) {
-    return axios.post('/api/auth/login', loginData).then(response => {
+  async login (loginData) {
+    try {
+      let response = await axios.post('/api/auth/login', loginData)
+
       Ls.set('auth.token', response.data.token)
       toastr['success']('Logged In!', 'Success')
       return response.data.token
-    }).catch(error => {
+    } catch (error) {
       if (error.response.status === 401) {
         toastr['error']('Invalid Credentials', 'Error')
       } else {
         // Something happened in setting up the request that triggered an Error
         console.log('Error', error.message)
       }
-    })
+    }
   },
-  logout () {
-    return axios.get('/api/auth/logout').then(response => {
+  async logout () {
+    try {
+      await axios.get('/api/auth/logout')
+
       Ls.remove('auth.token')
       toastr['success']('Logged out!', 'Success')
-    }).catch(error => {
+    } catch (error) {
       console.log('Error', error.message)
-    })
+    }
   },
-  check () {
-    return axios.get('/api/auth/check').then(response => {
+  async check () {
+    try {
+      let response = await axios.get('/api/auth/check')
+
       return !!response.data.authenticated
-    }).catch(error => {
+    } catch (error) {
       console.log('Error', error.message)
-    })
+    }
   }
 }

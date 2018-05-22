@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     handleColorGauges () {
-      var OptsColorGauge = {
+      let OptsColorGauge = {
         angle: -0.2, // The span of the gauge arc
         lineWidth: 0.2, // The line thickness
         radiusScale: 1, // Relative radius
@@ -62,7 +62,7 @@ export default {
       let elements = document.getElementsByClassName('color-gauge')
       for (let el of elements) {
         if (OptsColorGauge !== false) {
-          var colorgauge = new Gauge(el).setOptions(OptsColorGauge)
+          let colorgauge = new Gauge(el).setOptions(OptsColorGauge)
           colorgauge.maxValue = 3000 // set max gauge value
           colorgauge.setMinValue(0) // set min value
           colorgauge.animationSpeed = 32 // set animation speed (32 is default value)

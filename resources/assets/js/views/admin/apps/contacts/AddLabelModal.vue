@@ -45,14 +45,11 @@ export default {
     closeModal () {
       this.$refs.modal.close()
     },
-    labelStore () {
-      let self = this
-      axios.post('/api/admin/apps/contacts/labels', {'label': self.label})
-        .then(function (response) {
-          self.$refs.modal.close()
-          self.$parent.labels.push(response.data)
-          self.lable = {}
-        })
+    async labelStore () {
+      let response = await axios.post('/api/admin/apps/contacts/labels', {'label': self.label})
+      this.$refs.modal.close()
+      this.$parent.labels.push(response.data)
+      this.lable = {}
     }
   }
 }
