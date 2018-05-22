@@ -126,18 +126,12 @@
                     Filters
                   </button>
                   <v-dropdown-item>
-                    <a
-                      slot="dropdown-item"
-                      class="dropdown-item"
-                      href="#"
-                    >
+                    <a class="dropdown-item" href="#">
                       October
                     </a>
-                    <a
-                      slot="dropdown-item"
-                      class="dropdown-item"
-                      href="#"
-                    >
+                  </v-dropdown-item>
+                  <v-dropdown-item>
+                    <a class="dropdown-item" href="#">
                       September
                     </a>
                   </v-dropdown-item>
@@ -184,8 +178,6 @@ import { Tabs, Tab } from 'vue-tabs-component'
 import LineChart from '../../../components/chartjs/LineChart.vue'
 import BarChart from '../../../components/chartjs/BarChart.vue'
 import PieChart from '../../../components/chartjs/PieChart.vue'
-import VDropdown from '../../../components/dropdown/VDropdown'
-import VDropdownItem from '../../../components/dropdown/VDropdownItem'
 
 export default {
   components: {
@@ -193,9 +185,7 @@ export default {
     BarChart,
     PieChart,
     Tabs,
-    Tab,
-    VDropdown,
-    VDropdownItem,
+    Tab
   },
   data () {
     return {

@@ -31,7 +31,7 @@
     $dropdown-bg--hover: lighten($ls-color-theme, 10%);
     $dropdown-border-color: darken($ls-color-theme, 10%);
     $dropdown-divider-bg: $ls-color-gray--very-dark;
-    $dropdown-activator-color: $white;
+    $dropdown-activator-color: lighten($ls-color-theme, 55%);
     $dropdown-activator-color--hover: $white;
     $dropdown-header-color: $white;
     $dropdown-header-border-color: $ls-color-gray--very-dark;
@@ -153,8 +153,8 @@
             color: $header-menu-item-font-color--active;
             background-color: $header-menu-item-bg-color--active;
 
-            &:hover, 
-            &:focus, 
+            &:hover,
+            &:focus,
             &:active {
                 color: $header-menu-item-font-color--active;
                 background-color: $header-menu-item-bg-color--hover;
@@ -314,54 +314,56 @@
 
     //Dropdown
     .dropdown-group {
-        &.active > .dropdown-group-title,
-        &.active > .dropdown-group-title a {
+        &.active > .dropdown-activator > a {
             color: $dropdown-activator-color--hover;
-            background-color: $dropdown-bg--hover;
         }
 
-        &.has-child.toggle-arrow.active > .dropdown-group-title::after {
-            border-color: $dropdown-header-color transparent transparent;
-        }
-
-        a {
+        .dropdown-activator a {
             color: $dropdown-activator-color;
         }
 
-        a.active, a:hover {
-            color: $dropdown-activator-color--hover;
+        .dropdown-activator a:hover {
             background-color: $dropdown-bg--hover;
         }
 
-        .dropdown-group-items {
-            color: $ls-color-black;
+        &.has-child.toggle-arrow.active > .dropdown-activator::after {
+            border-color: $dropdown-activator-color--hover transparent transparent;
+        }
+
+        .dropdown-container {
+            color: $dropdown-activator-color;
             background-color: $dropdown-bg;
             border: 1px solid $dropdown-border-color;
-        }
 
-        .dropdown-group-items .dropdown-item-activator {
-            a::before {
+            .dropdown-group-item a {
+                color: $dropdown-activator-color;
+            }
+
+            .dropdown-group-item a.active {
+                color: $dropdown-activator-color--hover;
+            }
+
+            .dropdown-group-item a:hover {
+                background-color: $dropdown-bg--hover;
+            }
+
+            .dropdown-activator::before {
                 border-color: $dropdown-activator-color transparent transparent;
             }
+        }
 
-            &.active a {
+        .dropdown-container .dropdown-group.active .dropdown-activator {
+            a {
                 color: $dropdown-activator-color--hover;
-                background-color: $dropdown-bg--hover;
             }
 
-            &.active a:hover,
-            &.active a:focus,
-            &.active a:active {
-                background-color: $dropdown-bg--hover;
+            &::before {
+                border-color: $dropdown-activator-color--hover transparent transparent;
             }
         }
 
-        .dropdown-group-items .dropdown-item-activator.active a::before {
-            border-color: $dropdown-header-color transparent transparent;
-        }
-
-        .dropdown-item-divider{
-            border-color: $dropdown-divider-bg;
+        .dropdown-item-divider {
+            border-top: 1px solid $dropdown-divider-bg;
         }
     }
 

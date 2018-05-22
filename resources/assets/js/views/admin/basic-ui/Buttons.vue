@@ -294,7 +294,7 @@
                       2
                     </button>
                     <div class="btn-group" role="group">
-                      <v-dropdown :toggle-arrow="false">
+                      <v-dropdown :toggle-arrow="false" dropdown-light>
                         <button
                           id="btnGroupDrop1"
                           slot="activator"
@@ -307,18 +307,12 @@
                           Dropdown
                         </button>
                         <v-dropdown-item>
-                          <a
-                            slot="dropdown-item"
-                            class="dropdown-item"
-                            href="#"
-                          >
+                          <a class="dropdown-item" href="#">
                             Dropdown link
                           </a>
-                          <a
-                            slot="dropdown-item"
-                            class="dropdown-item"
-                            href="#"
-                          >
+                        </v-dropdown-item>
+                        <v-dropdown-item>
+                          <a class="dropdown-item" href="#">
                             Dropdown link
                           </a>
                         </v-dropdown-item>
@@ -396,7 +390,7 @@
                     2
                   </button>
                   <div class="btn-group" role="group">
-                    <v-dropdown :toggle-arrow="false">
+                    <v-dropdown :toggle-arrow="false" dropdown-light>
                       <button
                         id="btnGroupDrop1"
                         slot="activator"
@@ -409,18 +403,12 @@
                         Dropdown
                       </button>
                       <v-dropdown-item>
-                        <a
-                          slot="dropdown-item"
-                          class="dropdown-item"
-                          href="#"
-                        >
+                        <a class="dropdown-item" href="#">
                           Dropdown link
                         </a>
-                        <a
-                          slot="dropdown-item"
-                          class="dropdown-item"
-                          href="#"
-                        >
+                      </v-dropdown-item>
+                      <v-dropdown-item>
+                        <a class="dropdown-item" href="#">
                           Dropdown link
                         </a>
                       </v-dropdown-item>
@@ -549,14 +537,8 @@
 </template>
 <script>
 import ladda from 'ladda'
-import VDropdown from '../../../components/dropdown/VDropdown'
-import VDropdownItem from '../../../components/dropdown/VDropdownItem'
 
 export default {
-  components: {
-    VDropdown,
-    VDropdownItem,
-  },
   mounted () {
     // Ladda Buttons
     ladda.bind('div:not(.progress-demo) .ladda-button', { timeout: 2000 })
