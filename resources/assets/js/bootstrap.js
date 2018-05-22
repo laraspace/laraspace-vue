@@ -3,6 +3,9 @@ import VeeValidate from 'vee-validate'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
+import VDropdown from './components/dropdown/VDropdown'
+import VDropdownItem from './components/dropdown/VDropdownItem'
+import VDropdownDivider from './components/dropdown/VDropdownDivider'
 
 /**
  * Global css plugins
@@ -71,6 +74,13 @@ global.axios.interceptors.request.use(function (config) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // })
+
+/**
+ * Global components
+ */
+Vue.component('v-dropdown', VDropdown)
+Vue.component('v-dropdown-item', VDropdownItem)
+Vue.component('v-dropdown-divider', VDropdownDivider)
 
 require('./helpers/directives')
 

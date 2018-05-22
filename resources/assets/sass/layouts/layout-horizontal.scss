@@ -25,11 +25,11 @@
         position: relative;
         margin-right: -5px;
         
-        &.has-child.toggle-arrow .dropdown-group-title::after {
+        &.has-child.toggle-arrow .dropdown-activator::after {
             right: 20px;
             border-color: $dropdown-header-border-color transparent transparent;
         }
-        .dropdown-group-title  a {
+        .dropdown-activator  a {
             padding: 12px 40px 12px 20px; 
         }
     }

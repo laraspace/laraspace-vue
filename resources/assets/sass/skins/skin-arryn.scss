@@ -60,6 +60,7 @@
         }
 
         .action-list li {
+
             a {
                 background-color: $header-buttons-bg-color;
                 color: $header-buttons-font-color;
@@ -93,7 +94,9 @@
     }
 
     .side-nav {
+
         .collapse-group .collapse-group-item {
+
             a {
                 color: $sidebar-font-color;
 
@@ -168,6 +171,7 @@
     //----------------------------------
 
     .tabs-component.tabs-default {
+
         .tabs-component-tab {
             a {
                 color: $ls-color-black;
@@ -201,6 +205,7 @@
     //----------------------------------
 
     .tabs-component.tabs-vertical {
+
         .tabs-component-tabs {
             border-right: 1px solid $ls-color-theme !important;
 
@@ -228,6 +233,7 @@
     //----------------------------------
 
     .tabs-component.tabs-simple {
+
         .tabs-component-tabs .tabs-component-tab {
             a {
                 color: $ls-color-black;
@@ -294,6 +300,7 @@
     // Dropzone
 
     .vue-dropzone .dz-preview {
+
         .dz-details {
             background-color: $ls-color-theme !important;
             color: $white !important;
@@ -320,53 +327,57 @@
     //Dropdown
     .dropdown-group {
 
-        &.active > .dropdown-group-title,
-        &.active > .dropdown-group-title a {
+        &.active > .dropdown-activator > a {
             color: $dropdown-activator-color--hover;
-            background-color: $dropdown-bg--hover;
         }
 
-        &.has-child.toggle-arrow.active > .dropdown-group-title::after {
-            border-color: $dropdown-header-color transparent transparent;
-        }
-
-        a {
+        .dropdown-activator a {
             color: $dropdown-activator-color;
         }
 
-        a.active, a:hover {
-            color: $dropdown-activator-color--hover;
+        .dropdown-activator a:hover {
             background-color: $dropdown-bg--hover;
         }
 
-        .dropdown-group-items {
-            color: $ls-color-black;
+        &.has-child.toggle-arrow.active > .dropdown-activator::after {
+            border-color: $dropdown-activator-color--hover transparent transparent;
+        }
+
+        .dropdown-container {
+            color: $dropdown-activator-color;
             background-color: $dropdown-bg;
             border: 1px solid $dropdown-border-color;
-        }
 
-        .dropdown-group-items .dropdown-item-activator {
-            a::before {
+            .dropdown-group-item a {
+                color: $dropdown-activator-color;
+                background-color: transparent;
+            }
+
+            .dropdown-group-item a.active {
+                color: $dropdown-activator-color--hover;
+            }
+
+            .dropdown-group-item a:hover {
+                background-color: $dropdown-bg--hover;
+            }
+
+            .dropdown-activator::before {
                 border-color: $dropdown-activator-color transparent transparent;
             }
+        }
 
-            &.active a {
+        .dropdown-container .dropdown-group.active .dropdown-activator {
+            a {
                 color: $dropdown-activator-color--hover;
-                background-color: $dropdown-bg--hover;
             }
 
-            &.active a:hover,
-            &.active a:focus,
-            &.active a:active {
-                background-color: $dropdown-bg--hover;
+            &::before {
+                border-color: $dropdown-activator-color--hover transparent transparent;
             }
         }
 
-        .dropdown-group-items .dropdown-item-activator.active a::before {
-            border-color: $dropdown-header-color transparent transparent;
-        }
-        .dropdown-item-divider{
-            border-color: $dropdown-divider-bg;
+        .dropdown-item-divider {
+            border-top: 1px solid $dropdown-divider-bg;
         }
     }
 
@@ -415,6 +426,7 @@
         }
 
         .multiselect__tags-wrap {
+
             .multiselect__tag {
                 background: $ls-color-theme;
                 color: $white;
@@ -471,6 +483,7 @@
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {
+
         .current a,
         .current a:active,
         .current a:hover {
@@ -487,7 +500,9 @@
     }
 
     .form-wizard-2 {
+
         > .steps > ul {
+
             .current .number,
             .done .number {
                 border: 2px solid $ls-color-theme;
@@ -522,16 +537,13 @@
             }
         }
 
-        &.vertical-wizard {
-            .steps > ul {
-                .done:after {
-                    background: $ls-color-theme !important;
-                }
-            }
+        &.vertical-wizard  .steps > ul .done:after {
+            background: $ls-color-theme !important;
         }
     }
 
     .form-wizard-3 > .steps > ul {
+        
         .current a {
             border-bottom: 3px solid $ls-color-theme;
             color: $ls-color-black;

@@ -40,7 +40,6 @@
             display: inline-block;
             font-size: 14px;
             line-height: 14px;
-            padding: 11px;
         }
 
         a:hover {
@@ -51,7 +50,7 @@
     }
 
     .avatar {
-        padding: 0;
+        padding: 0 !important;
         background-color: transparent;
     }
 
@@ -63,11 +62,16 @@
     .dropdown-group {
         background-color: $header-buttons-bg-color;
 
+        .dropdown-activator a {
+            padding: 11px;
+        }
+
         i {
             text-align: center;
             width: auto;
         }
-        &.has-child > .dropdown-group-title::after{
+       
+        &.has-child > .dropdown-activator::after{
             content: none;
         }
 
@@ -82,11 +86,6 @@
             margin-bottom: 0;
         }
     }
-
-    .dropdown-divider {
-        background-color: $dropdown-divider-bg;
-    }
-
 }
 
 @media(max-width: $small-breakpoint-below) {
