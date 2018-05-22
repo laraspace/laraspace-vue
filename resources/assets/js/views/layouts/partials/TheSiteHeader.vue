@@ -30,14 +30,18 @@
             <i class="icon-fa icon-fa-plus"/>
           </a>
           <v-dropdown-item>
-            <a slot="dropdown-item" href="#">
+            <a href="#">
               <i class="icon-fa icon-fa-edit"/> New Post
             </a>
-            <a slot="dropdown-item" href="#">
+          </v-dropdown-item>
+          <v-dropdown-item>
+            <a href="#">
               <i class="icon-fa icon-fa-tag"/> New Category
             </a>
-            <v-dropdown-item-divider slot="dropdown-item"/>
-            <a slot="dropdown-item" href="#">
+          </v-dropdown-item>
+          <v-dropdown-divider/>
+          <v-dropdown-item>
+            <a href="#">
               <i class="icon-fa icon-fa-star"/> Separated link
             </a>
           </v-dropdown-item>
@@ -54,25 +58,21 @@
           >
             <i class="icon-fa icon-fa-bell"/>
           </a>
-          <v-dropdown-item class-name="notification-dropdown">
-            <h6 slot="dropdown-item" class="dropdown-header">
+          <div class="notification-dropdown">
+            <h6 class="dropdown-header">
               Notifications
             </h6>
-            <a
-              slot="dropdown-item"
-              class="dropdown-item"
-              href="#"
-            >
-              <i class="icon-fa icon-fa-user"/> New User was Registered
-            </a>
-            <a
-              slot="dropdown-item"
-              class="dropdown-item"
-              href="#"
-            >
-              <i class="icon-fa icon-fa-comment"/> A Comment has been posted.
-            </a>
-          </v-dropdown-item>
+            <v-dropdown-item>
+              <a class="dropdown-item" href="#">
+                <i class="icon-fa icon-fa-user"/> New User was Registered
+              </a>
+            </v-dropdown-item>
+            <v-dropdown-item>
+              <a class="dropdown-item" href="#">
+                <i class="icon-fa icon-fa-comment"/> A Comment has been posted.
+              </a>
+            </v-dropdown-item>
+          </div>
         </v-dropdown>
       </li>
       <li>
@@ -88,15 +88,12 @@
             <img src="/assets/img/avatars/avatar.png" alt="Avatar">
           </a>
           <v-dropdown-item>
-            <router-link
-              slot="dropdown-item"
-              class="dropdown-item"
-              to="/admin/settings"
-            >
+            <router-link class="dropdown-item" to="/admin/settings">
               <i class="icon-fa icon-fa-cogs"/> Settings
             </router-link>
+          </v-dropdown-item>
+          <v-dropdown-item>
             <a
-              slot="dropdown-item"
               href="#"
               class="dropdown-item"
               @click.prevent="logout"
@@ -111,16 +108,8 @@
 </template>
 <script type="text/babel">
 import Auth from '../../../services/auth'
-import VDropdown from '../../../components/dropdown/VDropdown'
-import VDropdownItem from '../../../components/dropdown/VDropdownItem'
-import VDropdownItemDivider from '../../../components/dropdown/VDropdownItemDivider'
 
 export default {
-  components: {
-    VDropdown,
-    VDropdownItem,
-    VDropdownItemDivider
-  },
   data () {
     return {
       header: 'header'
