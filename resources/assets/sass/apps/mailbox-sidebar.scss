@@ -70,18 +70,15 @@
             opacity: 1 !important;
         }
     }
-
-    &.is-open {
-        transform: translateX(0);
-
-        .left-sidebar-btn {
-            left: 0;
-            right: auto;
-            opacity: 0;
-        }
-    }
 }
 
-.is-open + .mailbox-content {
-    padding-left: 200px;
+
+.mailbox.is-open .mailbox-sidebar{
+    transform: translateX(0);
+
+    .left-sidebar-btn {
+        left: 0;
+        right: auto;
+        opacity: 0;
+    }
 }

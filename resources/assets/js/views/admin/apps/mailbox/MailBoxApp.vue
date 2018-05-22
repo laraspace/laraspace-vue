@@ -8,11 +8,14 @@
         <li class="breadcrumb-item active">Mailbox</li>
       </ol>
     </div>
-    <div class="mailbox">
+    <div :class="{'is-open': isLeftSidebarVisible}" class="mailbox">
+
       <mailbox-sidebar
         :selected-category="selectedCategory"
         :categories="categories"
+        :is-left-sidebar-visible="isLeftSidebarVisible"
         @selected="selectCategory"
+        @toggle="isLeftSidebarVisible = !isLeftSidebarVisible"
       />
 
       <div class="mailbox-content">
@@ -120,12 +123,14 @@
 
         <mailbox-footer />
 
-        <transition name="fade">
-          <mailbox-modal v-show="isModalVisible" :is-visible="isModalVisible" @close="closeMailModal" />
-        </transition>
 
-        <mailbox-compose-modal ref="compose"/>
       </div>
+
+      <transition name="fade">
+        <mailbox-modal v-show="isModalVisible" :is-visible="isModalVisible" @close="closeMailModal" />
+      </transition>
+
+      <mailbox-compose-modal ref="compose"/>
     </div>
   </div>
 </template>
@@ -165,7 +170,7 @@ export default {
         { id: 5, name: 'Trash', slug: 'trash', icon: 'icon-fa icon-fa-trash' }
       ],
       isModalVisible: false,
-      isLeftSidebarVisible: false,
+      isLeftSidebarVisible: true,
       selectedMails: [],
       selectedCategory: 'inbox',
       searchText: ''

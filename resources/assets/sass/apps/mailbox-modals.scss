@@ -2,23 +2,19 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 200px);
     max-width: 100%;
-    left: 200px;
     background: white;
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    z-index: 30;
-    transition: right 0.5s;
-
-    &.is-visible {
-        right: 0px;
-    }
+    z-index: 5;
+    padding-top: 54px;
+    width: 100%;
 
     .mail-header {
-        position: relative;
+        position: absolute;
         padding: 10px 20px;
+        width: 100%;
+        top: 0;
+        left: 0;
 
         h3 {
             margin: 0;
@@ -57,7 +53,10 @@
     }
 
     .mail-body {
+        overflow-y: auto;
+        overflow-x: hidden;
         padding: 10px 20px;
+        height: 100%;
 
         .mail-subject {
             margin: 0;
@@ -103,6 +102,10 @@
             .message-heading-right {
                 display: inline;
             }
+
+            .time {
+                margin-right: 5px;
+            }
         }
 
 
@@ -125,4 +128,9 @@
     .btn-icon.btn-sm {
         padding: 0.5rem;
     }
+}
+
+.mailbox.is-open .mailbox-modal {
+    left: 200px;
+    width: calc(100% - 200px);
 }

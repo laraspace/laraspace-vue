@@ -1,9 +1,9 @@
 <template>
-  <div :class="['mailbox-modal', { 'is-visible': isVisible }]" >
+  <div class="mailbox-modal">
     <div class="mail-header">
       <div class="mail-actions">
         <ul class="mail-action-list">
-          <li class="action">
+          <li class="action" @click="closeModal">
             <a href="#" ><i class="icon-fa icon-fa-arrow-left"></i></a>
           </li>
           <li class="action">
@@ -20,145 +20,8 @@
     </div>
     <div class="mail-body">
       <h3 class="mail-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+      <message></message>
 
-      <div class="message">
-        <div class="message-heading">
-          <div class="message-from">
-            <a class="avatar">
-              <img
-                src="/assets/img/avatars/avatar.png"
-                alt="avatar"
-                class="avatar-img"
-              >
-            </a>
-            <div class="from-text">
-              <div class="name">John Deo</div>
-              <div class="email">
-                <a href="#">
-                  johndeo@gmail.com
-                </a>
-                to
-                <a href="#">
-                  me
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="message-heading-right">
-            <span>3 minute ago</span>
-            <button class="btn btn-light btn-icon btn-sm">
-              <i class="icon-fa icon-fa-star-o"/>
-            </button>
-            <button class="btn btn-light btn-icon btn-sm">
-              <i class="icon-fa icon-fa-mail-reply"/>
-            </button>
-          </div>
-        </div>
-        <div class="message-content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.
-        </div>
-        <div class="message-attachment">
-          <p>
-            <i class="icon-fa icon-fa-paperclip"/>
-            Attachments |
-            <a href="#">Download All</a>
-          </p>
-          <ul>
-            <li>
-              <span class="name">abc.mp4</span>
-              <span class="size">(2.50mb)</span>
-              <button class="btn btn-light btn-icon btn-sm">
-                <i class="icon-fa icon-fa-cloud-download"/>
-              </button>
-            </li>
-            <li>
-              <span class="name">image.jpeg</span>
-              <span class="size">(1.50mb)</span>
-              <button class="btn btn-light btn-icon btn-sm">
-                <i class="icon-fa icon-fa-cloud-download"/>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="message">
-        <div class="message-heading">
-          <div class="message-from">
-            <a class="avatar">
-              <img
-                src="/assets/img/avatars/avatar.png"
-                alt="avatar"
-                class="avatar-img"
-              >
-            </a>
-            <div class="from-text">
-              <span class="name">John Deo</span>
-              <div class="email">
-                <a href="#">
-                  johndeo@gmail.com
-                </a>
-                to
-                <a href="#">
-                  me
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="message-heading-right">
-            <span>3 minute ago</span>
-            <button class="btn btn-light btn-icon btn-sm">
-              <i class="icon-fa icon-fa-star-o"/>
-            </button>
-            <button class="btn btn-light btn-icon btn-sm">
-              <i class="icon-fa icon-fa-mail-reply"/>
-            </button>
-          </div>
-        </div>
-        <div class="message-content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.
-        </div>
-      </div>
-      <div class="message">
-        <div class="message-heading">
-          <div class="message-from">
-            <a class="avatar">
-              <img
-                src="/assets/img/avatars/avatar.png"
-                alt="avatar"
-                class="avatar-img"
-              >
-            </a>
-            <span class="name">John Deo</span>
-            <div class="email">
-              <span>
-                <a href="#">
-                  johndeo@gmail.com
-                </a>
-                to
-                <a href="#">
-                  me
-                </a>
-              </span>
-            </div>
-          </div>
-
-          <div class="message-heading-right">
-            <span>3 minute ago</span>
-            <button class="btn btn-light btn-icon btn-sm">
-              <i class="icon-fa icon-fa-star-o"/>
-            </button>
-            <button class="btn btn-light btn-icon btn-sm">
-              <i class="icon-fa icon-fa-mail-reply"/>
-            </button>
-          </div>
-        </div>
-        <div class="message-content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores.
-        </div>
-      </div>
       <div class="commnet">
         <textarea
           id="reply"
@@ -175,11 +38,55 @@
 </template>
 
 <script>
+import Message from './Message'
+
 export default {
+  components: {
+    Message
+  },
+  data () {
+    return {
+      messages: [
+        {
+          avatar: '/assets/img/avatars/avatar.png',
+          name: 'John Deo',
+          email: 'johndeo@gmail.com',
+          time: '3 minutes ago',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
+          attachments: [
+            {name: 'abc.mp4', size: '2.50mb'},
+            {name: 'image.jpeg', size: '1.50mb'}
+          ]
+        },
+        {
+          avatar: '/assets/img/avatars/avatar.png',
+          name: 'John Deo',
+          email: 'johndeo@gmail.com',
+          time: '3 minutes ago',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
+          attachments: [
+            {name: 'abc.mp4', size: '2.50mb'},
+            {name: 'image.jpeg', size: '1.50mb'}
+          ]
+        },
+        {
+          avatar: '/assets/img/avatars/avatar.png',
+          name: 'John Deo',
+          email: 'johndeo@gmail.com',
+          time: '3 minutes ago',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
+          attachments: [
+            {name: 'abc.mp4', size: '2.50mb'},
+            {name: 'image.jpeg', size: '1.50mb'}
+          ]
+        }
+      ]
+    }
+  },
   props: {
     isVisible: {
       type: Boolean,
-      require: true,
+      required: true,
       default: false
     }
   },

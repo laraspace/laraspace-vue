@@ -1,5 +1,5 @@
 <template>
-  <div :class="['mailbox-sidebar', {'is-open': isSidebarVisible}]">
+  <div class="mailbox-sidebar">
     <button class="btn btn-theme btn-sm btn-block" @click="openComposeModal">Compose</button>
 
     <ul class="sidebar-menu mt-4">
@@ -17,13 +17,13 @@
       </li>
     </ul>
 
-    <a class="left-sidebar-btn" @click="toggleSidebar">
+    <a class="left-sidebar-btn" @click="$emit('toggle')">
       <i
-        v-show="!isSidebarVisible"
+        v-show="!isLeftSidebarVisible"
         class="icon-fa icon-fa-angle-right"
       />
       <i
-        v-show="isSidebarVisible"
+        v-show="isLeftSidebarVisible"
         class="icon-fa icon-fa-angle-left"
       />
     </a>
@@ -40,17 +40,13 @@ export default {
     selectedCategory: {
       type: String,
       required: true
-    }
-  },
-  data () {
-    return {
-      isSidebarVisible: true
+    },
+    isLeftSidebarVisible: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
-    toggleSidebar () {
-      this.isSidebarVisible = !this.isSidebarVisible
-    },
     selectCategory (category) {
       this.$emit('selected', category.slug)
     },
