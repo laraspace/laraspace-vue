@@ -1,30 +1,34 @@
 <template>
-  <form id="loginForm" @submit.prevent="validateBeforeSubmit">
-    <div :class="{'form-group' : true }">
+  <form @submit.prevent="validateBeforeSubmit">
+    <div :class="['form-group', {'is-invalid': $v.loginData.email.$error}]">
       <input
-        v-validate
-        v-model="loginData.email"
-        type="email"
-        class="form-control form-control-danger"
-        placeholder="Enter email"
-        name="email"
-        data-vv-rules="required|email"
+        :class="{ 'is-invalid': $v.loginData.email.$error }"
+        v-model.trim="loginData.email"
+        class="form-control"
+        placeholder="Enter Email"
+        @input="$v.loginData.email.$touch()"
       >
+      <span v-if="!$v.loginData.email.required" class="invalid-feedback">
+        Email is Required
+      </span>
+      <span v-if="!$v.loginData.email.email" class="invalid-feedback">
+        Please verify your email
+      </span>
     </div>
-    <div :class="{'form-group' : true , 'is-invalid': errors.has('password') }">
+    <div :class="['form-group', {'is-invalid': $v.loginData.password.$error}]">
       <input
-        v-validate
-        v-model="loginData.password"
-        :class="{'is-invalid': errors.has('password') }"
-        type="password"
+        :class="{ 'is-invalid': $v.loginData.password.$error }"
+        v-model.trim="loginData.password"
         class="form-control"
         placeholder="Enter Password"
-        name="password"
-        data-vv-rules="required"
+        @input="$v.loginData.password.$touch()"
       >
-      <div v-show="errors.has('password')" class="invalid-feedback">
-        {{ errors.first('password') }}
-      </div>
+      <span v-if="!$v.loginData.password.required" class="invalid-feedback">
+        Password is required.
+      </span>
+      <span v-if="!$v.loginData.password.minLength" class="invalid-feedback">
+        Password must have at least {{ $v.loginData.password.$params.minLength.min }} letters.
+      </span>
     </div>
     <div class="other-actions row">
       <div class="col-sm-6">
@@ -51,6 +55,7 @@
 </template>
 
 <script type="text/babel">
+import {required, minLength, email} from 'vuelidate/lib/validators'
 import Auth from '../../services/auth'
 
 export default {
@@ -63,11 +68,22 @@ export default {
       }
     }
   },
+  validations: {
+    loginData: {
+      password: {
+        required,
+        minLength: minLength(6)
+      },
+      email: {
+        required,
+        email
+      }
+    }
+  },
   methods: {
-    validateBeforeSubmit (e) {
-      this.$validator.validateAll()
-
-      if (!this.errors.any()) {
+    validateBeforeSubmit () {
+      this.$v.$touch()
+      if (!this.$v.$error) {
         Auth.login(this.loginData).then((res) => {
           if (res) {
             this.$router.push('/admin/dashboard/basic')
