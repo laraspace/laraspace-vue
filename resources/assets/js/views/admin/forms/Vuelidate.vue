@@ -35,7 +35,7 @@
               Field is required
             </span>
             <span v-if="!$v.name.minLength" class="help-block help-block-error">
-              Name must have at least { {$v.name.$params.minLength.min} } letters.
+              Name must have at least {{ $v.name.$params.minLength.min }} letters.
             </span>
           </div>
         </div>
@@ -50,7 +50,7 @@
           >
           <div v-if="$v.age.$error">
             <span v-if="!$v.age.between" class="help-block help-block-error">
-              Must be between { {$v.age.$params.between.min} } and { {$v.age.$params.between.max} }
+              Must be between {{ $v.age.$params.between.min }} and {{ $v.age.$params.between.max }}
             </span>
           </div>
         </div>
@@ -143,10 +143,9 @@
   </div>
 </template>
 <script type="text/babel">
-import { validationMixin } from 'vuelidate'
 import { required, sameAs, minLength, between } from 'vuelidate/lib/validators'
+
 export default {
-  mixins: [validationMixin],
   data () {
     return {
       name: '',
@@ -180,7 +179,7 @@ export default {
 
         // simulate async call, fail for all logins with even length
 
-        let response = await window.axios.post('/api/admin/vuelidate/email-exist', { email: value })
+        let response = await window.axios.post('/api/email-exist', { email: value })
         return response.data
       }
     }

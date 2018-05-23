@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router'
-import VeeValidate from 'vee-validate'
+import { validationMixin } from 'vuelidate'
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
@@ -75,16 +75,19 @@ global.axios.interceptors.request.use(function (config) {
 //     key: 'your-pusher-key'
 // })
 
+require('./helpers/directives')
+
 /**
- * Global components
+ * Global use of mixins
+ */
+Vue.mixin(validationMixin)
+/**
+ * Global use of components
  */
 Vue.component('v-dropdown', VDropdown)
 Vue.component('v-dropdown-item', VDropdownItem)
 Vue.component('v-dropdown-divider', VDropdownDivider)
 
-require('./helpers/directives')
-
 Vue.use(VueRouter)
-Vue.use(VeeValidate)
 Vue.use(VuePrism)
 Vue.use(VTooltip)
