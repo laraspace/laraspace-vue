@@ -28,7 +28,7 @@
               :data="getUsers"
               sort-by="row.name"
               sort-order="desc"
-              table-class="table table-bordered"
+              table-class="table"
             >
               <table-column show="name" label="Name"/>
               <table-column show="email" label="Email"/>
@@ -68,6 +68,7 @@
     </div>
   </div>
 </template>
+
 <script type="text/babel">
 import { TableComponent, TableColumn } from 'vue-table-component'
 
@@ -80,9 +81,6 @@ export default {
     return {
       users: []
     }
-  },
-  mounted () {
-
   },
   methods: {
     async getUsers ({ page, filter, sort }) {
