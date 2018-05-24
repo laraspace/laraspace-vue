@@ -3,16 +3,23 @@
     width: 150px !important;
     height: 130px !important;
 }
-// Apply Me button
+
+.color-pickers-demo {
+    position: relative;
+    padding-top: 20px;
+}
+
+// Demo Div
 .demo-div {
-    position: fixed;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    height: 60px;
-    width: 90px;
-    padding: 10px;
-    right: 0px;
-    top: 300px;
+    position: absolute;
+    height: 15px;
+    width: 190px;
+    text-indent: -999px;
+    right: 0;
+    width: 100%;
+    top: -10px;
     background: #194D33;
     color: white;
+    border-radius: 3px;
 }
+

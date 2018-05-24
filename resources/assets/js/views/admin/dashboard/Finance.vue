@@ -192,8 +192,5 @@ export default {
       header: 'header'
     }
   },
-  mounted () {
-    // Plugin.initPlugins(['EasyPieChart'])
-  }
 }
 </script>

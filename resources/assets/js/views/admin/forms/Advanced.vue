@@ -56,14 +56,14 @@
         <div class="row">
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Default Date Picker</h5>
-            <date-picker-demo input-class="form-control" placeholder="Select Date"/>
+            <datepicker input-class="form-control" placeholder="Select Date"/>
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Formate Date Picker</h5>
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">Result</label>
               <div class="col-sm-10">
-                <date-picker-demo :format="format" input-class="form-control"/>
+                <datepicker :format="format" input-class="form-control"/>
               </div>
             </div>
             <div class="form-group row">
@@ -82,7 +82,7 @@
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Inline Date Picker</h5>
-            <date-picker-demo :inline="true"/>
+            <datepicker :inline="true"/>
           </div>
         </div>
         <div class="row">
@@ -91,19 +91,19 @@
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">From</label>
               <div class="col-sm-10">
-                <date-picker-demo input-class="form-control" @selected="highlightFrom"/>
+                <datepicker input-class="form-control" @selected="highlightFrom"/>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">To</label>
               <div class="col-sm-10">
-                <date-picker-demo input-class="form-control" @selected="highlightTo"/>
+                <datepicker input-class="form-control" @selected="highlightTo"/>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">Result</label>
               <div class="col-sm-10">
-                <date-picker-demo :highlighted="highlighted" input-class="form-control"/>
+                <datepicker :highlighted="highlighted" input-class="form-control"/>
               </div>
             </div>
           </div>
@@ -112,19 +112,19 @@
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">From</label>
               <div class="col-sm-10">
-                <date-picker-demo input-class="form-control" @selected="disableFrom"/>
+                <datepicker input-class="form-control" @selected="disableFrom"/>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">To</label>
               <div class="col-sm-10">
-                <date-picker-demo input-class="form-control" @selected="disableTo"/>
+                <datepicker input-class="form-control" @selected="disableTo"/>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">Result</label>
               <div class="col-sm-10">
-                <date-picker-demo :disabled-dates="disabledDates" input-class="form-control" />
+                <datepicker :disabled-dates="disabledDates" input-class="form-control" />
               </div>
             </div>
           </div>
@@ -144,56 +144,15 @@
         </h6>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Photoshope</h5>
-            <color-pickers-demo :colorpicker="'photoshope'" />
-            <div :style="{ 'background': advcolors }" class="demo-div">
-              Applied on Me
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Swatches</h5>
-            <color-pickers-demo :colorpicker="'swatches'" />
-          </div>
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Sketch</h5>
-            <color-pickers-demo :colorpicker="'sketch'"/>
-          </div>
-        </div>
-        <div class="row mt-5">
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Chrome</h5>
-            <color-pickers-demo :colorpicker="'chrome'"/>
-          </div>
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Compact</h5>
-            <color-pickers-demo :colorpicker="'compact'"/>
-          </div>
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Material</h5>
-            <color-pickers-demo :colorpicker="'material'"/>
-          </div>
-        </div>
-        <div class="row mt-5">
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Slider</h5>
-            <color-pickers-demo :colorpicker="'slider'"/>
-          </div>
-          <div class="col-sm-4">
-            <h5 class="section-semi-title">Grayscale</h5>
-            <color-pickers-demo :colorpicker="'grayscale'"/>
-          </div>
-          <div class="col-sm-4"/>
-        </div>
+        <color-pickers-demo />
       </div>
     </div>
   </div>
 </template>
 <script type="text/babel">
-import ColorPickersDemo from '../../../components/advanced-elements/ColorPickers.vue'
-import MultiSelectDemo from '../../../components/advanced-elements/MultiSelect.vue'
-import TextMaskDemo from '../../../components/advanced-elements/TextMask.vue'
+import ColorPickersDemo from './advanced-elements/ColorPickersDemo.vue'
+import MultiSelectDemo from './advanced-elements/MultiSelectDemo.vue'
+import TextMaskDemo from './advanced-elements/TextMaskDemo.vue'
 import Datepicker from 'vuejs-datepicker'
 import Multiselect from 'vue-multiselect'
 
@@ -202,7 +161,7 @@ export default {
     'color-pickers-demo': ColorPickersDemo,
     'multi-select-demo': MultiSelectDemo,
     'text-mask-demo': TextMaskDemo,
-    'date-picker-demo': Datepicker,
+    Datepicker,
     'multi-select': Multiselect
   },
   data () {

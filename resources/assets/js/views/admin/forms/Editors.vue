@@ -50,23 +50,9 @@
 </template>
 
 <script type="text/babel">
-import Plugin from '../../../helpers/plugin'
-
 export default {
   components: {
     'summernote': require('summernote/dist/summernote')
-  },
-  mounted () {
-    Plugin.initPlugins(['Editors'])
-    // // let editor1 =  document.getElementsByClassName('ls-summernote')
-    // // if (editor1) {
-    // //   let summernote = new SummerNote({ element: editor1 })
-    // // }
-    // let editor2 = document.getElementsByClassName('ls-simplemde')[0]
-
-    // if (editor2) {
-    //   let simplemde = new SimpleMDE({ element: editor2 })
-    // }
   }
 }
 </script>
