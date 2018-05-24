@@ -11,9 +11,9 @@
 
     //SIDEBAR SECTION
     $sidebar-bg-color: $ls-color-theme;
-    $sidebar-font-color: $white;
+    $sidebar-font-color: lighten($ls-color-theme, 55%);
     $sidemenu-item-bg-color--hover: lighten($ls-color-theme, 10%);
-    $sidemenu-item-bg-color--active: darken($ls-color-theme, 7%);
+    $sidemenu-item-bg-color--active: darken($ls-color-theme,10%);
     $sidemenu-item-font-color: lighten($ls-color-theme, 55%);
     $sidemenu-item-font-color--active: $white;
     $sidemenu-arrow-color: $ls-color-gray--very-dark;
@@ -92,9 +92,10 @@
     }
 
     .side-nav {
+
         .collapse-group .collapse-group-item {
             a {
-                color: $sidebar-font-color;
+                color: $sidemenu-item-font-color;
 
                 &:hover {
                     background-color: $sidemenu-item-bg-color--hover;
@@ -110,14 +111,15 @@
 
                 .collapse-group-items {
                     background-color: darken($sidemenu-submenu-bg, 5%);
+                }
 
-                    .collapse-group-items {
-                        background-color: darken($sidemenu-submenu-bg, 8%);
-                    }
+                .collapse-group-items .collapse-group-items {
+                    background-color: darken($sidemenu-submenu-bg, 8%);
                 }
 
                 a.active {
                     color: $sidemenu-item-font-color--active;
+                    background-color: $sidemenu-item-bg-color--active;
                 }
             }
         }
@@ -389,7 +391,6 @@
 
     //SELECT 2
     .multiselect {
-        
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
@@ -434,9 +435,7 @@
 
     //DATEPICKER
     .vdp-datepicker__calendar .cell {
-
         &:not(.blank):not(.disabled) {
-
             &.day:hover,
             &.month:hover,
             &.year:hover {
@@ -445,21 +444,20 @@
         }
 
         &.selected {
-            color:$white;
+            color: $white;
             background: $ls-color-theme !important;
         }
 
         &.highlighted {
-            color:$white;
-            background:lighten($ls-color-theme,25%) !important;
+            color: $white;
+            background: lighten($ls-color-theme, 25%) !important;
         }
     }
-    
+
     // Vue-Carousel
     .VueCarousel-dot {
-
         .VueCarousel-dot-button {
-            background:  $ls-color-gray--very-dark!important;
+            background: $ls-color-gray--very-dark !important;
         }
 
         &.VueCarousel-dot--active {
