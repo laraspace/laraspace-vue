@@ -4,8 +4,8 @@
       <h3 class="page-title">Vue Dropzone</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
-        <li class="breadcrumb-item active">Modals</li>
+        <li class="breadcrumb-item"><a href="#">Components</a></li>
+        <li class="breadcrumb-item active">Vue Dropzone</li>
       </ol>
     </div>
     <div class="card">

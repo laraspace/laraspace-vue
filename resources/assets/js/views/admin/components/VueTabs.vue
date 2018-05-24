@@ -5,7 +5,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Components</a></li>
-        <li class="breadcrumb-item active">Vue-Tabs</li>
+        <li class="breadcrumb-item active">Vue Tabs</li>
       </ol>
     </div>
     <div class="card">

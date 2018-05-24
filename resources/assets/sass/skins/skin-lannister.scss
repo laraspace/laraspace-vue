@@ -93,34 +93,33 @@
         background-color: $sidebar-bg-color;
     }
 
-    .side-nav {
-        .collapse-group .collapse-group-item {
-            a {
-                color: $sidebar-font-color;
+    .side-nav .collapse-group .collapse-group-item {
+        a {
+            color: $sidemenu-item-font-color;
 
-                &:hover {
-                    background-color: $sidemenu-item-bg-color--hover;
-                }
+            &:hover {
+                background-color: $sidemenu-item-bg-color--hover;
             }
+        }
 
-            &.active > .collapse-item-title > a {
-                color: $sidemenu-item-font-color--active;
-            }
+        &.active > .collapse-item-title > a {
+            color: $sidemenu-item-font-color--active;
+        }
+
+        .collapse-group-items {
+            background-color: $sidemenu-submenu-bg;
 
             .collapse-group-items {
-                background-color: $sidemenu-submenu-bg;
+                background-color: darken($sidemenu-submenu-bg, 5%);
+            }
 
-                .collapse-group-items {
-                    background-color: darken($sidemenu-submenu-bg, 5%);
+            .collapse-group-items .collapse-group-items {
+                background-color: darken($sidemenu-submenu-bg, 8%);
+            }
 
-                    .collapse-group-items {
-                        background-color: darken($sidemenu-submenu-bg, 8%);
-                    }
-                }
-
-                a.active {
-                    color: $sidemenu-item-font-color--active;
-                }
+            a.active {
+                color: $sidemenu-item-font-color--active;
+                background-color: $sidemenu-item-bg-color--hover;
             }
         }
     }
@@ -337,7 +336,6 @@
 
     //SELECT 2
     .multiselect {
-        
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
@@ -451,32 +449,29 @@
 
     //DATEPICKER
     .vdp-datepicker__calendar .cell {
-
-         &:not(.blank):not(.disabled) {
-
+        &:not(.blank):not(.disabled) {
             &.day:hover,
             &.month:hover,
             &.year:hover {
                 border: 1px solid $ls-color-theme !important;
             }
         }
-        
+
         &.selected {
-            color:$white;
+            color: $white;
             background: $ls-color-theme !important;
         }
-        
+
         &.highlighted {
-            color:$white;
-            background:lighten($ls-color-theme,25%) !important;
+            color: $white;
+            background: lighten($ls-color-theme, 25%) !important;
         }
     }
-    
+
     // Vue-Carousel
     .VueCarousel-dot {
-
         .VueCarousel-dot-button {
-            background:  $ls-color-gray--very-dark!important;
+            background: $ls-color-gray--very-dark !important;
         }
 
         &.VueCarousel-dot--active {
@@ -485,7 +480,6 @@
             }
         }
     }
-
 
     //FORM WIZARDS
     .form-wizard-1 > .steps {

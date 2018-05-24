@@ -4,7 +4,7 @@
       <h3 class="page-title">Modals</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
+        <li class="breadcrumb-item"><a href="#">Components</a></li>
         <li class="breadcrumb-item active">Modals</li>
       </ol>
     </div>

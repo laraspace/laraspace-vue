@@ -25,17 +25,17 @@ import LayoutFront from './views/layouts/LayoutFront.vue'
 // Basic UI
 import Buttons from './views/admin/basic-ui/Buttons.vue'
 import Cards from './views/admin/basic-ui/Cards.vue'
-import VueTabs from './views/admin/basic-ui/VueTabs.vue'
 import Typography from './views/admin/basic-ui/Typography.vue'
 import Tables from './views/admin/basic-ui/Tables.vue'
 import ProgressBar from './views/admin/basic-ui/ProgressBars.vue'
 
 // Components
 import Notifications from './views/admin/components/Notifications.vue'
-import VueTable from './views/admin/components/VueTables.vue'
-import VueDropzone from './views/admin/components/VueDropzone.vue'
-import VueCarousel from './views/admin/components/VueCarousel.vue'
 import SweetModals from './views/admin/components/SweetModals.vue'
+import VueCarousel from './views/admin/components/VueCarousel.vue'
+import VueDropzone from './views/admin/components/VueDropzone.vue'
+import VueTable from './views/admin/components/VueTables.vue'
+import VueTabs from './views/admin/components/VueTabs.vue'
 import VueTooltips from './views/admin/components/VueTooltips.vue'
 
 // Charts

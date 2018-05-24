@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-sm-12">
             <h5 class="section-semi-title">Basic</h5>
-            <carousel :min-swipe-distance="2" :page-page-custom="[[480, 2],[768, 3]]">
+            <carousel :min-swipe-distance="2" :per-page-custom="[[480, 2],[768, 3]]">
               <slide>
                 <img src="/assets/img/demo/gallery/1.jpg" class="img-fluid">
               </slide>
@@ -50,7 +50,7 @@
         <div class="row mb-5">
           <div class="col-sm-12">
             <h5 class="section-semi-title">Responsive</h5>
-            <carousel :scroll-per-page="true" :page-page-custom="[[320, 1],[768, 2],[992, 3]]">
+            <carousel :scroll-per-page="true" :per-page-custom="[[320, 1],[768, 2],[992, 3]]">
               <slide>
                 <img src="/assets/img/demo/gallery/11.jpg" class="img-fluid">
               </slide>

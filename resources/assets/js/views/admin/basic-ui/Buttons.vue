@@ -4,7 +4,7 @@
       <h3 class="page-title">Buttons</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
+        <li class="breadcrumb-item"><a href="#">Basic UI</a></li>
         <li class="breadcrumb-item active">Buttons</li>
       </ol>
     </div>
