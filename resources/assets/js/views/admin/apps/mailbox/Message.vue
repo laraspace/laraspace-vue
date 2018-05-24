@@ -1,5 +1,5 @@
 <template>
-  <div class="message">
+  <div :class="{'collapsed': message.collapsed}" class="message" @click="openCollapsedMessage">
     <div class="message-heading">
       <div class="message-from">
         <a class="avatar">
@@ -32,24 +32,29 @@
         </button>
       </div>
     </div>
-    <div class="message-content">
-      {{ message.description }}
+    <div class="message-content" v-show="!message.collapsed">
+      <div class="message-description">
+        {{ message.description }}
+      </div>
+      <div class="message-attachment">
+        <p>
+          <i class="icon-fa icon-fa-paperclip"/>
+          Attachments |
+          <a href="#">Download All</a>
+        </p>
+        <ul>
+          <li v-for="attachment in message.attachments" :key="attachment.name">
+            <span class="name">{{ attachment.name }}</span>
+            <span class="size">({{ attachment.size }})</span>
+            <button class="btn btn-light btn-icon btn-sm">
+              <i class="icon-fa icon-fa-cloud-download"/>
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="message-attachment">
-      <p>
-        <i class="icon-fa icon-fa-paperclip"/>
-        Attachments |
-        <a href="#">Download All</a>
-      </p>
-      <ul>
-        <li v-for="attachment in message.attachments" :key="attachment.name">
-          <span class="name">{{ attachment.name }}</span>
-          <span class="size">({{ attachment.size }})</span>
-          <button class="btn btn-light btn-icon btn-sm">
-            <i class="icon-fa icon-fa-cloud-download"/>
-          </button>
-        </li>
-      </ul>
+    <div class="message-excerpt" v-show="message.collapsed">
+      {{ message.excerpt }}
     </div>
   </div>
 </template>
@@ -60,6 +65,13 @@ export default {
     message: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    openCollapsedMessage () {
+      if (this.message.collapsed) {
+        this.$emit('open', this.message.id)
+      }
     }
   }
 }

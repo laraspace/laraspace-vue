@@ -24,14 +24,48 @@
         display: inline-block;
         position: relative;
         margin-right: -5px;
-        
-        &.has-child.toggle-arrow .dropdown-activator::after {
-            right: 20px;
-            border-color: $dropdown-header-border-color transparent transparent;
-        }
+
         .dropdown-activator  a {
-            padding: 12px 40px 12px 20px; 
+            padding: 12px 40px 12px 20px;
         }
+    }
+
+    .dropdown-group.active > .dropdown-activator > a {
+        color: $dropdown-header-color;
+    }
+
+    .dropdown-activator a {
+        padding: 12px 20px;
+        display: inline-block;
+        color: $dropdown-link-color;
+        font-size: 14px;
+
+        &:hover {
+            background-color: $sidemenu-item-bg-color--hover;
+        }
+    }
+
+    .dropdown-group.has-child.toggle-arrow > .dropdown-activator::after {
+        position: absolute;
+        width: 0;
+        height: 0;
+        right: 20px;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        margin-top: -5px;
+        border-color: #bababa transparent transparent;
+        border-style: solid;
+        border-width: 5px 4px 0;
+        top: 25px;
+    }
+
+    .dropdown-group.has-child.toggle-arrow.active > .dropdown-activator::after {
+        border-color: $dropdown-header-color transparent transparent;
+    }
+
+    i {
+        width: 25px;
     }
 }
 

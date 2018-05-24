@@ -10,7 +10,7 @@
         >
       </a>
       <ul class="action-list">
-        <li>
+        <li class="action-item">
           <router-link to="/admin/dashboard/basic">Admin Dashboard</router-link>
         </li>
       </ul>

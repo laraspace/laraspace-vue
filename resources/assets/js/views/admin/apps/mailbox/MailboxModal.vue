@@ -4,25 +4,26 @@
       <div class="mail-actions">
         <ul class="mail-action-list">
           <li class="action" @click="closeModal">
-            <a href="#" ><i class="icon-fa icon-fa-arrow-left"></i></a>
+            <a href="#" v-tooltip.top-center="'Go Back'"><i class="icon-fa icon-fa-arrow-left"></i></a>
           </li>
           <li class="action">
-            <a href="#" ><i class="icon-fa icon-fa-exclamation"></i></a>
+            <a href="#" v-tooltip.top-center="'Report'"><i class="icon-fa icon-fa-exclamation"></i></a>
           </li>
           <li class="action">
-            <a href="#" ><i class="icon-fa icon-fa-trash"></i></a>
+            <a href="#" v-tooltip.top-center="'Trash'"><i class="icon-fa icon-fa-trash"></i></a>
           </li>
           <li class="action">
-            <a href="#" ><i class="icon-fa icon-fa-envelope-open icon-fa-fw"></i></a>
+            <a href="#" v-tooltip.top-center="'Forward'"><i class="icon-fa icon-fa-envelope-open icon-fa-fw"></i></a>
           </li>
         </ul>
       </div>
     </div>
     <div class="mail-body">
       <h3 class="mail-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-      <message></message>
 
-      <div class="commnet">
+      <message v-for="message in messages" :message="message" :key="message.id" @open="changeCollapse"/>
+
+      <div class="message-reply">
         <textarea
           id="reply"
           name="comment"
@@ -44,45 +45,6 @@ export default {
   components: {
     Message
   },
-  data () {
-    return {
-      messages: [
-        {
-          avatar: '/assets/img/avatars/avatar.png',
-          name: 'John Deo',
-          email: 'johndeo@gmail.com',
-          time: '3 minutes ago',
-          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
-          attachments: [
-            {name: 'abc.mp4', size: '2.50mb'},
-            {name: 'image.jpeg', size: '1.50mb'}
-          ]
-        },
-        {
-          avatar: '/assets/img/avatars/avatar.png',
-          name: 'John Deo',
-          email: 'johndeo@gmail.com',
-          time: '3 minutes ago',
-          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
-          attachments: [
-            {name: 'abc.mp4', size: '2.50mb'},
-            {name: 'image.jpeg', size: '1.50mb'}
-          ]
-        },
-        {
-          avatar: '/assets/img/avatars/avatar.png',
-          name: 'John Deo',
-          email: 'johndeo@gmail.com',
-          time: '3 minutes ago',
-          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
-          attachments: [
-            {name: 'abc.mp4', size: '2.50mb'},
-            {name: 'image.jpeg', size: '1.50mb'}
-          ]
-        }
-      ]
-    }
-  },
   props: {
     isVisible: {
       type: Boolean,
@@ -90,11 +52,69 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      messages: [
+        {
+          id: 1,
+          avatar: '/assets/img/avatars/avatar.png',
+          name: 'John Deo',
+          email: 'johndeo@gmail.com',
+          time: '3 minutes ago',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
+          excerpt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          attachments: [
+            {name: 'abc.mp4', size: '2.50mb'},
+            {name: 'image.jpeg', size: '1.50mb'}
+          ],
+          collapsed: false
+        },
+        {
+          id: 2,
+          avatar: '/assets/img/avatars/avatar.png',
+          name: 'John Deo',
+          email: 'johndeo@gmail.com',
+          time: '3 minutes ago',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
+          excerpt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          attachments: [
+            {name: 'abc.mp4', size: '2.50mb'},
+            {name: 'image.jpeg', size: '1.50mb'}
+          ],
+          collapsed: true
+        },
+        {
+          id: 3,
+          avatar: '/assets/img/avatars/avatar.png',
+          name: 'John Deo',
+          email: 'johndeo@gmail.com',
+          time: '3 minutes ago',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quia esse inventore animi eligendi optio temporibus veniam asperiores? Dolorem non quos error, aut est libero nisi veniam provident ratione.',
+          excerpt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          attachments: [
+            {name: 'abc.mp4', size: '2.50mb'},
+            {name: 'image.jpeg', size: '1.50mb'}
+          ],
+          collapsed: true
+        }
+      ]
+    }
+  },
+
   methods: {
     closeModal () {
       if (this.isVisible) {
         this.$emit('close')
       }
+    },
+    changeCollapse (messageId) {
+      this.messages.map((message) => {
+        if (message.id === messageId) {
+          message.collapsed = false
+        } else {
+          message.collapsed = true
+        }
+      })
     }
   }
 }

@@ -62,7 +62,7 @@ import ImageGallery from './views/admin/gallery/Image.vue'
 import VideoGallery from './views/admin/gallery/Video.vue'
 
 // Apps
-import TodosApp from './views/admin/apps/TodosApp.vue'
+import TodosApp from './views/admin/apps/todos/TodosApp.vue'
 import MailboxApp from './views/admin/apps/mailbox/MailboxApp.vue'
 import ContactsApp from './views/admin/apps/contacts/ContactsApp.vue'
 

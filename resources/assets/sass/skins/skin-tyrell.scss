@@ -376,7 +376,7 @@
     .btn-theme {
         @include button-variant($ls-color-theme, $ls-color-theme);
 
-        $color: $ls-color-secondary;
+        color: $white;
     }
 
     .btn-theme-outline {
@@ -390,7 +390,7 @@
 
     //Vue Select
     .multiselect {
-        
+
         .multiselect__option--highlight {
             background: $ls-color-theme;
             color: $white;
@@ -444,19 +444,19 @@
                 border: 1px solid $ls-color-theme !important;
             }
         }
-        
+
         &.selected {
             background: $ls-color-theme !important;
             color:$white;
         }
-       
+
         &.highlighted {
             background:lighten($ls-color-theme,25%) !important;
             color:$white;
-            
+
         }
     }
-    
+
     // Vue-Carousel
     .VueCarousel-dot {
 

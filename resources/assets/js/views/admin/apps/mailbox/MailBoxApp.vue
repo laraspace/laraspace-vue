@@ -21,7 +21,7 @@
       <div class="mailbox-content">
         <div class="mailbox-content-header">
           <div class="mailbox-actions">
-            <div class="custom-control custom-checkbox" style="display:inline-block">
+            <div class="custom-control custom-checkbox mailbox-action" style="display:inline-block">
               <input
                 id="customCheckAll"
                 v-model="selectAll"
@@ -31,24 +31,36 @@
               <label class="custom-control-label" for="customCheckAll"/>
             </div>
 
-            <button
-              id="dropdownFolderMenu"
-              class="btn btn-light dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Actions
-            </button>
+            <v-dropdown active-url="/admin/dashboard" dropdown-light class="mailbox-action">
+              <a slot="activator" href="#">
+                <button
+                  class="btn btn-light dropdown-toggle"
+                  type="button"
+                >
+                  Actions
+                </button>
+              </a>
+
+              <v-dropdown-item>
+                <router-link to="/admin/dashboard/basic">
+                  Edit
+                </router-link>
+              </v-dropdown-item>
+              <v-dropdown-item>
+                <router-link to="/admin/dashboard/ecommerce">
+                  Delete
+                </router-link>
+              </v-dropdown-item>
+              <v-dropdown-item>
+                <router-link to="/admin/dashboard/finance">
+                  Forward
+                </router-link>
+              </v-dropdown-item>
+            </v-dropdown>
 
             <button
-              id="dropdownTagMenu"
               type="button"
-              class="btn btn-icon btn-light"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+              class="btn btn-icon btn-light mailbox-action"
             >
               <i class="icon-fa icon-fa-tag"/>
             </button>
@@ -122,8 +134,6 @@
         </table>
 
         <mailbox-footer />
-
-
       </div>
 
       <transition name="fade">
@@ -176,11 +186,6 @@ export default {
       searchText: ''
     }
   },
-  watch: {
-    selectedCategory () {
-      this.isModalVisible = false
-    }
-  },
   computed: {
     selectAll: {
       get: function () {
@@ -214,6 +219,11 @@ export default {
 
         return categoryValid && nameValid
       })
+    }
+  },
+  watch: {
+    selectedCategory () {
+      this.isModalVisible = false
     }
   },
   mounted () {

@@ -9,10 +9,10 @@
         @input="$v.loginData.email.$touch()"
       >
       <span v-if="!$v.loginData.email.required" class="invalid-feedback">
-        Email is Required
+        Email is required
       </span>
       <span v-if="!$v.loginData.email.email" class="invalid-feedback">
-        Please verify your email
+        Email is invalid
       </span>
     </div>
     <div :class="['form-group', {'is-invalid': $v.loginData.password.$error}]">
@@ -24,7 +24,7 @@
         @input="$v.loginData.password.$touch()"
       >
       <span v-if="!$v.loginData.password.required" class="invalid-feedback">
-        Password is required.
+        Password is required
       </span>
       <span v-if="!$v.loginData.password.minLength" class="invalid-feedback">
         Password must have at least {{ $v.loginData.password.$params.minLength.min }} letters.
@@ -83,6 +83,7 @@ export default {
   methods: {
     validateBeforeSubmit () {
       this.$v.$touch()
+
       if (!this.$v.$error) {
         Auth.login(this.loginData).then((res) => {
           if (res) {

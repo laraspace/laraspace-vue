@@ -42,6 +42,10 @@
             line-height: 14px;
         }
 
+        .action-item {
+            padding: 11px;
+        }
+
         a:hover {
             background-color: $header-buttons-bg-color--hover;
             color: $header-font-color;
@@ -70,7 +74,7 @@
             text-align: center;
             width: auto;
         }
-       
+
         &.has-child > .dropdown-activator::after{
             content: none;
         }
