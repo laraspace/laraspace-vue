@@ -33,6 +33,10 @@
         margin: 0;
         padding: 0 4px;
 
+        &.action-item a{
+            padding: 11px;
+        }
+
         a {
             background-color: $header-buttons-bg-color;
             border-radius: 2px;
@@ -40,10 +44,6 @@
             display: inline-block;
             font-size: 14px;
             line-height: 14px;
-        }
-
-        .action-item {
-            padding: 11px;
         }
 
         a:hover {
