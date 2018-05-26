@@ -32,7 +32,7 @@
             </div>
 
             <v-dropdown active-url="/admin/dashboard" dropdown-light class="mailbox-action">
-              <a slot="activator" href="#">
+              <a slot="activator" href="#" @click.prevent>
                 <button
                   class="btn btn-light dropdown-toggle"
                   type="button"
@@ -228,6 +228,7 @@ export default {
   },
   mounted () {
     this.bootstrapNotifs()
+    this.hideSidebarOnMobile()
   },
   methods: {
     openMailModal (mail) {
@@ -260,6 +261,14 @@ export default {
           this.$set(category, 'unread', 0)
         }
       })
+    },
+    hideSidebarOnMobile () {
+      let self = this
+      window.onresize = function () {
+        if (window.innerWidth <= 992) {
+          self.isLeftSidebarVisible = false
+        }
+      }
     }
   }
 }

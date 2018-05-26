@@ -1,7 +1,8 @@
 .mailbox .mailbox-sidebar {
     padding-top: 20px;
     transition: 0.5s;
-    border-right: 1px solid #e4eaec;
+    border-right: 1px solid $ls-color-gray--light;
+    background: $white;
     position: absolute;
     height: 100%;
     width: 200px;
@@ -80,5 +81,12 @@
         left: 0;
         right: auto;
         opacity: 0;
+    }
+}
+@media(max-width:$medium-breakpoint) {
+    .mailbox.is-open .mailbox-sidebar .left-sidebar-btn {
+        left: auto;
+        right: -20px;
+        opacity: 1;
     }
 }

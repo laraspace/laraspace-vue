@@ -32,7 +32,7 @@
         </button>
       </div>
     </div>
-    <div class="message-content" v-show="!message.collapsed">
+    <div v-show="!message.collapsed" class="message-content" >
       <div class="message-description">
         {{ message.description }}
       </div>
@@ -53,7 +53,7 @@
         </ul>
       </div>
     </div>
-    <div class="message-excerpt" v-show="message.collapsed">
+    <div v-show="message.collapsed" class="message-excerpt">
       {{ message.excerpt }}
     </div>
   </div>

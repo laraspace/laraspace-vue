@@ -11,61 +11,61 @@
 
         .mailbox-filters {
             float: right;
-
-            .mail-search {
-                display: inline-block;
-            }
+        }
+        .mailbox-filters    .mail-search {
+            display: inline-block;
         }
     }
 
     .table {
-        
+
+        font-size: 15px;
+
+
         th {
             height: 50px;
         }
-
-        font-size: 15px;
 
         tr {
             cursor: pointer;
             background-color: #F9F9F9;
             border-bottom: 1px solid #d9d9d9;
+        }
 
-            td {
-                padding-top: 12px;
-                padding-bottom: 12px;
-                vertical-align: middle;
-                border: none;
+        tr td {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            vertical-align: middle;
+            border: none;
+            max-width: 220px;
 
-                .content {
-                    max-width: 1400px;
-                    line-height: 1.2;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-
-                .content-name {
-                    font-weight: bold;
-                    margin-bottom: 5px;
-                }
-
-                .content-subject {
-                    color: hsl(0, 0%, 45%);
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
-
+            .content {
+                max-width: 1400px;
+                line-height: 1.2;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
-            &:hover {
-                background-color: #efefef !important;
+            .content-name {
+                font-weight: bold;
+                margin-bottom: 5px;
             }
 
-            &.read {
-                background-color:$white;
+            .content-subject {
+                color: hsl(0, 0%, 45%);
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
+        }
+
+        tr:hover {
+            background-color: #efefef !important;
+        }
+
+        tr.read {
+            background-color:$white;
         }
     }
 
@@ -142,4 +142,10 @@
 
 .mailbox.is-open .mailbox-content {
     padding-left: 200px;
+}
+
+@media(max-width:$medium-breakpoint) {
+    .mailbox.is-open .mailbox-content {
+        padding-left: 0;
+    }
 }
