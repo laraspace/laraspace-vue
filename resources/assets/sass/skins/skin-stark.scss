@@ -91,6 +91,17 @@
         }
     }
 
+    //HEDER BOTTOM
+    .header-nav {
+        
+        .dropdown-group.dropdown-group.active > .dropdown-activator > a {
+            color: $dropdown-header-color;
+        }
+        .dropdown-group.has-child.toggle-arrow.active > .dropdown-activator::after {
+            border-color: $dropdown-header-color transparent transparent;
+        }
+    }   
+
     //SIDEBAR/NAV
 
     .sidebar-left {
@@ -325,6 +336,7 @@
 
     //Dropdown
     .dropdown-group {
+
         &.active > .dropdown-activator > a {
             color: $dropdown-activator-color--hover;
         }
@@ -364,6 +376,7 @@
         }
 
         .dropdown-container .dropdown-group.active .dropdown-activator {
+            
             a {
                 color: $dropdown-activator-color--hover;
             }
@@ -494,7 +507,7 @@
         }
 
         .btn-favorite .active {
-            color: $mailbox-font-color;
+            color: $ls-color-theme;
         }
     }
 

@@ -4,16 +4,24 @@
       <div class="mail-actions">
         <ul class="mail-action-list">
           <li class="action" @click="closeModal">
-            <a href="#" v-tooltip.top-center="'Go Back'"><i class="icon-fa icon-fa-arrow-left"></i></a>
+            <a v-tooltip.top-center="'Go Back'" href="#">
+              <i class="icon-fa icon-fa-arrow-left"/>
+            </a>
           </li>
           <li class="action">
-            <a href="#" v-tooltip.top-center="'Report'"><i class="icon-fa icon-fa-exclamation"></i></a>
+            <a v-tooltip.top-center="'Report'" href="#">
+              <i class="icon-fa icon-fa-exclamation"/>
+            </a>
           </li>
           <li class="action">
-            <a href="#" v-tooltip.top-center="'Trash'"><i class="icon-fa icon-fa-trash"></i></a>
+            <a v-tooltip.top-center="'Trash'" href="#">
+              <i class="icon-fa icon-fa-trash"/>
+            </a>
           </li>
           <li class="action">
-            <a href="#" v-tooltip.top-center="'Forward'"><i class="icon-fa icon-fa-envelope-open icon-fa-fw"></i></a>
+            <a v-tooltip.top-center="'Forward'" href="#">
+              <i class="icon-fa icon-fa-envelope-open icon-fa-fw"/>
+            </a>
           </li>
         </ul>
       </div>
@@ -23,14 +31,15 @@
 
       <message v-for="message in messages" :message="message" :key="message.id" @open="changeCollapse"/>
 
-      <div class="message-reply">
+      <div class="message-reply form-group-row">
         <textarea
           id="reply"
           name="comment"
+          class="form-control"
           cols="75"
           rows="4"
         />
-        <button class="btn btn-primary">
+        <button class="btn btn-primary mt-2">
           Reply
         </button>
       </div>

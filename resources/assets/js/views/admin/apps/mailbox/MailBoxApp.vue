@@ -228,6 +228,7 @@ export default {
   },
   mounted () {
     this.bootstrapNotifs()
+    this.leftSidebarVisibility()
   },
   methods: {
     openMailModal (mail) {
@@ -260,6 +261,14 @@ export default {
           this.$set(category, 'unread', 0)
         }
       })
+    },
+    leftSidebarVisibility () {
+      let self = this
+      window.onresize = function () {
+        if (window.innerWidth <= 992) {
+          self.isLeftSidebarVisible = false
+        }
+      }
     }
   }
 }

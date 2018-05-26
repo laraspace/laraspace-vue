@@ -107,3 +107,23 @@
         border: 0 !important;
     }
 }
+@media(max-width: 700px) {
+    .card.with-tabs .tabs-component {
+
+        .tabs-component-tabs {
+            position: relative;
+            display: block;
+            margin-right: -41px;
+            border-radius: 0;
+            top: -21px;
+            margin-left: -1px;
+        }
+
+        .tabs-component-panels {
+            // border: 0 !important;
+        }
+        .tabs-component-tab:not(:last-child) {
+            border-bottom: dotted 1px $ls-color-gray--dark;
+        }
+    }
+}
