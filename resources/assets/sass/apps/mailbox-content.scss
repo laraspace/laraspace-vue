@@ -18,18 +18,20 @@
     }
 
     .table {
-        
+
+        font-size: 15px;
+
+
         th {
             height: 50px;
         }
-
-        font-size: 15px;
 
         tr {
             cursor: pointer;
             background-color: #F9F9F9;
             border-bottom: 1px solid #d9d9d9;
         }
+
         tr td {
             padding-top: 12px;
             padding-bottom: 12px;
@@ -97,11 +99,6 @@
         .active {
             color: $ls-color-primary;
         }
-    }
-    
-    .custom-control-label::before,
-    .custom-control-label::after{
-        top: -0.75rem;
     }
 
     .user-avatar {
