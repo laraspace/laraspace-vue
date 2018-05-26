@@ -10,21 +10,27 @@
       </ol>
     </div>
     <div class="card">
-      <div class="card-body">
+      <div class="card-body my-gallery">
         <gallery
           :images="images"
           :index="imgIndex"
+          :options="{closeOnEscape: true,
+                     closeOnSlideClick: true,
+                     closeOnSwipeUpOrDown: true,
+                     startSlideshow: true,
+                     fullScreen: false
+          }"
           @close="imgIndex = null"
         />
-        <div class="my-gallery image-gallery">
+        <div class="image-gallery">
           <div class="row">
             <figure
               v-for="(image, bindex) in images"
               :key="bindex"
-              class="col-lg-3 col-md-6 col-xs-12"
+              class="col-xl-3 col-lg-4 col-md-6 col-xs-12"
             >
               <img
-                :style="{ backgroundImage: 'url(' + image + ')', width: '480px', height:'280px' }"
+                :style="{ backgroundImage: 'url(' + image + ')',width:'480px', height:'360px' } "
                 class="demo image img-fluid"
                 @click="imgIndex = bindex"
               >

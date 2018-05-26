@@ -29,7 +29,7 @@
 </head>
 <body class="layout-default skin-default">
 <div id="app" class="site-wrapper">
-    <div class="mobile-menu-overlay" @click.prevent="onOverlayClick"></div>
+    <div class="mobile-menu-overlay" @click.prevent="$utils.toggleSidebar"></div>
     <transition name="fade" mode="out-in">
         <router-view></router-view>
     </transition>
