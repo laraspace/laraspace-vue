@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     onNavToggle () {
-      this.$layout.toggleSidebar()
+      this.$utils.toggleSidebar()
     },
     logout () {
       Auth.logout().then(() => {

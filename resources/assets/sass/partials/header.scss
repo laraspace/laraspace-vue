@@ -44,6 +44,7 @@
             display: inline-block;
             font-size: 14px;
             line-height: 14px;
+            padding: 11px;
         }
 
         a:hover {
@@ -65,10 +66,6 @@
 
     .dropdown-group {
         background-color: $header-buttons-bg-color;
-
-        .dropdown-activator a {
-            padding: 11px;
-        }
 
         i {
             text-align: center;

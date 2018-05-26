@@ -40,6 +40,12 @@
     $code-bg: $ls-color-gray--light;
     $code-color: $ls-color-theme;
 
+    //MAILBOX
+    $mailbox-sidebar-menu-item: $ls-color-theme;
+    $mailbox-font-color:$ls-color-black;
+    $mailbox-page-link: $white;
+    $mailbox-page-link-bg: $ls-color-theme;
+
     //HEADER
     .site-header {
         background-color: $header-bg-color;
@@ -472,77 +478,46 @@
     }
 
 
-    //FORM WIZARDS
-    .form-wizard-1 > .steps {
-        .current a,
-        .current a:active,
-        .current a:hover {
-            background-color: $ls-color-theme;
-            color: $white;
+    //MAILBOX
+    .mailbox .mailbox-content {
+
+        .table tr td .content-subject {
+            color: $mailbox-font-color;
         }
 
-        .done a,
-        .done a:active,
-        .done a:hover {
-            background: lighten($ls-color-theme, 30%);
-            color: $white;
-        }
-    }
+        .mailbox-content-footer {
 
-    .form-wizard-2 {
-        > .steps > ul {
-            .current .number,
-            .done .number {
-                border: 2px solid $ls-color-theme;
+            .page-link {
+                color: $mailbox-font-color;
             }
 
-            .done .number {
-                background: $ls-color-theme;
-                color: $white;
-            }
-
-            .current:before,
-            .current:after,
-            .done:after,
-            .done:before {
-                background: $ls-color-theme;
-            }
-
-            .current.last.done:after {
-                background: $ls-color-theme !important;
+            .active .page-link {
+                background-color: $mailbox-page-link-bg;
+                border-color: $mailbox-page-link-bg;
+                color: $mailbox-page-link;
             }
         }
 
-        &.icon-wizard > .steps > ul {
-            .current i,
-            .done i {
-                border: 2px solid $ls-color-theme;
-            }
-
-            .done i {
-                background: $ls-color-theme;
-                color: $white;
-            }
-        }
-
-        &.vertical-wizard {
-            .steps > ul {
-                .done:after {
-                    background: $ls-color-theme !important;
-                }
-            }
+        .btn-favorite .active {
+            color: $mailbox-font-color;
         }
     }
 
-    .form-wizard-3 > .steps > ul {
-        .current a {
-            border-bottom: 3px solid $ls-color-theme;
-            color: $ls-color-black;
+    .mailbox-modal .mail-body .message-heading.email a {
+        color: $ls-color-black;
+    }
+
+    .mailbox .mailbox-sidebar {
+
+        .sidebar-menu li.active {
+            border-left: 5px solid $ls-color-theme;
+        }
+        .sidebar-menu li a{
+            color: $mailbox-font-color;
         }
 
-        .done a {
-            border-bottom: 2px solid lighten($ls-color-theme, 30%);
-            color: $ls-color-black;
+        .left-sidebar-btn {
+            color: $mailbox-font-color;
         }
     }
 

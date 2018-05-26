@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     max-width: 100%;
-    background: white;
+    background: $white;
     height: 100%;
     z-index: 5;
     padding-top: 54px;
@@ -36,11 +36,11 @@
             .action a {
                 display: inline-block;
                 font-size: 16px;
-                color: #bababa;
+                color: $ls-color-gray--very-dark;
                 padding: 5px 10px;
 
                 &:hover {
-                    color: #55595c;
+                    color: $ls-color-black--light;
                 }
             }
 

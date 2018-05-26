@@ -1,4 +1,9 @@
 export default {
+  toggleSidebar () {
+    let icon = document.getElementsByClassName('hamburger')[0]
+    document.body.classList.toggle('sidebar-open')
+    icon.classList.toggle('is-active')
+  },
 
   addClass (el, className) {
     if (el.classList) el.classList.add(className)

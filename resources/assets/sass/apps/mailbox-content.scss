@@ -19,6 +19,7 @@
     }
 
     .table {
+        
         th {
             height: 50px;
         }
@@ -62,7 +63,7 @@
             }
 
             &.read {
-                background-color: white;
+                background-color:$white;
             }
 
         }
@@ -93,7 +94,7 @@
 
     .btn-favorite {
         font-size: 23px;
-        color: #bababa;
+        color: $ls-color-gray--very-dark;
 
         .active {
             color: $ls-color-primary;
@@ -133,7 +134,7 @@
 
     .custom-control-label::before {
         background-color: transparent;
-        border: 1px solid #bababa;
+        border: 1px solid $ls-color-gray--very-dark;
     }
 
 }

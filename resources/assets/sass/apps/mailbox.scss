@@ -1,5 +1,5 @@
 .mailbox {
-    background-color: white;
+    background-color: $white;
     position: relative;
     min-height: 800px;
 
@@ -34,7 +34,7 @@
         position: fixed;
         top: 60px;
         z-index: 10;
-        background: white;
+        background: $white;
         left: 82px;
   }
 
@@ -66,7 +66,7 @@
         position: fixed;
         top: 60px;
         z-index: 10;
-        background: white;
+        background: $white;
         left: -160px;
 
         &.is-open {
