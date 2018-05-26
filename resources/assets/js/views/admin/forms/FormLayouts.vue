@@ -106,8 +106,8 @@
           <div class="card-body">
             <form>
               <div class="form-group row">
-                <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                <div class="col-sm-10">
+                <label for="firstName" class="col-sm-4 col-form-label">First Name</label>
+                <div class="col-sm-8">
                   <input
                     id="firstName"
                     type="text"
@@ -117,8 +117,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                <div class="col-sm-10">
+                <label for="lastName" class="col-sm-4 col-form-label">Last Name</label>
+                <div class="col-sm-8">
                   <input
                     id="lastName"
                     type="text"
@@ -128,8 +128,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
+                <label for="email" class="col-sm-4 col-form-label">Email</label>
+                <div class="col-sm-8">
                   <input
                     id="email"
                     type="email"
@@ -139,8 +139,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="password" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
+                <label for="password" class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
                   <input
                     id="password"
                     type="password"

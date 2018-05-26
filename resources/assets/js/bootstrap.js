@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import { validationMixin } from 'vuelidate'
+
 import Ls from './services/ls'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'

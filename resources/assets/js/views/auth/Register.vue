@@ -7,6 +7,7 @@
         v-model.trim.lazy="registerData.email"
         class="form-control"
         placeholder="Enter Email"
+        type="email"
         @change="$v.registerData.email.$touch()"
       >
       <span v-if="!$v.registerData.email.required" class="invalid-feedback">
@@ -25,6 +26,7 @@
         v-model.trim="registerData.password"
         class="form-control"
         placeholder="Enter Password"
+        type="password"
         @change="$v.registerData.password.$touch()"
       >
       <span v-if="!$v.registerData.password.required" class="invalid-feedback">
@@ -40,6 +42,7 @@
         v-model.trim="registerData.password_confirmation"
         class="form-control"
         placeholder="Retype Password"
+        type="password"
         @change="$v.registerData.password_confirmation.$touch()"
       >
       <span v-if="!$v.registerData.password_confirmation.sameAsPassword" class="invalid-feedback">
