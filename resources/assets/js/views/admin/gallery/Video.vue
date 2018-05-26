@@ -30,11 +30,11 @@
               :key="vindex"
               class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12"
             >
-              <div
-                :style="{ backgroundImage: 'url(' + image.poster + ')', width: '480px', height:'225px' }"
+              <img
+                :src="image.poster"
                 class="demo image img-fluid"
                 @click="VidIndex = vindex"
-              />
+              >
             </figure>
           </div>
         </div>

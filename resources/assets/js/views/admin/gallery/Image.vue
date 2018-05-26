@@ -30,7 +30,7 @@
               class="col-xl-3 col-lg-4 col-md-6 col-xs-12"
             >
               <img
-                :style="{ backgroundImage: 'url(' + image + ')',width:'480px', height:'360px' } "
+                :src="image"
                 class="demo image img-fluid"
                 @click="imgIndex = bindex"
               >
