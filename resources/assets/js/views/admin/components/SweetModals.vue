@@ -14,7 +14,7 @@
           <div class="card-header">
             <h6>Simple Modals</h6>
           </div>
-          <div class="card-body">
+          <div class="card-body buttons-demo">
             <div class="row">
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Basic Alerts</h5>
@@ -313,7 +313,7 @@
           <div class="card-header">
             <h6>Tabbed Modals</h6>
           </div>
-          <div class="card-body">
+          <div class="card-body buttons-demo">
             <div class="row">
               <div class="col-sm-6">
                 <h5 class="section-semi-title">Basic</h5>

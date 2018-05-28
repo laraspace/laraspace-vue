@@ -68,13 +68,11 @@ export default {
     return {
       dropzoneOptions1: {
         url: 'https://httpbin.org/post',
-        thumbnailWidth: 150,
         maxFilesize: 0.5,
         headers: { 'My-Awesome-Header': 'header value' }
       },
       dropzoneOptions2: {
         url: 'https://httpbin.org/post',
-        thumbnailWidth: 150,
         maxFilesize: 0.5,
         addRemoveLinks: true,
         dictCancelUpload: 'Cancel File',
@@ -82,7 +80,6 @@ export default {
       },
       dropzoneOptions3: {
         url: 'https://httpbin.org/post',
-        thumbnailWidth: 150,
         maxFilesize: 0.5,
         addRemoveLinks: true,
         dictCancelUpload: 'Cancel File',

@@ -6,6 +6,7 @@
         v-model.trim="loginData.email"
         class="form-control"
         placeholder="Enter Email"
+        type="email"
         @input="$v.loginData.email.$touch()"
       >
       <span v-if="!$v.loginData.email.required" class="invalid-feedback">
@@ -21,6 +22,7 @@
         v-model.trim="loginData.password"
         class="form-control"
         placeholder="Enter Password"
+        type="password"
         @input="$v.loginData.password.$touch()"
       >
       <span v-if="!$v.loginData.password.required" class="invalid-feedback">
