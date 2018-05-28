@@ -114,7 +114,7 @@
             </router-link>
 
             <router-link to="/admin/charts/gauges">
-              Gauges
+              Gauge Charts
             </router-link>
           </v-collapse-item>
 

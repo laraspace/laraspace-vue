@@ -4,8 +4,8 @@
       <h3 class="page-title">Chart JS</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Components</a></li>
-        <li class="breadcrumb-item active">Charts</li>
+        <li class="breadcrumb-item"><a href="#">Charts</a></li>
+        <li class="breadcrumb-item active">Chart JS</li>
       </ol>
     </div>
     <div class="row">

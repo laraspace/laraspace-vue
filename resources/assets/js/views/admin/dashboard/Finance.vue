@@ -173,7 +173,6 @@
 </template>
 
 <script type="text/babel">
-import 'easy-pie-chart/dist/easypiechart'
 import { Tabs, Tab } from 'vue-tabs-component'
 import LineChart from '../../../components/chartjs/LineChart.vue'
 import BarChart from '../../../components/chartjs/BarChart.vue'

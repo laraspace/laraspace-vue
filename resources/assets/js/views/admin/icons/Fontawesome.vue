@@ -1,11 +1,11 @@
 <template>
   <div class="main-content">
     <div class="page-header">
-      <h4 class="page-title">Font Awesome Icons</h4>
+      <h4 class="page-title">Font Awesome</h4>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Icons</a></li>
-        <li class="breadcrumb-item"><a href="#">Font Awesome Icons</a></li>
+        <li class="breadcrumb-item"><a href="#">Font Awesome</a></li>
       </ol>
     </div>
     <div class="row">
