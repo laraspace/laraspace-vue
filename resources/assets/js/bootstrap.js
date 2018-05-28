@@ -6,6 +6,8 @@ import VTooltip from 'v-tooltip'
 import VDropdown from './components/dropdown/VDropdown'
 import VDropdownItem from './components/dropdown/VDropdownItem'
 import VDropdownDivider from './components/dropdown/VDropdownDivider'
+import VCollapse from './components/collapse/VCollapse'
+import VCollapseItem from './components/collapse/VCollapseItem'
 
 /**
  * Global css plugins
@@ -81,12 +83,15 @@ require('./helpers/directives')
  * Global use of mixins
  */
 Vue.mixin(validationMixin)
+
 /**
  * Global use of components
  */
 Vue.component('v-dropdown', VDropdown)
 Vue.component('v-dropdown-item', VDropdownItem)
 Vue.component('v-dropdown-divider', VDropdownDivider)
+Vue.component('v-collapse', VCollapse)
+Vue.component('v-collapse-item', VCollapseItem)
 
 Vue.use(VueRouter)
 Vue.use(VuePrism)

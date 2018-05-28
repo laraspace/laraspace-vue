@@ -12,7 +12,7 @@
       <slot name="activator"/>
     </div>
     <div
-      v-show="(toggle)||(autoClose)"
+      v-show="(toggle)&&(autoClose)"
       v-if="hasChild"
       ref="dropdownItems"
       :class="['dropdown-container', {'align-right': rightAlign}]"

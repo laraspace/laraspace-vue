@@ -95,7 +95,7 @@
             </router-link>
 
             <router-link to="/admin/components/vue-tabs">
-              Vue Tabs
+              Vue Tabs & Accordian
             </router-link>
 
             <router-link to="/admin/components/tooltips">
@@ -250,10 +250,6 @@
               Mailbox
             </router-link>
 
-            <router-link to="/admin/apps/contacts">
-              Contacts
-            </router-link>
-
             <router-link to="/admin/apps/todos">
               Todos
             </router-link>
@@ -273,14 +269,8 @@
 </template>
 
 <script type="text/babel">
-import VCollapse from '../../../components/collapse/VCollapse'
-import VCollapseItem from '../../../components/collapse/VCollapseItem'
 
 export default {
-  components: {
-    VCollapse,
-    VCollapseItem
-  },
   data () {
     return {
       sidebar: 'sidebar'

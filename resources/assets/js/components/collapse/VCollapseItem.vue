@@ -49,6 +49,8 @@ export default {
     this.$nextTick(() => {
       if (this.accordion === true) {
         this.hasActive()
+      } else {
+        this.isCollapseOpen = false
       }
       this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
       if (this.$refs.collapseItems.children.length === 0) {
