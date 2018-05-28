@@ -23,3 +23,25 @@
     border-radius: 3px;
 }
 
+// Photosop 
+@media only screen and (max-width: $small-breakpoint ) {
+    .vc-photoshop {
+        width: 100% !important;
+    }
+    .vc-chrome {
+        width: 100% !important;
+    }
+    .vc-compact { 
+        width: 100% !important;
+    }
+    .vc-slider { 
+        width: 100% !important;
+    }
+    .vc-swatches { 
+        width: 100% !important;
+    }
+    .vc-sketch {
+        width: 268px !important;
+    }
+}
+

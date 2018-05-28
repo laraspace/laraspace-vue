@@ -5,41 +5,41 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-xl-6 mb-5 ">
         <h5 class="section-semi-title">Photoshop</h5>
         <photoshop-picker v-model="colors"/>
 
       </div>
-      <div class="col-lg-6">
+      <div class="col-xl-6 mb-5 ">
         <h5 class="section-semi-title">Swatches</h5>
         <swatches-picker v-model="colors"/>
       </div>
     </div>
 
-    <div class="row mt-5">
-      <div class="col-lg-4">
+    <div class="row">
+      <div class="col-xl-6 mb-5 ">
         <h5 class="section-semi-title">Sketch</h5>
         <sketch-picker v-model="colors"/>
       </div>
-      <div class="col-lg-4">
+      <div class="col-xl-3 mb-5 ">
         <h5 class="section-semi-title">Chrome</h5>
         <chrome-picker v-model="colors"/>
       </div>
-      <div class="col-lg-4">
+      <div class="col-xl-3 mb-5 ">
         <h5 class="section-semi-title">Compact</h5>
         <compact-picker v-model="colors"/>
       </div>
     </div>
-    <div class="row mt-5">
-      <div class="col-lg-5">
+    <div class="row">
+      <div class="col-xl-6 mb-5 ">
         <h5 class="section-semi-title">Slider</h5>
         <slider-picker v-model="colors"/>
       </div>
-      <div class="col-lg-3">
+      <div class="col-xl-3 mb-5 ">
         <h5 class="section-semi-title">Material</h5>
         <material-picker v-model="colors"/>
       </div>
-      <div class="col-lg-3">
+      <div class="col-xl-3 mb-5 ">
         <h5 class="section-semi-title">Grayscale</h5>
         <grayscale-picker v-model="colors"/>
       </div>
