@@ -12,10 +12,11 @@
       <slot name="activator"/>
     </div>
     <div
-      v-show="toggle"
+      v-show="(toggle)||(autoClose)"
       v-if="hasChild"
       ref="dropdownItems"
       :class="['dropdown-container', {'align-right': rightAlign}]"
+      @click="closeDropdown"
     >
       <slot/>
     </div>
@@ -38,6 +39,11 @@ export default {
       type: Boolean,
       require: true,
       default: false
+    },
+    autoClose: {
+      type: Boolean,
+      require: true,
+      default: true
     }
   },
   data () {
@@ -95,7 +101,11 @@ export default {
       this.toggle = !this.toggle
     },
     closeDropdown () {
-      this.toggle = false
+      if (this.autoClose === false) {
+        this.toggle = true
+      } else {
+        this.toggle = false
+      }
     }
   }
 }
