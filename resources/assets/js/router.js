@@ -53,7 +53,6 @@ import Meteo from './views/admin/icons/Meteo.vue'
 import General from './views/admin/forms/General.vue'
 import Advanced from './views/admin/forms/Advanced.vue'
 import Layouts from './views/admin/forms/FormLayouts.vue'
-import Editors from './views/admin/forms/Editors.vue'
 import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
@@ -273,10 +272,6 @@ const routes = [
       {
         path: 'forms/layouts',
         component: Layouts
-      },
-      {
-        path: 'forms/editors',
-        component: Editors
       },
       {
         path: 'forms/vuelidate',

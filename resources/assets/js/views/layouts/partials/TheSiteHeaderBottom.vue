@@ -131,7 +131,7 @@
 
       <v-dropdown active-url="/admin/forms">
         <a slot="activator" href="#">
-          <i class="icon-fa icon-fa-rocket"/>Form
+          <i class="icon-fa icon-fa-rocket"/>Forms
         </a>
 
         <v-dropdown-item>
@@ -147,30 +147,6 @@
         <v-dropdown-item>
           <router-link to="/admin/forms/layouts">
             Form Layouts
-          </router-link>
-        </v-dropdown-item>
-        <v-dropdown-item>
-          <router-link to="/admin/forms/validation">
-            Form Validation
-          </router-link>
-
-          <router-link to="/admin/forms/wizards">
-            Form Wizard
-          </router-link>
-        </v-dropdown-item>
-        <v-dropdown-item>
-          <router-link to="/admin/forms/wizards-2">
-            Form Wizard 2
-          </router-link>
-        </v-dropdown-item>
-        <v-dropdown-item>
-          <router-link to="/admin/forms/wizards-3">
-            Form Wizard 3
-          </router-link>
-        </v-dropdown-item>
-        <v-dropdown-item>
-          <router-link to="/admin/forms/editors">
-            Editors
           </router-link>
         </v-dropdown-item>
         <v-dropdown-item>

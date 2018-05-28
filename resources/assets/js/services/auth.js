@@ -1,4 +1,5 @@
 import Ls from './ls'
+
 export default {
   async login (loginData) {
     try {
@@ -16,6 +17,7 @@ export default {
       }
     }
   },
+
   async logout () {
     try {
       await axios.get('/api/auth/logout')
@@ -26,13 +28,16 @@ export default {
       console.log('Error', error.message)
     }
   },
+
   async check () {
-    try {
+    const AUTH_TOKEN = Ls.get('auth.token')
+
+    if (AUTH_TOKEN) {
+      return true
+    } else {
       let response = await axios.get('/api/auth/check')
 
       return !!response.data.authenticated
-    } catch (error) {
-      console.log('Error', error.message)
     }
   }
 }

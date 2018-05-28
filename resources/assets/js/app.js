@@ -9,17 +9,17 @@ import ThemeSwitcher from './components/ThemeSwitcher'
 
 require('./bootstrap')
 
+Vue.prototype.$utils = utils
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-window.Plugin = Plugin
-
-Vue.prototype.$utils = utils
-
 const app = new Vue({
   router,
+
+  // Theme Swiching Demo Component (You can remove it if not required)
   components: {
     ThemeSwitcher
   }

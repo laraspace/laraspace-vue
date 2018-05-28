@@ -42,19 +42,13 @@
               </a>
 
               <v-dropdown-item>
-                <router-link to="/admin/dashboard/basic">
-                  Edit
-                </router-link>
+                <a href="#" @click.prevent>Edit</a>
               </v-dropdown-item>
               <v-dropdown-item>
-                <router-link to="/admin/dashboard/ecommerce">
-                  Delete
-                </router-link>
+                <a href="#" @click.prevent>Delete</a>
               </v-dropdown-item>
               <v-dropdown-item>
-                <router-link to="/admin/dashboard/finance">
-                  Forward
-                </router-link>
+                <a href="#" @click.prevent>Forward</a>
               </v-dropdown-item>
             </v-dropdown>
 

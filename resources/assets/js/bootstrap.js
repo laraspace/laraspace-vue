@@ -1,9 +1,9 @@
 import VueRouter from 'vue-router'
-import { validationMixin } from 'vuelidate'
-
-import Ls from './services/ls'
+import Vuelidate from 'vuelidate'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
+
+import Ls from './services/ls'
 import VDropdown from './components/dropdown/VDropdown'
 import VDropdownItem from './components/dropdown/VDropdownItem'
 import VDropdownDivider from './components/dropdown/VDropdownDivider'
@@ -11,7 +11,7 @@ import VCollapse from './components/collapse/VCollapse'
 import VCollapseItem from './components/collapse/VCollapseItem'
 
 /**
- * Global css plugins
+ * Global CSS imports
  */
 import 'vue-tabs-component/docs/resources/tabs-component.css'
 
@@ -20,9 +20,7 @@ import 'vue-tabs-component/docs/resources/tabs-component.css'
  */
 global.notie = require('notie')
 global.toastr = require('toastr')
-window.summernote = require('summernote/dist/summernote')
-window.SimpleMDE = require('simplemde/src/js/simplemde')
-window._ = require('lodash')
+global._ = require('lodash')
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -32,9 +30,6 @@ window._ = require('lodash')
 
 global.Vue = require('vue')
 
-// Vue.directive('tooltip', VTooltip)
-// Vue.directive('close-popover', VClosePopover)
-// Vue.component('v-popover', VPopover)
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -48,7 +43,7 @@ global.axios.defaults.headers.common = {
 }
 
 /**
- * Interceptors
+ * Global Axios Request Interceptor
  */
 
 global.axios.interceptors.request.use(function (config) {
@@ -73,20 +68,18 @@ global.axios.interceptors.request.use(function (config) {
 
 // import Echo from "laravel-echo"
 
-// window.Echo = new Echo({
+// global.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // })
 
+/**
+ * Custom Directives
+ */
 require('./helpers/directives')
 
 /**
- * Global use of mixins
- */
-Vue.mixin(validationMixin)
-
-/**
- * Global use of components
+ * Global Components
  */
 Vue.component('v-dropdown', VDropdown)
 Vue.component('v-dropdown-item', VDropdownItem)
@@ -97,3 +90,4 @@ Vue.component('v-collapse-item', VCollapseItem)
 Vue.use(VueRouter)
 Vue.use(VuePrism)
 Vue.use(VTooltip)
+Vue.use(Vuelidate)

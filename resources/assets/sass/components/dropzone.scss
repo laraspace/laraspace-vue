@@ -1,11 +1,15 @@
 .vue-dropzone .dz-preview  {
-  
+
     width: 150px !important;
     height:150px !important;
     background: transparent !important;
-    
+
     &:hover {
         z-index: 100 !important;
+    }
+
+    .dz-remove:hover {
+        text-decoration: none !important;
     }
 
     .dz-details {
@@ -23,7 +27,6 @@
         border-radius:30px !important;
         width: 150px !important;
         height:150px !important;
-
     }
 
     .dz-error-message {
@@ -56,8 +59,8 @@
         font-weight: 600 !important;
     }
 
-    
-    
+
+
 }
 @media only screen and (max-width: $small-breakpoint ) {
 
@@ -80,7 +83,7 @@
 
         .dz-remove {
             margin-left: 10px !important;
-            bottom: 15px !important; 
+            bottom: 15px !important;
             font-size: 10px !important;
             font-weight: 600 !important;
             letter-spacing: 1px !important;
@@ -99,7 +102,7 @@
             left: 5px !important;
             width: 95% !important;
             font-size: 12px !important;
-            
+
             &::after {
                 left: 45px !important;
              }
@@ -116,7 +119,7 @@
             justify-content: center!important;
             align-items: center !important;
         }
-        
+
         .dz-success-mark svg {
             width: 44px !important;
             height: 40px !important;

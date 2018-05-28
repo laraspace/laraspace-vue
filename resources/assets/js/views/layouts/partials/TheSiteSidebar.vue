@@ -164,10 +164,6 @@
               Form Layouts
             </router-link>
 
-            <router-link to="/admin/forms/editors">
-              Editors
-            </router-link>
-
             <router-link to="/admin/forms/vuelidate">
               Vuelidate
             </router-link>

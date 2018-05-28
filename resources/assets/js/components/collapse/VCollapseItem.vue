@@ -1,6 +1,6 @@
 <template>
   <div :class="['collapse-group-item', { active: isCollapseOpen } ]">
-    <div class="collapse-item-title" @click="showCollapse">
+    <div class="collapse-item-title" @click="toggleCollapse">
       <slot name="item-title"/>
     </div>
     <transition
@@ -53,6 +53,7 @@ export default {
         this.isCollapseOpen = false
       }
       this.height = this.originalHeight = this.$refs.collapseItems.clientHeight
+
       if (this.$refs.collapseItems.children.length === 0) {
         this.hasChild = false
       }
@@ -73,7 +74,7 @@ export default {
         }
       }
     },
-    showCollapse () {
+    toggleCollapse () {
       let self = this
       if (this.accordion) {
         if (this.isCollapseOpen === false) {

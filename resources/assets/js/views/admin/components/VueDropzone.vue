@@ -40,7 +40,7 @@
             />
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4 manual-demo">
           <div class="col-sm-12">
             <h5 class="section-semi-title">Manually add file</h5>
             <vue-dropzone
@@ -86,7 +86,7 @@ export default {
         dictDefaultMessage: "<i class='icon-fa icon-fa-cloud-upload'/></i> Uploads Your File's Here",
         headers: { 'My-Awesome-Header': 'header value' }
       },
-      count: 13
+      count: 1
     }
   },
   methods: {
@@ -94,12 +94,20 @@ export default {
       let file = { size: 123, name: 'Icon' }
       let url = '/assets/img/demo/gallery/' + this.count + '.jpg'
       this.$refs.myVueDropzone.manuallyAddFile(file, url)
-      if (this.count !== 17) {
+      if (this.count !== 12) {
         this.count = this.count + 1
       } else {
-        this.count = 13
+        this.count = 12
       }
     }
   }
 }
 </script>
+
+<style>
+  .manual-demo .dz-image img {
+    width: auto !important;
+    height: auto !important;
+    object-fit: fill !important;
+  }
+</style>

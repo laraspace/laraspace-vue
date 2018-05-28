@@ -2,6 +2,7 @@
     background-color: $white;
     position: relative;
     min-height: 800px;
+    overflow: hidden;
 
     .compose-mail-btn {
         background-color: $ls-color-primary;
