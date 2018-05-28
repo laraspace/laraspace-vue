@@ -64,7 +64,6 @@ import VideoGallery from './views/admin/gallery/Video.vue'
 // Apps
 import TodosApp from './views/admin/apps/todos/TodosApp.vue'
 import MailboxApp from './views/admin/apps/mailbox/MailboxApp.vue'
-import ContactsApp from './views/admin/apps/contacts/ContactsApp.vue'
 
 // Users
 import Users from './views/admin/users/Users.vue'
@@ -316,10 +315,6 @@ const routes = [
       {
         path: 'apps/todos',
         component: TodosApp
-      },
-      {
-        path: 'apps/contacts',
-        component: ContactsApp
       },
 
       // Settings

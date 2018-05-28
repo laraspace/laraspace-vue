@@ -60,24 +60,20 @@
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Formate Date Picker</h5>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Result</label>
-              <div class="col-sm-10">
-                <datepicker :format="format" input-class="form-control"/>
-              </div>
+            <div class="form-group">
+              <label>Result</label>
+              <datepicker :format="format" input-class="form-control"/>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Formats</label>
-              <div class="col-sm-10">
-                <multi-select
-                  v-model="format"
-                  :options="FormatOptions"
-                  :allow-empty="false"
-                  :show-labels="false"
-                  :searchable="true"
-                  placeholder="Pick a Format"
-                />
-              </div>
+            <div class="form-group">
+              <label>Formats</label>
+              <multi-select
+                v-model="format"
+                :options="FormatOptions"
+                :allow-empty="false"
+                :show-labels="false"
+                :searchable="true"
+                placeholder="Pick a Format"
+              />
             </div>
           </div>
           <div class="col-xl-4 mb-4">
@@ -88,44 +84,32 @@
         <div class="row">
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Highlited Date</h5>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">From</label>
-              <div class="col-sm-10">
-                <datepicker input-class="form-control" @selected="highlightFrom"/>
-              </div>
+            <div class="form-group">
+              <label >From</label>
+              <datepicker input-class="form-control" @selected="highlightFrom"/>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">To</label>
-              <div class="col-sm-10">
-                <datepicker input-class="form-control" @selected="highlightTo"/>
-              </div>
+            <div class="form-group">
+              <label>To</label>
+              <datepicker input-class="form-control" @selected="highlightTo"/>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Result</label>
-              <div class="col-sm-10">
-                <datepicker :highlighted="highlighted" input-class="form-control"/>
-              </div>
+            <div class="form-group">
+              <label>Result</label>
+              <datepicker :highlighted="highlighted" input-class="form-control"/>
             </div>
           </div>
           <div class="col-xl-4 mb-4">
             <h5 class="section-semi-title">Disable Specific Range Of Date</h5>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">From</label>
-              <div class="col-sm-10">
-                <datepicker input-class="form-control" @selected="disableFrom"/>
-              </div>
+            <div class="form-group">
+              <label>From</label>
+              <datepicker input-class="form-control" @selected="disableFrom"/>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">To</label>
-              <div class="col-sm-10">
-                <datepicker input-class="form-control" @selected="disableTo"/>
-              </div>
+            <div class="form-group">
+              <label>To</label>
+              <datepicker input-class="form-control" @selected="disableTo"/>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Result</label>
-              <div class="col-sm-10">
-                <datepicker :disabled-dates="disabledDates" input-class="form-control" />
-              </div>
+            <div class="form-group">
+              <label>Result</label>
+              <datepicker :disabled-dates="disabledDates" input-class="form-control" />
             </div>
           </div>
         </div>

@@ -87,24 +87,27 @@
                 </div>
                 <div class="actions">
                   <div class="btn-group" role="group">
-                    <button
-                      id="cardDropButton"
-                      type="button"
-                      class="btn btn-sm btn-outline-primary dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="true"
-                    >
-                      Filters
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cardDropButton">
-                      <a class="dropdown-item" href="#">
-                        Update
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        Delete
-                      </a>
-                    </div>
+                    <v-dropdown dropdown-light>
+                      <button
+                        id="cardDropButton"
+                        slot="activator"
+                        type="button"
+                        class="btn btn-sm btn-outline-primary dropdown-toggle"
+                      >
+                        Filters
+                      </button>
+
+                      <v-dropdown-item>
+                        <a class="dropdown-item" href="#">
+                          Update
+                        </a>
+                      </v-dropdown-item>
+                      <v-dropdown-item>
+                        <a class="dropdown-item" href="#">
+                          Delete
+                        </a>
+                      </v-dropdown-item>
+                    </v-dropdown>
                   </div>
                 </div>
               </div>

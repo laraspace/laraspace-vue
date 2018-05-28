@@ -224,27 +224,17 @@
                   Checkbox
                 </h5>
                 <form>
-                  <div class="form-group row">
-                    <label for="inputEmail2" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                      <input
-                        id="inputEmail2"
-                        type="email"
-                        class="form-control"
-                        placeholder="Email"
-                      >
-                    </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                      Option one is this and that—be sure to include why it's great
+                    </label>
                   </div>
-                  <div class="form-group row">
-                    <label for="inputPassword2" class="col-sm-2 col-form-label">Password</label>
-                    <div class="col-sm-10">
-                      <input
-                        id="inputPassword2"
-                        type="password"
-                        class="form-control"
-                        placeholder="Password"
-                      >
-                    </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+                    <label class="form-check-label" for="defaultCheck2">
+                      Option two is disabled
+                    </label>
                   </div>
                 </form>
               </div>

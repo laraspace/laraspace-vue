@@ -42,3 +42,10 @@
     width: auto;
     margin: 0 20px;
 }
+
+@media(max-width:$small-breakpoint) {
+    .VueCarousel-dot .VueCarousel-dot-button {
+        width: 7px !important;
+        height: 7px !important;
+    }
+}
