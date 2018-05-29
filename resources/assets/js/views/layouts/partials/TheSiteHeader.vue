@@ -110,11 +110,6 @@
 import Auth from '../../../services/auth'
 
 export default {
-  data () {
-    return {
-      header: 'header'
-    }
-  },
   methods: {
     onNavToggle () {
       this.$utils.toggleSidebar()

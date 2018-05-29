@@ -54,12 +54,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api.auth'], function (){
 
     });
 
-    Route::group(['prefix' => 'apps/contacts'], function (){
-
-        Route::resource('/list', 'ContactController');
-        Route::resource('/labels', 'LabelController');
-
-    });
-
 });
 

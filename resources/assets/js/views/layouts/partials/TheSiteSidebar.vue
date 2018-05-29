@@ -195,7 +195,7 @@
           <v-collapse-item active-url="/admin/pages">
             <a slot="item-title" href="#"
             >
-              <i class="icon-fa icon-fa-file"/> Pages
+              <i class="icon-fa icon-fa-file"/>Pages
               <span class="icon-fa arrow icon-fa-fw"/>
             </a>
 
@@ -267,14 +267,3 @@
     </div>
   </div>
 </template>
-
-<script type="text/babel">
-
-export default {
-  data () {
-    return {
-      sidebar: 'sidebar'
-    }
-  }
-}
-</script>

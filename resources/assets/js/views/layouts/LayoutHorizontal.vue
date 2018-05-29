@@ -11,6 +11,7 @@
 import SiteHeader from './partials/TheSiteHeader.vue'
 import SiteFooter from './partials/TheSiteFooter.vue'
 import SiteHeaderBottom from './partials/TheSiteHeaderBottom.vue'
+
 export default {
   components: {
     SiteHeader,
