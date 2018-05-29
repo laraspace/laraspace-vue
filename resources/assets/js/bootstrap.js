@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router'
+import VeeValidate from 'vee-validate'
 import Vuelidate from 'vuelidate'
 import VuePrism from 'vue-prism'
 import VTooltip from 'v-tooltip'
@@ -90,4 +91,5 @@ Vue.component('v-collapse-item', VCollapseItem)
 Vue.use(VueRouter)
 Vue.use(VuePrism)
 Vue.use(VTooltip)
+Vue.use(VeeValidate)
 Vue.use(Vuelidate)

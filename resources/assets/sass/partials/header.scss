@@ -42,9 +42,9 @@
             border-radius: 2px;
             color: $header-buttons-font-color;
             display: inline-block;
-            font-size: 14px;
-            line-height: 14px;
-            padding: 11px;
+            font-size: 14px !important;
+            line-height: 14px !important;
+            padding: 11px !important;
         }
 
         a:hover {
@@ -74,6 +74,9 @@
 
         &.has-child > .dropdown-activator::after{
             content: none;
+        }
+        .dropdown-group-item i {
+            width: 25px;
         }
 
     }

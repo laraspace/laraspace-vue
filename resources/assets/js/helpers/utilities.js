@@ -31,5 +31,9 @@ export default {
   setSkin (skinName) {
     this.reset('skin-')
     document.body.classList.add('skin-' + skinName)
+  },
+
+  setLogo (logoSrc) {
+    document.getElementById('logo-desk').src = logoSrc
   }
 }

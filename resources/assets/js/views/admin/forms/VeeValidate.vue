@@ -138,8 +138,6 @@
   </div>
 </template>
 <script type="text/babel">
-// import 'vee-validate/dist/vee-validate'
-// window.VeeValidate = require('vee-validate')
 
 export default {
   data () {
