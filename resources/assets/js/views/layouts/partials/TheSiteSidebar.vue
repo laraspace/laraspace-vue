@@ -95,7 +95,11 @@
             </router-link>
 
             <router-link to="/admin/components/vue-tabs">
-              Vue Tabs & Accordian
+              Vue Tabs
+            </router-link>
+
+            <router-link to="/admin/components/vue-collapse">
+              Vue Collapse
             </router-link>
 
             <router-link to="/admin/components/tooltips">

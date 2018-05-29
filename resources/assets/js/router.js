@@ -37,6 +37,7 @@ import VueDropzone from './views/admin/components/VueDropzone.vue'
 import VueTable from './views/admin/components/VueTables.vue'
 import VueTabs from './views/admin/components/VueTabs.vue'
 import VueTooltips from './views/admin/components/VueTooltips.vue'
+import VueCollapse from './views/admin/components/VueCollapse.vue'
 
 // Charts
 import Chartjs from './views/admin/charts/Chartjs.vue'
@@ -202,6 +203,10 @@ const routes = [
       {
         path: 'components/vue-tabs',
         component: VueTabs
+      },
+      {
+        path: 'components/vue-collapse',
+        component: VueCollapse
       },
       {
         path: 'components/notifications',

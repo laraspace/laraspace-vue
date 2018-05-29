@@ -12,7 +12,7 @@
             :title="skin.title"
             href="#"
             class="skin-radio"
-            @click.prevent="selectSkin(skin.slug)"
+            @click.prevent="selectSkin(skin)"
           >
             <img :src="skin.img" class="img-fluid">
           </a>
@@ -29,19 +29,24 @@ export default {
       isOpen: false,
       selectedSkin: 'default',
       skins: [
-        {title: 'Skin - Default', 'slug': 'default', 'img': '/assets/img/skins/skin-default.png'},
-        {title: 'Skin - Tyrell', 'slug': 'tyrell', 'img': '/assets/img/skins/skin-tyrell.png'},
-        {title: 'Skin - Arryn', 'slug': 'arryn', 'img': '/assets/img/skins/skin-arryn.png'},
-        {title: 'Skin - Lannister', 'slug': 'lannister', 'img': '/assets/img/skins/skin-lannister.png'},
-        {title: 'Skin - Stark', 'slug': 'stark', 'img': '/assets/img/skins/skin-stark.png'},
-        {title: 'Skin - Targaryen', 'slug': 'targaryen', 'img': '/assets/img/skins/skin-targaryen.png'}
+        {title: 'Skin - Default', 'slug': 'default', 'img': '/assets/img/skins/skin-default.png', 'light': false},
+        {title: 'Skin - Tyrell', 'slug': 'tyrell', 'img': '/assets/img/skins/skin-tyrell.png', 'light': true},
+        {title: 'Skin - Arryn', 'slug': 'arryn', 'img': '/assets/img/skins/skin-arryn.png', 'light': true},
+        {title: 'Skin - Lannister', 'slug': 'lannister', 'img': '/assets/img/skins/skin-lannister.png', 'light': true},
+        {title: 'Skin - Stark', 'slug': 'stark', 'img': '/assets/img/skins/skin-stark.png', 'light': false},
+        {title: 'Skin - Targaryen', 'slug': 'targaryen', 'img': '/assets/img/skins/skin-targaryen.png', 'light': false}
       ]
     }
   },
   methods: {
     selectSkin (skin) {
-      this.selectedSkin = skin
-      this.$utils.setSkin(skin)
+      this.selectedSkin = skin.slug
+      this.$utils.setSkin(skin.slug)
+      if (skin.light === true) {
+        this.$utils.setLogo('/assets/img/logo_white.png')
+      } else {
+        this.$utils.setLogo('/assets/img/logo-desk.png')
+      }
     }
   }
 }
