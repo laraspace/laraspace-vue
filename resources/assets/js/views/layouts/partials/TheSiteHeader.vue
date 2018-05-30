@@ -19,8 +19,10 @@
       class="nav-toggle"
       @click="onNavToggle"
     >
-      <div class="hamburger hamburger--htla">
-        <span>toggle menu</span>
+      <div class="hamburger hamburger--arrowturn">
+        <div class="hamburger-box">
+          <div class="hamburger-inner"/>
+        </div>
       </div>
     </a>
     <ul class="action-list">
