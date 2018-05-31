@@ -25,28 +25,28 @@
           <label>Name </label>
           <input
             v-validate
-            v-model="name"
-            :class="['form-control', {'is-invalid': errors.has('name') }]"
+            v-model="basic_validation.name"
+            :class="['form-control', {'is-invalid': errors.has('basic_validation.name') }]"
             data-vv-rules="required"
-            name="name"
+            name="basic_validation.name"
             type="text"
           >
-          <div v-show="errors.has('name')" class="invalid-feedback">
-            {{ errors.first('name') }}
+          <div v-show="errors.has('basic_validation.name')" class="invalid-feedback">
+            {{ errors.first('basic_validation.name') }}
           </div>
         </div>
         <div :class="{'form-group' : true }">
           <label>Email Address</label>
           <input
             v-validate
-            v-model="email"
-            :class="['form-control', {'is-invalid': errors.has('email') }]"
+            v-model="basic_validation.email"
+            :class="['form-control', {'is-invalid': errors.has('basic_validation.email') }]"
             data-vv-rules="required|email"
-            name="email"
+            name="basic_validation.email"
             type="text"
           >
-          <div v-show="errors.has('email')" class="invalid-feedback">
-            {{ errors.first('email') }}
+          <div v-show="errors.has('basic_validation.email')" class="invalid-feedback">
+            {{ errors.first('basic_validation.email') }}
           </div>
         </div>
       </div>
@@ -68,61 +68,64 @@
           <div :class="{'form-group' : true}">
             <label>Name </label>
             <input
-              v-validate.initial="name"
-              v-model="name"
-              :class="['form-control', {'is-invalid': errors.has('name') }]"
-              data-vv-rules="required"
-              name="name"
+              v-validate.initial="'required'"
+              v-model="form_validation.name"
+              :class="['form-control', {'is-invalid': errors.has('form_validation.name') }]"
+              name="form_validation.name"
               type="text"
             >
-            <div v-show="errors.has('name')" class="invalid-feedback">
-              {{ errors.first('name') }}
+            <div v-show="errors.has('form_validation.name')" class="invalid-feedback">
+              {{ errors.first('form_validation.name') }}
             </div>
           </div>
           <div :class="{'form-group' : true }">
             <label>Email Address</label>
             <input
-              v-validate.initial="email"
-              v-model="email"
-              :class="['form-control', {'is-invalid': errors.has('email') }]"
-              data-vv-rules="required|email"
-              name="email"
+              v-validate.initial="'required|email'"
+              v-model="form_validation.email"
+              :class="['form-control', {'is-invalid': errors.has('form_validation.email') }]"
+              name="form_validation.email"
               type="text"
             >
-            <div v-show="errors.has('email')" class="invalid-feedback">
-              {{ errors.first('email') }}
+            <div v-show="errors.has('form_validation.email')" class="invalid-feedback">
+              {{ errors.first('form_validation.email') }}
             </div>
           </div>
           <div :class="{'form-group' : true }">
             <label>Password</label>
             <input
+              v-validate
               id="password"
+              v-model="form_validation.password"
               type="password"
+              data-vv-rules="required"
               class="form-control"
-              name="password"
+              name="form_validation.password"
             >
           </div>
           <label>Confirm Password</label>
           <input
-            v-validate="'required|confirmed:password'"
-            :class="{'is-invalid': errors.has('password_confirmation') }"
-            data-vv-as="password"
-            name="password_confirmation"
+            v-validate="'required|confirmed:form_validation.password'"
+            v-model="form_validation.cnfpassword"
+            :class="{'is-invalid': errors.has('form_validation.password_confirmation') }"
+            data-vv-as="form_validation.password"
+            name="form_validation.password_confirmation"
             data-vv-rules="required"
             class="form-control"
             type="password"
           >
-          <div v-show="errors.has('password_confirmation')" class="invalid-feedback">
-            {{ errors.first('password_confirmation') }}
+          <div v-show="errors.has('form_validation.password_confirmation')" class="invalid-feedback">
+            {{ errors.first('form_validation.password_confirmation') }}
           </div>
           <div :class="{'form-group' : true }">
             <div class="checkbox checkbox-full">
               <label>
                 <input
-                  v-validate.initial="terms"
+                  v-validate.initial="'required'"
+                  v-model="form_validation.terms"
                   type="checkbox"
                   name="terms"
-                  data-vv-rules="required"
+                  data-vv-rules=""
                 >
                 I Accept Terms & Conditions
                 <div v-show="errors.has('terms')" class="invalid-feedback">
@@ -142,12 +145,17 @@
 export default {
   data () {
     return {
-      name: '',
-      email1: '',
-      email: '',
-      password: '',
-      cnfpassword: '',
-      terms: false
+      basic_validation: {
+        name: '',
+        email: ''
+      },
+      form_validation: {
+        name: '',
+        email: '',
+        password: '',
+        cnfpassword: '',
+        terms: false
+      }
     }
   },
   methods: {
