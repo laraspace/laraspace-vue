@@ -1,86 +1,141 @@
+// .hamburger {
+//     display: block;
+//     position: relative;
+//     overflow: hidden;
+//     margin: 0;
+//     padding: 0;
+//     width: 24px;
+//     height: 24px;
+//     font-size: 0;
+//     text-indent: -9999px;
+//     appearance: none;
+//     box-shadow: none;
+//     border-radius: none;
+//     border: none;
+//     cursor: pointer;
+//     transition: background 0.3s;
+// }
+
+// .hamburger:focus {
+//     outline: none;
+// }
+
+// .hamburger span {
+//     display: block;
+//     position: absolute;
+//     top: 11px;
+//     left: 4.5px;
+//     right: 4.5px;
+//     height: 2px;
+//     background: $header-buttons-font-color;
+// }
+
+// .hamburger span::before,
+// .hamburger span::after {
+//     position: absolute;
+//     display: block;
+//     left: 0;
+//     width: 100%;
+//     height: 2px;
+//     background-color: $header-buttons-font-color;
+//     content: "";
+// }
+
+// .hamburger span::before {
+//     top: -5px;
+// }
+
+// .hamburger span::after {
+//     bottom: -5px;
+// }
+
+// .hamburger--htla span {
+//     transition: transform 0.3s;
+// }
+
+// .hamburger--htla span::before {
+//     transform-origin: top right;
+//     transition: transform 0.3s, width 0.3s, top 0.3s;
+// }
+
+// .hamburger--htla span::after {
+//     transform-origin: bottom right;
+//     transition: transform 0.3s, width 0.3s, bottom 0.3s;
+// }
+
+// .hamburger--htla.is-active span {
+//    transform: rotate(-180deg);
+// }
+
+// .hamburger--htla.is-active span::before,
+// .hamburger--htla.is-active span::after {
+//     width: 50%;
+// }
+
+// .hamburger--htla.is-active span::before {
+//     top: 0;
+//     transform: translate3d(8px, 0, 0) rotate(45deg) scale(0.7, 1);
+// }
+
+// .hamburger--htla.is-active span::after {
+//     bottom: 0;
+//     transform: translate3d(8px, 0, 0) rotate(-45deg) scale(0.7, 1);
+// }
 .hamburger {
-    display: block;
-    position: relative;
-    overflow: hidden;
+    display: inline-block;
+    cursor: pointer;
+    transition-property: opacity, filter;
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+    background-color: transparent;
+    border: 0;
     margin: 0;
-    padding: 0;
+    overflow: visible; 
+}
+
+.hamburger-box {
     width: 24px;
     height: 24px;
-    font-size: 0;
-    text-indent: -9999px;
-    appearance: none;
-    box-shadow: none;
-    border-radius: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+    display: inline-block;
+    position: relative;
+ }
 
-.hamburger:focus {
-    outline: none;
-}
-
-.hamburger span {
+.hamburger-inner {
     display: block;
-    position: absolute;
-    top: 11px;
+    top: 50%;
     left: 4.5px;
     right: 4.5px;
-    height: 2px;
-    background: $header-buttons-font-color;
+    margin-top: -2px; 
 }
-
-.hamburger span::before,
-.hamburger span::after {
-    position: absolute;
-    display: block;
-    left: 0;
-    width: 100%;
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
     height: 2px;
     background-color: $header-buttons-font-color;
+    border-radius: 2px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease; 
+}
+.hamburger-inner::before, .hamburger-inner::after {
     content: "";
+    display: block;
+    width:100%;
 }
-
-.hamburger span::before {
-    top: -5px;
+.hamburger-inner::before {
+    top: -5px; 
 }
-
-.hamburger span::after {
-    bottom: -5px;
+.hamburger-inner::after {
+    bottom: -5px; 
 }
-
-.hamburger--htla {
+.hamburger--arrowturn.is-active .hamburger-inner {
+    transform: rotate(-180deg);
 }
-
-.hamburger--htla span {
-    transition: transform 0.3s;
+.hamburger--arrowturn.is-active .hamburger-inner::before {
+    transform: translate3d(3px, 1px, 0) rotate(45deg) scale(0.7, 1); 
 }
-
-.hamburger--htla span::before {
-    transform-origin: top right;
-    transition: transform 0.3s, width 0.3s, top 0.3s;
-}
-
-.hamburger--htla span::after {
-    transform-origin: bottom right;
-    transition: transform 0.3s, width 0.3s, bottom 0.3s;
-}
-
-.hamburger--htla.is-active span {
-    transform: rotate(180deg);
-}
-
-.hamburger--htla.is-active span::before,
-.hamburger--htla.is-active span::after {
-    width: 50%;
-}
-
-.hamburger--htla.is-active span::before {
-    top: 0;
-    transform: translateX(9.5px) translateY(1.5px) rotate(45deg);
-}
-
-.hamburger--htla.is-active span::after {
-    bottom: 0;
-    transform: translateX(9.5px) translateY(-1.6px) rotate(-45deg);
+.hamburger--arrowturn.is-active .hamburger-inner::after {
+    transform: translate3d(3px, -1px, 0) rotate(-45deg) scale(0.7, 1); 
 }
