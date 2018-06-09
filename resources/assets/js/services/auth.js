@@ -30,14 +30,8 @@ export default {
   },
 
   async check () {
-    const AUTH_TOKEN = Ls.get('auth.token')
+    let response = await axios.get('/api/auth/check')
 
-    if (AUTH_TOKEN) {
-      return true
-    } else {
-      let response = await axios.get('/api/auth/check')
-
-      return !!response.data.authenticated
-    }
+    return !!response.data.authenticated
   }
 }
