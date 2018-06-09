@@ -4,15 +4,15 @@
     :class="['dropdown-group',
              {'active': (toggle || isActive() )},
              {'has-child':hasChild},
-             {'toggle-arrow':(hasChild)&&(toggleArrow)},
-             {'dropdown-light': dropdownLight},
+             {'toggle-arrow':(hasChild)&&(showArrow)},
+             {'dropdown-light': themeLight},
     ]"
   >
     <div class="dropdown-activator" @click="showDropdown">
       <slot name="activator"/>
     </div>
     <div
-      v-show="(toggle)&&(autoClose)"
+      v-show="(toggle)&&(closeOnSelecet)"
       v-if="hasChild"
       ref="dropdownItems"
       :class="['dropdown-container', {'align-right': rightAlign}]"
@@ -30,17 +30,17 @@ export default {
       require: true,
       default: String
     },
-    toggleArrow: {
+    showArrow: {
       type: Boolean,
       require: true,
       default: true
     },
-    dropdownLight: {
+    themeLight: {
       type: Boolean,
       require: true,
       default: false
     },
-    autoClose: {
+    closeOnSelecet: {
       type: Boolean,
       require: true,
       default: true
@@ -101,7 +101,7 @@ export default {
       this.toggle = !this.toggle
     },
     closeDropdown () {
-      if (this.autoClose === false) {
+      if (this.closeOnSelecet === false) {
         this.toggle = true
       } else {
         this.toggle = false

@@ -118,7 +118,7 @@
               <div
                 class="btn-group"
                 role="group">
-                <v-dropdown :toggle-arrow="false">
+                <v-dropdown :show-arrow="false">
                   <button
                     slot="activator"
                     type="button"
