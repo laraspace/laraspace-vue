@@ -32,6 +32,7 @@
     "icomoon-free-npm": "0.0.0",
     "ladda": "^1.0.6",
     "lodash": "^4.16.2",
+    "node-sass": "^4.9.0",
     "notie": "^4.3.1",
     "popper.js": "^1.12.9",
     "prismjs": "^1.14.0",
