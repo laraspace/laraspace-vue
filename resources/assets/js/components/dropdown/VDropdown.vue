@@ -12,7 +12,7 @@
       <slot name="activator"/>
     </div>
     <div
-      v-show="(toggle)&&(closeOnSelecet)"
+      v-show="(toggle)&&(closeOnSelect)"
       v-if="hasChild"
       ref="dropdownItems"
       :class="['dropdown-container', {'align-right': rightAlign}]"
@@ -40,7 +40,7 @@ export default {
       require: true,
       default: false
     },
-    closeOnSelecet: {
+    closeOnSelect: {
       type: Boolean,
       require: true,
       default: true
@@ -101,7 +101,7 @@ export default {
       this.toggle = !this.toggle
     },
     closeDropdown () {
-      if (this.closeOnSelecet === false) {
+      if (this.closeOnSelect === false) {
         this.toggle = true
       } else {
         this.toggle = false
