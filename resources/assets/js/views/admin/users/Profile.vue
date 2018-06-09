@@ -153,7 +153,7 @@
                       <a href="#">
                         <img
                           class="media-object"
-                          src="/assets/img/avatars/avatar1.png"
+                          src="/assets/img/avatars/avatar3.png"
                           alt="Generic placeholder image"
                         >
                       </a>
@@ -168,7 +168,7 @@
                       <a href="#">
                         <img
                           class="media-object"
-                          src="/assets/img/avatars/avatar2.png"
+                          src="/assets/img/avatars/avatar4.png"
                           alt="Generic placeholder image"
                         >
                       </a>
@@ -183,7 +183,7 @@
                       <a href="#">
                         <img
                           class="media-object"
-                          src="/assets/img/avatars/avatar1.png"
+                          src="/assets/img/avatars/avatar5.png"
                           alt="Generic placeholder image"
                         >
                       </a>
@@ -198,7 +198,7 @@
                       <a href="#">
                         <img
                           class="media-object"
-                          src="/assets/img/avatars/avatar2.png"
+                          src="/assets/img/avatars/avatar6.png"
                           alt="Generic placeholder image"
                         >
                       </a>

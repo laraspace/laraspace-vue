@@ -138,6 +138,14 @@ easy-pie-chart {
     color: $ls-color-gray--very-dark;
 }
 
+// Chart - Gauge Chart
+
+.gauge-charts .col {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto !important;
+}
+
 //Sweet Modal
 .sweet-modal-demo {
     .demo-buttons {

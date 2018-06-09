@@ -19,14 +19,8 @@
     align-items: center;
 }
 
-.gauges-row .col {
-    display: flex;
-    justify-content: center;
-    margin: 20px auto !important;
-}
-
 .gauge-lg {
-
+    
     .basic-gauge, .donut-gauge, .color-gauge {
         height: 250px;
     }

@@ -21,7 +21,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^4.0.1",
-    "laravel-mix": "2.1.11"
+    "laravel-mix": "^2.1.11"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -38,6 +38,7 @@
     "sweet-modal-vue": "^2.0.0",
     "text-mask-addons": "^3.7.2",
     "toastr": "^2.1.4",
+    "upgrade": "^1.1.0",
     "v-tooltip": "^2.0.0-rc.31",
     "vee-validate": "^2.0.9",
     "vue": "^2.5.16",

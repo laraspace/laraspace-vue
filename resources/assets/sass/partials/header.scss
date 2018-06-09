@@ -1,8 +1,6 @@
-.brand-main {
-    img {
-        height: 25px;
-        padding-top: 6px;
-    }
+.brand-main  img {
+    height: 25px;
+    padding-top: 6px;
 }
 
 .nav-toggle {
@@ -11,8 +9,9 @@
     color: $header-buttons-font-color;
     display: none;
     font-size: 14px;
-    line-height: 14px;
+    line-height: 9px;
     padding: 6px;
+
     &:active,
     &:focus,
     &:visited {
@@ -33,7 +32,7 @@
         margin: 0;
         padding: 0 4px;
 
-        &.action-item a{
+        &.action-item a {
             padding: 11px;
         }
 
@@ -72,7 +71,7 @@
             width: auto;
         }
 
-        &.has-child > .dropdown-activator::after{
+        &.has-child > .dropdown-activator::after {
             content: none;
         }
         .dropdown-group-item i {
