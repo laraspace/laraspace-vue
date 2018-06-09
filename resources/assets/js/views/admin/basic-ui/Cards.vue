@@ -87,7 +87,7 @@
                 </div>
                 <div class="actions">
                   <div class="btn-group" role="group">
-                    <v-dropdown dropdown-light>
+                    <v-dropdown theme-light>
                       <button
                         id="cardDropButton"
                         slot="activator"

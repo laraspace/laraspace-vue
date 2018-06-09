@@ -294,7 +294,7 @@
                       2
                     </button>
                     <div class="btn-group" role="group">
-                      <v-dropdown :toggle-arrow="false" dropdown-light>
+                      <v-dropdown :show-arrow="false" theme-light>
                         <button
                           id="btnGroupDrop1"
                           slot="activator"
@@ -390,7 +390,7 @@
                     2
                   </button>
                   <div class="btn-group" role="group">
-                    <v-dropdown :toggle-arrow="false" dropdown-light>
+                    <v-dropdown :show-arrow="false" theme-light>
                       <button
                         id="btnGroupDrop1"
                         slot="activator"

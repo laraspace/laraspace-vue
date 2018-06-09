@@ -31,7 +31,7 @@
               <label class="custom-control-label" for="customCheckAll"/>
             </div>
 
-            <v-dropdown active-url="/admin/dashboard" dropdown-light class="mailbox-action">
+            <v-dropdown active-url="/admin/dashboard" theme-light class="mailbox-action">
               <a slot="activator" href="#" @click.prevent>
                 <button
                   class="btn btn-light dropdown-toggle"
