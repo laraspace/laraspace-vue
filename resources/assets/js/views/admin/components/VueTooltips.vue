@@ -266,7 +266,7 @@ export default {
     asyncContent () {
       return new Promise((resolve) => {
         setTimeout(() => {
-          return resolve('Hey! This is content loaded from serverside')
+          return resolve('Hey! This content is loaded from serverside')
         }, 2000)
       })
     }
