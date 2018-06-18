@@ -29,6 +29,7 @@
             :class="['form-control', {'is-invalid': errors.has('basic_validation.name') }]"
             data-vv-rules="required"
             name="basic_validation.name"
+            data-vv-as="Name"
             type="text"
           >
           <div v-show="errors.has('basic_validation.name')" class="invalid-feedback">
@@ -43,6 +44,7 @@
             :class="['form-control', {'is-invalid': errors.has('basic_validation.email') }]"
             data-vv-rules="required|email"
             name="basic_validation.email"
+            data-vv-as="Email"
             type="text"
           >
           <div v-show="errors.has('basic_validation.email')" class="invalid-feedback">
@@ -72,6 +74,7 @@
               v-model="form_validation.name"
               :class="['form-control', {'is-invalid': errors.has('form_validation.name') }]"
               name="form_validation.name"
+              data-vv-as="Name"
               type="text"
             >
             <div v-show="errors.has('form_validation.name')" class="invalid-feedback">
@@ -85,6 +88,7 @@
               v-model="form_validation.email"
               :class="['form-control', {'is-invalid': errors.has('form_validation.email') }]"
               name="form_validation.email"
+              data-vv-as="Email"
               type="text"
             >
             <div v-show="errors.has('form_validation.email')" class="invalid-feedback">
@@ -101,6 +105,7 @@
               data-vv-rules="required"
               class="form-control"
               name="form_validation.password"
+              data-vv-as="Password"
             >
           </div>
           <label>Confirm Password</label>
@@ -108,7 +113,7 @@
             v-validate="'required|confirmed:form_validation.password'"
             v-model="form_validation.cnfpassword"
             :class="{'is-invalid': errors.has('form_validation.password_confirmation') }"
-            data-vv-as="form_validation.password"
+            data-vv-as="Confirm Password"
             name="form_validation.password_confirmation"
             data-vv-rules="required"
             class="form-control"
