@@ -89,7 +89,7 @@
                     type="checkbox"
                     class="custom-control-input"
                   >
-                  <label :for="index" class="custom-control-label"/>
+                  <label :for="index" class="custom-control-label" />
                 </div>
               </td>
               <td class="cell-fav">
