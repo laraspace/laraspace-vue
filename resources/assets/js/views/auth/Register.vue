@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="validateBeforeSubmit">
-    <!-- {{ csrf_field() }} -->
     <div :class="['form-group', {'is-invalid': $v.registerData.email.$error}]">
       <input
         :class="{'is-invalid': $v.registerData.email.$error, 'form-group--loading': $v.registerData.email.$pending}"
