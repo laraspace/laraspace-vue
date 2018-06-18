@@ -1,15 +1,3 @@
-// Morris Charts
-// -------------------------
-
-.morris {
-    width: 100%;
-    height: 500px;
-
-    a {
-        display: none !important;
-    }
-}
-
 // Gauges
 // -------------------------
 
@@ -20,7 +8,7 @@
 }
 
 .gauge-lg {
-    
+
     .basic-gauge, .donut-gauge, .color-gauge {
         height: 250px;
     }

@@ -112,7 +112,6 @@ export default {
       }
     },
     notieNotifs (type) {
-      console.log(type)
       switch (type) {
         case 'success':
           notie.alert({ type: 1, text: 'Success!' })

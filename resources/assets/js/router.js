@@ -58,8 +58,8 @@ import VeeValidate from './views/admin/forms/VeeValidate.vue'
 import Vuelidate from './views/admin/forms/Vuelidate.vue'
 
 // Gallery
-import ImageGallery from './views/admin/gallery/Image.vue'
-import VideoGallery from './views/admin/gallery/Video.vue'
+import ImageGallery from './views/admin/gallery/ImageGallery.vue'
+import VideoGallery from './views/admin/gallery/VideoGallery.vue'
 
 // Apps
 import TodosApp from './views/admin/apps/todos/TodosApp.vue'
