@@ -7,3 +7,8 @@
 Homestead.json
 Homestead.yaml
 .env
+public/assets/css/laraspace.css
+public/assets/css/laraspace.css.map
+public/assets/js/app.js
+public/assets/js/app.js.map
+public/mix-manifest.json
