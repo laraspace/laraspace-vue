@@ -1,0 +1,132 @@
+.vue-dropzone .dz-preview  {
+
+    width: 150px !important;
+    height:150px !important;
+    background: transparent !important;
+
+    &:hover {
+        z-index: 100 !important;
+    }
+
+    .dz-remove:hover {
+        text-decoration: none !important;
+    }
+
+    .dz-details {
+        background-color:$ls-color-yellow !important;
+        border-radius:30px!important;
+        color:$ls-color-black !important;
+        text-align: center !important;
+        padding-top: 50px !important;
+        .dz-size {
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .dz-image {
+        border-radius:30px !important;
+        width: 150px !important;
+        height:150px !important;
+    }
+
+    .dz-error-message {
+        top: 160px !important;
+        left: 5px !important;
+        &::after {
+            top: -6px !important;
+            transform: rotate(180deg) !important;
+        }
+    }
+
+    .dz-upload {
+        background: $ls-color-black !important;
+    }
+
+    .dz-error-mark svg #Page-1 g{
+        fill:$ls-color-black !important;
+    }
+
+    .dz-success-mark svg g path{
+        fill:$ls-color-black !important;
+    }
+    .dz-remove {
+        color: $ls-color-black !important;
+        margin-left: 25px !important;
+        padding: 2px !important;
+        bottom: 20px !important;
+        border: 2px $ls-color-black solid !important;
+        font-size: 0.7rem !important;
+        font-weight: 600 !important;
+    }
+
+
+
+}
+@media only screen and (max-width: $small-breakpoint ) {
+
+    .vue-dropzone .dz-preview  {
+
+        width: 110px!important;
+        height: 110px !important;
+        background: transparent !important;
+        margin: 5px !important;
+
+        .dz-image {
+            border-radius: 0;
+            width: 100% !important;
+            height:100% !important;
+        }
+
+        .dz-progress {
+            height: 12px !important;
+        }
+
+        .dz-remove {
+            margin-left: 10px !important;
+            bottom: 15px !important;
+            font-size: 10px !important;
+            font-weight: 600 !important;
+            letter-spacing: 1px !important;
+        }
+
+        .dz-details .dz-size {
+            font-size: 12px !important;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+        }
+
+        .dz-error-message {
+            top: 121px !important;
+            left: 5px !important;
+            width: 95% !important;
+            font-size: 12px !important;
+
+            &::after {
+                left: 45px !important;
+             }
+        }
+
+        .dz-error-mark svg #Page-1 g {
+            display: flex!important;
+            justify-content: center!important;
+            align-items: center !important;
+        }
+
+        .dz-success-mark svg g path {
+            display: flex!important;
+            justify-content: center!important;
+            align-items: center !important;
+        }
+
+        .dz-success-mark svg {
+            width: 44px !important;
+            height: 40px !important;
+        }
+        .dz-error-mark  svg {
+            width: 44px !important;
+            height: 40px !important;
+        }
+    }
+}

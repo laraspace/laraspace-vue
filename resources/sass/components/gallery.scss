@@ -1,0 +1,32 @@
+.my-gallery {
+    .demo {
+        border: 5px solid #eee;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 2px;
+        cursor: pointer;
+    }
+
+    .blueimp-gallery > .slides > .slide > .video-content > iframe {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: auto;
+        height: auto;
+        width: 480px;
+        height: 360px;
+    }
+
+    .blueimp-gallery-controls > .close,
+    .blueimp-gallery-controls > .next,
+    .blueimp-gallery-controls > .play-pause,
+    .blueimp-gallery-controls > .prev,
+    .blueimp-gallery-controls > .title {
+        color: $white;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}

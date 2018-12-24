@@ -1,0 +1,35 @@
+.mailbox {
+    background-color: $white;
+    position: relative;
+    min-height: 800px;
+    overflow: hidden;
+
+    .compose-mail-btn {
+        background-color: $ls-color-primary;
+        color: $ls-color-secondary;
+        position: fixed;
+        right: 30px;
+        bottom: 130px;
+        z-index: 100;
+        width: 40px;
+        border-radius: 100px;
+        border: none;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .mailbox-actions {
+        display: flex;
+        align-items: center;
+
+        .mailbox-action:not(:first-child) {
+            margin-left: 10px;
+        }
+    }
+
+}
+
+
+@import "mailbox-sidebar";
+@import "mailbox-content";
+@import "mailbox-modals";

@@ -1,0 +1,140 @@
+.mailbox-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    background: $white;
+    height: 100%;
+    z-index: 5;
+    padding-top: 54px;
+    width: 100%;
+
+    .mail-header {
+        position: absolute;
+        padding: 10px 20px;
+        width: 100%;
+        top: 0;
+        left: 0;
+
+        h3 {
+            margin: 0;
+        }
+
+        .mail-actions {
+
+            .mail-action-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .action {
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            .action a {
+                display: inline-block;
+                font-size: 16px;
+                color: $ls-color-gray--very-dark;
+                padding: 5px 10px;
+
+                &:hover {
+                    color: $ls-color-black--light;
+                }
+            }
+
+            .action i {
+                width: auto;
+                text-align: center;
+            }
+
+        }
+    }
+
+    .mail-body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 10px 20px;
+        height: 100%;
+
+        .mail-subject {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            padding: 20px 0px;
+            border-bottom: 1px solid #d9d9d9;
+
+            &.collapsed {
+                cursor: pointer;
+            }
+        }
+
+        .message-heading {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            margin-bottom: 15px;
+
+            .avatar-img {
+                height: 40px;
+                border-radius: 50%;
+            }
+
+            .message-from {
+                display: flex;
+                align-items: center;
+            }
+
+            .from-text {
+                margin-left: 10px;
+            }
+
+            .email {
+
+                a {
+                    color: $ls-color-black;
+                }
+
+                display: inline-block;
+            }
+
+            .message-heading-right {
+                display: inline;
+            }
+
+            .time {
+                margin-right: 5px;
+            }
+        }
+
+
+        .message-attachment {
+            margin-top: 40px;
+
+            ul {
+                list-style: none;
+                padding: 0px;
+            }
+        }
+
+        .message-reply {
+            border-top: 1px solid #e4eaec;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .btn-icon.btn-sm {
+        padding: 0.5rem;
+    }
+}
+
+.mailbox.is-open .mailbox-modal {
+    left: 200px;
+    width: calc(100% - 200px);
+}

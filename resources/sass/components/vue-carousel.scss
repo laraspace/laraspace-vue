@@ -1,0 +1,51 @@
+.VueCarousel-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+}
+
+.VueCarousel-inner .VueCarousel-slide:first-child {
+    padding-left: 0;
+}
+
+.VueCarousel-inner .VueCarousel-slide:last-child {
+    padding-right: 0;
+}
+
+.VueCarousel-dot {
+    margin-top: 0 !important;
+
+    .VueCarousel-dot-button {
+        background: $ls-color-black!important;
+    }
+
+    &.VueCarousel-dot--active .VueCarousel-dot-button{
+        background: $ls-color-primary !important;
+    }
+}
+
+.VueCarousel-navigation {
+
+    .VueCarousel-navigation-prev {
+        transform: translateY(-130%) translateX(-100%) !important;
+        margin-left: 10px;
+    }
+
+    .VueCarousel-navigation-next {
+        transform: translateY(-130%) translateX(100%) !important;
+        margin-right: 10px;
+    }
+}
+
+.with-nav .VueCarousel-wrapper{
+    width: auto;
+    margin: 0 20px;
+}
+
+@media(max-width:$small-breakpoint) {
+    .VueCarousel-dot .VueCarousel-dot-button {
+        width: 7px !important;
+        height: 7px !important;
+    }
+}

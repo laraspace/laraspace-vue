@@ -1,0 +1,173 @@
+.table {
+    th,
+    td {
+        font-size: 0.9rem;
+        vertical-align: middle;
+    }
+
+    th {
+        text-transform: uppercase;
+        white-space: nowrap;
+        font-size: 0.85em;
+        font-weight: 500;
+        position: relative;
+    }
+
+    .table__actions {
+        display: flex;
+        opacity: 0;
+
+        .btn {
+            padding: 2px 0.5rem;
+        }
+
+        a:not(:last-child) {
+            border-right: 1px solid #d9d9d9;
+            margin-right: 8px;
+            padding-right: 8px;
+        }
+
+    }
+
+    tr:hover .table__actions{
+        opacity: 1;
+    }
+}
+
+.card-body .table {
+    margin-top: -10px;
+
+    th {
+        border-top: none;
+    }
+}
+
+// Vue Table
+
+.table-component {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-component__filter {
+    align-self: flex-end;
+    position: relative;
+}
+
+.table-component__filter__field {
+    padding: 0.15em 1.25em 0.15em 0.75em;
+    border: solid 1px #e0e0e0;
+    font-size: 15px;
+    border-radius: 3px;
+}
+
+.table-component__filter__clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    color: #007593;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.table-component__filter__field:focus {
+    outline: 0;
+    border-color: $ls-color-primary;
+}
+
+.table-component__table-wrapper {
+    overflow-x: auto;
+    margin-top: 1em;
+    width: 100%;
+}
+
+.table-component__table {
+    min-width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    margin-bottom: 0;
+}
+
+.table-component__table__caption {
+    position: absolute;
+    top: auto;
+    left: -10000px;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+.table-component__table th,
+.table-component__table td {
+    padding: 0.75em 1.25em;
+    vertical-align: top;
+    text-align: left;
+}
+
+.table-component__message {
+    color: #999;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.table-component__th--sort,
+.table-component__th--sort-asc,
+.table-component__th--sort-desc {
+    // text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+}
+
+.table-component__th--sort-asc:after,
+.table-component__th--sort-desc:after {
+    position: absolute;
+    left: 0.25em;
+    display: inline-block;
+    color: #bbb;
+}
+
+.table-component__th--sort-asc:after {
+    content: "↑";
+}
+
+.table-component__th--sort-desc:after {
+    content: "↓";
+}
+
+
+// Pagination
+.table-component .pagination {
+    justify-content: flex-end !important;
+    margin-top: 10px;
+
+    .page-item {
+        overflow: hidden;
+    }
+
+    .page-item.active .page-link {
+        color: #fff !important;
+    }
+
+    a i {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        font-style: normal;
+        cursor: pointer;
+    }
+
+    a.disabled i {
+        color: #d9d9d9;
+        pointer-events: none;
+        cursor: auto;
+    }
+
+}
