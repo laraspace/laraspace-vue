@@ -1,0 +1,294 @@
+// demo.scss - Styles for Preview pages
+
+easy-pie-chart {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+
+    .percent {
+        display: inline-block;
+        line-height: 80px;
+        z-index: 2;
+        font-size: 18px;
+    }
+
+    .percent:after {
+        content: "%";
+        margin-left: 0.1em;
+        font-size: 0.8em;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+// Icons
+// -------------------------
+.icon-container {
+    .demo-icon {
+        .icon-classname {
+            margin-left: 20px;
+        }
+
+        .icon-box {
+            height: 50px;
+            width: 50px;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid #ffeb3b;
+
+            &:hover {
+                background-color: #ffeb3b;
+            }
+        }
+    }
+}
+
+@mixin n-columns($min-width, $gutter, $last-equal: false, $max-cols: 5) {
+    .icon-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -$gutter;
+        margin-top: -$gutter;
+
+        .demo-icon {
+            flex: 1 0 $min-width;
+            margin-left: $gutter;
+            margin-top: $gutter;
+            margin-bottom: $gutter;
+            align-items: center;
+
+            @if $last-equal {
+                @for $i from 2 through $max-cols {
+                    $screen-width: ($min-width * $i)+ ($gutter * $i);
+                    $column-width: (100% / $i);
+                    @media (min-width: $screen-width) {
+                        max-width: calc(#{$column-width} - #{$gutter});
+                    }
+                }
+
+                $column-width: (100% / $max-cols);
+                @media (min-width: $min-width*$max-cols) {
+                    min-width: calc(#{$column-width} - #{$gutter});
+                }
+            }
+        }
+    }
+}
+
+@include n-columns(350px, 20px, true, 5);
+
+.icon-container {
+    .demo-icon {
+        display: flex;
+        flex-direction: row;
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+// Buttons
+// -------------------------
+.buttons-demo {
+    .btn {
+        margin-bottom: 10px;
+    }
+
+    .btn-group-vertical .btn {
+        margin-bottom: 0;
+    }
+}
+
+.btn-group-vertical {
+    margin-right: 20px;
+}
+
+.source-link {
+    font-size: 0.9rem;
+    color: $ls-color-gray--very-dark;
+}
+
+// Chart - Gauge Chart
+
+.gauge-charts .col {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto !important;
+}
+
+//Sweet Modal
+.sweet-modal-demo {
+    .demo-buttons {
+        display: flex;
+        flex-wrap: wrap;
+
+        .modal-demo {
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+@media (max-width: $small-breakpoint) {
+    .modal-media {
+        .modal-dialog {
+            .modal-content {
+                overflow: hidden;
+                .side-menu {
+                    background: black;
+                    margin: 8px 10px 6px 10px;
+                    width: 26px;
+                    float: right;
+                }
+
+                .left-menu {
+                    left: -127px;
+                    display: block !important;
+                    background: #333;
+                    height: 100%;
+                    top: 0;
+                    z-index: 30;
+                    transition: left 0.3s ease;
+                    &.sidebar-open {
+                        left: 0px;
+
+                        .tabs-vertical.nav-tabs li a {
+                            border-right-color: #333;
+                        }
+                    }
+                    .tabs-vertical .nav-tabs li a.active {
+                        background-color: unset;
+                    }
+                }
+                .media-upload-content {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+}
+
+//BASIC UI
+.progress {
+    margin-top: 20px;
+}
+
+.card-body .progress:first-child {
+    margin-top: 0;
+}
+
+// Skin Tools
+// -------------------------
+
+.skin-tools {
+    position: fixed;
+    top: 200px;
+    right: -400px;
+    z-index: 900;
+    width: 400px;
+    transition: all 0.3s;
+
+    .skin-tools-action {
+        position: absolute;
+        top: 0px;
+        left: -48px;
+        padding: 8px 16px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: $white;
+        color: $ls-color-black;
+        box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.15);
+        border-left: 1px solid rgba(222, 227, 231, 0.56);
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+    }
+
+    .skin-tools-content {
+        height: 100%;
+        min-height: 100px;
+        padding: 5px 20px 20px;
+        background-color: $white;
+        color: $ls-color-black;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 0 3px 3px;
+    }
+
+    .skins {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -10px;
+        margin-top: 0;
+
+        .skin-item {
+            flex: 1;
+            min-width: calc(50% - 20px);
+            margin: 10px;
+            position: relative;
+        }
+    }
+
+    h5 {
+        margin-bottom: 10px;
+        color: $ls-color-black;
+    }
+
+    .skin-radio.active::after {
+        background-image: url("/assets/img/skins/tick.png");
+        background-size: 100% auto;
+        width: 20px;
+        height: 20px;
+        content: "";
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        z-index: 10;
+    }
+
+    .skin-radio.active img {
+        opacity: 1;
+    }
+
+    .skin-radio img {
+        opacity: 0.5;
+    }
+
+    &.is-open {
+        right: 0;
+    }
+}
+
+@media (max-width: $x-small-breakpoint) {
+    .skin-tools {
+        top: 100px;
+        right: -250px;
+        width: 250px;
+
+        .skin-item {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+@media (max-width: $small-breakpoint) {
+    .skin-tools {
+        top: 100px;
+        right: -250px;
+        width: 250px;
+
+        .skins .skin-item{
+            min-width: calc(100% - 20px);
+        }
+    }
+}

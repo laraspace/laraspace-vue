@@ -1,0 +1,41 @@
+.sweet-modal-overlay.theme-dark {
+    background-color: rgba(0,0,0,.7) !important;
+}
+
+.sweet-modal.theme-dark {
+    background: #222222 !important;
+}
+
+.sweet-modal-icon.sweet-modal-error .sweet-modal-line {
+    background-color: $ls-color-primary !important;
+}
+
+.sweet-modal.theme-dark .sweet-content + .sweet-buttons {
+    border-top-color: #333333 !important;
+    box-shadow: none !important;
+}
+
+.sweet-modal-icon.sweet-modal-error {
+    border-color: $ls-color-primary !important;
+}
+
+.sweet-modal .sweet-box-actions .sweet-action-close:hover {
+    background: $ls-color-blue !important;
+
+    .theme-dark & {
+        background: $ls-color-primary !important;
+        color: $ls-color-secondary;
+    }
+}
+
+.sweet-modal .sweet-title > h2 {
+    line-height: inherit;
+}
+
+.sweet-modal ul.sweet-modal-tabs li.sweet-modal-tab.active a {
+    color: $ls-color-blue !important;
+}
+
+.sweet-buttons button{
+    margin-left: 10px;
+}

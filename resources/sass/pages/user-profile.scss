@@ -1,0 +1,95 @@
+.avatar-container {
+    padding: 10px;
+    border: 1px solid $ls-color-gray--dark;
+}
+
+.detail-row i {
+    width: 30px;
+    text-align: center;
+    margin-left: -7px;
+}
+
+.activity-list , .friends-list {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.activity-list .media {
+    padding-top: 15px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $ls-color-gray--dark;
+}
+
+.activity-list .media-left {
+    padding-right: 20px;
+}
+
+.activity-list .media-object {
+    width: 50px;
+}
+
+.activity-list .media-body {
+
+    small {
+        color: #a3afb7;
+    }
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.activity-list .media-heading {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+
+    span {
+        color: $base-font-color;
+        font-size: 1rem;
+    }
+}
+
+.friends-list .media {
+    min-width: 30%;
+    display: flex;
+    border: 1px solid $ls-color-gray--dark;
+    margin-right: 3%;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.friends-list .media-left {
+    padding-right: 20px;
+}
+
+.friends-list .media-object {
+    width: 90px;
+}
+
+.friends-list .media-body {
+    padding-right: 30px;
+}
+
+.friends-list .media-heading {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+@media (max-width: $small-breakpoint) {
+
+    .friends-list .media {
+        min-width: 45%;
+    }
+
+}
+
+@media (max-width: $x-small-breakpoint) {
+
+    .friends-list .media {
+        min-width: 100%;
+
+    }
+
+}

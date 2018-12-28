@@ -1,4 +1,6 @@
 {
-    "/assets/js/app.js": "/assets/js/app.js?id=c4d89958eafd66fd8dc8",
-    "/assets/css/laraspace.css": "/assets/css/laraspace.css?id=d9a030e2c25e1c74ac5d"
+    "/assets/js/app.js": "/assets/js/app.js",
+    "/assets/css/laraspace.css": "/assets/css/laraspace.css",
+    "/assets/js/app.js.map": "/assets/js/app.js.map",
+    "/assets/css/laraspace.css.map": "/assets/css/laraspace.css.map"
 }

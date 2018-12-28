@@ -1,0 +1,92 @@
+.mailbox .mailbox-sidebar {
+    padding-top: 20px;
+    transition: 0.5s;
+    border-right: 1px solid $ls-color-gray--light;
+    background: $white;
+    position: absolute;
+    height: 100%;
+    width: 200px;
+    transform: translateX(-200px);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+    padding: 10px;
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+
+        li {
+            padding: 0 15px;
+            border-left: 5px solid transparent;
+
+            &.active {
+                border-left: 5px solid $ls-color-primary;
+                background-color: $ls-color-gray--light;
+            }
+
+            i {
+                width: 30px;
+            }
+
+            a {
+                display: block;
+                padding: 15px 0px 12px 0px;
+                position: relative;
+                text-decoration: none;
+
+                span {
+                    float: right;
+                    margin-top: 3px;
+                }
+            }
+        }
+    }
+
+    .left-sidebar-btn {
+        position: absolute;
+        padding: 2px 2px;
+        height: 60px;
+        width: 20px;
+        color: $ls-color-black;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-50%);
+        cursor: pointer;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-color:$ls-color-gray--light;
+        right: -20px;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+            background-color: #e5e5e5
+        }
+    }
+
+    &:hover {
+        .left-sidebar-btn {
+            opacity: 1 !important;
+        }
+    }
+}
+
+
+.mailbox.is-open .mailbox-sidebar{
+    transform: translateX(0);
+
+    .left-sidebar-btn {
+        left: 0;
+        right: auto;
+        opacity: 0;
+    }
+}
+@media(max-width:$medium-breakpoint) {
+    .mailbox.is-open .mailbox-sidebar .left-sidebar-btn {
+        left: auto;
+        right: -20px;
+        opacity: 1;
+    }
+}

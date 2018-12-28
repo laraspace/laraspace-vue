@@ -1,0 +1,546 @@
+.skin-targaryen {
+    // Theme Colors :
+    $ls-color-theme: #343A52;
+
+    //HEADER SECTION
+    $header-bg-color: $white;
+    $header-font-color: $white;
+    $header-buttons-bg-color: $ls-color-theme;
+    $header-buttons-bg-color--hover: lighten($ls-color-theme, 10%);
+    $header-buttons-font-color: $white;
+
+    //SIDEBAR SECTION
+    $sidebar-bg-color: $ls-color-theme;
+    $sidebar-font-color: $white;
+    $sidemenu-item-bg-color--hover: lighten($ls-color-theme, 10%);
+    $sidemenu-item-bg-color--active: darken($ls-color-theme, 7%);
+    $sidemenu-item-font-color: lighten($ls-color-theme, 55%);
+    $sidemenu-item-font-color--active: $white;
+    $sidemenu-arrow-color: $ls-color-gray--very-dark;
+    $sidemenu-submenu-bg: darken($ls-color-theme, 5%);
+
+    //Horizontal Menu
+    $header-bottom-bg: $ls-color-theme;
+    $header-menu-item-font-color: darken($white, 10%);
+    $header-menu-item-font-color--active: $white;
+    $header-menu-item-bg-color--hover: lighten($ls-color-theme, 10%);
+    $header-menu-item-bg-color--active: lighten($ls-color-theme, 10%);
+
+    //DROPDOWN
+    $dropdown-bg: $ls-color-theme;
+    $dropdown-bg--hover: lighten($ls-color-theme, 10%);
+    $dropdown-border-color: darken($ls-color-theme, 10%);
+    $dropdown-divider-bg: $ls-color-gray--very-dark;
+    $dropdown-activator-color: lighten($ls-color-theme, 55%);
+    $dropdown-activator-color--hover: $white;
+    $dropdown-header-color: $white;
+    $dropdown-header-border-color: $ls-color-gray--very-dark;
+
+    //MISC
+    $code-bg: $ls-color-gray--light;
+    $code-color: $ls-color-theme;
+
+    //MAILBOX
+    $mailbox-sidebar-menu-item: $ls-color-theme;
+    $mailbox-font-color:$ls-color-black;
+    $mailbox-page-link: $white;
+    $mailbox-page-link-bg: $ls-color-theme;
+
+    //HEADER
+    .site-header {
+        background-color: $header-bg-color;
+        border-bottom: 1px solid rgba(230, 230, 230, 0.7);
+
+        .nav-toggle {
+            background-color: $header-buttons-bg-color;
+            color: $header-buttons-font-color;
+        }
+
+        .hamburger span {
+            background: $header-buttons-font-color;
+        }
+
+        .hamburger span::before,
+        .hamburger span::after {
+            background-color: $header-buttons-font-color;
+        }
+
+        .action-list li {
+            a {
+                background-color: $header-buttons-bg-color;
+                color: $header-buttons-font-color;
+            }
+
+            a:hover {
+                background-color: $header-buttons-bg-color--hover;
+                color: $header-buttons-font-color;
+            }
+        }
+
+        .dropdown-menu {
+            background-color: $ls-color-theme;
+        }
+
+        .notification-dropdown .dropdown-header {
+            border-bottom: 1px solid $dropdown-header-border-color;
+            color: $dropdown-header-color;
+        }
+
+        .dropdown-divider {
+            background-color: $dropdown-divider-bg;
+        }
+    }
+
+    //HEDER BOTTOM
+    .header-nav {
+        
+        .dropdown-group.dropdown-group.active > .dropdown-activator > a {
+            color: $dropdown-header-color;
+        }
+        .dropdown-group.has-child.toggle-arrow.active > .dropdown-activator::after {
+            border-color: $dropdown-header-color transparent transparent;
+        }
+    }   
+
+    //SIDEBAR/NAV
+
+    .sidebar-left {
+        background-color: $sidebar-bg-color;
+    }
+
+    .side-nav .collapse-group .collapse-group-item {
+
+        a {
+            color: $sidemenu-item-font-color;
+
+            &:hover {
+                background-color: $sidemenu-item-bg-color--hover;
+            }
+        }
+
+        &.active > .collapse-item-title > a {
+            color: $sidemenu-item-font-color--active;
+            border-left: 3px solid #fff;
+        }
+
+        .collapse-group-items {
+            background-color: $sidemenu-submenu-bg;
+
+            .collapse-group-items {
+                background-color: darken($sidemenu-submenu-bg, 5%);
+            }
+
+            .collapse-group-items .collapse-group-items {
+                background-color: darken($sidemenu-submenu-bg, 8%);
+            }
+
+            a.active {
+                color: $sidemenu-item-font-color--active;
+                background-color: $sidemenu-item-bg-color--active;
+            }
+        }
+    }
+
+    //Horizontal Layout
+
+    .header-bottom {
+        background-color: $ls-color-theme;
+    }
+
+    .header-nav {
+
+        li a {
+            color: $header-menu-item-font-color;
+
+            &:hover {
+                background-color: $header-menu-item-bg-color--hover;
+                color: $header-menu-item-font-color;
+            }
+        }
+
+        li.active > a {
+            color: $header-menu-item-font-color--active;
+            background-color: $header-menu-item-bg-color--active;
+
+            &:hover {
+                color: $header-menu-item-font-color--active;
+                background-color: $header-menu-item-bg-color--active;
+            }
+        }
+
+        li .dropdown-item.active {
+            color: $header-menu-item-font-color--active;
+            background-color: $header-menu-item-bg-color--active;
+
+            &:hover,
+            &:focus,
+            &:active {
+                color: $header-menu-item-font-color--active;
+                background-color: $header-menu-item-bg-color--hover;
+            }
+        }
+    }
+
+    //Tabs
+
+    // Tabs Default
+    //----------------------------------
+
+    .tabs-component.tabs-default {
+
+        .tabs-component-tab {
+
+            a {
+                color: $ls-color-black;
+            }
+
+            a:hover {
+                color: $ls-color-black;
+            }
+
+            &.is-active {
+                border: 1px solid $ls-color-theme;
+                background: $ls-color-theme;
+                color: $white;
+            }
+            &.is-active a {
+                color: $white;
+            }
+        }
+
+        .tabs-component-tab:hover {
+            border: 1px solid $ls-color-theme;
+        }
+
+        .tabs-component-panels {
+            border-top: 1px solid $ls-color-theme !important;
+        }
+    }
+
+    // Tabs Vertical
+    //----------------------------------
+
+    .tabs-component.tabs-vertical .tabs-component-tabs {
+        border-right: 1px solid $ls-color-theme !important;
+
+        .tabs-component-tab {
+
+            a, a:hover {
+                color: $ls-color-black;
+            }
+
+            &.is-active {
+                a {
+                    color: $white;
+                }
+
+                background: $ls-color-theme;
+            }
+        }
+
+        .tabs-component-tab:hover {
+            border: 1px solid $ls-color-theme;
+        }
+    }
+
+    // Tabs Simple
+    //----------------------------------
+
+    .tabs-component.tabs-simple {
+
+        .tabs-component-tabs .tabs-component-tab {
+
+            a {
+                color: $ls-color-black;
+            }
+
+            a:hover {
+                color: $ls-color-black;
+                border-bottom: 3px solid lighten($ls-color-theme, 30%);
+            }
+
+            &.is-active {
+                border-bottom: 3px solid $ls-color-theme;
+                color: $white;
+            }
+        }
+
+        .tabs-component-panels {
+            border-top: 1px solid #ddd !important;
+        }
+    }
+
+    // Tabs Simple Vertical
+    //----------------------------------
+
+    .tabs-component.tabs-simple-vertical .tabs-component-tabs {
+        border-right: 1px solid #ddd;
+
+        .tabs-component-tab {
+
+            a {
+                color: $ls-color-black;
+            }
+
+            a:hover {
+                border-right: 3px solid lighten($ls-color-theme, 30%);
+            }
+
+            &.is-active {
+                border-right: 3px solid $ls-color-theme;
+                color: $ls-color-theme;
+            }
+        }
+    }
+
+    //MISC
+    code, .code {
+        background-color: $code-bg;
+        color: $code-color;
+    }
+
+    mark, .mark {
+        background-color: $ls-color-theme;
+        color: $white;
+    }
+
+    .todo-container {
+        background-color: $ls-color-theme !important;
+        color: $white !important;
+
+        h5 {
+            color: $white !important;
+        }
+    }
+
+    // Dropzone
+
+    .vue-dropzone .dz-preview {
+        
+        .dz-details {
+            background-color: $ls-color-theme !important;
+            color: $white !important;
+        }
+
+        .dz-upload {
+            background: $white !important;
+        }
+
+        .dz-error-mark svg #Page-1 g {
+            fill: $white !important;
+        }
+
+        .dz-success-mark svg g path {
+            fill: white !important;
+        }
+
+        .dz-remove {
+            color: $white !important;
+            border: 2px $white solid !important;
+        }
+    }
+
+    //Dropdown
+    .dropdown-group {
+
+        &.active > .dropdown-activator > a {
+            color: $dropdown-activator-color--hover;
+        }
+
+        .dropdown-activator a {
+            color: $dropdown-activator-color;
+        }
+
+        .dropdown-activator a:hover {
+            background-color: $dropdown-bg--hover;
+        }
+
+        &.has-child.toggle-arrow.active > .dropdown-activator::after {
+            border-color: $dropdown-activator-color--hover transparent transparent;
+        }
+
+        .dropdown-container {
+            color: $dropdown-activator-color;
+            background-color: $dropdown-bg;
+            border: 1px solid $dropdown-border-color;
+
+            .dropdown-group-item a {
+                color: $dropdown-activator-color;
+            }
+
+            .dropdown-group-item a.active {
+                color: $dropdown-activator-color--hover;
+            }
+
+            .dropdown-group-item a:hover {
+                background-color: $dropdown-bg--hover;
+            }
+
+            .dropdown-activator::before {
+                border-color: $dropdown-activator-color transparent transparent;
+            }
+        }
+
+        .dropdown-container .dropdown-group.active .dropdown-activator {
+            
+            a {
+                color: $dropdown-activator-color--hover;
+            }
+
+            &::before {
+                border-color: $dropdown-activator-color--hover transparent transparent;
+            }
+        }
+
+        .dropdown-item-divider {
+            border-top: 1px solid $dropdown-divider-bg;
+        }
+    }
+
+    //Buttons
+    .btn-theme {
+        @include button-variant($ls-color-theme, $ls-color-theme);
+
+        color: $white;
+    }
+
+    .btn-theme-outline {
+        @include button-outline-variant($ls-color-theme);
+    }
+
+    //Forms
+
+    .form-control:focus {
+        border: 1px solid $ls-color-theme;
+    }
+
+    //SELECT 2
+    .multiselect {
+
+        .multiselect__option--highlight {
+            background: $ls-color-theme;
+            color: $white;
+
+            &.multiselect__option--selected {
+                background: $ls-color-gray--light;
+                color: $ls-color-black;
+            }
+            &.multiselect__option--selected::after {
+                background: $ls-color-gray--dark;
+                color: $ls-color-black;
+            }
+
+            &::after {
+                background: $ls-color-gray--dark;
+                color: $ls-color-black;
+            }
+        }
+
+        &:hover {
+            background: $ls-color-gray--light;
+        }
+
+        .multiselect__tags-wrap {
+
+            .multiselect__tag {
+                background: $ls-color-theme;
+                color: $white;
+            }
+            .multiselect__tag .multiselect__tag-icon {
+
+                &:hover {
+                    background: $ls-color-theme;
+                }
+
+                &::after {
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    //DATEPICKER
+    .vdp-datepicker__calendar .cell {
+
+        &:not(.blank):not(.disabled) {
+
+            &.day:hover,
+            &.month:hover,
+            &.year:hover {
+                border: 1px solid $ls-color-theme !important;
+            }
+        }
+
+        &.selected {
+            color: $white;
+            background: $ls-color-theme !important;
+        }
+
+        &.highlighted {
+            color: $white;
+            background: lighten($ls-color-theme, 25%) !important;
+        }
+    }
+
+    // Vue-Carousel
+    .VueCarousel-dot {
+
+        .VueCarousel-dot-button {
+            background: $ls-color-gray--very-dark !important;
+        }
+
+        &.VueCarousel-dot--active .VueCarousel-dot-button {
+            background: $ls-color-theme !important;
+        }
+    }
+
+    //MAILBOX
+    .mailbox .mailbox-content {
+
+        .table tr td .content-subject {
+            color: $mailbox-font-color;
+        }
+
+        .mailbox-content-footer {
+
+            .page-link {
+                color: $mailbox-font-color;
+            }
+
+            .active .page-link {
+                background-color: $mailbox-page-link-bg;
+                border-color: $mailbox-page-link-bg;
+                color: $mailbox-page-link;
+            }
+        }
+
+        .btn-favorite .active {
+            color: $ls-color-theme;
+        }
+    }
+
+    .mailbox-modal .mail-body .message-heading.email a {
+        color: $ls-color-black;
+    }
+
+    .mailbox .mailbox-sidebar {
+
+        .sidebar-menu li.active {
+            border-left: 5px solid $ls-color-theme;
+        }
+        .sidebar-menu li a{
+            color: $mailbox-font-color;
+        }
+
+        .left-sidebar-btn {
+            color: $mailbox-font-color;
+        }
+    }
+
+    @media (max-width: $x-small-breakpoint) {
+        .header-nav .dropdown-menu {
+            border: 0 !important;
+            background-color: $sidemenu-submenu-bg !important;
+        }
+    }
+}

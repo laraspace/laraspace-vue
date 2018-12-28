@@ -1,0 +1,45 @@
+.multiselect {
+
+    .multiselect__option--highlight {
+        background: $ls-color-primary;
+        color: $ls-color-black;
+        font-weight: normal !important;
+
+        &.multiselect__option--selected {
+            background: $ls-color-gray--light;
+            color: $ls-color-black;
+            font-size: 1rem;
+            font-weight: normal !important;
+
+            &::after {
+                background: $ls-color-black;
+                color: $white;
+            }
+        }
+
+        &::after {
+            background: $ls-color-black;
+            color: $white;
+        }
+    }
+
+    .multiselect__option--selected {
+        font-weight: normal !important;
+        background: $ls-color-gray--light;
+    }
+
+    .multiselect__tags-wrap .multiselect__tag {
+        background: $ls-color-primary;
+        color: $ls-color-black;
+
+        .multiselect__tag-icon {
+            &:hover {
+                background: $ls-color-primary;
+            }
+
+            &::after {
+                color: $ls-color-black;
+            }
+        }
+    }
+}

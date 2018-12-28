@@ -1,0 +1,109 @@
+// Variables
+//----------------------------------
+
+@import 'variables';
+
+
+// Plugins
+//----------------------------------
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import '../../node_modules/font-awesome/scss/font-awesome.scss';
+@import "../../node_modules/notie/src/notie";
+@import "../../node_modules/toastr/toastr";
+@import '../../node_modules/prismjs/themes/prism.css';
+@import '../../node_modules/ladda/css/ladda.scss';
+
+
+// Icons
+//----------------------------------
+
+@import "../plugins/icons/icons.scss";
+
+
+// Skins
+//----------------------------------
+
+@import 'skins/skin-tyrell';
+@import 'skins/skin-arryn';
+@import 'skins/skin-targaryen';
+@import 'skins/skin-lannister';
+@import 'skins/skin-stark';
+
+
+// Site Base
+//----------------------------------
+
+@import 'base';
+
+
+// Layouts
+//----------------------------------
+
+@import 'layouts/layout';
+@import "layouts/layout-icon-sidebar";
+@import "layouts/layout-horizontal";
+
+
+// Partials
+//----------------------------------
+
+@import 'partials/header';
+@import 'partials/sidebar';
+
+
+// Components
+//----------------------------------
+
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+@import 'components/tabs';
+@import 'components/tables';
+@import 'components/hamburgers';
+@import 'components/transitions';
+@import 'components/charts';
+@import "components/ico-moon";
+@import "components/easy-pie-chart";
+@import "components/pace-loader";
+@import "components/dropzone";
+
+@import "components/vue-tabs";
+@import "components/tooltips";
+@import "components/vue-dropdown";
+@import "components/gallery";
+@import "components/modals";
+@import "components/vue-date-picker";
+@import "components/vue-color";
+@import "components/vue-carousel";
+@import "components/vue-multi-select";
+
+
+// Pages
+//----------------------------------
+
+@import 'pages/dashboard';
+@import 'pages/login';
+@import "pages/login-1";
+@import 'pages/login-2';
+@import 'pages/login-3';
+@import 'pages/user-profile';
+@import 'pages/404';
+@import 'pages/settings';
+
+
+// Apps
+//----------------------------------
+
+@import "apps/mailbox/mailbox";
+
+
+// Demo Styles -- Remove this!
+//----------------------------------
+
+@import "demo";
+
+
+//Front
+//----------------------------------
+
+@import "front"
