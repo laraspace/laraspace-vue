@@ -3,6 +3,7 @@
     "description": "The Laraspace admin template.",
     "keywords": [
         "laravel",
+        "vue",
         "laraspace",
         "admin",
         "template"
