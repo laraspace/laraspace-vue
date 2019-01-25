@@ -29,7 +29,7 @@ OPTIONAL REQUIREMENTS:
 
 ## Installation
 
-1. Run `composer create-project --prefer-dist laraspace/laraspace`
+1. Run `composer create-project --prefer-dist laraspace/laraspace-vue`
 2. Using your preferred terminal , go to the laraspace folder and run the following command to set a random secure Application Key `php artisan key:generate`
 3. Open `.env` file in your favorite text editor and set the database credentials.
 4. Open `database/seeds/UsersTableSeeder.php` and change the admin's email & password to your preference.
