@@ -1,9 +1,12 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "laraspace/laraspace-vue",
+    "description": "The Laraspace admin template.",
     "keywords": [
-        "framework",
-        "laravel"
+        "laravel",
+        "vue",
+        "laraspace",
+        "admin",
+        "template"
     ],
     "license": "MIT",
     "type": "project",
