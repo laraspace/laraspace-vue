@@ -12,7 +12,7 @@
           <p>Powered by
             <a href="http://bytefury.com" target="_blank">Bytefury</a>
           </p>
-          <p>Laraspace © 2016</p>
+          <p>larasapace © 2021</p>
         </div>
       </div>
     </div>
